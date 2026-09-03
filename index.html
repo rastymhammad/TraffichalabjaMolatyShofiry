@@ -11,7 +11,6 @@
             font-weight: normal;
             font-style: normal;
         }
-
         body {
             font-family: 'Rabar', Tahoma, Arial, sans-serif;
             background-color: #f0f8ff;
@@ -28,7 +27,6 @@
             max-width: 400px;
             margin: auto auto 20px auto;
             border-bottom: 4px solid #0056b3;
-            transition: background-color 0.4s;
         }
         .header-title h1 {
             color: #0056b3;
@@ -48,7 +46,6 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             max-width: 400px;
             margin: auto auto 25px auto;
-            transition: background-color 0.4s;
         }
         #adminSection {
             max-width: 650px;
@@ -66,7 +63,6 @@
             border-radius: 6px;
             font-size: 15px;
             font-family: 'Rabar', Tahoma, Arial, sans-serif; 
-            transition: background-color 0.4s, color 0.4s;
         }
         button {
             background: #28a745;
@@ -77,7 +73,6 @@
             border-radius: 6px;
             font-size: 16px;
             font-weight: bold;
-            transition: background 0.3s;
             width: 95%;
             margin-top: 10px;
             font-family: 'Rabar', Tahoma, Arial, sans-serif;
@@ -96,8 +91,6 @@
             font-weight: bold;
             font-size: 16px;
         }
-        
-        /* شێوازی دوگمەی گۆڕینی ڕەنگ (تاریک/ڕووناک) */
         .theme-toggle-btn {
             position: absolute;
             top: 20px;
@@ -110,12 +103,6 @@
             padding: 0;
             margin: 0;
         }
-        .theme-toggle-btn:hover {
-            background: transparent;
-            transform: scale(1.1);
-        }
-
-        /* ---------------- دۆخی تاریک (Dark Mode) ---------------- */
         body.dark-mode {
             background-color: #121212;
             color: #e0e0e0;
@@ -138,62 +125,21 @@
             color: #fff;
             border: 1px solid #444;
         }
-        body.dark-mode input::placeholder {
-            color: #888;
-        }
-        body.dark-mode table {
-            border-color: #444;
-        }
-        body.dark-mode th {
-            background-color: #004085;
-            border-color: #444;
-        }
-        body.dark-mode td {
-            border-color: #444;
-        }
-        /* -------------------------------------------------------- */
-
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            .printable-area, .printable-area * {
-                visibility: visible;
-            }
-            .printable-area {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-            }
-            button {
-                display: none;
-            }
-            /* بۆ ئەوەی لە کاتی پرێنتکردن لاپەڕەکە بە سپی دەربچێت */
-            body.dark-mode .container {
-                background-color: white !important;
-                color: black !important;
-            }
-            body.dark-mode td {
-                color: black !important;
-            }
-        }
     </style>
 </head>
 <body>
 
-    <!-- دوگمەی گۆڕینی دۆخی تاریک و ڕووناک -->
     <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="گۆڕینی ڕەنگ">🌙</button>
 
     <div class="header-title">
         <h1>بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە</h1>
-        <p>ئاماده‌كردنی  ڕێپێدراوی هاتووچۆ ( ڕاستی محمد حیدر )</p>
+        <p>ئاماده‌كردنی ڕێپێدراوی هاتووچۆ ( ڕاستی محمد حیدر )</p>
     </div>
 
     <div class="container">
         <h2>تۆمارکردنی ناو</h2>
         <input type="text" id="nameInput" placeholder="ناوی چواری بنووسە...">
-        <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن (بۆ نموونە 07700000000)..." maxlength="15">
+        <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="15">
         <button onclick="registerUser()">تۆمارکردن</button>
         <div id="registerMessage" class="message"></div>
     </div>
@@ -234,9 +180,7 @@
     <script>
         const apiUrl = "https://rastymhammad-001-site1.itempurl.com/api/users";
 
-        // --- بەشی دۆخی تاریک و ڕووناک (Dark Mode Toggle) ---
         const themeBtn = document.getElementById("themeToggleBtn");
-        
         if (localStorage.getItem("theme") === "dark") {
             document.body.classList.add("dark-mode");
             themeBtn.innerText = "☀️";
@@ -252,7 +196,6 @@
                 localStorage.setItem("theme", "light");
             }
         }
-        // --------------------------------------------------
 
         async function registerUser() {
             let name = document.getElementById("nameInput").value.trim();
@@ -265,11 +208,10 @@
                 return;
             }
 
-            // پشکنینی پیتە ئینگلیزییەکان (ئەگەر پیتی ئینگلیزی تێدا بوو ڕێگری دەکات)
             let englishRegex = /[a-zA-Z]/;
             if (englishRegex.test(name)) {
                 messageDiv.style.color = "#ff4d4d";
-                messageDiv.innerText = "تکایە ناوی چواری بە پیتی کوردی یان عەرەبی بنووسە (پیتی ئینگلیزی قەدەغەیە)!";
+                messageDiv.innerText = "تکایە ناوی چواری بە پیتی کوردی بنووسە (پیتی ئینگلیزی قەدەغەیە)!";
                 return;
             }
 
@@ -280,7 +222,6 @@
                 return;
             }
 
-            // پشکنینی ژمارەی تەلەفۆن کە نابێت لە 11 ژمارە کەمتر بێت
             if (phone.length < 11) {
                 messageDiv.style.color = "#ff4d4d";
                 messageDiv.innerText = "ژمارەی تەلەفۆن نابێت لە 11 ژمارە کەمتر بێت!";
@@ -327,7 +268,7 @@
                 
                 if(response.ok) {
                     messageDiv.style.color = "#28a745";
-                    messageDiv.innerText = `بەڕێز (${result.name})، تۆ لە پشکی ئەمڕۆدا  ژمارە (${result.rank})ـیت. تکایە سبەینێ سەردان بکە.`;
+                    messageDiv.innerText = result.message;
                 } else {
                     messageDiv.style.color = "#ff4d4d";
                     messageDiv.innerText = result.message || "ناو نەدۆزرایەوە!";
