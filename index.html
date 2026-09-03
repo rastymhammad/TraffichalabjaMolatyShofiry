@@ -145,8 +145,8 @@
     </div>
 
     <div class="container">
-        <h2>گەڕان بۆ ناوەکەت</h2>
-        <input type="text" id="searchInput" placeholder="گەڕان بەپێی ناو بۆ دڵنیابوونەوە...">
+        <h2>دڵنیابوونەوە لە ناوت (بە ژمارەی تەلەفۆن)</h2>
+        <input type="tel" id="searchInput" placeholder="ژمارەی تەلەفۆنەکەت بنووسە..." maxlength="15">
         <button class="search-btn" onclick="searchUser()">گەڕان</button>
         <div id="searchMessage" class="message"></div>
     </div>
@@ -254,16 +254,17 @@
         }
 
         async function searchUser() {
-            let searchName = document.getElementById("searchInput").value.trim();
+            let searchPhone = document.getElementById("searchInput").value.trim();
             let messageDiv = document.getElementById("searchMessage");
 
-            if(searchName === "") {
-                messageDiv.innerText = "";
+            if(searchPhone === "") {
+                messageDiv.style.color = "#ff4d4d";
+                messageDiv.innerText = "تکایە ژمارەی تەلەفۆن بنووسە بۆ گەڕان!";
                 return;
             }
 
             try {
-                let response = await fetch(`${apiUrl}/search/${encodeURIComponent(searchName)}`);
+                let response = await fetch(`${apiUrl}/search/${encodeURIComponent(searchPhone)}`);
                 let result = await response.json();
                 
                 if(response.ok) {
