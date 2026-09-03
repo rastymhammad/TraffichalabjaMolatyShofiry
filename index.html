@@ -194,7 +194,7 @@
     <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="گۆڕینی ڕەنگ">🌙</button>
 
     <div class="header-title">
-        <h1>بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجه</h1>
+        <h1>بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە</h1>
         <p>ئاماده‌كردنی ڕێپێدراوی هاتووچۆ ( ڕاستی محمد حیدر )</p>
         <div id="statusBadge" class="status-badge status-open">
             <span id="statusDot" class="dot dot-green"></span>
@@ -220,8 +220,18 @@
         <div id="searchMessage" class="message"></div>
     </div>
 
+    <!-- بەشی ئەدمین -->
     <div class="container printable-area" id="adminSection" style="display: none;">
         <h2>بەشی ئەدمین - کۆنتڕۆڵی سیستەم</h2>
+
+        <!-- بەشی نوێ: تۆمارکردنی پێشوەختە لەلایەن ئەدمینەوە -->
+        <div style="background: rgba(0, 86, 179, 0.08); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid rgba(0, 86, 179, 0.2);">
+            <h3 style="margin-top: 0; font-size: 16px; color: #0056b3;">تۆمارکردنی پێشوەختە لەلایەن ئەدمینەوە</h3>
+            <input type="text" id="adminNameInput" placeholder="ناوی چواری بنووسە...">
+            <input type="tel" id="adminPhoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="15" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false">
+            <button style="background: #17a2b8;" onclick="adminRegisterUser()">تۆمارکردنی پێشوەختە</button>
+            <div id="adminRegMessage" class="message"></div>
+        </div>
 
         <button class="search-btn" onclick="loadTodayUsers()">نیشاندانی لیستی ئەمڕۆ</button>
         <button style="background: #17a2b8;" onclick="downloadExcel()">داونلۆدکردنی ئێکسڵ (Excel/CSV)</button>
@@ -394,6 +404,68 @@
             }
         }
 
+        // فەنکشنی نوێ بۆ تۆمارکردنی پێشوەختە لەلایەن ئەدمنەوە
+        async function adminRegisterUser() {
+            let name = document.getElementById("adminNameInput").value.trim();
+            let phone = document.getElementById("adminPhoneInput").value.trim();
+            let messageDiv = document.getElementById("adminRegMessage");
+
+            if(name === "" || phone === "") {
+                messageDiv.style.color = "#ff4d4d";
+                messageDiv.innerText = "تکایە ناو و ژمارەی تەلەفۆن پڕبکەرەوە!";
+                return;
+            }
+
+            let englishRegex = /[a-zA-Z]/;
+            if (englishRegex.test(name)) {
+                messageDiv.style.color = "#ff4d4d";
+                messageDiv.innerText = "تکایە ناو بە پیتی کوردی بنووسە!";
+                return;
+            }
+
+            let nameParts = name.split(/\s+/);
+            if (nameParts.length < 4) {
+                messageDiv.style.color = "#ff4d4d";
+                messageDiv.innerText = "تکایە ناوی چواری بنووسە!";
+                return;
+            }
+
+            if (phone.length < 11) {
+                messageDiv.style.color = "#ff4d4d";
+                messageDiv.innerText = "ژمارەی تەلەفۆن نابێت لە 11 ژمارە کەمتر بێت!";
+                return;
+            }
+
+            try {
+                let response = await fetch(`${apiUrl}/admin-register`, {
+                    method: "POST",
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "Admin-Password": "0007"
+                    },
+                    body: JSON.stringify({ name: name, phone: phone })
+                });
+
+                let result = await response.json().catch(() => ({}));
+
+                if(response.ok) {
+                    messageDiv.style.color = "#28a745";
+                    messageDiv.innerText = result.message || "ناو بە سەرکەوتوویی لەلایەن ئەدمنەوە پێشوەختە تۆمارکرا!";
+                    document.getElementById("adminNameInput").value = "";
+                    document.getElementById("adminPhoneInput").value = "";
+                    loadTodayUsers();
+                    checkQuotaAndTimer();
+                } else {
+                    messageDiv.style.color = "#ff4d4d";
+                    messageDiv.innerText = result.message || "هەڵەیەک ڕوویدا لە تۆمارکردندا!";
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                messageDiv.style.color = "#ff4d4d";
+                messageDiv.innerText = "کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!";
+            }
+        }
+
         async function searchUser() {
             let searchPhone = document.getElementById("searchInput").value.trim();
             let messageDiv = document.getElementById("searchMessage");
@@ -435,6 +507,7 @@
             document.getElementById("adminSection").style.display = "none";
             document.getElementById("tableBody").innerHTML = "";
             document.getElementById("adminMessage").innerText = "";
+            document.getElementById("adminRegMessage").innerText = "";
         }
 
         async function toggleSystemStatus() {
