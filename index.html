@@ -238,7 +238,6 @@
         <button style="background: #ffc107; color: black;" onclick="toggleSystemStatus()">ڕاگرتن / کردنەوەی سایت</button>
         <button style="background: #6c757d;" onclick="window.print()">چاپکردنی لیست (Print)</button>
         <button style="background: #dc3545; margin-top: 5px;" onclick="hideAdminPanel()">داخستنی بەشی ئەدمین</button>
-        <button style="background: #343a40; margin-top: 5px;" onclick="adminLogout()">چوونەدەرەوە لە ئەدمین</button>
         
         <div id="adminMessage" class="message" style="color: red; margin-top: 10px;"></div>
 
@@ -265,7 +264,6 @@
         const apiUrl = `${baseUrl}/api/users`;
         let globalUsersData = [];
         let adminClickCount = 0;
-        let adminToken = sessionStorage.getItem("adminToken") || "";
 
         function onlyEnglishNumbers(event) {
             let charCode = (event.which) ? event.which : event.keyCode;
@@ -277,12 +275,14 @@
 
         async function checkQuotaAndTimer() {
             try {
-                let response = await fetch(`${baseUrl}/api/users/today-count`);
+                let response = await fetch(`${apiUrl}/today-list`, {
+                    method: "GET",
+                    headers: { "Admin-Password": "0007" }
+                });
                 if (response.ok) {
-                    let data = await response.json();
-                    let count = Number(data.count || 0);
-                    let remaining = Number(data.remaining ?? (40 - count));
-                    let isActive = data.isActive !== false;
+                    let users = await response.json();
+                    let count = users.length;
+                    let remaining = 40 - count;
                     if (remaining < 0) remaining = 0;
 
                     let counterBox = document.getElementById("liveCounterBox");
@@ -292,7 +292,7 @@
                     let dot = document.getElementById("statusDot");
                     let text = document.getElementById("statusText");
 
-                    if (!isActive || count >= 40) {
+                    if (count >= 40) {
                         badge.className = "status-badge status-closed";
                         dot.className = "dot dot-red";
                         text.innerText = "دۆخی سیستەم: داخراوە";
@@ -382,11 +382,7 @@
                 let response = await fetch(apiUrl, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ 
-                        name: name, 
-                        phone: phone,
-                        adminPassword: "" 
-                    })
+                    body: JSON.stringify({ name: name, phone: phone })
                 });
 
                 let result = await response.json().catch(() => ({}));
@@ -413,12 +409,6 @@
             let name = document.getElementById("adminNameInput").value.trim();
             let phone = document.getElementById("adminPhoneInput").value.trim();
             let messageDiv = document.getElementById("adminRegMessage");
-
-            if (!adminToken) {
-                messageDiv.style.color = "#ff4d4d";
-                messageDiv.innerText = "تکایە سەرەتا بچۆ ژوورەوە وەک ئەدمین!";
-                return;
-            }
 
             if(name === "" || phone === "") {
                 messageDiv.style.color = "#ff4d4d";
@@ -447,31 +437,27 @@
             }
 
             try {
-                let response = await fetch(apiUrl, {
+                let response = await fetch(`${apiUrl}/admin-register`, {
                     method: "POST",
-                    headers: {
+                    headers: { 
                         "Content-Type": "application/json",
-                        "Authorization": `Bearer ${adminToken}`
+                        "Admin-Password": "0007"
                     },
-                    body: JSON.stringify({
-                        name: name,
-                        phone: phone,
-                        adminPassword: ""
-                    })
+                    body: JSON.stringify({ name: name, phone: phone })
                 });
 
                 let result = await response.json().catch(() => ({}));
 
                 if(response.ok) {
                     messageDiv.style.color = "#28a745";
-                    messageDiv.innerText = result.message || "ناو بە سەرکەوتوویی لەلایەن ئەدمنەوە تۆمارکرا!";
+                    messageDiv.innerText = result.message || "ناو بە سەرکەوتوویی لەلایەن ئەدمنەوە پێشوەختە تۆمارکرا!";
                     document.getElementById("adminNameInput").value = "";
                     document.getElementById("adminPhoneInput").value = "";
                     loadTodayUsers();
                     checkQuotaAndTimer();
                 } else {
                     messageDiv.style.color = "#ff4d4d";
-                    messageDiv.innerText = result.message || "هەڵەیەک ڕوویدا";
+                    messageDiv.innerText = result.message || `هەڵە: ${response.status}`;
                 }
             } catch (error) {
                 console.error("Error:", error);
@@ -516,42 +502,18 @@
             }
         }
 
-        async function showAdminPanel() {
-            if (adminToken) {
+        function showAdminPanel() {
+            let password = prompt("تکایە پاسوۆردی ئەدمن بنووسە:");
+            if (password === "0007") {
                 document.getElementById("adminSection").style.display = "block";
                 loadTodayUsers();
-                return;
-            }
-
-            let password = prompt("تکایە پاسوۆردی ئەدمن بنووسە:");
-            if (password === null) return;
-
-            try {
-                let response = await fetch(`${baseUrl}/api/admin/login`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ password: password })
-                });
-
-                let result = await response.json().catch(() => ({}));
-
-                if (response.ok && result.token) {
-                    adminToken = result.token;
-                    sessionStorage.setItem("adminToken", adminToken);
-                    document.getElementById("adminSection").style.display = "block";
-                    loadTodayUsers();
-                } else {
-                    alert(result.message || "پاسوۆرد هەڵەیە!");
-                }
-            } catch (error) {
-                alert("کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!");
+            } else if (password !== null) {
+                alert("پاسوۆرد هەڵەیە!");
             }
         }
 
         function hideAdminPanel() {
             document.getElementById("adminSection").style.display = "none";
-            adminToken = "";
-            sessionStorage.removeItem("adminToken");
             document.getElementById("tableBody").innerHTML = "";
             document.getElementById("adminMessage").innerText = "";
             document.getElementById("adminRegMessage").innerText = "";
@@ -559,29 +521,22 @@
         }
 
         async function toggleSystemStatus() {
-            if (!adminToken) {
-                alert("تکایە سەرەتا بچۆ ژوورەوە وەک ئەدمین!");
+            let password = prompt("تکایە پاسوۆردی ئەدمین بنووسە بۆ گۆڕینی باری سایت:");
+            if (password !== "0007") {
+                if (password !== null) alert("پاسوۆرد هەڵەیە!");
                 return;
             }
 
             try {
                 let response = await fetch(`${baseUrl}/api/admin/toggle-status`, {
                     method: "POST",
-                    headers: {
-                        "Authorization": `Bearer ${adminToken}`
-                    }
+                    headers: { "Admin-Password": "0007" }
                 });
-
                 let result = await response.json().catch(() => ({}));
-
                 if(response.ok) {
                     alert(result.message || "دۆخ گۆڕدرا!");
                     location.reload();
                 } else {
-                    if (response.status === 401 || response.status === 403) {
-                        adminToken = "";
-                        sessionStorage.removeItem("adminToken");
-                    }
                     alert(result.message || "هەڵە ڕووی دا!");
                 }
             } catch (error) {
@@ -594,16 +549,9 @@
             let tbody = document.getElementById("tableBody");
 
             try {
-                if (!adminToken) {
-                    messageDiv.innerText = "تکایە سەرەتا بچۆ ژوورەوە وەک ئەدمین!";
-                    return;
-                }
-
                 let response = await fetch(`${apiUrl}/today-list`, {
                     method: "GET",
-                    headers: {
-                        "Authorization": `Bearer ${adminToken}`
-                    }
+                    headers: { "Admin-Password": "0007" }
                 });
 
                 if (!response.ok) {
@@ -635,15 +583,6 @@
                 console.error("Error:", error);
                 messageDiv.innerText = "کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!";
             }
-        }
-
-        function adminLogout() {
-            adminToken = "";
-            sessionStorage.removeItem("adminToken");
-            document.getElementById("adminSection").style.display = "none";
-            document.getElementById("tableBody").innerHTML = "";
-            document.getElementById("adminMessage").innerText = "";
-            adminClickCount = 0;
         }
 
         function downloadExcel() {
