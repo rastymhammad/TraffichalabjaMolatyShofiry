@@ -107,7 +107,7 @@
             color: #d9534f;
             margin-top: 15px;
             font-weight: bold;
-            display: none; /* بە سەرەتایی شاراوەیە تاوکاتێک پشک تەواو دەبێت */
+            display: none;
         }
         .theme-toggle-btn {
             position: absolute;
@@ -132,7 +132,7 @@
             border-bottom-color: #4da3ff;
         }
         body.dark-mode .header-title h1,
-        body.dark-mode h2 {
+        body.dark-mode .header-title h2 {
             color: #4da3ff;
         }
         body.dark-mode .header-title p {
@@ -158,7 +158,7 @@
     <div class="container">
         <h2>تۆمارکردنی ناو</h2>
         <input type="text" id="nameInput" placeholder="ناوی چواری بنووسە...">
-        <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="15">
+        <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="15" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false">
         <button onclick="registerUser()">تۆمارکردن</button>
         <div id="registerMessage" class="message"></div>
         <div id="countdownTimer" class="timer-box"></div>
@@ -166,7 +166,7 @@
 
     <div class="container">
         <h2>دڵنیابوونەوە لە ناوت (بە ژمارەی تەلەفۆن)</h2>
-        <input type="tel" id="searchInput" placeholder="ژمارەی تەلەفۆنەکەت بنووسە..." maxlength="15">
+        <input type="tel" id="searchInput" placeholder="ژمارەی تەلەفۆنەکەت بنووسە..." maxlength="15" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false">
         <button class="search-btn" onclick="searchUser()">گەڕان</button>
         <div id="searchMessage" class="message"></div>
     </div>
@@ -203,7 +203,15 @@
         const apiUrl = "https://rastymhammad-001-site1.itempurl.com/api/users";
         let globalUsersData = [];
 
-        // پشکنینی پشکی ئەمڕۆ بۆ نیشاندانی کاتی ماوە تەنها کاتێک 40 کەس پڕ بوون
+        // ڕێگریکردن لە نووسینی هەر شتێک جگە لە ژمارەی ئینگلیزی (0-9)
+        function onlyEnglishNumbers(event) {
+            let charCode = (event.which) ? event.which : event.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+
         async function checkQuotaAndTimer() {
             try {
                 let response = await fetch(`${apiUrl}/today-list`, {
@@ -213,7 +221,6 @@
                 if (response.ok) {
                     let users = await response.json();
                     if (users.length >= 40) {
-                        // ئەگەر 40 کەسەکە پڕ بوون، کاتژمێرەکە نیشان بدە
                         document.getElementById("countdownTimer").style.display = "block";
                         startCountdown();
                     }
@@ -228,7 +235,7 @@
             function update() {
                 let now = new Date();
                 let target = new Date();
-                target.setHours(18, 0, 0, 0); // سەعات 6ی ئێوارە
+                target.setHours(18, 0, 0, 0);
                 if (now > target) {
                     target.setDate(target.getDate() + 1);
                 }
@@ -305,11 +312,10 @@
                     messageDiv.innerText = result.message;
                     document.getElementById("nameInput").value = "";
                     document.getElementById("phoneInput").value = "";
-                    checkQuotaAndTimer(); // پشکنینەوە دوای تۆمارکردن
+                    checkQuotaAndTimer();
                 } else {
                     messageDiv.style.color = "orange";
                     messageDiv.innerText = result.message || "کێشەیەک ڕوویدا";
-                    // ئەگەر پشکەکە تەواو بوو بوو، کاتژمێرەکە دەردەکەوێت
                     if (result.message && result.message.includes("تەواو بوو")) {
                         document.getElementById("countdownTimer").style.display = "block";
                         startCountdown();
