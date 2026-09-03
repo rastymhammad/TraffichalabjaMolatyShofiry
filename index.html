@@ -193,7 +193,7 @@
     <div class="container">
         <h2>تۆمارکردنی ناو</h2>
         <input type="text" id="nameInput" placeholder="ناوی چواری بنووسە...">
-        <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن...">
+        <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن (بۆ نموونە 07700000000)..." maxlength="15">
         <button onclick="registerUser()">تۆمارکردن</button>
         <div id="registerMessage" class="message"></div>
     </div>
@@ -232,13 +232,11 @@
     </div>
 
     <script>
-        // لینکەکە گۆڕدرا بۆ ئەوەی ڕاستەوخۆ پەیوەندی بە سێرڤەرەکەوە بکات
         const apiUrl = "https://rastymhammad-001-site1.itempurl.com/api/users";
 
         // --- بەشی دۆخی تاریک و ڕووناک (Dark Mode Toggle) ---
         const themeBtn = document.getElementById("themeToggleBtn");
         
-        // پشکنین کە ئایا پێشتر بەکارهێنەر تاریکی هەڵبژاردووە
         if (localStorage.getItem("theme") === "dark") {
             document.body.classList.add("dark-mode");
             themeBtn.innerText = "☀️";
@@ -271,6 +269,13 @@
             if (nameParts.length < 4) {
                 messageDiv.style.color = "#ff4d4d";
                 messageDiv.innerText = "تکایە ناوی چواری بنووسە!";
+                return;
+            }
+
+            // پشکنینی ژمارەی تەلەفۆن کە نابێت لە 11 ژمارە کەمتر بێت
+            if (phone.length < 11) {
+                messageDiv.style.color = "#ff4d4d";
+                messageDiv.innerText = "ژمارەی تەلەفۆن نابێت لە 11 ژمارە کەمتر بێت!";
                 return;
             }
 
