@@ -256,7 +256,8 @@
     </div>
 
     <script>
-        const apiUrl = "https://rastymhammad-001-site1.itempurl.com/api/users";
+        const baseUrl = "https://rastymhammad-001-site1.itempurl.com";
+        const apiUrl = `${baseUrl}/api/users`;
         let globalUsersData = [];
 
         function onlyEnglishNumbers(event) {
@@ -379,11 +380,11 @@
                     body: JSON.stringify({ name: name, phone: phone })
                 });
 
-                let result = await response.json();
+                let result = await response.json().catch(() => ({}));
 
                 if(response.ok) {
                     messageDiv.style.color = "#28a745";
-                    messageDiv.innerText = result.message;
+                    messageDiv.innerText = result.message || "بە سەرکەوتوویی تۆمارکرا!";
                     document.getElementById("nameInput").value = "";
                     document.getElementById("phoneInput").value = "";
                     checkQuotaAndTimer();
@@ -441,7 +442,7 @@
                     body: JSON.stringify({ name: name, phone: phone })
                 });
 
-                let result = await response.json();
+                let result = await response.json().catch(() => ({}));
 
                 if(response.ok) {
                     messageDiv.style.color = "#28a745";
@@ -452,7 +453,7 @@
                     checkQuotaAndTimer();
                 } else {
                     messageDiv.style.color = "#ff4d4d";
-                    messageDiv.innerText = result.message || "هەڵەیەک ڕوویدا";
+                    messageDiv.innerText = result.message || "هەڵەیەک ڕوویدا لە تۆمارکردندا!";
                 }
             } catch (error) {
                 console.error("Error:", error);
@@ -473,7 +474,7 @@
 
             try {
                 let response = await fetch(`${apiUrl}/search/${encodeURIComponent(searchPhone)}`);
-                let result = await response.json();
+                let result = await response.json().catch(() => ({}));
                 
                 if(response.ok) {
                     messageDiv.style.color = "#28a745";
@@ -513,16 +514,16 @@
             }
 
             try {
-                let response = await fetch("https://rastymhammad-001-site1.itempurl.com/api/admin/toggle-status", {
+                let response = await fetch(`${baseUrl}/api/admin/toggle-status`, {
                     method: "POST",
                     headers: { "Admin-Password": "0007" }
                 });
-                let result = await response.json();
+                let result = await response.json().catch(() => ({}));
                 if(response.ok) {
-                    alert(result.message);
+                    alert(result.message || "دۆخ گۆڕدرا!");
                     location.reload();
                 } else {
-                    alert("هەڵە ڕووی دا!");
+                    alert(result.message || "هەڵە ڕووی دا!");
                 }
             } catch (error) {
                 alert("کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!");
@@ -540,7 +541,7 @@
                 });
 
                 if (!response.ok) {
-                    let errResult = await response.json();
+                    let errResult = await response.json().catch(() => ({}));
                     messageDiv.innerText = errResult.message || "هەڵەیەک ڕوویدا";
                     tbody.innerHTML = "";
                     return;
