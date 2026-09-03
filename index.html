@@ -39,16 +39,29 @@
             font-size: 14px;
             margin: 8px 0 0 0;
         }
+        
+        /* شێوازی گلۆپەکان (سەوز و سوور) */
         .status-badge {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 5px 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+            padding: 6px 14px;
             font-size: 13px;
             font-weight: bold;
             border-radius: 20px;
         }
         .status-open { background: #d4edda; color: #155724; }
         .status-closed { background: #f8d7da; color: #721c24; }
+        
+        .dot {
+            height: 12px;
+            width: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .dot-green { background-color: #28a745; box-shadow: 0 0 8px #28a745; }
+        .dot-red { background-color: #dc3545; box-shadow: 0 0 8px #dc3545; }
 
         .container {
             background: white;
@@ -152,7 +165,10 @@
     <div class="header-title">
         <h1>بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە</h1>
         <p>ئاماده‌كردنی ڕێپێدراوی هاتووچۆ ( ڕاستی محمد حیدر )</p>
-        <div id="statusBadge" class="status-badge status-open">دۆخی سیستەم: کراوەیە بۆ تۆمارکردن ✓</div>
+        <div id="statusBadge" class="status-badge status-open">
+            <span id="statusDot" class="dot dot-green"></span>
+            <span id="statusText">دۆخی سیستەم: کراوەیە بۆ تۆمارکردن</span>
+        </div>
     </div>
 
     <div class="container">
@@ -172,12 +188,12 @@
     </div>
 
     <div class="container printable-area" id="adminSection" style="display: none;">
-        <h2>بەشی ئەدمین - کۆنتڕۆڵی سیستەم</h2>
+        <h2>بەشی ئەدمن - کۆنتڕۆڵی سیستەم</h2>
         <button class="search-btn" onclick="loadTodayUsers()">نیشاندانی لیستی ئەمڕۆ</button>
         <button style="background: #17a2b8;" onclick="downloadExcel()">داونلۆدکردنی ئێکسڵ (Excel/CSV)</button>
         <button style="background: #ffc107; color: black;" onclick="toggleSystemStatus()">ڕاگرتن / کردنەوەی سایت</button>
         <button style="background: #6c757d;" onclick="window.print()">چاپکردنی لیست (Print)</button>
-        <button style="background: #dc3545; margin-top: 5px;" onclick="hideAdminPanel()">داخستنی بەشی ئەدمین</button>
+        <button style="background: #dc3545; margin-top: 5px;" onclick="hideAdminPanel()">داخستنی بەشی ئەدمن</button>
         
         <div id="adminMessage" class="message" style="color: red; margin-top: 10px;"></div>
 
@@ -196,14 +212,13 @@
     </div>
 
     <div style="text-align: center; margin-top: 30px;">
-        <button onclick="showAdminPanel()" style="background: none; color: #aaa; border: none; font-size: 10px; cursor: pointer; width: auto;">چوونەژوورەوەی ئەدمین</button>
+        <button onclick="showAdminPanel()" style="background: none; color: #aaa; border: none; font-size: 12px; cursor: pointer; width: auto;">ئەدمین</button>
     </div>
 
     <script>
         const apiUrl = "https://rastymhammad-001-site1.itempurl.com/api/users";
         let globalUsersData = [];
 
-        // ڕێگریکردن لە نووسینی هەر شتێک جگە لە ژمارەی ئینگلیزی (0-9)
         function onlyEnglishNumbers(event) {
             let charCode = (event.which) ? event.which : event.keyCode;
             if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -212,6 +227,7 @@
             return true;
         }
 
+        // پشکنینی پشکی ئەمڕۆ بۆ گۆڕینی گلۆپ و کاتژمێر
         async function checkQuotaAndTimer() {
             try {
                 let response = await fetch(`${apiUrl}/today-list`, {
@@ -220,9 +236,23 @@
                 });
                 if (response.ok) {
                     let users = await response.json();
+                    let badge = document.getElementById("statusBadge");
+                    let dot = document.getElementById("statusDot");
+                    let text = document.getElementById("statusText");
+
                     if (users.length >= 40) {
+                        // ئەگەر 40 کەس پڕ بوو: گلۆپی سوور و داخراو
+                        badge.className = "status-badge status-closed";
+                        dot.className = "dot dot-red";
+                        text.innerText = "دۆخی سیستەم: پشکی ئەمڕۆ تەواو بوو (داخراوە)";
+                        
                         document.getElementById("countdownTimer").style.display = "block";
                         startCountdown();
+                    } else {
+                        // ئەگەر هێشتا پڕ نەبووبوو: گلۆپی سەوز و کراوە
+                        badge.className = "status-badge status-open";
+                        dot.className = "dot dot-green";
+                        text.innerText = "دۆخی سیستەم: کراوەیە بۆ تۆمارکردن";
                     }
                 }
             } catch (e) {
@@ -316,10 +346,7 @@
                 } else {
                     messageDiv.style.color = "orange";
                     messageDiv.innerText = result.message || "کێشەیەک ڕوویدا";
-                    if (result.message && result.message.includes("تەواو بوو")) {
-                        document.getElementById("countdownTimer").style.display = "block";
-                        startCountdown();
-                    }
+                    checkQuotaAndTimer();
                 }
             } catch (error) {
                 console.error("Error:", error);
@@ -357,7 +384,7 @@
         }
 
         function showAdminPanel() {
-            let password = prompt("تکایە پاسوۆردی ئەدمین بنووسە:");
+            let password = prompt("تکایە پاسوۆردی ئەدمن بنووسە:");
             if (password === "0007") {
                 document.getElementById("adminSection").style.display = "block";
             } else if (password !== null) {
@@ -372,7 +399,7 @@
         }
 
         async function toggleSystemStatus() {
-            let password = prompt("تکایە پاسوۆردی ئەدمین بنووسە بۆ گۆڕینی باری سایت:");
+            let password = prompt("تکایە پاسوۆردی ئەدمن بنووسە بۆ گۆڕینی باری سایت:");
             if (password !== "0007") {
                 if (password !== null) alert("پاسوۆرد هەڵەیە!");
                 return;
