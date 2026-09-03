@@ -105,8 +105,9 @@
         .timer-box {
             font-size: 14px;
             color: #d9534f;
-            margin-top: 10px;
+            margin-top: 15px;
             font-weight: bold;
+            display: none; /* بە سەرەتایی شاراوەیە تاوکاتێک پشک تەواو دەبێت */
         }
         .theme-toggle-btn {
             position: absolute;
@@ -202,24 +203,45 @@
         const apiUrl = "https://rastymhammad-001-site1.itempurl.com/api/users";
         let globalUsersData = [];
 
-        // کاتی ژمێرەری پێچەوانە تا سەعات 6ی ئێوارە
-        function updateCountdown() {
-            let now = new Date();
-            let target = new Date();
-            target.setHours(18, 0, 0, 0); // سەعات 18:00 (6ی ئێوارە)
-            
-            if (now > target) {
-                target.setDate(target.getDate() + 1); // ئەگەر تێپەڕیبوو، دەیخاتە سەعات 6ی سبەی
+        // پشکنینی پشکی ئەمڕۆ بۆ نیشاندانی کاتی ماوە تەنها کاتێک 40 کەس پڕ بوون
+        async function checkQuotaAndTimer() {
+            try {
+                let response = await fetch(`${apiUrl}/today-list`, {
+                    method: "GET",
+                    headers: { "Admin-Password": "0007" }
+                });
+                if (response.ok) {
+                    let users = await response.json();
+                    if (users.length >= 40) {
+                        // ئەگەر 40 کەسەکە پڕ بوون، کاتژمێرەکە نیشان بدە
+                        document.getElementById("countdownTimer").style.display = "block";
+                        startCountdown();
+                    }
+                }
+            } catch (e) {
+                console.log(e);
             }
-            
-            let diff = target - now;
-            let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            let seconds = Math.floor((diff % (1000 * 60)) / 1000);
-            
-            document.getElementById("countdownTimer").innerText = `ماوە بۆ کردنەوەی پشکی سبەی: کاتژمێر ${hours} : خولەک ${minutes} : چرکە ${seconds}`;
         }
-        setInterval(updateCountdown, 1000);
+        checkQuotaAndTimer();
+
+        function startCountdown() {
+            function update() {
+                let now = new Date();
+                let target = new Date();
+                target.setHours(18, 0, 0, 0); // سەعات 6ی ئێوارە
+                if (now > target) {
+                    target.setDate(target.getDate() + 1);
+                }
+                let diff = target - now;
+                let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                document.getElementById("countdownTimer").innerText = `پشکی ئەمڕۆ تەواو بوو! ماوە بۆ کردنەوەی پشکی سبەی: کاتژمێر ${hours} : خولەک ${minutes} : چرکە ${seconds}`;
+            }
+            update();
+            setInterval(update, 1000);
+        }
 
         const themeBtn = document.getElementById("themeToggleBtn");
         if (localStorage.getItem("theme") === "dark") {
@@ -252,7 +274,7 @@
             let englishRegex = /[a-zA-Z]/;
             if (englishRegex.test(name)) {
                 messageDiv.style.color = "#ff4d4d";
-                messageDiv.innerText = "تکایە ناوی چواری بە پیتی کوردی بنووسه (پیتی ئینگلیزی قەدەغەیە)!";
+                messageDiv.innerText = "تکایە ناوی چواری بە پیتی کوردی بنووسە (پیتی ئینگلیزی قەدەغەیە)!";
                 return;
             }
 
@@ -283,9 +305,15 @@
                     messageDiv.innerText = result.message;
                     document.getElementById("nameInput").value = "";
                     document.getElementById("phoneInput").value = "";
+                    checkQuotaAndTimer(); // پشکنینەوە دوای تۆمارکردن
                 } else {
                     messageDiv.style.color = "orange";
                     messageDiv.innerText = result.message || "کێشەیەک ڕوویدا";
+                    // ئەگەر پشکەکە تەواو بوو بوو، کاتژمێرەکە دەردەکەوێت
+                    if (result.message && result.message.includes("تەواو بوو")) {
+                        document.getElementById("countdownTimer").style.display = "block";
+                        startCountdown();
+                    }
                 }
             } catch (error) {
                 console.error("Error:", error);
@@ -402,7 +430,6 @@
             }
         }
 
-        // داونلۆدکردنی لیستی ناوەکان بۆ فایلێکی اکسڵ (CSV)
         function downloadExcel() {
             if (globalUsersData.length === 0) {
                 alert("سەرەتا تکایە لە سەرەوە 'نیشاندانی لیستی ئەمڕۆ' دابگرە!");
