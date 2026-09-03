@@ -172,12 +172,12 @@
     </div>
 
     <div class="container printable-area" id="adminSection" style="display: none;">
-        <h2>بەشی ئەدمن - کۆنتڕۆڵی سیستەم</h2>
+        <h2>بەشی ئەدمین - کۆنتڕۆڵی سیستەم</h2>
         <button class="search-btn" onclick="loadTodayUsers()">نیشاندانی لیستی ئەمڕۆ</button>
         <button style="background: #17a2b8;" onclick="downloadExcel()">داونلۆدکردنی ئێکسڵ (Excel/CSV)</button>
         <button style="background: #ffc107; color: black;" onclick="toggleSystemStatus()">ڕاگرتن / کردنەوەی سایت</button>
         <button style="background: #6c757d;" onclick="window.print()">چاپکردنی لیست (Print)</button>
-        <button style="background: #dc3545; margin-top: 5px;" onclick="hideAdminPanel()">داخستنی بەشی ئەدمن</button>
+        <button style="background: #dc3545; margin-top: 5px;" onclick="hideAdminPanel()">داخستنی بەشی ئەدمین</button>
         
         <div id="adminMessage" class="message" style="color: red; margin-top: 10px;"></div>
 
@@ -357,7 +357,7 @@
         }
 
         function showAdminPanel() {
-            let password = prompt("تکایە پاسوۆردی ئەدمن بنووسە:");
+            let password = prompt("تکایە پاسوۆردی ئەدمین بنووسە:");
             if (password === "0007") {
                 document.getElementById("adminSection").style.display = "block";
             } else if (password !== null) {
@@ -372,7 +372,7 @@
         }
 
         async function toggleSystemStatus() {
-            let password = prompt("تکایە پاسوۆردی ئەدمن بنووسە بۆ گۆڕینی باری سایت:");
+            let password = prompt("تکایە پاسوۆردی ئەدمین بنووسە بۆ گۆڕینی باری سایت:");
             if (password !== "0007") {
                 if (password !== null) alert("پاسوۆرد هەڵەیە!");
                 return;
