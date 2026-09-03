@@ -140,7 +140,7 @@
         <h2>تۆمارکردنی ناو</h2>
         <input type="text" id="nameInput" placeholder="ناوی چواری بنووسە...">
         <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="15">
-        <button onclick="registerUser()">تـــۆمــارکــــردن</button>
+        <button onclick="registerUser()">تۆمارکردن</button>
         <div id="registerMessage" class="message"></div>
     </div>
 
@@ -152,10 +152,11 @@
     </div>
 
     <div class="container printable-area" id="adminSection" style="display: none;">
-        <h2>بەشی ئەدمین - پرێنتی لیستی ئەمڕۆ</h2>
-        <button class="search-btn" onclick="loadTodayUsers()">نیشاندانی لیست</button>
+        <h2>بەشی ئەدمن - کۆنتڕۆڵی سیستەم</h2>
+        <button class="search-btn" onclick="loadTodayUsers()">نیشاندانی لیستی ئەمڕۆ</button>
+        <button style="background: #ffc107; color: black;" onclick="toggleSystemStatus()">ڕاگرتن / کردنەوەی سایت (Toggle)</button>
         <button style="background: #17a2b8;" onclick="window.print()">چاپکردنی لیست (Print)</button>
-        <button style="background: #dc3545; margin-top: 5px;" onclick="hideAdminPanel()">داخستنی بەشی ئەدمین</button>
+        <button style="background: #dc3545; margin-top: 5px;" onclick="hideAdminPanel()">داخستنی بەشی ئەدمن</button>
         
         <div id="adminMessage" class="message" style="color: red; margin-top: 10px;"></div>
 
@@ -294,6 +295,29 @@
             document.getElementById("adminSection").style.display = "none";
             document.getElementById("tableBody").innerHTML = "";
             document.getElementById("adminMessage").innerText = "";
+        }
+
+        async function toggleSystemStatus() {
+            let password = prompt("تکایە پاسوۆردی ئەدمن بنووسە بۆ گۆڕینی باری سایت:");
+            if (password !== "0007") {
+                if (password !== null) alert("پاسوۆرد هەڵەیە!");
+                return;
+            }
+
+            try {
+                let response = await fetch("https://rastymhammad-001-site1.itempurl.com/api/admin/toggle-status", {
+                    method: "POST",
+                    headers: { "Admin-Password": "0007" }
+                });
+                let result = await response.json();
+                if(response.ok) {
+                    alert(result.message);
+                } else {
+                    alert("هەڵە ڕووی دا!");
+                }
+            } catch (error) {
+                alert("کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!");
+            }
         }
 
         async function loadTodayUsers() {
