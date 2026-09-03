@@ -123,7 +123,7 @@
             background: #dc3545;
             color: white;
             border: none;
-            padding: 5px 12px;
+            padding: 6px 14px;
             border-radius: 4px;
             cursor: pointer;
             font-size: 13px;
@@ -418,7 +418,6 @@
             }
         }
 
-        // فەنکشنی تۆمارکردنی پێشوەختە لەلایەن ئەدمینەوە
         async function adminRegisterUser() {
             let name = document.getElementById("adminNameInput").value.trim();
             let phone = document.getElementById("adminPhoneInput").value.trim();
@@ -598,9 +597,12 @@
             if (!confirmDelete) return;
 
             try {
-                let response = await fetch(`${apiUrl}/delete/${encodeURIComponent(phone)}`, {
+                let response = await fetch(`${apiUrl}/delete/${encodeURIComponent(phone.trim())}`, {
                     method: "DELETE",
-                    headers: { "Admin-Password": "0007" }
+                    headers: { 
+                        "Admin-Password": "0007",
+                        "Content-Type": "application/json"
+                    }
                 });
 
                 let result = await response.json().catch(() => ({}));
@@ -610,7 +612,7 @@
                     loadTodayUsers();
                     checkQuotaAndTimer();
                 } else {
-                    alert(result.message || "کێشەیەک ڕوویدا لە کاتی سڕینەوەدا!");
+                    alert(result.message || `کێشەیەک ڕوویدا: هەڵەی سێرڤەر (${response.status})`);
                 }
             } catch (error) {
                 console.error("Delete Error:", error);
