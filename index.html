@@ -40,7 +40,6 @@
             margin: 8px 0 0 0;
         }
         
-        /* شێوازی گلۆپەکان (سەوز و سوور) */
         .status-badge {
             display: inline-flex;
             align-items: center;
@@ -62,6 +61,17 @@
         }
         .dot-green { background-color: #28a745; box-shadow: 0 0 8px #28a745; }
         .dot-red { background-color: #dc3545; box-shadow: 0 0 8px #dc3545; }
+
+        /* لابردنی چوارگۆشە و هێشتنەوەی تەنها ژمارەکە بە قەبارەیەکی گەورە و جوان */
+        .live-counter-box {
+            background: transparent;
+            color: #0056b3;
+            padding: 5px;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            border: none;
+        }
 
         .container {
             background: white;
@@ -156,6 +166,26 @@
             color: #fff;
             border: 1px solid #444;
         }
+        body.dark-mode .live-counter-box {
+            color: #6ea8fe;
+            background: transparent;
+        }
+
+        /* تایبەتمەندی پرێنت: تەنها خشتە نیشان دەدات */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #usersTable, #usersTable * {
+                visibility: visible;
+            }
+            #usersTable {
+                position: absolute;
+                right: 0;
+                top: 0;
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -173,6 +203,9 @@
 
     <div class="container">
         <h2>تۆمارکردنی ناو</h2>
+        <!-- تەنها ژمارەکە بە بێ هیچ چوارگۆشەیەک -->
+        <div id="liveCounterBox" class="live-counter-box">40</div>
+        
         <input type="text" id="nameInput" placeholder="ناوی چواری بنووسە...">
         <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="15" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false">
         <button onclick="registerUser()">تۆمارکردن</button>
@@ -227,7 +260,6 @@
             return true;
         }
 
-        // پشکنینی پشکی ئەمڕۆ بۆ گۆڕینی گلۆپ و کاتژمێر
         async function checkQuotaAndTimer() {
             try {
                 let response = await fetch(`${apiUrl}/today-list`, {
@@ -236,20 +268,25 @@
                 });
                 if (response.ok) {
                     let users = await response.json();
+                    let count = users.length;
+                    let remaining = 40 - count;
+                    if (remaining < 0) remaining = 0;
+
+                    let counterBox = document.getElementById("liveCounterBox");
+                    counterBox.innerText = remaining;
+
                     let badge = document.getElementById("statusBadge");
                     let dot = document.getElementById("statusDot");
                     let text = document.getElementById("statusText");
 
-                    if (users.length >= 40) {
-                        // ئەگەر 40 کەس پڕ بوو: گلۆپی سوور و داخراو
+                    if (count >= 40) {
                         badge.className = "status-badge status-closed";
                         dot.className = "dot dot-red";
-                        text.innerText = "دۆخی سیستەم: پشکی ئەمڕۆ تەواو بوو (داخراوە)";
+                        text.innerText = "دۆخی سیستەم: داخراوە";
                         
                         document.getElementById("countdownTimer").style.display = "block";
                         startCountdown();
                     } else {
-                        // ئەگەر هێشتا پڕ نەبووبوو: گلۆپی سەوز و کراوە
                         badge.className = "status-badge status-open";
                         dot.className = "dot dot-green";
                         text.innerText = "دۆخی سیستەم: کراوەیە بۆ تۆمارکردن";
@@ -274,7 +311,7 @@
                 let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 let seconds = Math.floor((diff % (1000 * 60)) / 1000);
                 
-                document.getElementById("countdownTimer").innerText = `پشکی ئەمڕۆ تەواو بوو! کردنەوەی پشکی سبەی: کاتژمێر ${hours} : خولەک ${minutes} : چرکە ${seconds}`;
+                document.getElementById("countdownTimer").innerText = `ماوە بۆ کردنەوەی پشکی سبەی: کاتژمێر ${hours} : خولەک ${minutes} : چرکە ${seconds}`;
             }
             update();
             setInterval(update, 1000);
