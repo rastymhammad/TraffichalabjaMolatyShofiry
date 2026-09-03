@@ -382,7 +382,11 @@
                 let response = await fetch(apiUrl, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ name: name, phone: phone })
+                    body: JSON.stringify({ 
+                        name: name, 
+                        phone: phone,
+                        adminPassword: "" 
+                    })
                 });
 
                 let result = await response.json().catch(() => ({}));
@@ -443,7 +447,11 @@
                         "Content-Type": "application/json",
                         "Admin-Password": "0007"
                     },
-                    body: JSON.stringify({ name: name, phone: phone })
+                    body: JSON.stringify({ 
+                        name: name, 
+                        phone: phone,
+                        adminPassword: "0007" 
+                    })
                 });
 
                 let responseText = await response.text();
