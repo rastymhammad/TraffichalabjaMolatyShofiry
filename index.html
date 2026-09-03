@@ -263,7 +263,7 @@
         const baseUrl = "https://rastymhammad-001-site1.itempurl.com";
         const apiUrl = `${baseUrl}/api/users`;
         let globalUsersData = [];
-        let adminClickCount = 0; // پاشەکەوتکردنی ژمارەی کلیکەکان
+        let adminClickCount = 0;
 
         function onlyEnglishNumbers(event) {
             let charCode = (event.which) ? event.which : event.keyCode;
@@ -446,23 +446,26 @@
                     body: JSON.stringify({ name: name, phone: phone })
                 });
 
-                let result = await response.json().catch(() => ({}));
+                let responseText = await response.text();
+                let result = {};
+                try { result = JSON.parse(responseText); } catch (e) {}
 
                 if(response.ok) {
                     messageDiv.style.color = "#28a745";
-                    messageDiv.innerText = result.message || "ناو بە سەرکەوتوویی لەلایەن ئەدمنەوە پێشوەختە تۆمارکرا!";
+                    messageDiv.innerText = result.message || "ناو بە سەرکەوتوویی لەلایەن ئەدمنەوە تۆمارکرا!";
                     document.getElementById("adminNameInput").value = "";
                     document.getElementById("adminPhoneInput").value = "";
                     loadTodayUsers();
                     checkQuotaAndTimer();
                 } else {
                     messageDiv.style.color = "#ff4d4d";
-                    messageDiv.innerText = result.message || "هەڵەیەک ڕوویدا لە تۆمارکردندا!";
+                    // لێرەدا دەقی تەواوی هەڵەکەی سێرڤەر نیشان دەدەین بۆ ئەوەی بزانین کێشەکە چییە
+                    messageDiv.innerText = result.message || responseText || `هەڵەی سێرڤەر: ${response.status}`;
                 }
             } catch (error) {
                 console.error("Error:", error);
                 messageDiv.style.color = "#ff4d4d";
-                messageDiv.innerText = "کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!";
+                messageDiv.innerText = "کێشە لە پەیوەندیکردن: " + error.message;
             }
         }
 
@@ -494,11 +497,10 @@
             }
         }
 
-        // فەنکشنی نوێ بۆ هەژمارکردنی 5 جار کلیک کردن لەسەر دوگمەی ئەدمین
         function handleAdminClick() {
             adminClickCount++;
             if (adminClickCount >= 5) {
-                adminClickCount = 0; // ڕێستکردنەوەی ژمێرەرەکە
+                adminClickCount = 0;
                 showAdminPanel();
             }
         }
@@ -517,7 +519,7 @@
             document.getElementById("tableBody").innerHTML = "";
             document.getElementById("adminMessage").innerText = "";
             document.getElementById("adminRegMessage").innerText = "";
-            adminClickCount = 0; // بە تەواوی ڕێست دەبێتەوە کاتێک داخرا
+            adminClickCount = 0;
         }
 
         async function toggleSystemStatus() {
