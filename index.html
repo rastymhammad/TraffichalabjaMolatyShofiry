@@ -265,6 +265,14 @@
                 return;
             }
 
+            // پشکنینی پیتە ئینگلیزییەکان (ئەگەر پیتی ئینگلیزی تێدا بوو ڕێگری دەکات)
+            let englishRegex = /[a-zA-Z]/;
+            if (englishRegex.test(name)) {
+                messageDiv.style.color = "#ff4d4d";
+                messageDiv.innerText = "تکایە ناوی چواری بە پیتی کوردی یان عەرەبی بنووسە (پیتی ئینگلیزی قەدەغەیە)!";
+                return;
+            }
+
             let nameParts = name.split(/\s+/);
             if (nameParts.length < 4) {
                 messageDiv.style.color = "#ff4d4d";
