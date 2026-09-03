@@ -277,52 +277,41 @@
 
         async function checkQuotaAndTimer() {
             try {
-                const response = await fetch(`${baseUrl}/api/users/today-count`, {
-                    method: "GET",
-                    cache: "no-store"
-                });
+                let response = await fetch(`${baseUrl}/api/users/today-count`);
+                if (response.ok) {
+                    let data = await response.json();
+                    let count = Number(data.count || 0);
+                    let remaining = Number(data.remaining ?? (40 - count));
+                    let isActive = data.isActive !== false;
+                    if (remaining < 0) remaining = 0;
 
-                if (!response.ok) return;
+                    let counterBox = document.getElementById("liveCounterBox");
+                    counterBox.innerText = remaining;
 
-                const data = await response.json();
-                const count = Number(data.count || 0);
-                const remaining = Math.max(0, Number(data.remaining ?? (40 - count)));
-                const isActive = data.isActive !== false;
+                    let badge = document.getElementById("statusBadge");
+                    let dot = document.getElementById("statusDot");
+                    let text = document.getElementById("statusText");
 
-                document.getElementById("liveCounterBox").innerText = remaining;
-
-                const badge = document.getElementById("statusBadge");
-                const dot = document.getElementById("statusDot");
-                const text = document.getElementById("statusText");
-                const timer = document.getElementById("countdownTimer");
-
-                if (!isActive || count >= 40) {
-                    badge.className = "status-badge status-closed";
-                    dot.className = "dot dot-red";
-                    text.innerText = !isActive
-                        ? "دۆخی سیستەم: داخراوە"
-                        : "دۆخی سیستەم: داخراوە (٤٠ ناو پڕبووە)";
-                    timer.style.display = "block";
-                    startCountdown();
-                } else {
-                    badge.className = "status-badge status-open";
-                    dot.className = "dot dot-green";
-                    text.innerText = "دۆخی سیستەم: کراوەیە بۆ تۆمارکردن";
-                    timer.style.display = "none";
+                    if (!isActive || count >= 40) {
+                        badge.className = "status-badge status-closed";
+                        dot.className = "dot dot-red";
+                        text.innerText = "دۆخی سیستەم: داخراوە";
+                        
+                        document.getElementById("countdownTimer").style.display = "block";
+                        startCountdown();
+                    } else {
+                        badge.className = "status-badge status-open";
+                        dot.className = "dot dot-green";
+                        text.innerText = "دۆخی سیستەم: کراوەیە بۆ تۆمارکردن";
+                    }
                 }
             } catch (e) {
-                console.log("Quota check:", e);
+                console.log(e);
             }
         }
-
         checkQuotaAndTimer();
 
-        let countdownStarted = false;
-
         function startCountdown() {
-            if (countdownStarted) return;
-            countdownStarted = true;
-
             function update() {
                 let now = new Date();
                 let target = new Date();
@@ -619,16 +608,7 @@
 
                 if (!response.ok) {
                     let errResult = await response.json().catch(() => ({}));
-
-                    if (response.status === 401 || response.status === 403) {
-                        adminToken = "";
-                        sessionStorage.removeItem("adminToken");
-                        document.getElementById("adminSection").style.display = "none";
-                        messageDiv.innerText = "سەشنەکەی ئەدمین بەسەرچووە، تکایە دووبارە بچۆ ژوورەوە.";
-                    } else {
-                        messageDiv.innerText = errResult.message || "هەڵەیەک ڕوویدا";
-                    }
-
+                    messageDiv.innerText = errResult.message || "هەڵەیەک ڕوویدا";
                     tbody.innerHTML = "";
                     return;
                 }
