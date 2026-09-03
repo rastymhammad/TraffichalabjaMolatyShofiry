@@ -81,7 +81,7 @@
             margin: auto auto 25px auto;
         }
         #adminSection {
-            max-width: 650px;
+            max-width: 700px;
         }
         h2 {
             color: #0056b3;
@@ -118,6 +118,20 @@
         }
         .search-btn:hover {
             background: #0056b3;
+        }
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            width: auto;
+            margin: 0;
+        }
+        .delete-btn:hover {
+            background: #bd2130;
         }
         .message {
             margin-top: 15px;
@@ -183,6 +197,9 @@
                 top: 0;
                 width: 100%;
             }
+            .no-print {
+                display: none !important;
+            }
         }
     </style>
 </head>
@@ -244,6 +261,7 @@
                     <th style="padding: 8px;">ناو</th>
                     <th style="padding: 8px;">ژمارەی تەلەفۆن</th>
                     <th style="padding: 8px;">کاتی تۆمارکردن</th>
+                    <th class="no-print" style="padding: 8px;">کردار</th>
                 </tr>
             </thead>
             <tbody id="tableBody">
@@ -552,7 +570,7 @@
                 tbody.innerHTML = "";
 
                 if(globalUsersData.length === 0) {
-                    tbody.innerHTML = "<tr><td colspan='4' style='padding: 10px;'>هیچ ناوێک بۆ ئەمڕۆ تۆمار نەکراوە!</td></tr>";
+                    tbody.innerHTML = "<tr><td colspan='5' style='padding: 10px;'>هیچ ناوێک بۆ ئەمڕۆ تۆمار نەکراوە!</td></tr>";
                     return;
                 }
 
@@ -562,12 +580,41 @@
                         <td style="padding: 8px;">${user.name}</td>
                         <td style="padding: 8px;">${user.phone}</td>
                         <td style="padding: 8px;">${user.createdAt}</td>
+                        <td class="no-print" style="padding: 8px;">
+                            <button class="delete-btn" onclick="deleteUser('${user.phone}', '${user.name}')">سڕینەوە</button>
+                        </td>
                     </tr>`;
                     tbody.innerHTML += row;
                 });
             } catch (error) {
                 console.error("Error:", error);
                 messageDiv.innerText = "کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!";
+            }
+        }
+
+        // فەنکشنی سڕینەوەی ناو لەلایەن ئەدمینەوە
+        async function deleteUser(phone, name) {
+            let confirmDelete = confirm(`ئایا دڵنیایت لە سڕینەوەی ناوی (${name}) بە ژمارەی (${phone})؟`);
+            if (!confirmDelete) return;
+
+            try {
+                let response = await fetch(`${apiUrl}/delete/${encodeURIComponent(phone)}`, {
+                    method: "DELETE",
+                    headers: { "Admin-Password": "0007" }
+                });
+
+                let result = await response.json().catch(() => ({}));
+
+                if (response.ok) {
+                    alert(result.message || "ناو بە سەرکەوتوویی سڕایەوە!");
+                    loadTodayUsers();
+                    checkQuotaAndTimer();
+                } else {
+                    alert(result.message || "کێشەیەک ڕوویدا لە کاتی سڕینەوەدا!");
+                }
+            } catch (error) {
+                console.error("Delete Error:", error);
+                alert("کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!");
             }
         }
 
