@@ -224,7 +224,7 @@
     <div class="container printable-area" id="adminSection" style="display: none;">
         <h2>بەشی ئەدمین - کۆنتڕۆڵی سیستەم</h2>
 
-        <!-- بەشی نوێ: تۆمارکردنی پێشوەختە لەلایەن ئەدمینەوە -->
+        <!-- بەشی تۆمارکردنی پێشوەختە لەلایەن ئەدمینەوە -->
         <div style="background: rgba(0, 86, 179, 0.08); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid rgba(0, 86, 179, 0.2);">
             <h3 style="margin-top: 0; font-size: 16px; color: #0056b3;">تۆمارکردنی پێشوەختە لەلایەن ئەدمینەوە</h3>
             <input type="text" id="adminNameInput" placeholder="ناوی چواری بنووسە...">
@@ -256,13 +256,14 @@
     </div>
 
     <div style="text-align: center; margin-top: 30px;">
-        <button onclick="showAdminPanel()" style="background: none; color: #aaa; border: none; font-size: 12px; cursor: pointer; width: auto;">ئەدمین</button>
+        <button onclick="handleAdminClick()" style="background: none; color: #aaa; border: none; font-size: 12px; cursor: pointer; width: auto;">ئەدمین</button>
     </div>
 
     <script>
         const baseUrl = "https://rastymhammad-001-site1.itempurl.com";
         const apiUrl = `${baseUrl}/api/users`;
         let globalUsersData = [];
+        let adminClickCount = 0; // پاشەکەوتکردنی ژمارەی کلیکەکان
 
         function onlyEnglishNumbers(event) {
             let charCode = (event.which) ? event.which : event.keyCode;
@@ -404,7 +405,6 @@
             }
         }
 
-        // فەنکشنی نوێ بۆ تۆمارکردنی پێشوەختە لەلایەن ئەدمنەوە
         async function adminRegisterUser() {
             let name = document.getElementById("adminNameInput").value.trim();
             let phone = document.getElementById("adminPhoneInput").value.trim();
@@ -494,6 +494,15 @@
             }
         }
 
+        // فەنکشنی نوێ بۆ هەژمارکردنی 5 جار کلیک کردن لەسەر دوگمەی ئەدمین
+        function handleAdminClick() {
+            adminClickCount++;
+            if (adminClickCount >= 5) {
+                adminClickCount = 0; // ڕێستکردنەوەی ژمێرەرەکە
+                showAdminPanel();
+            }
+        }
+
         function showAdminPanel() {
             let password = prompt("تکایە پاسوۆردی ئەدمن بنووسە:");
             if (password === "0007") {
@@ -508,6 +517,7 @@
             document.getElementById("tableBody").innerHTML = "";
             document.getElementById("adminMessage").innerText = "";
             document.getElementById("adminRegMessage").innerText = "";
+            adminClickCount = 0; // بە تەواوی ڕێست دەبێتەوە کاتێک داخرا
         }
 
         async function toggleSystemStatus() {
