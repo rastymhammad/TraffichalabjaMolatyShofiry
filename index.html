@@ -39,6 +39,17 @@
             font-size: 14px;
             margin: 8px 0 0 0;
         }
+        .status-badge {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 5px 12px;
+            font-size: 13px;
+            font-weight: bold;
+            border-radius: 20px;
+        }
+        .status-open { background: #d4edda; color: #155724; }
+        .status-closed { background: #f8d7da; color: #721c24; }
+
         .container {
             background: white;
             padding: 25px;
@@ -91,6 +102,12 @@
             font-weight: bold;
             font-size: 16px;
         }
+        .timer-box {
+            font-size: 14px;
+            color: #d9534f;
+            margin-top: 10px;
+            font-weight: bold;
+        }
         .theme-toggle-btn {
             position: absolute;
             top: 20px;
@@ -134,6 +151,7 @@
     <div class="header-title">
         <h1>بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە</h1>
         <p>ئاماده‌كردنی ڕێپێدراوی هاتووچۆ ( ڕاستی محمد حیدر )</p>
+        <div id="statusBadge" class="status-badge status-open">دۆخی سیستەم: کراوەیە بۆ تۆمارکردن ✓</div>
     </div>
 
     <div class="container">
@@ -142,6 +160,7 @@
         <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="15">
         <button onclick="registerUser()">تۆمارکردن</button>
         <div id="registerMessage" class="message"></div>
+        <div id="countdownTimer" class="timer-box"></div>
     </div>
 
     <div class="container">
@@ -154,8 +173,9 @@
     <div class="container printable-area" id="adminSection" style="display: none;">
         <h2>بەشی ئەدمن - کۆنتڕۆڵی سیستەم</h2>
         <button class="search-btn" onclick="loadTodayUsers()">نیشاندانی لیستی ئەمڕۆ</button>
-        <button style="background: #ffc107; color: black;" onclick="toggleSystemStatus()">ڕاگرتن / کردنەوەی سایت (Toggle)</button>
-        <button style="background: #17a2b8;" onclick="window.print()">چاپکردنی لیست (Print)</button>
+        <button style="background: #17a2b8;" onclick="downloadExcel()">داونلۆدکردنی ئێکسڵ (Excel/CSV)</button>
+        <button style="background: #ffc107; color: black;" onclick="toggleSystemStatus()">ڕاگرتن / کردنەوەی سایت</button>
+        <button style="background: #6c757d;" onclick="window.print()">چاپکردنی لیست (Print)</button>
         <button style="background: #dc3545; margin-top: 5px;" onclick="hideAdminPanel()">داخستنی بەشی ئەدمن</button>
         
         <div id="adminMessage" class="message" style="color: red; margin-top: 10px;"></div>
@@ -180,6 +200,26 @@
 
     <script>
         const apiUrl = "https://rastymhammad-001-site1.itempurl.com/api/users";
+        let globalUsersData = [];
+
+        // کاتی ژمێرەری پێچەوانە تا سەعات 6ی ئێوارە
+        function updateCountdown() {
+            let now = new Date();
+            let target = new Date();
+            target.setHours(18, 0, 0, 0); // سەعات 18:00 (6ی ئێوارە)
+            
+            if (now > target) {
+                target.setDate(target.getDate() + 1); // ئەگەر تێپەڕیبوو، دەیخاتە سەعات 6ی سبەی
+            }
+            
+            let diff = target - now;
+            let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById("countdownTimer").innerText = `ماوە بۆ کردنەوەی پشکی سبەی: کاتژمێر ${hours} : خولەک ${minutes} : چرکە ${seconds}`;
+        }
+        setInterval(updateCountdown, 1000);
 
         const themeBtn = document.getElementById("themeToggleBtn");
         if (localStorage.getItem("theme") === "dark") {
@@ -212,7 +252,7 @@
             let englishRegex = /[a-zA-Z]/;
             if (englishRegex.test(name)) {
                 messageDiv.style.color = "#ff4d4d";
-                messageDiv.innerText = "تکایە ناوی چواری بە پیتی کوردی بنووسە (پیتی ئینگلیزی قەدەغەیە)!";
+                messageDiv.innerText = "تکایە ناوی چواری بە پیتی کوردی بنووسه (پیتی ئینگلیزی قەدەغەیە)!";
                 return;
             }
 
@@ -312,6 +352,7 @@
                 let result = await response.json();
                 if(response.ok) {
                     alert(result.message);
+                    location.reload();
                 } else {
                     alert("هەڵە ڕووی دا!");
                 }
@@ -327,9 +368,7 @@
             try {
                 let response = await fetch(`${apiUrl}/today-list`, {
                     method: "GET",
-                    headers: {
-                        "Admin-Password": "0007"
-                    }
+                    headers: { "Admin-Password": "0007" }
                 });
 
                 if (!response.ok) {
@@ -340,16 +379,15 @@
                 }
 
                 messageDiv.innerText = "";
-                let users = await response.json();
-                
+                globalUsersData = await response.json();
                 tbody.innerHTML = "";
 
-                if(users.length === 0) {
+                if(globalUsersData.length === 0) {
                     tbody.innerHTML = "<tr><td colspan='4' style='padding: 10px;'>هیچ ناوێک بۆ ئەمڕۆ تۆمار نەکراوە!</td></tr>";
                     return;
                 }
 
-                users.forEach(user => {
+                globalUsersData.forEach(user => {
                     let row = `<tr>
                         <td style="padding: 8px; font-weight: bold; color: #4da3ff;">${user.rank}</td>
                         <td style="padding: 8px;">${user.name}</td>
@@ -362,6 +400,28 @@
                 console.error("Error:", error);
                 messageDiv.innerText = "کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!";
             }
+        }
+
+        // داونلۆدکردنی لیستی ناوەکان بۆ فایلێکی اکسڵ (CSV)
+        function downloadExcel() {
+            if (globalUsersData.length === 0) {
+                alert("سەرەتا تکایە لە سەرەوە 'نیشاندانی لیستی ئەمڕۆ' دابگرە!");
+                return;
+            }
+
+            let csvContent = "\uFEFFژمارە,ناو,ژمارەی تەلەفۆن,کاتی تۆمارکردن\n";
+            globalUsersData.forEach(u => {
+                csvContent += `${u.rank},"${u.name}","${u.phone}","${u.createdAt}"\n`;
+            });
+
+            let blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            let url = URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = `Traffic_List_${new Date().toISOString().slice(0,10)}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
         }
     </script>
 </body>
