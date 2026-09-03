@@ -241,7 +241,7 @@
         
         <div id="adminMessage" class="message" style="color: red; margin-top: 10px;"></div>
 
-        <table id="usersTable" border="1" style="width:100%; margin-top:15px; border-collapse: collapse; text-align: center;">
+        <table id="usersTable" border="1" style="width:100%; margin-top:15px; border-collapse: collapse; text-align: center; display: none;">
             <thead>
                 <tr style="background: #0056b3; color: white;">
                     <th style="padding: 8px;">ژمارە</th>
@@ -437,7 +437,6 @@
             }
 
             try {
-                // ناردن بۆ ڕێڕەوی سەرەکی بە هێدەری ئەدمین بۆ ئەوەی هەڵەی 404 نەمێنێت
                 let response = await fetch(apiUrl, {
                     method: "POST",
                     headers: { 
@@ -454,7 +453,8 @@
                     messageDiv.innerText = result.message || "ناو بە سەرکەوتوویی لەلایەن ئەدمنەوە پێشوەختە تۆمارکرا!";
                     document.getElementById("adminNameInput").value = "";
                     document.getElementById("adminPhoneInput").value = "";
-                    loadTodayUsers();
+                    // دوای تۆمارکردنی ناوەکە دەتوانیت خشتەکە نوێ بکەیتەوە
+                    // بەڵام لێرەدا دەتوانیت بە سادەیی تەنیا پەیامەکە نیشان بدەیت
                     checkQuotaAndTimer();
                 } else {
                     messageDiv.style.color = "#ff4d4d";
@@ -507,7 +507,7 @@
             let password = prompt("تکایە پاسوۆردی ئەدمن بنووسە:");
             if (password === "0007") {
                 document.getElementById("adminSection").style.display = "block";
-                loadTodayUsers();
+                // پێشتر لێرەدا فەنکشنی loadTodayUsers() بانگ دەکرا، ئێستا سڕدراوەتەوە
             } else if (password !== null) {
                 alert("پاسوۆرد هەڵەیە!");
             }
@@ -515,6 +515,7 @@
 
         function hideAdminPanel() {
             document.getElementById("adminSection").style.display = "none";
+            document.getElementById("usersTable").style.display = "none"; // خشتەکە دەشارێتەوە
             document.getElementById("tableBody").innerHTML = "";
             document.getElementById("adminMessage").innerText = "";
             document.getElementById("adminRegMessage").innerText = "";
@@ -547,6 +548,7 @@
 
         async function loadTodayUsers() {
             let messageDiv = document.getElementById("adminMessage");
+            let table = document.getElementById("usersTable");
             let tbody = document.getElementById("tableBody");
 
             try {
@@ -559,6 +561,7 @@
                     let errResult = await response.json().catch(() => ({}));
                     messageDiv.innerText = errResult.message || "هەڵەیەک ڕوویدا";
                     tbody.innerHTML = "";
+                    table.style.display = "none";
                     return;
                 }
 
@@ -568,18 +571,21 @@
 
                 if(globalUsersData.length === 0) {
                     tbody.innerHTML = "<tr><td colspan='4' style='padding: 10px;'>هیچ ناوێک بۆ ئەمڕۆ تۆمار نەکراوە!</td></tr>";
-                    return;
+                } else {
+                    globalUsersData.forEach(user => {
+                        let row = `<tr>
+                            <td style="padding: 8px; font-weight: bold; color: #4da3ff;">${user.rank}</td>
+                            <td style="padding: 8px;">${user.name}</td>
+                            <td style="padding: 8px;">${user.phone}</td>
+                            <td style="padding: 8px;">${user.createdAt}</td>
+                        </tr>`;
+                        tbody.innerHTML += row;
+                    });
                 }
+                
+                // پاش بارکردنی داتاکان خشتەکە نیشان بدە
+                table.style.display = "table";
 
-                globalUsersData.forEach(user => {
-                    let row = `<tr>
-                        <td style="padding: 8px; font-weight: bold; color: #4da3ff;">${user.rank}</td>
-                        <td style="padding: 8px;">${user.name}</td>
-                        <td style="padding: 8px;">${user.phone}</td>
-                        <td style="padding: 8px;">${user.createdAt}</td>
-                    </tr>`;
-                    tbody.innerHTML += row;
-                });
             } catch (error) {
                 console.error("Error:", error);
                 messageDiv.innerText = "کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!";
