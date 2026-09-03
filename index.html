@@ -39,7 +39,7 @@
             font-size: 14px;
             margin: 8px 0 0 0;
         }
-        
+
         .status-badge {
             display: inline-flex;
             align-items: center;
@@ -52,7 +52,7 @@
         }
         .status-open { background: #d4edda; color: #155724; }
         .status-closed { background: #f8d7da; color: #721c24; }
-        
+
         .dot {
             height: 12px;
             width: 12px;
@@ -95,7 +95,7 @@
             border: 1px solid #ccc;
             border-radius: 6px;
             font-size: 15px;
-            font-family: 'Rabar', Tahoma, Arial, sans-serif; 
+            font-family: 'Rabar', Tahoma, Arial, sans-serif;
         }
         button {
             background: #28a745;
@@ -205,7 +205,7 @@
     <div class="container">
         <h2>تۆمارکردنی ناو</h2>
         <div id="liveCounterBox" class="live-counter-box">40</div>
-        
+
         <input type="text" id="nameInput" placeholder="ناوی چواری بنووسە...">
         <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="15" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false">
         <button onclick="registerUser()">تۆمارکردن</button>
@@ -238,7 +238,7 @@
         <button style="background: #ffc107; color: black;" onclick="toggleSystemStatus()">ڕاگرتن / کردنەوەی سایت</button>
         <button style="background: #6c757d;" onclick="window.print()">چاپکردنی لیست (Print)</button>
         <button style="background: #dc3545; margin-top: 5px;" onclick="hideAdminPanel()">داخستنی بەشی ئەدمین</button>
-        
+
         <div id="adminMessage" class="message" style="color: red; margin-top: 10px;"></div>
 
         <table id="usersTable" border="1" style="width:100%; margin-top:15px; border-collapse: collapse; text-align: center; display: none;">
@@ -265,6 +265,10 @@
         let globalUsersData = [];
         let adminClickCount = 0;
 
+        // Admin session token, kept in sessionStorage so a page refresh
+        // doesn't force re-login, but it's cleared when the tab is closed.
+        let adminToken = sessionStorage.getItem("adminToken") || null;
+
         function onlyEnglishNumbers(event) {
             let charCode = (event.which) ? event.which : event.keyCode;
             if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -273,17 +277,19 @@
             return true;
         }
 
+        function adminHeaders(extra = {}) {
+            return adminToken
+                ? { "Authorization": `Bearer ${adminToken}`, ...extra }
+                : { ...extra };
+        }
+
+        // Public status check - does NOT require admin rights.
         async function checkQuotaAndTimer() {
             try {
-                let response = await fetch(`${apiUrl}/today-list`, {
-                    method: "GET",
-                    headers: { "Admin-Password": "0007" }
-                });
+                let response = await fetch(`${apiUrl}/today-count`, { method: "GET" });
                 if (response.ok) {
-                    let users = await response.json();
-                    let count = users.length;
-                    let remaining = 40 - count;
-                    if (remaining < 0) remaining = 0;
+                    let data = await response.json();
+                    let remaining = data.remaining;
 
                     let counterBox = document.getElementById("liveCounterBox");
                     counterBox.innerText = remaining;
@@ -292,17 +298,20 @@
                     let dot = document.getElementById("statusDot");
                     let text = document.getElementById("statusText");
 
-                    if (count >= 40) {
+                    if (!data.canRegister) {
                         badge.className = "status-badge status-closed";
                         dot.className = "dot dot-red";
-                        text.innerText = "دۆخی سیستەم: داخراوە";
-                        
+                        text.innerText = data.isActive
+                            ? "دۆخی سیستەم: داخراوە"
+                            : "دۆخی سیستەم: ڕاگیراوە لەلایەن ئەدمینەوە";
+
                         document.getElementById("countdownTimer").style.display = "block";
                         startCountdown();
                     } else {
                         badge.className = "status-badge status-open";
                         dot.className = "dot dot-green";
                         text.innerText = "دۆخی سیستەم: کراوەیە بۆ تۆمارکردن";
+                        document.getElementById("countdownTimer").style.display = "none";
                     }
                 }
             } catch (e) {
@@ -323,7 +332,7 @@
                 let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 let seconds = Math.floor((diff % (1000 * 60)) / 1000);
-                
+
                 document.getElementById("countdownTimer").innerText = ` بۆ تۆماركردنی ناوی سبەی: کاتژمێر ${hours} : خولەک ${minutes} : چرکە ${seconds}`;
             }
             update();
@@ -410,6 +419,12 @@
             let phone = document.getElementById("adminPhoneInput").value.trim();
             let messageDiv = document.getElementById("adminRegMessage");
 
+            if (!adminToken) {
+                messageDiv.style.color = "#ff4d4d";
+                messageDiv.innerText = "سیشنی ئەدمین بەسەرچووە، تکایە دووبارە بچۆرەوە ژوورەوە!";
+                return;
+            }
+
             if(name === "" || phone === "") {
                 messageDiv.style.color = "#ff4d4d";
                 messageDiv.innerText = "تکایە ناو و ژمارەی تەلەفۆن پڕبکەرەوە!";
@@ -439,10 +454,7 @@
             try {
                 let response = await fetch(apiUrl, {
                     method: "POST",
-                    headers: { 
-                        "Content-Type": "application/json",
-                        "Admin-Password": "0007"
-                    },
+                    headers: adminHeaders({ "Content-Type": "application/json" }),
                     body: JSON.stringify({ name: name, phone: phone })
                 });
 
@@ -450,12 +462,15 @@
 
                 if(response.ok) {
                     messageDiv.style.color = "#28a745";
-                    messageDiv.innerText = result.message || "ناو بە سەرکەوتوویی لەلایەن ئەدمنەوە پێشوەختە تۆمارکرا!";
+                    messageDiv.innerText = result.message || "ناو بە سەرکەوتوویی لەلایەن ئەدمینەوە پێشوەختە تۆمارکرا!";
                     document.getElementById("adminNameInput").value = "";
                     document.getElementById("adminPhoneInput").value = "";
-                    // دوای تۆمارکردنی ناوەکە دەتوانیت خشتەکە نوێ بکەیتەوە
-                    // بەڵام لێرەدا دەتوانیت بە سادەیی تەنیا پەیامەکە نیشان بدەیت
                     checkQuotaAndTimer();
+                } else if (response.status === 401) {
+                    messageDiv.style.color = "#ff4d4d";
+                    messageDiv.innerText = "سیشنی ئەدمین بەسەرچووە، تکایە دووبارە بچۆرەوە ژوورەوە!";
+                    adminToken = null;
+                    sessionStorage.removeItem("adminToken");
                 } else {
                     messageDiv.style.color = "#ff4d4d";
                     messageDiv.innerText = result.message || `هەڵە: ${response.status}`;
@@ -480,7 +495,7 @@
             try {
                 let response = await fetch(`${apiUrl}/search/${encodeURIComponent(searchPhone)}`);
                 let result = await response.json().catch(() => ({}));
-                
+
                 if(response.ok) {
                     messageDiv.style.color = "#28a745";
                     messageDiv.innerText = result.message;
@@ -503,19 +518,55 @@
             }
         }
 
-        function showAdminPanel() {
-            let password = prompt("تکایە پاسوۆردی ئەدمن بنووسە:");
-            if (password === "0007") {
+        // Real login: sends the password to the server and stores the
+        // token it returns. The server is the only place that checks
+        // the password now.
+        async function showAdminPanel() {
+            if (adminToken) {
                 document.getElementById("adminSection").style.display = "block";
-                // پێشتر لێرەدا فەنکشنی loadTodayUsers() بانگ دەکرا، ئێستا سڕدراوەتەوە
-            } else if (password !== null) {
-                alert("پاسوۆرد هەڵەیە!");
+                return;
+            }
+
+            let password = prompt("تکایە پاسوۆردی ئەدمن بنووسە:");
+            if (password === null) return;
+
+            try {
+                let response = await fetch(`${baseUrl}/api/admin/login`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ password: password })
+                });
+
+                let result = await response.json().catch(() => ({}));
+
+                if (response.ok && result.token) {
+                    adminToken = result.token;
+                    sessionStorage.setItem("adminToken", adminToken);
+                    document.getElementById("adminSection").style.display = "block";
+                } else {
+                    alert(result.message || "پاسوۆرد هەڵەیە!");
+                }
+            } catch (error) {
+                alert("کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!");
             }
         }
 
-        function hideAdminPanel() {
+        async function hideAdminPanel() {
+            // Also invalidate the session on the server.
+            if (adminToken) {
+                try {
+                    await fetch(`${baseUrl}/api/admin/logout`, {
+                        method: "POST",
+                        headers: adminHeaders()
+                    });
+                } catch (e) { /* ignore */ }
+            }
+
+            adminToken = null;
+            sessionStorage.removeItem("adminToken");
+
             document.getElementById("adminSection").style.display = "none";
-            document.getElementById("usersTable").style.display = "none"; // خشتەکە دەشارێتەوە
+            document.getElementById("usersTable").style.display = "none";
             document.getElementById("tableBody").innerHTML = "";
             document.getElementById("adminMessage").innerText = "";
             document.getElementById("adminRegMessage").innerText = "";
@@ -523,21 +574,24 @@
         }
 
         async function toggleSystemStatus() {
-            let password = prompt("تکایە پاسوۆردی ئەدمین بنووسە بۆ گۆڕینی باری سایت:");
-            if (password !== "0007") {
-                if (password !== null) alert("پاسوۆرد هەڵەیە!");
+            if (!adminToken) {
+                alert("تکایە سەرەتا وەک ئەدمین بچۆرە ژوورەوە!");
                 return;
             }
 
             try {
                 let response = await fetch(`${baseUrl}/api/admin/toggle-status`, {
                     method: "POST",
-                    headers: { "Admin-Password": "0007" }
+                    headers: adminHeaders()
                 });
                 let result = await response.json().catch(() => ({}));
                 if(response.ok) {
                     alert(result.message || "دۆخ گۆڕدرا!");
-                    location.reload();
+                    checkQuotaAndTimer();
+                } else if (response.status === 401) {
+                    alert("سیشنی ئەدمین بەسەرچووە، تکایە دووبارە بچۆرەوە ژوورەوە!");
+                    adminToken = null;
+                    sessionStorage.removeItem("adminToken");
                 } else {
                     alert(result.message || "هەڵە ڕووی دا!");
                 }
@@ -551,15 +605,26 @@
             let table = document.getElementById("usersTable");
             let tbody = document.getElementById("tableBody");
 
+            if (!adminToken) {
+                messageDiv.innerText = "تکایە سەرەتا وەک ئەدمین بچۆرە ژوورەوە!";
+                return;
+            }
+
             try {
                 let response = await fetch(`${apiUrl}/today-list`, {
                     method: "GET",
-                    headers: { "Admin-Password": "0007" }
+                    headers: adminHeaders()
                 });
 
                 if (!response.ok) {
                     let errResult = await response.json().catch(() => ({}));
-                    messageDiv.innerText = errResult.message || "هەڵەیەک ڕوویدا";
+                    if (response.status === 401) {
+                        messageDiv.innerText = "سیشنی ئەدمین بەسەرچووە، تکایە دووبارە بچۆرەوە ژوورەوە!";
+                        adminToken = null;
+                        sessionStorage.removeItem("adminToken");
+                    } else {
+                        messageDiv.innerText = errResult.message || "هەڵەیەک ڕوویدا";
+                    }
                     tbody.innerHTML = "";
                     table.style.display = "none";
                     return;
@@ -582,8 +647,7 @@
                         tbody.innerHTML += row;
                     });
                 }
-                
-                // پاش بارکردنی داتاکان خشتەکە نیشان بدە
+
                 table.style.display = "table";
 
             } catch (error) {
