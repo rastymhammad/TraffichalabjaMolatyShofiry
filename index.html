@@ -274,7 +274,7 @@
                 let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 let seconds = Math.floor((diff % (1000 * 60)) / 1000);
                 
-                document.getElementById("countdownTimer").innerText = `پشکی ئەمڕۆ تەواو بوو! ماوە بۆ کردنەوەی پشکی سبەی: کاتژمێر ${hours} : خولەک ${minutes} : چرکە ${seconds}`;
+                document.getElementById("countdownTimer").innerText = `پشکی ئەمڕۆ تەواو بوو! کردنەوەی پشکی سبەی: کاتژمێر ${hours} : خولەک ${minutes} : چرکە ${seconds}`;
             }
             update();
             setInterval(update, 1000);
