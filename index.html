@@ -437,7 +437,8 @@
             }
 
             try {
-                let response = await fetch(`${apiUrl}/admin-register`, {
+                // ناردن بۆ ڕێڕەوی سەرەکی بە هێدەری ئەدمین بۆ ئەوەی هەڵەی 404 نەمێنێت
+                let response = await fetch(apiUrl, {
                     method: "POST",
                     headers: { 
                         "Content-Type": "application/json",
