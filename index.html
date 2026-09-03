@@ -418,6 +418,7 @@
             }
         }
 
+        // فەنکشنی تۆمارکردنی پێشوەختە لەلایەن ئەدمینەوە
         async function adminRegisterUser() {
             let name = document.getElementById("adminNameInput").value.trim();
             let phone = document.getElementById("adminPhoneInput").value.trim();
@@ -591,14 +592,14 @@
             }
         }
 
-        // فەنکشنی سڕینەوەی ناو لەلایەن ئەدمینەوە
+        // فەنکشنی سڕینەوەی ناو لەلایەن ئەدمینەوە (بەکارهێنانی POST بۆ ڕێگری لە بلۆککردنی سێرڤەر)
         async function deleteUser(phone, name) {
             let confirmDelete = confirm(`ئایا دڵنیایت لە سڕینەوەی ناوی (${name}) بە ژمارەی (${phone})؟`);
             if (!confirmDelete) return;
 
             try {
                 let response = await fetch(`${apiUrl}/delete/${encodeURIComponent(phone.trim())}`, {
-                    method: "DELETE",
+                    method: "POST",
                     headers: { 
                         "Admin-Password": "0007",
                         "Content-Type": "application/json"
