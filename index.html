@@ -437,7 +437,7 @@
             }
 
             try {
-                let response = await fetch(`${apiUrl}/admin-register`, {
+                let response = await fetch(apiUrl, {
                     method: "POST",
                     headers: { 
                         "Content-Type": "application/json",
@@ -459,7 +459,6 @@
                     checkQuotaAndTimer();
                 } else {
                     messageDiv.style.color = "#ff4d4d";
-                    // لێرەدا دەقی تەواوی هەڵەکەی سێرڤەر نیشان دەدەین بۆ ئەوەی بزانین کێشەکە چییە
                     messageDiv.innerText = result.message || responseText || `هەڵەی سێرڤەر: ${response.status}`;
                 }
             } catch (error) {
