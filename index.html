@@ -277,40 +277,52 @@
 
         async function checkQuotaAndTimer() {
             try {
-                let response = await fetch(`${apiUrl}/today-list`);
-                if (response.ok) {
-                    let users = await response.json();
-                    let count = users.length;
-                    let remaining = 40 - count;
-                    if (remaining < 0) remaining = 0;
+                const response = await fetch(`${baseUrl}/api/users/today-count`, {
+                    method: "GET",
+                    cache: "no-store"
+                });
 
-                    let counterBox = document.getElementById("liveCounterBox");
-                    counterBox.innerText = remaining;
+                if (!response.ok) return;
 
-                    let badge = document.getElementById("statusBadge");
-                    let dot = document.getElementById("statusDot");
-                    let text = document.getElementById("statusText");
+                const data = await response.json();
+                const count = Number(data.count || 0);
+                const remaining = Math.max(0, Number(data.remaining ?? (40 - count)));
+                const isActive = data.isActive !== false;
 
-                    if (count >= 40) {
-                        badge.className = "status-badge status-closed";
-                        dot.className = "dot dot-red";
-                        text.innerText = "دۆخی سیستەم: داخراوە";
-                        
-                        document.getElementById("countdownTimer").style.display = "block";
-                        startCountdown();
-                    } else {
-                        badge.className = "status-badge status-open";
-                        dot.className = "dot dot-green";
-                        text.innerText = "دۆخی سیستەم: کراوەیە بۆ تۆمارکردن";
-                    }
+                document.getElementById("liveCounterBox").innerText = remaining;
+
+                const badge = document.getElementById("statusBadge");
+                const dot = document.getElementById("statusDot");
+                const text = document.getElementById("statusText");
+                const timer = document.getElementById("countdownTimer");
+
+                if (!isActive || count >= 40) {
+                    badge.className = "status-badge status-closed";
+                    dot.className = "dot dot-red";
+                    text.innerText = !isActive
+                        ? "دۆخی سیستەم: داخراوە"
+                        : "دۆخی سیستەم: داخراوە (٤٠ ناو پڕبووە)";
+                    timer.style.display = "block";
+                    startCountdown();
+                } else {
+                    badge.className = "status-badge status-open";
+                    dot.className = "dot dot-green";
+                    text.innerText = "دۆخی سیستەم: کراوەیە بۆ تۆمارکردن";
+                    timer.style.display = "none";
                 }
             } catch (e) {
-                console.log(e);
+                console.log("Quota check:", e);
             }
         }
+
         checkQuotaAndTimer();
 
+        let countdownStarted = false;
+
         function startCountdown() {
+            if (countdownStarted) return;
+            countdownStarted = true;
+
             function update() {
                 let now = new Date();
                 let target = new Date();
@@ -607,7 +619,16 @@
 
                 if (!response.ok) {
                     let errResult = await response.json().catch(() => ({}));
-                    messageDiv.innerText = errResult.message || "هەڵەیەک ڕوویدا";
+
+                    if (response.status === 401 || response.status === 403) {
+                        adminToken = "";
+                        sessionStorage.removeItem("adminToken");
+                        document.getElementById("adminSection").style.display = "none";
+                        messageDiv.innerText = "سەشنەکەی ئەدمین بەسەرچووە، تکایە دووبارە بچۆ ژوورەوە.";
+                    } else {
+                        messageDiv.innerText = errResult.message || "هەڵەیەک ڕوویدا";
+                    }
+
                     tbody.innerHTML = "";
                     return;
                 }
