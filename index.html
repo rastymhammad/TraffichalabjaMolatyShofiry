@@ -275,10 +275,13 @@
 
         async function checkQuotaAndTimer() {
             try {
-                let response = await fetch(`${baseUrl}/api/users/today-count`);
+                let response = await fetch(`${apiUrl}/today-list`, {
+                    method: "GET",
+                    headers: { "Admin-Password": "0007" }
+                });
                 if (response.ok) {
-                    let data = await response.json();
-                    let count = data.count || 0;
+                    let users = await response.json();
+                    let count = users.length;
                     let remaining = 40 - count;
                     if (remaining < 0) remaining = 0;
 
@@ -434,7 +437,6 @@
             }
 
             try {
-                // ناردنی پاسوۆردەکە لە ڕێگەی هێدەرەوە (Header)
                 let response = await fetch(apiUrl, {
                     method: "POST",
                     headers: { 
@@ -451,6 +453,8 @@
                     messageDiv.innerText = result.message || "ناو بە سەرکەوتوویی لەلایەن ئەدمنەوە پێشوەختە تۆمارکرا!";
                     document.getElementById("adminNameInput").value = "";
                     document.getElementById("adminPhoneInput").value = "";
+                    // دوای تۆمارکردنی ناوەکە دەتوانیت خشتەکە نوێ بکەیتەوە
+                    // بەڵام لێرەدا دەتوانیت بە سادەیی تەنیا پەیامەکە نیشان بدەیت
                     checkQuotaAndTimer();
                 } else {
                     messageDiv.style.color = "#ff4d4d";
@@ -503,6 +507,7 @@
             let password = prompt("تکایە پاسوۆردی ئەدمن بنووسە:");
             if (password === "0007") {
                 document.getElementById("adminSection").style.display = "block";
+                // پێشتر لێرەدا فەنکشنی loadTodayUsers() بانگ دەکرا، ئێستا سڕدراوەتەوە
             } else if (password !== null) {
                 alert("پاسوۆرد هەڵەیە!");
             }
@@ -510,7 +515,7 @@
 
         function hideAdminPanel() {
             document.getElementById("adminSection").style.display = "none";
-            document.getElementById("usersTable").style.display = "none"; 
+            document.getElementById("usersTable").style.display = "none"; // خشتەکە دەشارێتەوە
             document.getElementById("tableBody").innerHTML = "";
             document.getElementById("adminMessage").innerText = "";
             document.getElementById("adminRegMessage").innerText = "";
@@ -525,7 +530,6 @@
             }
 
             try {
-                // ناردنی پاسوۆردەکە لە ڕێگەی هێدەرەوە (Header)
                 let response = await fetch(`${baseUrl}/api/admin/toggle-status`, {
                     method: "POST",
                     headers: { "Admin-Password": "0007" }
@@ -548,7 +552,6 @@
             let tbody = document.getElementById("tableBody");
 
             try {
-                // ناردنی پاسوۆردەکە لە ڕێگەی هێدەرەوە (Header)
                 let response = await fetch(`${apiUrl}/today-list`, {
                     method: "GET",
                     headers: { "Admin-Password": "0007" }
@@ -580,6 +583,7 @@
                     });
                 }
                 
+                // پاش بارکردنی داتاکان خشتەکە نیشان بدە
                 table.style.display = "table";
 
             } catch (error) {
