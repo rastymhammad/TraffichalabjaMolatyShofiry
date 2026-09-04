@@ -208,7 +208,6 @@
         
         <input type="text" id="nameInput" placeholder="ناوی چواری بنووسە...">
         <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="15" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false">
-        <!-- ئایدی registerBtn ی بۆ زیادکرا -->
         <button id="registerBtn" onclick="registerUser()">تۆمارکردن</button>
         <div id="registerMessage" class="message"></div>
         <div id="countdownTimer" class="timer-box"></div>
@@ -227,9 +226,17 @@
 
         <div style="background: rgba(0, 86, 179, 0.08); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid rgba(0, 86, 179, 0.2);">
             <h3 style="margin-top: 0; font-size: 16px; color: #0056b3;">تۆمارکردنی پێشوەختە لەلایەن ئەدمینەوە</h3>
-            <input type="text" id="adminNameInput" placeholder="ناوی چواری بنووسە...">
-            <input type="tel" id="adminPhoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="15" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false">
-            <button style="background: #17a2b8;" onclick="adminRegisterUser()">تۆمارکردنی پێشوەختە</button>
+            
+            <!-- دوگمەی داواکردنی پاسوۆرد -->
+            <button id="openPreRegBtn" style="background: #17a2b8;" onclick="showPreRegForm()">کردنەوەی بەشی تۆمارکردن</button>
+            
+            <!-- فۆڕمەکە (سەرەتا شاردراوەتەوە) -->
+            <div id="preRegForm" style="display: none; margin-top: 15px;">
+                <input type="text" id="adminNameInput" placeholder="ناوی چواری بنووسە...">
+                <input type="tel" id="adminPhoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="15" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false">
+                <button style="background: #28a745;" onclick="adminRegisterUser()">تۆمارکردنی پێشوەختە</button>
+            </div>
+            
             <div id="adminRegMessage" class="message"></div>
         </div>
 
@@ -273,7 +280,6 @@
             return true;
         }
 
-        // فەنکشنی پشکنینی کاتی عێراق
         function checkSystemTimeUI() {
             const options = { timeZone: 'Asia/Baghdad', hour: 'numeric', hour12: false };
             const iraqHour = parseInt(new Intl.DateTimeFormat('en-US', options).format(new Date()));
@@ -301,7 +307,6 @@
 
         async function checkQuotaAndTimer() {
             try {
-                // گۆڕدرا بۆ /count وە پاسوۆردەکەی لێ سڕدرایەوە
                 let response = await fetch(`${apiUrl}/count`, {
                     method: "GET"
                 });
@@ -394,7 +399,6 @@
         }
 
         async function registerUser() {
-            // ئەگەر دوگمەکە ڕاگیرابوو، ڕێگە مەدە کۆدەکە ئیش بکات
             if (document.getElementById("registerBtn").disabled) return;
 
             let name = document.getElementById("nameInput").value.trim();
@@ -454,6 +458,18 @@
             }
         }
 
+        // فەنکشنی نوێ بۆ داواکردنی پاسوۆردی تۆمارکردنی پێشوەختە
+        function showPreRegForm() {
+            let pwd = prompt("تکایە پاسوۆردی تایبەت بە تۆمارکردنی پێشوەختە بنووسە:");
+            if (pwd === "8899") { 
+                document.getElementById("openPreRegBtn").style.display = "none";
+                document.getElementById("preRegForm").style.display = "block";
+                document.getElementById("adminRegMessage").innerText = "";
+            } else if (pwd !== null) {
+                alert("پاسوۆردی تۆمارکردن هەڵەیە!");
+            }
+        }
+
         async function adminRegisterUser() {
             let name = document.getElementById("adminNameInput").value.trim();
             let phone = document.getElementById("adminPhoneInput").value.trim();
@@ -490,7 +506,7 @@
                     method: "POST",
                     headers: { 
                         "Content-Type": "application/json",
-                        "Admin-Password": "0007"
+                        "Admin-Password": "8899" // پاسوۆردەکە گۆڕدرا بۆ 8899
                     },
                     body: JSON.stringify({ name: name, phone: phone })
                 });
@@ -565,6 +581,13 @@
             document.getElementById("tableBody").innerHTML = "";
             document.getElementById("adminMessage").innerText = "";
             document.getElementById("adminRegMessage").innerText = "";
+            
+            // گێڕانەوەی فۆڕمی پێشوەختە بۆ دۆخی سەرەتایی (شاردراوە)
+            let preRegForm = document.getElementById("preRegForm");
+            let openPreRegBtn = document.getElementById("openPreRegBtn");
+            if(preRegForm) preRegForm.style.display = "none";
+            if(openPreRegBtn) openPreRegBtn.style.display = "inline-block";
+
             adminClickCount = 0;
         }
 
