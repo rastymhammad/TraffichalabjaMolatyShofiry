@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سیسته‌می سه‌ره‌گرتنی مۆڵه‌تی شۆفێری هاتووچۆی هه‌ڵه‌بجه‌</title>
     
-    <!-- زیادکردنی FontAwesome بۆ ئایکۆنەکان -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- زیادکردنی SweetAlert2 بۆ پەنجەرەی مۆدێرن -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
@@ -31,7 +29,7 @@
         }
         
         .main-content {
-            flex: 1; /* بۆ ئەوەی فووتەرەکە هەمیشە بچێتە خوارەوە */
+            flex: 1;
         }
 
         .header-title {
@@ -78,9 +76,6 @@
         .dot-green { background-color: #28a745; box-shadow: 0 0 8px #28a745; }
         .dot-red { background-color: #dc3545; box-shadow: 0 0 8px #dc3545; }
 
-        /* =========================================
-            دیزاینی شریتە جوڵاوەکە (سەرەدێڕی هەواڵ)
-        ========================================= */
         .news-ticker-container {
             max-width: 400px;
             margin: 0 auto 25px auto;
@@ -112,7 +107,6 @@
             0% { transform: translateX(0); }
             100% { transform: translateX(100%); }
         }
-        /* ========================================= */
 
         .container {
             background: white;
@@ -131,7 +125,6 @@
             font-size: 18px;
         }
 
-        /* دیزاینی ئایکۆنەکانی ناو Input */
         .input-wrapper {
             position: relative;
             width: 90%;
@@ -199,7 +192,6 @@
             margin: 0;
         }
         
-        /* دیزاینی فووتەر */
         footer {
             background-color: #0056b3;
             color: white;
@@ -216,7 +208,6 @@
             margin-top: 5px;
         }
 
-        /* دۆخی تاریک (Dark Mode) */
         body.dark-mode {
             background-color: #121212;
             color: #e0e0e0;
@@ -252,7 +243,6 @@
             border-top: 2px solid #4da3ff;
         }
 
-        /* گۆڕینی فۆنتی SweetAlert بۆ ڕابەر */
         .swal2-container {
             font-family: 'Rabar', Tahoma, Arial, sans-serif !important;
         }
@@ -283,22 +273,18 @@
             <div class="news-ticker-text">
                 نۆره‌ گرتنی مۆڵه‌تی شۆفێری له‌ به‌ڕێوه‌به‌رایه‌تی هاتووچۆی پارێزگای هه‌ڵه‌بجه سه‌باره‌ت به‌و هاووڵاتیانه‌ی كه‌ ڕۆژانه‌ له‌ ئیمتیحانی پراكتیكی واته‌ ترای ده‌ر ده‌چن له‌و ڕۆژه‌دا نابێت سه‌ردانی به‌ڕێوه‌به‌رایه‌تی بكه‌ن ده‌بێت ئه‌وانیش ناوی خۆیان تۆمار بكه‌ن بۆ ڕۆژی دواتر  
             </div>
-            <div class="news-ticker-text">
-                نۆره‌ گرتنی مۆڵه‌تی شۆفێری له‌ به‌ڕێوه‌به‌رایه‌تی هاتووچۆی پارێزگای هه‌ڵه‌بجه سه‌باره‌ت به‌و هاووڵاتیانه‌ی كه‌ ڕۆژانه‌ له‌ ئیمتیحانی پراكتیكی واته‌ ترای ده‌ر ده‌چن له‌و ڕۆژه‌دا نابێت سه‌ردانی به‌ڕێوه‌به‌رایه‌تی بكه‌ن ده‌بێت ئه‌وانیش ناوی خۆیان تۆمار بكه‌ن بۆ ڕۆژی دواتر  
-            </div>
         </div>
 
         <div class="container">
             <h2>تۆمارکردنی ناو</h2>
             
-            <!-- بۆکسەکان لەگەڵ ئایکۆن -->
             <div class="input-wrapper">
                 <i class="fa-solid fa-user"></i>
                 <input type="text" id="nameInput" placeholder="ناوی چواری بنووسە...">
             </div>
             <div class="input-wrapper">
                 <i class="fa-solid fa-phone"></i>
-                <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="15" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false">
+                <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false">
             </div>
 
             <button id="registerBtn" onclick="registerUser()">تۆمارکردن</button>
@@ -309,12 +295,11 @@
             <h2>دڵنیابوونەوە لە ناوت (بە ژمارەی تەلەفۆن)</h2>
             <div class="input-wrapper">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="tel" id="searchInput" placeholder="ژمارەی تەلەفۆنەکەت بنووسە..." maxlength="15" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false">
+                <input type="tel" id="searchInput" placeholder="ژمارەی تەلەفۆنەکەت بنووسە..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false">
             </div>
             <button class="search-btn" onclick="searchUser()">گەڕان</button>
         </div>
 
-        <!-- بەشی ئەدمین -->
         <div class="container printable-area" id="adminSection" style="display: none;">
             <h2>بەشی ئەدمین - کۆنتڕۆڵی سیستەم</h2>
 
@@ -330,7 +315,7 @@
                     </div>
                     <div class="input-wrapper" style="width: 100%;">
                         <i class="fa-solid fa-phone"></i>
-                        <input type="tel" id="adminPhoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="15" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false">
+                        <input type="tel" id="adminPhoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false">
                     </div>
                     <button id="adminRegBtn" style="background: #28a745;" onclick="adminRegisterUser()">تۆمارکردنی پێشوەختە</button>
                 </div>
@@ -349,7 +334,7 @@
                         <th style="padding: 8px;">ناو</th>
                         <th style="padding: 8px;">ژمارەی تەلەفۆن</th>
                         <th style="padding: 8px;">کاتی تۆمارکردن</th>
-                        <th style="padding: 8px;" class="no-print">سڕینەوە</th>
+                        <th style="padding: 8px; width: 100px;" class="no-print">کردارەکان</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">
@@ -360,9 +345,8 @@
         <div style="text-align: center; margin-top: 10px; margin-bottom: 20px;">
             <button onclick="handleAdminClick()" style="background: none; color: #aaa; border: none; font-size: 12px; cursor: pointer; width: auto;">ئەدمین</button>
         </div>
-    </div> <!-- کۆتایی main-content -->
+    </div>
 
-    <!-- زیادکردنی فووتەرێکی جوان -->
     <footer>
         <p>هەموو مافێکی پارێزراوە بۆ بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە &copy; 2026</p>
         <p class="dev-name">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووچۆ ( ڕاستی محمد شێخ حیدر )</p>
@@ -520,10 +504,17 @@
                 return;
             }
 
-            if (phone.length < 11) {
-                Swal.fire('ئاگاداری', 'ژمارەی تەلەفۆن نابێت لە 11 ژمارە کەمتر بێت!', 'warning');
+            // === مەرجی ژمارەی مۆبایل لە جاڤاسکڕێپت ===
+            if (!phone.startsWith("077") && !phone.startsWith("075") && !phone.startsWith("078")) {
+                Swal.fire('ئاگاداری', 'ژمارەی مۆبایل دەبێت بە 077 یان 075 یان 078 دەست پێبکات!', 'warning');
                 return;
             }
+
+            if (phone.length !== 11) {
+                Swal.fire('ئاگاداری', 'ژمارەی مۆبایل دەبێت 11 ژمارە بێت!', 'warning');
+                return;
+            }
+            // =======================================
 
             let originalText = regBtn.innerHTML;
             regBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> چاوەڕێ بکە...';
@@ -535,6 +526,11 @@
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ name: name, phone: phone })
                 });
+
+                if (response.status === 429) {
+                    Swal.fire('ئاگاداری', 'زۆر خێرایت! تکایە دوای یەک خولەک دووبارە هەوڵ بدەرەوە. (ڕێگری لە سپام)', 'warning');
+                    return;
+                }
 
                 let result = await response.json().catch(() => ({}));
 
@@ -549,6 +545,8 @@
                 console.error("Error:", error);
                 Swal.fire('کێشەی هێڵ', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error');
             } finally {
+                regBtn.innerHTML = originalText;
+                regBtn.disabled = false;
                 checkQuotaAndTimer();
             }
         }
@@ -580,20 +578,19 @@
                 return;
             }
 
-            let englishRegex = /[a-zA-Z]/;
-            if (englishRegex.test(name)) {
-                Swal.fire('ئاگاداری', 'تکایە ناو بە پیتی کوردی بنووسە!', 'warning');
-                return;
-            }
-
             let nameParts = name.split(/\s+/);
             if (nameParts.length < 4) {
                 Swal.fire('ئاگاداری', 'تکایە ناوی چواری بنووسە!', 'warning');
                 return;
             }
 
-            if (phone.length < 11) {
-                Swal.fire('ئاگاداری', 'ژمارەی تەلەفۆن نابێت لە 11 ژمارە کەمتر بێت!', 'warning');
+            if (!phone.startsWith("077") && !phone.startsWith("075") && !phone.startsWith("078")) {
+                Swal.fire('ئاگاداری', 'ژمارەی مۆبایل دەبێت بە 077 یان 075 یان 078 دەست پێبکات!', 'warning');
+                return;
+            }
+
+            if (phone.length !== 11) {
+                Swal.fire('ئاگاداری', 'ژمارەی مۆبایل دەبێت 11 ژمارە بێت!', 'warning');
                 return;
             }
 
@@ -611,6 +608,11 @@
                     body: JSON.stringify({ name: name, phone: phone })
                 });
 
+                if (response.status === 429) {
+                    Swal.fire('ئاگاداری', 'تکایە کەمێک چاوەڕێ بکە (Rate Limit)', 'warning');
+                    return;
+                }
+
                 let result = await response.json().catch(() => ({}));
 
                 if(response.ok) {
@@ -621,7 +623,6 @@
                     Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان کێشەیەک هەیە!', 'error');
                 }
             } catch (error) {
-                console.error("Error:", error);
                 Swal.fire('کێشەی هێڵ', 'کێشە لە پەیوەندیکردن هەیە!', 'error');
             } finally {
                 regBtn.innerHTML = originalText;
@@ -632,7 +633,6 @@
 
         async function searchUser() {
             let searchPhone = document.getElementById("searchInput").value.trim();
-
             if(searchPhone === "") {
                 Swal.fire('ئاگاداری', 'تکایە ژمارەی تەلەفۆن بنووسە بۆ گەڕان!', 'warning');
                 return;
@@ -643,20 +643,12 @@
                 let result = await response.json().catch(() => ({}));
                 
                 if(response.ok) {
-                    Swal.fire({
-                        title: 'دۆزرایەوە',
-                        html: result.message,
-                        icon: 'success',
-                        confirmButtonText: 'باشە'
-                    });
+                    Swal.fire({ title: 'دۆزرایەوە', html: result.message, icon: 'success', confirmButtonText: 'باشە' });
                 } else {
                     Swal.fire('نەدۆزرایەوە', result.message || 'ناو نەدۆزرایەوە!', 'error');
                 }
-                
                 document.getElementById("searchInput").value = "";
-                
             } catch (error) {
-                console.error("Error:", error);
                 Swal.fire('کێشە', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error');
             }
         }
@@ -707,9 +699,7 @@
                 confirmButtonText: 'گۆڕین',
                 showCancelButton: true
             });
-
             if (!password) return;
-
             try {
                 let response = await fetch(`${baseUrl}/api/admin/toggle-status`, {
                     method: "POST",
@@ -752,14 +742,16 @@
                     tbody.innerHTML = "<tr><td colspan='5' style='padding: 10px;'>هیچ ناوێک بۆ ئەمڕۆ تۆمار نەکراوە!</td></tr>";
                 } else {
                     globalUsersData.forEach(user => {
-                        // لێرەدا دوگمەی سڕینەوەمان زیاد کردووە
                         let row = `<tr>
                             <td style="padding: 8px; font-weight: bold; color: #4da3ff;">${user.rank}</td>
                             <td style="padding: 8px;">${user.name}</td>
                             <td style="padding: 8px;">${user.phone}</td>
                             <td style="padding: 8px;">${user.createdAt}</td>
                             <td style="padding: 8px;" class="no-print">
-                                <button onclick="deleteUser(${user.id || user.Id})" style="background: #dc3545; color: white; padding: 6px 12px; margin: 0; width: auto; font-size: 14px; border-radius: 4px;">
+                                <button onclick="editUser(${user.id || user.Id}, '${user.name}', '${user.phone}')" style="background: #ffc107; color: black; padding: 6px 10px; margin: 0 5px 0 0; width: auto; font-size: 14px; border-radius: 4px;" title="دەستکاریکردن">
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+                                <button onclick="deleteUser(${user.id || user.Id})" style="background: #dc3545; color: white; padding: 6px 10px; margin: 0; width: auto; font-size: 14px; border-radius: 4px;" title="سڕینەوە">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>
                             </td>
@@ -767,16 +759,75 @@
                         tbody.innerHTML += row;
                     });
                 }
-                
                 table.style.display = "table";
-
             } catch (error) {
-                console.error("Error:", error);
                 Swal.fire('کێشە', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error');
             }
         }
 
-        // فەنکشنی نوێ بۆ سڕینەوەی ناو
+        // === فەنکشنی نوێ بۆ دەستکاریکردنی ناو یان ژمارە (Edit) ===
+        async function editUser(id, currentName, currentPhone) {
+            const { value: formValues } = await Swal.fire({
+                title: 'دەستکاریکردنی زانیاری',
+                html:
+                    `<input id="swal-input-name" class="swal2-input" value="${currentName}" placeholder="ناوی چواری">` +
+                    `<input id="swal-input-phone" class="swal2-input" value="${currentPhone}" placeholder="ژمارەی مۆبایل">`,
+                focusConfirm: false,
+                showCancelButton: true,
+                confirmButtonText: 'پاشەکەوتکردن',
+                cancelButtonText: 'داخستن',
+                preConfirm: () => {
+                    return [
+                        document.getElementById('swal-input-name').value,
+                        document.getElementById('swal-input-phone').value
+                    ]
+                }
+            });
+
+            if (formValues) {
+                let newName = formValues[0].trim();
+                let newPhone = formValues[1].trim();
+
+                if (!newName || !newPhone) {
+                    Swal.fire('هەڵە', 'تکایە هەردوو خانەکە پڕبکەرەوە', 'error');
+                    return;
+                }
+
+                if (!newPhone.startsWith("077") && !newPhone.startsWith("075") && !newPhone.startsWith("078")) {
+                    Swal.fire('هەڵە', 'ژمارەی مۆبایل دەبێت بە 077 یان 075 یان 078 دەست پێبکات', 'error');
+                    return;
+                }
+
+                if (newPhone.length !== 11) {
+                    Swal.fire('هەڵە', 'ژمارەی مۆبایل دەبێت 11 ژمارە بێت', 'error');
+                    return;
+                }
+
+                try {
+                    let response = await fetch(`${apiUrl}/${id}`, {
+                        method: "PUT",
+                        headers: { 
+                            "Content-Type": "application/json",
+                            "Admin-Password": tempAdminPassword 
+                        },
+                        body: JSON.stringify({ name: newName, phone: newPhone })
+                    });
+
+                    let resData = await response.json().catch(() => ({}));
+
+                    if (response.ok) {
+                        Swal.fire('سەرکەوتوو بوو!', resData.message || 'زانیارییەکان گۆڕدران.', 'success');
+                        loadTodayUsers(); // بۆ ئەوەی خشتەکە خۆی تازە بکاتەوە
+                    } else {
+                        Swal.fire('هەڵە!', resData.message || 'کێشەیەک هەیە لە نوێکردنەوە!', 'error');
+                    }
+                } catch (error) {
+                    Swal.fire('کێشە', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error');
+                }
+            }
+        }
+        // ========================================================
+
         async function deleteUser(id) {
             const confirmResult = await Swal.fire({
                 title: 'دڵنیایت؟',
@@ -795,20 +846,15 @@
                         method: "DELETE",
                         headers: { "Admin-Password": tempAdminPassword }
                     });
-
                     let resData = await response.json().catch(() => ({}));
-
                     if (response.ok) {
                         Swal.fire('سڕایەوە!', resData.message || 'ناوەکە بە سەرکەوتوویی سڕایەوە.', 'success');
-                        // خشتەکە نوێ دەکەینەوە دوای سڕینەوە
                         loadTodayUsers();
-                        // ژمارەی پشکەکان نوێ دەکەینەوە
                         checkQuotaAndTimer();
                     } else {
                         Swal.fire('هەڵە!', resData.message || 'کێشەیەک هەیە لە سڕینەوە!', 'error');
                     }
                 } catch (error) {
-                    console.error("Error:", error);
                     Swal.fire('کێشە', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error');
                 }
             }
@@ -819,12 +865,10 @@
                 Swal.fire('ئاگاداری', "سەرەتا تکایە لە سەرەوە 'نیشاندانی لیستی ئەمڕۆ' دابگرە!", 'warning');
                 return;
             }
-
             let csvContent = "\uFEFFژمارە,ناو,ژمارەی تەلەفۆن,کاتی تۆمارکردن\n";
             globalUsersData.forEach(u => {
                 csvContent += `${u.rank},"${u.name}","${u.phone}","${u.createdAt}"\n`;
             });
-
             let blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             let url = URL.createObjectURL(blob);
             let a = document.createElement('a');
