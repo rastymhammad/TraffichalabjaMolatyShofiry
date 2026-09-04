@@ -229,6 +229,24 @@
             margin-top: 5px;
         }
 
+        /* === دیزاینی ئایکۆنەکانی سۆشیاڵ میدیا === */
+        .social-icons {
+            margin-top: 15px;
+        }
+        .social-icons a {
+            color: #d4edda;
+            font-size: 26px;
+            margin: 0 10px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .social-icons a:hover {
+            color: #ffffff;
+            transform: scale(1.2) translateY(-3px);
+        }
+        /* ======================================= */
+
         body.dark-mode {
             background-color: #121212;
             color: #e0e0e0;
@@ -272,9 +290,6 @@
             font-family: 'Rabar', Tahoma, Arial, sans-serif !important;
         }
 
-        /* =========================================================
-           ڕێکخستنی نوێ بۆ بەشی پرینت کردن (چاپکردن)
-        ========================================================= */
         @media print {
             body * { visibility: hidden; }
             .table-responsive, .table-responsive * { visibility: visible; }
@@ -287,23 +302,22 @@
             }
             
             #usersTable {
-                font-size: 14px !important; /* قەبارەی فۆنتەکە گەورەتر کرا بۆ خوێندنەوە */
+                font-size: 14px !important; 
                 width: 100% !important;
                 border-collapse: collapse !important;
             }
 
             #usersTable th, #usersTable td { 
                 white-space: normal !important; 
-                color: #000000 !important; /* ڕەنگی دەقەکان کران بە ڕەشی تۆخ */
-                border: 1px solid #000000 !important; /* هێڵەکانی خشتەکە ڕەشتۆخ کران */
-                padding: 10px 8px !important; /* کەمێک بۆشایی بۆ ئاسان خوێندنەوە */
+                color: #000000 !important; 
+                border: 1px solid #000000 !important; 
+                padding: 10px 8px !important; 
             }
 
             #usersTable th {
-                background-color: #e6e6e6 !important; /* باکگراوندی سەردێڕ خۆڵەمێشی دەبێت */
+                background-color: #e6e6e6 !important; 
                 color: #000000 !important;
                 font-weight: bold !important;
-                /* ئەم دوو کۆدەی خوارەوە بۆ دەرخستنی ڕەنگی باکگراوندە لە کاتی چاپکردن */
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
@@ -409,6 +423,16 @@
     <footer>
         <p>هەموو مافێکی پارێزراوە بۆ بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە &copy; 2026</p>
         <p class="dev-name">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووچۆ ( ڕاستی محمد شێخ حیدر )</p>
+        
+        <!-- بەشی ئایکۆنەکان کە زیادمان کرد -->
+        <div class="social-icons no-print">
+            <a href="https://facebook.com/share/19ChSYyAyM?mibextid=wwXIfr" target="_blank" title="فەیسبووکی گەشەپێدەر">
+                <i class="fa-brands fa-facebook"></i>
+            </a>
+            <a href="https://wa.me/9647501116212" target="_blank" title="وەتسئەپی گەشەپێدەر">
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
+        </div>
     </footer>
 
     <script>
