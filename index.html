@@ -227,10 +227,8 @@
         <div style="background: rgba(0, 86, 179, 0.08); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid rgba(0, 86, 179, 0.2);">
             <h3 style="margin-top: 0; font-size: 16px; color: #0056b3;">تۆمارکردنی پێشوەختە لەلایەن ئەدمینەوە</h3>
             
-            <!-- دوگمەی داواکردنی پاسوۆرد -->
             <button id="openPreRegBtn" style="background: #17a2b8;" onclick="showPreRegForm()">کردنەوەی بەشی تۆمارکردن</button>
             
-            <!-- فۆڕمەکە (سەرەتا شاردراوەتەوە) -->
             <div id="preRegForm" style="display: none; margin-top: 15px;">
                 <input type="text" id="adminNameInput" placeholder="ناوی چواری بنووسە...">
                 <input type="tel" id="adminPhoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="15" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false">
@@ -271,6 +269,11 @@
         const apiUrl = `${baseUrl}/api/users`;
         let globalUsersData = [];
         let adminClickCount = 0;
+        
+        // ئەم دوو گۆڕدراوە زانیاری پاسوۆردەکان بە کاتی هەڵدەگرن 
+        // بەبێ ئەوەی لێرەدا بنووسرێن، تەنها ئەوە هەڵدەگرن کە ئەدمین لەسەر شاشەکە دەینووسێت
+        let tempAdminPassword = "";
+        let tempPreRegPassword = "";
 
         function onlyEnglishNumbers(event) {
             let charCode = (event.which) ? event.which : event.keyCode;
@@ -458,15 +461,14 @@
             }
         }
 
-        // فەنکشنی نوێ بۆ داواکردنی پاسوۆردی تۆمارکردنی پێشوەختە
+        // لێرەدا کۆدەکەمان گۆڕی بۆ ئەوەی هیچ پاسوۆردێک بە ئاشکرا نەنووسرێت
         function showPreRegForm() {
             let pwd = prompt("تکایە پاسوۆردی تایبەت بە تۆمارکردنی پێشوەختە بنووسە:");
-            if (pwd === "8899") { 
+            if (pwd !== null && pwd.trim() !== "") { 
+                tempPreRegPassword = pwd; // پاسوۆردەکە وەردەگرێت و لەناو گۆڕدراوێک هەڵیدەگرێت
                 document.getElementById("openPreRegBtn").style.display = "none";
                 document.getElementById("preRegForm").style.display = "block";
                 document.getElementById("adminRegMessage").innerText = "";
-            } else if (pwd !== null) {
-                alert("پاسوۆردی تۆمارکردن هەڵەیە!");
             }
         }
 
@@ -506,7 +508,7 @@
                     method: "POST",
                     headers: { 
                         "Content-Type": "application/json",
-                        "Admin-Password": "8899" // پاسوۆردەکە گۆڕدرا بۆ 8899
+                        "Admin-Password": tempPreRegPassword // لێرەدا تەنها ئەو وشەیە دەنێرێت کە تۆ نوسیوتە
                     },
                     body: JSON.stringify({ name: name, phone: phone })
                 });
@@ -521,7 +523,7 @@
                     checkQuotaAndTimer();
                 } else {
                     messageDiv.style.color = "#ff4d4d";
-                    messageDiv.innerText = result.message || `هەڵە: ${response.status}`;
+                    messageDiv.innerText = result.message || "پاسوۆرد هەڵەیە یان کێشەیەک هەیە!";
                 }
             } catch (error) {
                 console.error("Error:", error);
@@ -566,12 +568,12 @@
             }
         }
 
+        // کردنەوەی بەشی ئەدمن بەبێ ئەوەی پاسوۆردەکە لەناو کۆدەکەدا هەبێت
         function showAdminPanel() {
-            let password = prompt("تکایە پاسوۆردی ئەدمن بنووسە:");
-            if (password === "0007") {
+            let pwd = prompt("تکایە پاسوۆردی ئەدمن بنووسە:");
+            if (pwd !== null && pwd.trim() !== "") {
+                tempAdminPassword = pwd; // هەڵگرتنی پاسوۆردەکە
                 document.getElementById("adminSection").style.display = "block";
-            } else if (password !== null) {
-                alert("پاسوۆرد هەڵەیە!");
             }
         }
 
@@ -582,33 +584,33 @@
             document.getElementById("adminMessage").innerText = "";
             document.getElementById("adminRegMessage").innerText = "";
             
-            // گێڕانەوەی فۆڕمی پێشوەختە بۆ دۆخی سەرەتایی (شاردراوە)
             let preRegForm = document.getElementById("preRegForm");
             let openPreRegBtn = document.getElementById("openPreRegBtn");
             if(preRegForm) preRegForm.style.display = "none";
             if(openPreRegBtn) openPreRegBtn.style.display = "inline-block";
 
+            // سڕینەوەی پاسوۆردەکان لە بیرگەی جاڤاسکڕێپت کاتێک ئەدمن دادەخرێت
+            tempAdminPassword = "";
+            tempPreRegPassword = "";
             adminClickCount = 0;
         }
 
+        // داخستن و کردنەوەی سایت ڕاستەوخۆ پشت بەو پاسوۆردە دەبەستێت کە لەو کاتەدا دەینووسیت
         async function toggleSystemStatus() {
             let password = prompt("تکایە پاسوۆردی ئەدمین بنووسە بۆ گۆڕینی باری سایت:");
-            if (password !== "0007") {
-                if (password !== null) alert("پاسوۆرد هەڵەیە!");
-                return;
-            }
+            if (password === null || password.trim() === "") return;
 
             try {
                 let response = await fetch(`${baseUrl}/api/admin/toggle-status`, {
                     method: "POST",
-                    headers: { "Admin-Password": "0007" }
+                    headers: { "Admin-Password": password }
                 });
                 let result = await response.json().catch(() => ({}));
                 if(response.ok) {
                     alert(result.message || "دۆخ گۆڕدرا!");
                     location.reload();
                 } else {
-                    alert(result.message || "هەڵە ڕووی دا!");
+                    alert(result.message || "هەڵە ڕووی دا یان پاسوۆرد هەڵەیە!");
                 }
             } catch (error) {
                 alert("کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!");
@@ -623,12 +625,12 @@
             try {
                 let response = await fetch(`${apiUrl}/today-list`, {
                     method: "GET",
-                    headers: { "Admin-Password": "0007" }
+                    headers: { "Admin-Password": tempAdminPassword } // ناردنی ئەو پاسوۆردەی کە پێشتر نوسیوتە
                 });
 
                 if (!response.ok) {
                     let errResult = await response.json().catch(() => ({}));
-                    messageDiv.innerText = errResult.message || "هەڵەیەک ڕوویدا";
+                    messageDiv.innerText = errResult.message || "هەڵەیەک ڕوویدا یان پاسوۆردی سەرەتا هەڵەبوو!";
                     tbody.innerHTML = "";
                     table.style.display = "none";
                     return;
