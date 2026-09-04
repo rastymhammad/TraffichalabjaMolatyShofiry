@@ -25,7 +25,7 @@
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             max-width: 400px;
-            margin: auto auto 20px auto;
+            margin: auto auto 15px auto; 
             border-bottom: 4px solid #0056b3;
         }
         .header-title h1 {
@@ -62,15 +62,42 @@
         .dot-green { background-color: #28a745; box-shadow: 0 0 8px #28a745; }
         .dot-red { background-color: #dc3545; box-shadow: 0 0 8px #dc3545; }
 
-        .live-counter-box {
-            background: transparent;
-            color: #0056b3;
-            padding: 5px;
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            border: none;
+        /* =========================================
+            دیزاینی شریتە جوڵاوەکە (سەرەدێڕی هەواڵ)
+        ========================================= */
+        .news-ticker-container {
+            max-width: 400px;
+            margin: 0 auto 25px auto;
+            background-color: #0056b3;
+            color: #ffffff;
+            padding: 12px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+            white-space: nowrap;
+            cursor: pointer;
+            display: flex; /* بۆ ڕێکخستنی دوو نوسینەکە لەتەنیشت یەک */
         }
+        
+        /* کاتێک ماوس دەچێتە سەری، سلایدەکە دەوەستێت */
+        .news-ticker-container:hover .news-ticker-text {
+            animation-play-state: paused;
+        }
+
+        .news-ticker-text {
+            display: inline-block;
+            font-size: 15px;
+            font-weight: bold;
+            padding-right: 100%; /* ئەمە وادەکات بۆشایی گونجاو هەبێت لە نێوان دوو نوسینەکەدا */
+            animation: moveLeftToRight 25s linear infinite; 
+        }
+        
+        @keyframes moveLeftToRight {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(100%); }
+        }
+        /* ========================================= */
 
         .container {
             background: white;
@@ -165,9 +192,11 @@
             color: #fff;
             border: 1px solid #444;
         }
-        body.dark-mode .live-counter-box {
-            color: #6ea8fe;
-            background: transparent;
+        
+        body.dark-mode .news-ticker-container {
+            background-color: #1e1e1e;
+            border: 1px solid #4da3ff;
+            color: #4da3ff;
         }
 
         @media print {
@@ -202,9 +231,20 @@
         </div>
     </div>
 
+    <!-- بەشی سلایدەکە -->
+    <div class="news-ticker-container">
+        <!-- دانەی یەکەم -->
+        <div class="news-ticker-text">
+            نۆره‌ گرتنی مۆڵه‌تی شۆفێری له‌ به‌ڕێوه‌به‌رایه‌تی هاتووچۆی پارێزگای هه‌ڵه‌بجه سه‌باره‌ت به‌و هاووڵاتیانه‌ی كه‌ ڕۆژانه‌ له‌ ئیمتیحانی پراكتیكی واته‌ ترای ده‌ر ده‌چن له‌و ڕۆژه‌دا نابێت سه‌ردانی به‌ڕێوه‌به‌رایه‌تی بكه‌ن ده‌بێت ئه‌وانیش ناوی خۆیان تۆمار بكه‌ن بۆ ڕۆژی دواتر ‌ 
+        </div>
+        <!-- دانەی دووەم (ڕاستەوخۆ بەدوای یەکەمدا دێت) -->
+        <div class="news-ticker-text">
+            نۆره‌ گرتنی مۆڵه‌تی شۆفێری له‌ به‌ڕێوه‌به‌رایه‌تی هاتووچۆی پارێزگای هه‌ڵه‌بجه سه‌باره‌ت به‌و هاووڵاتیانه‌ی كه‌ ڕۆژانه‌ له‌ ئیمتیحانی پراكتیكی واته‌ ترای ده‌ر ده‌چن له‌و ڕۆژه‌دا نابێت سه‌ردانی به‌ڕێوه‌به‌رایه‌تی بكه‌ن ده‌بێت ئه‌وانیش ناوی خۆیان تۆمار بكه‌ن بۆ ڕۆژی دواتر ‌ 
+        </div>
+    </div>
+
     <div class="container">
         <h2>تۆمارکردنی ناو</h2>
-        <div id="liveCounterBox" class="live-counter-box"></div>
         
         <input type="text" id="nameInput" placeholder="ناوی چواری بنووسە...">
         <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="15" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false">
@@ -270,8 +310,6 @@
         let globalUsersData = [];
         let adminClickCount = 0;
         
-        // ئەم دوو گۆڕدراوە زانیاری پاسوۆردەکان بە کاتی هەڵدەگرن 
-        // بەبێ ئەوەی لێرەدا بنووسرێن، تەنها ئەوە هەڵدەگرن کە ئەدمین لەسەر شاشەکە دەینووسێت
         let tempAdminPassword = "";
         let tempPreRegPassword = "";
 
@@ -317,11 +355,6 @@
                 if (response.ok) {
                     let result = await response.json();
                     let count = result.count; 
-                    let remaining = 40 - count;
-                    if (remaining < 0) remaining = 0;
-
-                    let counterBox = document.getElementById("liveCounterBox");
-                    counterBox.innerText = remaining;
 
                     let isTimeBlocked = checkSystemTimeUI();
 
@@ -464,7 +497,7 @@
         function showPreRegForm() {
             let pwd = prompt("تکایە پاسوۆردی تایبەت بە تۆمارکردنی پێشوەختە بنووسە:");
             if (pwd !== null && pwd.trim() !== "") { 
-                tempPreRegPassword = pwd; // پاسوۆردەکە وەردەگرێت و لەناو گۆڕدراوێک هەڵیدەگرێت
+                tempPreRegPassword = pwd; 
                 document.getElementById("openPreRegBtn").style.display = "none";
                 document.getElementById("preRegForm").style.display = "block";
                 document.getElementById("adminRegMessage").innerText = "";
@@ -553,7 +586,6 @@
                     messageDiv.innerText = result.message || "ناو نەدۆزرایەوە!";
                 }
                 
-                // بەتاڵکردنەوەی بۆکسەکە دوای ئەنجامدانی گەڕانەکە
                 document.getElementById("searchInput").value = "";
                 
             } catch (error) {
