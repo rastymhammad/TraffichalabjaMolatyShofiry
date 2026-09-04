@@ -461,7 +461,6 @@
             }
         }
 
-        // لێرەدا کۆدەکەمان گۆڕی بۆ ئەوەی هیچ پاسوۆردێک بە ئاشکرا نەنووسرێت
         function showPreRegForm() {
             let pwd = prompt("تکایە پاسوۆردی تایبەت بە تۆمارکردنی پێشوەختە بنووسە:");
             if (pwd !== null && pwd.trim() !== "") { 
@@ -508,7 +507,7 @@
                     method: "POST",
                     headers: { 
                         "Content-Type": "application/json",
-                        "Admin-Password": tempPreRegPassword // لێرەدا تەنها ئەو وشەیە دەنێرێت کە تۆ نوسیوتە
+                        "Admin-Password": tempPreRegPassword 
                     },
                     body: JSON.stringify({ name: name, phone: phone })
                 });
@@ -553,6 +552,10 @@
                     messageDiv.style.color = "#ff4d4d";
                     messageDiv.innerText = result.message || "ناو نەدۆزرایەوە!";
                 }
+                
+                // بەتاڵکردنەوەی بۆکسەکە دوای ئەنجامدانی گەڕانەکە
+                document.getElementById("searchInput").value = "";
+                
             } catch (error) {
                 console.error("Error:", error);
                 messageDiv.style.color = "#ff4d4d";
@@ -568,11 +571,10 @@
             }
         }
 
-        // کردنەوەی بەشی ئەدمن بەبێ ئەوەی پاسوۆردەکە لەناو کۆدەکەدا هەبێت
         function showAdminPanel() {
             let pwd = prompt("تکایە پاسوۆردی ئەدمن بنووسە:");
             if (pwd !== null && pwd.trim() !== "") {
-                tempAdminPassword = pwd; // هەڵگرتنی پاسوۆردەکە
+                tempAdminPassword = pwd; 
                 document.getElementById("adminSection").style.display = "block";
             }
         }
@@ -589,13 +591,11 @@
             if(preRegForm) preRegForm.style.display = "none";
             if(openPreRegBtn) openPreRegBtn.style.display = "inline-block";
 
-            // سڕینەوەی پاسوۆردەکان لە بیرگەی جاڤاسکڕێپت کاتێک ئەدمن دادەخرێت
             tempAdminPassword = "";
             tempPreRegPassword = "";
             adminClickCount = 0;
         }
 
-        // داخستن و کردنەوەی سایت ڕاستەوخۆ پشت بەو پاسوۆردە دەبەستێت کە لەو کاتەدا دەینووسیت
         async function toggleSystemStatus() {
             let password = prompt("تکایە پاسوۆردی ئەدمین بنووسە بۆ گۆڕینی باری سایت:");
             if (password === null || password.trim() === "") return;
@@ -625,7 +625,7 @@
             try {
                 let response = await fetch(`${apiUrl}/today-list`, {
                     method: "GET",
-                    headers: { "Admin-Password": tempAdminPassword } // ناردنی ئەو پاسوۆردەی کە پێشتر نوسیوتە
+                    headers: { "Admin-Password": tempAdminPassword } 
                 });
 
                 if (!response.ok) {
