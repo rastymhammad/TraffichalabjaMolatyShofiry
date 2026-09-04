@@ -110,7 +110,7 @@
             margin-top: 10px;
             font-family: 'Rabar', Tahoma, Arial, sans-serif;
         }
-        button:hover {
+        button:hover:not(:disabled) {
             background: #218838;
         }
         .search-btn {
@@ -208,7 +208,8 @@
         
         <input type="text" id="nameInput" placeholder="ناوی چواری بنووسە...">
         <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="15" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false">
-        <button onclick="registerUser()">تۆمارکردن</button>
+        <!-- ئایدی registerBtn ی بۆ زیادکرا -->
+        <button id="registerBtn" onclick="registerUser()">تۆمارکردن</button>
         <div id="registerMessage" class="message"></div>
         <div id="countdownTimer" class="timer-box"></div>
     </div>
@@ -224,7 +225,6 @@
     <div class="container printable-area" id="adminSection" style="display: none;">
         <h2>بەشی ئەدمین - کۆنتڕۆڵی سیستەم</h2>
 
-        <!-- بەشی تۆمارکردنی پێشوەختە لەلایەن ئەدمینەوە -->
         <div style="background: rgba(0, 86, 179, 0.08); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid rgba(0, 86, 179, 0.2);">
             <h3 style="margin-top: 0; font-size: 16px; color: #0056b3;">تۆمارکردنی پێشوەختە لەلایەن ئەدمینەوە</h3>
             <input type="text" id="adminNameInput" placeholder="ناوی چواری بنووسە...">
@@ -273,40 +273,86 @@
             return true;
         }
 
+        // فەنکشنی پشکنینی کاتی عێراق
+        function checkSystemTimeUI() {
+            const options = { timeZone: 'Asia/Baghdad', hour: 'numeric', hour12: false };
+            const iraqHour = parseInt(new Intl.DateTimeFormat('en-US', options).format(new Date()));
+
+            if (iraqHour >= 14 && iraqHour < 18) {
+                let badge = document.getElementById("statusBadge");
+                let dot = document.getElementById("statusDot");
+                let text = document.getElementById("statusText");
+                let regBtn = document.getElementById("registerBtn");
+
+                if (badge) badge.className = "status-badge status-closed";
+                if (dot) dot.className = "dot dot-red";
+                if (text) text.innerText = "دۆخی سیستەم: داخراوە تا 6:00 ی ئێوارە";
+                
+                if (regBtn) {
+                    regBtn.disabled = true;
+                    regBtn.style.backgroundColor = "gray";
+                    regBtn.style.cursor = "not-allowed";
+                    regBtn.innerText = "لە 6:00 ی ئێوارە دەکرێتەوە";
+                }
+                return true; 
+            }
+            return false;
+        }
+
         async function checkQuotaAndTimer() {
             try {
-                let response = await fetch(`${apiUrl}/today-list`, {
-                    method: "GET",
-                    headers: { "Admin-Password": "0007" }
+                // گۆڕدرا بۆ /count وە پاسوۆردەکەی لێ سڕدرایەوە
+                let response = await fetch(`${apiUrl}/count`, {
+                    method: "GET"
                 });
+
                 if (response.ok) {
-                    let users = await response.json();
-                    let count = users.length;
+                    let result = await response.json();
+                    let count = result.count; 
                     let remaining = 40 - count;
                     if (remaining < 0) remaining = 0;
 
                     let counterBox = document.getElementById("liveCounterBox");
                     counterBox.innerText = remaining;
 
-                    let badge = document.getElementById("statusBadge");
-                    let dot = document.getElementById("statusDot");
-                    let text = document.getElementById("statusText");
+                    let isTimeBlocked = checkSystemTimeUI();
 
-                    if (count >= 40) {
-                        badge.className = "status-badge status-closed";
-                        dot.className = "dot dot-red";
-                        text.innerText = "دۆخی سیستەم: داخراوە";
-                        
-                        document.getElementById("countdownTimer").style.display = "block";
-                        startCountdown();
-                    } else {
-                        badge.className = "status-badge status-open";
-                        dot.className = "dot dot-green";
-                        text.innerText = "دۆخی سیستەم: کراوەیە بۆ تۆمارکردن";
+                    if (!isTimeBlocked) {
+                        let badge = document.getElementById("statusBadge");
+                        let dot = document.getElementById("statusDot");
+                        let text = document.getElementById("statusText");
+                        let regBtn = document.getElementById("registerBtn");
+
+                        if (count >= 40) {
+                            badge.className = "status-badge status-closed";
+                            dot.className = "dot dot-red";
+                            text.innerText = "دۆخی سیستەم: داخراوە (پشک تەواو بوو)";
+                            
+                            document.getElementById("countdownTimer").style.display = "block";
+                            startCountdown();
+
+                            if (regBtn) {
+                                regBtn.disabled = true;
+                                regBtn.style.backgroundColor = "gray";
+                                regBtn.style.cursor = "not-allowed";
+                                regBtn.innerText = "پشکی ئەمڕۆ تەواو بووە";
+                            }
+                        } else {
+                            badge.className = "status-badge status-open";
+                            dot.className = "dot dot-green";
+                            text.innerText = "دۆخی سیستەم: کراوەیە بۆ تۆمارکردن";
+                            
+                            if (regBtn) {
+                                regBtn.disabled = false;
+                                regBtn.style.backgroundColor = ""; 
+                                regBtn.style.cursor = "pointer";
+                                regBtn.innerText = "تۆمارکردن";
+                            }
+                        }
                     }
                 }
             } catch (e) {
-                console.log(e);
+                console.log("کێشە لە هێنانەوەی ژمارەکان:", e);
             }
         }
         checkQuotaAndTimer();
@@ -348,6 +394,9 @@
         }
 
         async function registerUser() {
+            // ئەگەر دوگمەکە ڕاگیرابوو، ڕێگە مەدە کۆدەکە ئیش بکات
+            if (document.getElementById("registerBtn").disabled) return;
+
             let name = document.getElementById("nameInput").value.trim();
             let phone = document.getElementById("phoneInput").value.trim();
             let messageDiv = document.getElementById("registerMessage");
@@ -453,8 +502,6 @@
                     messageDiv.innerText = result.message || "ناو بە سەرکەوتوویی لەلایەن ئەدمنەوە پێشوەختە تۆمارکرا!";
                     document.getElementById("adminNameInput").value = "";
                     document.getElementById("adminPhoneInput").value = "";
-                    // دوای تۆمارکردنی ناوەکە دەتوانیت خشتەکە نوێ بکەیتەوە
-                    // بەڵام لێرەدا دەتوانیت بە سادەیی تەنیا پەیامەکە نیشان بدەیت
                     checkQuotaAndTimer();
                 } else {
                     messageDiv.style.color = "#ff4d4d";
@@ -507,7 +554,6 @@
             let password = prompt("تکایە پاسوۆردی ئەدمن بنووسە:");
             if (password === "0007") {
                 document.getElementById("adminSection").style.display = "block";
-                // پێشتر لێرەدا فەنکشنی loadTodayUsers() بانگ دەکرا، ئێستا سڕدراوەتەوە
             } else if (password !== null) {
                 alert("پاسوۆرد هەڵەیە!");
             }
@@ -515,7 +561,7 @@
 
         function hideAdminPanel() {
             document.getElementById("adminSection").style.display = "none";
-            document.getElementById("usersTable").style.display = "none"; // خشتەکە دەشارێتەوە
+            document.getElementById("usersTable").style.display = "none"; 
             document.getElementById("tableBody").innerHTML = "";
             document.getElementById("adminMessage").innerText = "";
             document.getElementById("adminRegMessage").innerText = "";
@@ -583,7 +629,6 @@
                     });
                 }
                 
-                // پاش بارکردنی داتاکان خشتەکە نیشان بدە
                 table.style.display = "table";
 
             } catch (error) {
