@@ -192,7 +192,6 @@
             margin: 0;
         }
         
-        /* === ڕێکخستنی قەبارەی خشتەکە بۆ ئەوەی بچووکتر بێت === */
         .table-responsive {
             width: 100%;
             overflow-x: auto;
@@ -203,17 +202,16 @@
             width: 100%;
             border-collapse: collapse;
             text-align: center;
-            font-size: 10px; /* فۆنتەکە کەمێک بچووکتر کرایەوە */
+            font-size: 10px; 
         }
         #usersTable th, #usersTable td {
             white-space: nowrap; 
-            padding: 6px 8px; /* بۆشایی ناو خانەکان زۆر کەم کرایەوە */
+            padding: 6px 8px; 
             border: 1px solid #ddd;
         }
         #usersTable th {
-            padding: 8px 10px; /* سەردێڕی خشتەکە کەمێک گەورەتر بێت ئاساییە */
+            padding: 8px 10px; 
         }
-        /* ==================================================== */
         
         footer {
             background-color: #0056b3;
@@ -274,11 +272,42 @@
             font-family: 'Rabar', Tahoma, Arial, sans-serif !important;
         }
 
+        /* =========================================================
+           ڕێکخستنی نوێ بۆ بەشی پرینت کردن (چاپکردن)
+        ========================================================= */
         @media print {
             body * { visibility: hidden; }
             .table-responsive, .table-responsive * { visibility: visible; }
-            .table-responsive { position: absolute; right: 0; top: 0; width: 100%; overflow: visible; }
-            #usersTable th, #usersTable td { white-space: normal; }
+            .table-responsive { 
+                position: absolute; 
+                right: 0; 
+                top: 0; 
+                width: 100%; 
+                overflow: visible; 
+            }
+            
+            #usersTable {
+                font-size: 14px !important; /* قەبارەی فۆنتەکە گەورەتر کرا بۆ خوێندنەوە */
+                width: 100% !important;
+                border-collapse: collapse !important;
+            }
+
+            #usersTable th, #usersTable td { 
+                white-space: normal !important; 
+                color: #000000 !important; /* ڕەنگی دەقەکان کران بە ڕەشی تۆخ */
+                border: 1px solid #000000 !important; /* هێڵەکانی خشتەکە ڕەشتۆخ کران */
+                padding: 10px 8px !important; /* کەمێک بۆشایی بۆ ئاسان خوێندنەوە */
+            }
+
+            #usersTable th {
+                background-color: #e6e6e6 !important; /* باکگراوندی سەردێڕ خۆڵەمێشی دەبێت */
+                color: #000000 !important;
+                font-weight: bold !important;
+                /* ئەم دوو کۆدەی خوارەوە بۆ دەرخستنی ڕەنگی باکگراوندە لە کاتی چاپکردن */
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
             .no-print { display: none !important; }
         }
     </style>
@@ -770,7 +799,6 @@
                     tbody.innerHTML = "<tr><td colspan='5' style='padding: 15px;'>هیچ ناوێک بۆ ئەمڕۆ تۆمار نەکراوە!</td></tr>";
                 } else {
                     globalUsersData.forEach(user => {
-                        // قەبارەی دوگمەکان بچووکتر کراوەتەوە بۆ ئەوەی جێگە نەگرێت
                         let row = `<tr>
                             <td style="font-weight: bold; color: #4da3ff;">${user.rank}</td>
                             <td>${user.name}</td>
