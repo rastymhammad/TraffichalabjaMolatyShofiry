@@ -192,6 +192,25 @@
             margin: 0;
         }
         
+        /* === بەشی نوێ بۆ ڕێکخستنی خشتەکە لە مۆبایل === */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-top: 15px;
+        }
+        #usersTable {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+        #usersTable th, #usersTable td {
+            white-space: nowrap; /* ڕێگری دەکات لە شکانەوەی دەقەکان */
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+        }
+        /* ================================================= */
+        
         footer {
             background-color: #0056b3;
             color: white;
@@ -242,6 +261,10 @@
             background-color: #1e1e1e;
             border-top: 2px solid #4da3ff;
         }
+        body.dark-mode #usersTable th, 
+        body.dark-mode #usersTable td {
+            border: 1px solid #444;
+        }
 
         .swal2-container {
             font-family: 'Rabar', Tahoma, Arial, sans-serif !important;
@@ -249,8 +272,9 @@
 
         @media print {
             body * { visibility: hidden; }
-            #usersTable, #usersTable * { visibility: visible; }
-            #usersTable { position: absolute; right: 0; top: 0; width: 100%; }
+            .table-responsive, .table-responsive * { visibility: visible; }
+            .table-responsive { position: absolute; right: 0; top: 0; width: 100%; overflow: visible; }
+            #usersTable th, #usersTable td { white-space: normal; } /* لە کاتی پرینت دەکرێت بشکێتەوە */
             .no-print { display: none !important; }
         }
     </style>
@@ -327,19 +351,22 @@
             <button style="background: #6c757d;" onclick="window.print()">چاپکردنی لیست (Print)</button>
             <button style="background: #dc3545; margin-top: 5px;" onclick="hideAdminPanel()">داخستنی بەشی ئەدمین</button>
             
-            <table id="usersTable" border="1" style="width:100%; margin-top:15px; border-collapse: collapse; text-align: center; display: none;">
-                <thead>
-                    <tr style="background: #0056b3; color: white;">
-                        <th style="padding: 8px;">ژمارە</th>
-                        <th style="padding: 8px;">ناو</th>
-                        <th style="padding: 8px;">ژمارەی تەلەفۆن</th>
-                        <th style="padding: 8px;">کاتی تۆمارکردن</th>
-                        <th style="padding: 8px; width: 100px;" class="no-print">کردارەکان</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                </tbody>
-            </table>
+            <!-- زیادکردنی کلاس بۆ ڕێکخستنی خشتەکە -->
+            <div class="table-responsive">
+                <table id="usersTable" style="display: none;">
+                    <thead>
+                        <tr style="background: #0056b3; color: white;">
+                            <th>ژمارە</th>
+                            <th>ناو</th>
+                            <th>ژمارەی تەلەفۆن</th>
+                            <th>کاتی تۆمارکردن</th>
+                            <th class="no-print">کردارەکان</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div style="text-align: center; margin-top: 10px; margin-bottom: 20px;">
@@ -504,7 +531,6 @@
                 return;
             }
 
-            // === مەرجی ژمارەی مۆبایل لە جاڤاسکڕێپت ===
             if (!phone.startsWith("077") && !phone.startsWith("075") && !phone.startsWith("078")) {
                 Swal.fire('ئاگاداری', 'ژمارەی مۆبایل دەبێت بە 077 یان 075 یان 078 دەست پێبکات!', 'warning');
                 return;
@@ -514,7 +540,6 @@
                 Swal.fire('ئاگاداری', 'ژمارەی مۆبایل دەبێت 11 ژمارە بێت!', 'warning');
                 return;
             }
-            // =======================================
 
             let originalText = regBtn.innerHTML;
             regBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> چاوەڕێ بکە...';
@@ -739,21 +764,24 @@
                 tbody.innerHTML = "";
 
                 if(globalUsersData.length === 0) {
-                    tbody.innerHTML = "<tr><td colspan='5' style='padding: 10px;'>هیچ ناوێک بۆ ئەمڕۆ تۆمار نەکراوە!</td></tr>";
+                    tbody.innerHTML = "<tr><td colspan='5' style='padding: 15px;'>هیچ ناوێک بۆ ئەمڕۆ تۆمار نەکراوە!</td></tr>";
                 } else {
                     globalUsersData.forEach(user => {
+                        // لێرەدا کۆدی خانەی دوگمەکانمان ڕێکخستووە بۆ ئەوەی بچنە پاڵ یەکتر
                         let row = `<tr>
-                            <td style="padding: 8px; font-weight: bold; color: #4da3ff;">${user.rank}</td>
-                            <td style="padding: 8px;">${user.name}</td>
-                            <td style="padding: 8px;">${user.phone}</td>
-                            <td style="padding: 8px;">${user.createdAt}</td>
-                            <td style="padding: 8px;" class="no-print">
-                                <button onclick="editUser(${user.id || user.Id}, '${user.name}', '${user.phone}')" style="background: #ffc107; color: black; padding: 6px 10px; margin: 0 5px 0 0; width: auto; font-size: 14px; border-radius: 4px;" title="دەستکاریکردن">
-                                    <i class="fa-solid fa-pen"></i>
-                                </button>
-                                <button onclick="deleteUser(${user.id || user.Id})" style="background: #dc3545; color: white; padding: 6px 10px; margin: 0; width: auto; font-size: 14px; border-radius: 4px;" title="سڕینەوە">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
+                            <td style="font-weight: bold; color: #4da3ff;">${user.rank}</td>
+                            <td>${user.name}</td>
+                            <td>${user.phone}</td>
+                            <td>${user.createdAt}</td>
+                            <td class="no-print">
+                                <div style="display: flex; gap: 8px; justify-content: center;">
+                                    <button onclick="editUser(${user.id || user.Id}, '${user.name}', '${user.phone}')" style="background: #ffc107; color: black; padding: 6px 12px; margin: 0; width: auto; font-size: 14px; border-radius: 4px;" title="دەستکاریکردن">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+                                    <button onclick="deleteUser(${user.id || user.Id})" style="background: #dc3545; color: white; padding: 6px 12px; margin: 0; width: auto; font-size: 14px; border-radius: 4px;" title="سڕینەوە">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </div>
                             </td>
                         </tr>`;
                         tbody.innerHTML += row;
@@ -765,7 +793,6 @@
             }
         }
 
-        // === فەنکشنی نوێ بۆ دەستکاریکردنی ناو یان ژمارە (Edit) ===
         async function editUser(id, currentName, currentPhone) {
             const { value: formValues } = await Swal.fire({
                 title: 'دەستکاریکردنی زانیاری',
@@ -817,7 +844,7 @@
 
                     if (response.ok) {
                         Swal.fire('سەرکەوتوو بوو!', resData.message || 'زانیارییەکان گۆڕدران.', 'success');
-                        loadTodayUsers(); // بۆ ئەوەی خشتەکە خۆی تازە بکاتەوە
+                        loadTodayUsers(); 
                     } else {
                         Swal.fire('هەڵە!', resData.message || 'کێشەیەک هەیە لە نوێکردنەوە!', 'error');
                     }
@@ -826,7 +853,6 @@
                 }
             }
         }
-        // ========================================================
 
         async function deleteUser(id) {
             const confirmResult = await Swal.fire({
