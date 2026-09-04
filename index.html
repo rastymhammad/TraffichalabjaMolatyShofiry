@@ -229,7 +229,6 @@
             margin-top: 5px;
         }
 
-        /* === دیزاینی ئایکۆنەکانی سۆشیاڵ میدیا === */
         .social-icons {
             margin-top: 15px;
         }
@@ -245,7 +244,6 @@
             color: #ffffff;
             transform: scale(1.2) translateY(-3px);
         }
-        /* ======================================= */
 
         body.dark-mode {
             background-color: #121212;
@@ -392,7 +390,11 @@
                 </div>
             </div>
 
-            <button class="search-btn" onclick="loadTodayUsers()">نیشاندانی لیستی ئەمڕۆ</button>
+            <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                <button class="search-btn" onclick="loadTodayUsers()" style="flex: 1; margin-top: 0;">نیشاندانی لیستی ئەمڕۆ</button>
+                <button style="background: #20c997; color: white; width: auto; margin-top: 0; padding: 12px 20px;" onclick="loadTodayUsers()" title="نوێکردنەوەی خشتەکە">🔄</button>
+            </div>
+            
             <button style="background: #17a2b8;" onclick="downloadExcel()">داونلۆدکردنی ئێکسڵ (Excel/CSV)</button>
             <button style="background: #ffc107; color: black;" onclick="toggleSystemStatus()">ڕاگرتن / کردنەوەی سایت</button>
             <button style="background: #6c757d;" onclick="window.print()">چاپکردنی لیست (Print)</button>
@@ -424,7 +426,6 @@
         <p>هەموو مافێکی پارێزراوە بۆ بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە &copy; 2026</p>
         <p class="dev-name">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووچۆ ( ڕاستی محمد شێخ حیدر )</p>
         
-        <!-- بەشی ئایکۆنەکان کە زیادمان کرد -->
         <div class="social-icons no-print">
             <a href="https://facebook.com/share/19ChSYyAyM?mibextid=wwXIfr" target="_blank" title="فەیسبووکی گەشەپێدەر">
                 <i class="fa-brands fa-facebook"></i>
@@ -440,6 +441,7 @@
         const apiUrl = `${baseUrl}/api/users`;
         let globalUsersData = [];
         let adminClickCount = 0;
+        let timerInterval = null;
         
         let tempAdminPassword = "";
         let tempPreRegPassword = "";
@@ -452,35 +454,95 @@
             return true;
         }
 
+        // دیزاینی پەنجەرەی پسوولەی ئەلیکترۆنی (Digital Ticket)
+        function generateTicketHTML(name, phone, rank, time) {
+            let dateToday = new Date().toISOString().slice(0,10);
+            return `
+                <div style="border: 2px dashed #0056b3; padding: 20px; border-radius: 10px; background: #f0f8ff; text-align: center; font-family: 'Rabar', Tahoma, sans-serif;">
+                    <i class="fa-solid fa-address-card" style="font-size: 40px; color: #0056b3; margin-bottom: 10px;"></i>
+                    <h3 style="margin: 0 0 15px 0; color: #0056b3; font-size: 18px;">بەڕێوەبەرایەتی هاتووچۆی هەڵەبجە</h3>
+                    
+                    <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #cce5ff; text-align: right;">
+                        <p style="margin: 5px 0; font-size: 15px;"><strong>ناوی هاووڵاتی:</strong> ${name}</p>
+                        <p style="margin: 5px 0; font-size: 15px;"><strong>ژمارەی تەلەفۆن:</strong> ${phone}</p>
+                        <hr style="border: 0; border-top: 1px dashed #ccc; margin: 12px 0;">
+                        <p style="margin: 5px 0; font-size: 16px; text-align: center;"><strong>ژمارەی نۆرە:</strong> <span style="font-size: 28px; color: #dc3545; font-weight: bold;">${rank}</span></p>
+                        <p style="margin: 5px 0; font-size: 15px; text-align: center;"><strong>کاتی ئامادەبوون:</strong> <span style="color: #28a745; font-weight: bold;">${time}</span></p>
+                        <p style="margin: 5px 0; font-size: 12px; text-align: center; color: gray;">بەروار: ${dateToday}</p>
+                    </div>
+                    
+                    <p style="margin: 15px 0 0 0; font-size: 13px; color: #666; font-weight: bold;">تکایە سکرین شۆتی ئەم پسوولەیە بگرە بۆ کاتی سەردانیکردن.</p>
+                </div>
+            `;
+        }
+
+        // کۆنترۆڵکردنی دیزاینی کاتی داخران
+        function setClosedUI(msg) {
+            let badge = document.getElementById("statusBadge");
+            if(badge) badge.className = "status-badge status-closed";
+            let dot = document.getElementById("statusDot");
+            if(dot) dot.className = "dot dot-red";
+            let text = document.getElementById("statusText");
+            if(text) text.innerText = msg;
+            
+            let regBtn = document.getElementById("registerBtn");
+            if (regBtn) {
+                regBtn.disabled = true;
+                regBtn.style.backgroundColor = "gray";
+                regBtn.style.cursor = "not-allowed";
+                regBtn.innerHTML = '<i class="fa-solid fa-lock"></i> کات ماوە بۆ کردنەوە';
+            }
+            document.getElementById("countdownTimer").style.display = "block";
+            startCountdown();
+        }
+
+        // کۆنترۆڵکردنی دیزاینی کاتی کرانەوە
+        function setOpenUI() {
+            let badge = document.getElementById("statusBadge");
+            if(badge) badge.className = "status-badge status-open";
+            let dot = document.getElementById("statusDot");
+            if(dot) dot.className = "dot dot-green";
+            let text = document.getElementById("statusText");
+            if(text) text.innerText = "دۆخی سیستەم: کراوەیە بۆ تۆمارکردن";
+            
+            let regBtn = document.getElementById("registerBtn");
+            if (regBtn) {
+                regBtn.disabled = false;
+                regBtn.style.backgroundColor = ""; 
+                regBtn.style.cursor = "pointer";
+                regBtn.innerHTML = 'تۆمارکردن';
+            }
+            document.getElementById("countdownTimer").style.display = "none";
+        }
+
         function checkSystemTimeUI() {
-            const options = { timeZone: 'Asia/Baghdad', hour: 'numeric', hour12: false };
-            const iraqHour = parseInt(new Intl.DateTimeFormat('en-US', options).format(new Date()));
+            const dateInIraq = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Baghdad"}));
+            const iraqHour = dateInIraq.getHours();
+            const dayOfWeek = dateInIraq.getDay(); 
 
+            // پشکنینی پشووی کۆتایی هەفتە
+            let isWeekendClosed = false;
+            if (dayOfWeek === 4 && iraqHour >= 14) isWeekendClosed = true; // پێنجشەممە پاش 2ی نیوەڕۆ
+            if (dayOfWeek === 5) isWeekendClosed = true; // هەینی
+            if (dayOfWeek === 6 && iraqHour < 18) isWeekendClosed = true; // شەممە پێش 6ی ئێوارە
+
+            if (isWeekendClosed) {
+                setClosedUI("پشوو: سیستەم شەممە کاتژمێر 6ی ئێوارە دەکرێتەوە");
+                return true;
+            }
+
+            // پشکنینی داخرانی ڕۆژانە
             if (iraqHour >= 14 && iraqHour < 18) {
-                let badge = document.getElementById("statusBadge");
-                let dot = document.getElementById("statusDot");
-                let text = document.getElementById("statusText");
-                let regBtn = document.getElementById("registerBtn");
-
-                if (badge) badge.className = "status-badge status-closed";
-                if (dot) dot.className = "dot dot-red";
-                if (text) text.innerText = "دۆخی سیستەم: داخراوە تا 6:00 ی ئێوارە";
-                
-                if (regBtn) {
-                    regBtn.disabled = true;
-                    regBtn.style.backgroundColor = "gray";
-                    regBtn.style.cursor = "not-allowed";
-                    regBtn.innerHTML = '<i class="fa-solid fa-lock"></i> لە 6:00 ی ئێوارە دەکرێتەوە';
-                }
+                setClosedUI("دۆخی سیستەم: داخراوە تا 6:00 ی ئێوارە");
                 return true; 
             }
+            
             return false;
         }
 
         async function checkQuotaAndTimer() {
             try {
                 let response = await fetch(`${apiUrl}/count`, { method: "GET" });
-
                 if (response.ok) {
                     let result = await response.json();
                     let count = result.count; 
@@ -488,36 +550,10 @@
                     let isTimeBlocked = checkSystemTimeUI();
 
                     if (!isTimeBlocked) {
-                        let badge = document.getElementById("statusBadge");
-                        let dot = document.getElementById("statusDot");
-                        let text = document.getElementById("statusText");
-                        let regBtn = document.getElementById("registerBtn");
-
                         if (count >= 40) {
-                            badge.className = "status-badge status-closed";
-                            dot.className = "dot dot-red";
-                            text.innerText = "دۆخی سیستەم: داخراوە (پشک تەواو بوو)";
-                            
-                            document.getElementById("countdownTimer").style.display = "block";
-                            startCountdown();
-
-                            if (regBtn) {
-                                regBtn.disabled = true;
-                                regBtn.style.backgroundColor = "gray";
-                                regBtn.style.cursor = "not-allowed";
-                                regBtn.innerHTML = '<i class="fa-solid fa-ban"></i> پشکی ئەمڕۆ تەواو بووە';
-                            }
+                            setClosedUI("دۆخی سیستەم: داخراوە (پشک تەواو بوو)");
                         } else {
-                            badge.className = "status-badge status-open";
-                            dot.className = "dot dot-green";
-                            text.innerText = "دۆخی سیستەم: کراوەیە بۆ تۆمارکردن";
-                            
-                            if (regBtn) {
-                                regBtn.disabled = false;
-                                regBtn.style.backgroundColor = ""; 
-                                regBtn.style.cursor = "pointer";
-                                regBtn.innerHTML = 'تۆمارکردن';
-                            }
+                            setOpenUI();
                         }
                     }
                 }
@@ -527,23 +563,50 @@
         }
         checkQuotaAndTimer();
 
+        // ژمێرەری کات (کاتژمێرەکەی خوارەوە) کە زیرەکانە دەزانێت کەی دەکرێتەوە
         function startCountdown() {
+            if (timerInterval) clearInterval(timerInterval);
+            
             function update() {
-                let now = new Date();
-                let target = new Date();
+                const dateInIraq = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Baghdad"}));
+                let now = dateInIraq;
+                let target = new Date(now);
                 target.setHours(18, 0, 0, 0);
-                if (now > target) {
-                    target.setDate(target.getDate() + 1);
+
+                let day = now.getDay();
+                let hour = now.getHours();
+
+                // ئەگەر لە پشوودا بێت
+                if ((day === 4 && hour >= 14) || day === 5 || (day === 6 && hour < 18)) {
+                    let daysToSat = (6 - day + 7) % 7;
+                    target.setDate(now.getDate() + daysToSat);
+                } 
+                // ئەگەر لە کاتی ئاسایی و داخرانی شەوانەدا بێت
+                else if (hour >= 18) {
+                    if (day === 3) target.setDate(now.getDate() + 3); // ئەگەر چوارشەممە شەو بوو پشک تەواو بوو
+                    else if (day === 4) target.setDate(now.getDate() + 2);
+                    else target.setDate(now.getDate() + 1);
+                } 
+                else if (hour >= 14 && hour < 18) {
+                    // هیچ ناکەین چونکە تارجێت ئەمڕۆ 18:00ـیە
+                } 
+                else { // کاتی بەیانیان ئەگەر پشک تەواو بوو
+                    if (day === 4) target.setDate(now.getDate() + 2); 
                 }
+
                 let diff = target - now;
+                if (diff < 0) diff = 0;
+
+                let days = Math.floor(diff / (1000 * 60 * 60 * 24));
                 let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 let seconds = Math.floor((diff % (1000 * 60)) / 1000);
                 
-                document.getElementById("countdownTimer").innerText = ` بۆ تۆماركردنی ناوی سبەی: کاتژمێر ${hours} : خولەک ${minutes} : چرکە ${seconds}`;
+                let dayStr = days > 0 ? `${days} ڕۆژ و ` : "";
+                document.getElementById("countdownTimer").innerText = ` کاتی کردنەوەی سیستەم: ${dayStr}${hours} : ${minutes} : ${seconds}`;
             }
             update();
-            setInterval(update, 1000);
+            timerInterval = setInterval(update, 1000);
         }
 
         const themeBtn = document.getElementById("themeToggleBtn");
@@ -616,14 +679,24 @@
                 let result = await response.json().catch(() => ({}));
 
                 if(response.ok) {
-                    Swal.fire('سەرکەوتوو بوو', result.message || 'بە سەرکەوتوویی تۆمارکرا!', 'success');
+                    // نیشاندانی پسوولەی ئەلیکترۆنی پاش تۆمارکردن
+                    if(result.ticket) {
+                        Swal.fire({
+                            title: 'تۆمارکردن سەرکەوتوو بوو!',
+                            html: generateTicketHTML(result.ticket.name, result.ticket.phone, result.ticket.rank, result.ticket.time),
+                            confirmButtonText: 'باشە، تێگەیشتم',
+                            confirmButtonColor: '#28a745'
+                        });
+                    } else {
+                        Swal.fire('سەرکەوتوو بوو', result.message || 'بە سەرکەوتوویی تۆمارکرا!', 'success');
+                    }
+                    
                     document.getElementById("nameInput").value = "";
                     document.getElementById("phoneInput").value = "";
                 } else {
                     Swal.fire('هەڵە', result.message || 'کێشەیەک ڕوویدا', 'error');
                 }
             } catch (error) {
-                console.error("Error:", error);
                 Swal.fire('کێشەی هێڵ', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error');
             } finally {
                 regBtn.innerHTML = originalText;
@@ -724,7 +797,13 @@
                 let result = await response.json().catch(() => ({}));
                 
                 if(response.ok) {
-                    Swal.fire({ title: 'دۆزرایەوە', html: result.message, icon: 'success', confirmButtonText: 'باشە' });
+                    // پیشاندانی پسوولە لە کاتی گەڕان
+                    Swal.fire({ 
+                        title: 'ناو دۆزرایەوە', 
+                        html: generateTicketHTML(result.name, result.phone, result.rank, result.timeMessage), 
+                        confirmButtonText: 'داخستن',
+                        confirmButtonColor: '#0056b3'
+                    });
                 } else {
                     Swal.fire('نەدۆزرایەوە', result.message || 'ناو نەدۆزرایەوە!', 'error');
                 }
