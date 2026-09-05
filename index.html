@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
-    <!-- کتێبخانەی QR Code و Chart.js بۆ ئامارەکان -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -220,30 +219,36 @@
             padding: 8px 10px; 
         }
         
-        /* ستایلی تایبەت بە داشبۆرد و چارت */
+        /* قەبارەی نوێ و بچووک بۆ مۆبایل لە بەشی ئامارەکان */
         .dashboard-cards {
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 8px;
+            margin-bottom: 15px;
             justify-content: space-between;
         }
         .dash-card {
             background: #f8f9fa;
             border: 1px solid #dee2e6;
             border-radius: 8px;
-            padding: 15px 10px;
+            padding: 10px 5px;
             flex: 1;
             text-align: center;
         }
         .dash-card h4 {
-            margin: 0 0 5px 0;
-            font-size: 14px;
+            margin: 0 0 3px 0;
+            font-size: 12px;
             color: #6c757d;
         }
         .dash-card h3 {
             margin: 0;
-            font-size: 24px;
+            font-size: 18px;
             color: #0056b3;
+        }
+        
+        /* کۆنتڕۆڵکردنی قەبارەی چارتەکە بۆ ئەوەی لە مۆبایلدا گەورە نەبێت */
+        .chart-container {
+            max-width: 240px;
+            margin: 0 auto;
         }
         
         footer {
@@ -403,7 +408,6 @@
             <div id="countdownTimer" class="timer-box"></div>
         </div>
 
-        <!-- بەشێکی شاراوە بۆ پشکنینی بارکۆد کە تەنها کاتێک دەکرێتەوە ئەگەر پۆلیسێک بارکۆد سکان بکات -->
         <div class="container" id="verifySection" style="display: none; border: 3px solid #28a745;">
             <h2 style="color: #28a745;"><i class="fa-solid fa-shield-check"></i> دڵنیابوونەوەی پسوولە</h2>
             <div id="verifyResult" style="padding: 15px; font-size: 16px; font-weight: bold; margin-top: 10px; border-radius: 8px;">
@@ -424,9 +428,9 @@
         <div class="container printable-area" id="adminSection" style="display: none;">
             <h2>بەشی ئەدمین - کۆنتڕۆڵی سیستەم</h2>
 
-            <!-- داشبۆردی ئامارەکان -->
-            <div class="no-print" style="margin-bottom: 25px;">
-                <h3 style="text-align: right; margin-bottom: 10px; font-size: 16px; color: #0056b3;">ئاماری ئەمڕۆ</h3>
+            <!-- ئامارەکان بە قەبارەی ڕێک و بچووک بۆ مۆبایل -->
+            <div class="no-print" style="margin-bottom: 20px;">
+                <h3 style="text-align: right; margin-bottom: 8px; font-size: 15px; color: #0056b3;">ئاماری ئەمڕۆ</h3>
                 <div class="dashboard-cards">
                     <div class="dash-card">
                         <h4>کۆی گشتی</h4>
@@ -442,8 +446,10 @@
                     </div>
                 </div>
                 
-                <div style="background: white; padding: 10px; border-radius: 8px; border: 1px solid #dee2e6;">
-                    <canvas id="myChart" width="400" height="200"></canvas>
+                <div style="background: white; padding: 8px; border-radius: 8px; border: 1px solid #dee2e6;">
+                    <div class="chart-container">
+                        <canvas id="myChart"></canvas>
+                    </div>
                 </div>
             </div>
 
@@ -549,21 +555,18 @@
             return true;
         }
 
-        // === زیادکردنی QR Code بۆ ناو پسوولە ===
         function generateTicketHTML(name, phone, rank, time, qrToken) {
             let dateToday = new Date().toISOString().slice(0,10);
             
-            // لینکی پشکنینی بارکۆدەکە
             let verifyUrl = window.location.href.split('?')[0] + "?verify=" + encodeURIComponent(qrToken);
             
-            // دروستکردنی بارکۆدەکە لە شێوەی وێنەی Base64 بۆ ئەوەی لەناو Swal کار بکات
             setTimeout(() => {
                 let qrContainer = document.getElementById("qrCodeDiv");
                 if(qrContainer) {
                     new QRCode(qrContainer, {
                         text: verifyUrl,
-                        width: 100,
-                        height: 100,
+                        width: 90,
+                        height: 90,
                         colorDark : "#000000",
                         colorLight : "#ffffff",
                         correctLevel : QRCode.CorrectLevel.H
@@ -594,7 +597,6 @@
                 </div>
             `;
         }
-        // ==========================================
 
         function setClosedUI(msg) {
             let badge = document.getElementById("statusBadge");
@@ -717,13 +719,11 @@
             }
         }
         
-        // ==== پشکنین ئەگەر لینکی سەردانیکردنەکە لە ڕێگەی سکانی QR کۆدەوە بێت ====
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const verifyToken = urlParams.get('verify');
             
             if (verifyToken) {
-                // شاردنەوەی بەشەکانی تر بۆ ئەوەی تەنها پشکنینەکە پیشان بدات
                 document.getElementById('userRegistrationSection').style.display = 'none';
                 document.getElementById('searchSection').style.display = 'none';
                 document.querySelector('.news-ticker-container').style.display = 'none';
@@ -732,7 +732,6 @@
                 let resultDiv = document.getElementById('verifyResult');
                 verifyDiv.style.display = 'block';
                 
-                // ناردنی تۆکنەکە بۆ سێرڤەر بۆ پشکنین
                 fetch(`${apiUrl}/verify-qr?token=${encodeURIComponent(verifyToken)}`)
                     .then(response => response.json())
                     .then(data => {
@@ -766,7 +765,6 @@
                 checkQuotaAndTimer();
             }
         };
-        // =======================================================================
 
         function startCountdown() {
             if (timerInterval) clearInterval(timerInterval);
@@ -987,7 +985,6 @@
                     document.getElementById("adminNameInput").value = "";
                     document.getElementById("adminPhoneInput").value = "";
                     
-                    // دوای تۆمارکردنی ئەدمینیش، با ئامارەکان تازە ببنەوە ئەگەر داشبۆردەکە کراوە بوو
                     if(tempAdminPassword !== "") {
                         loadAdminStats();
                         loadTodayUsers();
@@ -1016,7 +1013,6 @@
                 let result = await response.json().catch(() => ({}));
                 
                 if(response.ok) {
-                    // لێرەدا پێویستمان بە qrToken نییە چونکە تەنها بۆ بینینەوەیە، بەڵام بۆ ئەوەی خەتابار نەبێت نرخی بەتاڵی دەدەینێ ئەگەر نەبوو
                     Swal.fire({ 
                         title: 'ناو دۆزرایەوە', 
                         html: generateTicketHTML(result.name, result.phone, result.rank, result.timeMessage, ""), 
@@ -1059,10 +1055,7 @@
                     if (response.ok) {
                         tempAdminPassword = pwd; 
                         document.getElementById("adminSection").style.display = "block";
-                        
-                        // هەرکە ئەدمین چووە ژوورەوە، ئامارەکان بهێنە
                         loadAdminStats();
-                        
                     } else {
                         Swal.fire('هەڵە', 'پاسوۆردەکە هەڵەیە!', 'error');
                     }
@@ -1087,7 +1080,6 @@
             adminClickCount = 0;
         }
 
-        // ==== فەنکشن بۆ هێنانەوەی ئامارەکان بۆ داشبۆرد ====
         async function loadAdminStats() {
             if(!tempAdminPassword) return;
             
@@ -1099,15 +1091,12 @@
                 if(response.ok) {
                     let stats = await response.json();
                     
-                    // دانانی ژمارەکان لەناو کارتەکان
                     document.getElementById('statTotal').innerText = stats.today.total;
                     document.getElementById('statUser').innerText = stats.today.byUser;
                     document.getElementById('statAdmin').innerText = stats.today.byAdmin;
                     
-                    // دروستکردنی چارتەکە (Pie Chart)
                     let ctx = document.getElementById('myChart').getContext('2d');
                     
-                    // ئەگەر چارتەکە پێشتر هەبوو، بیسڕەوە بۆ ئەوەی دوو جار نەکێشرێت
                     if(statChart) statChart.destroy();
                     
                     statChart = new Chart(ctx, {
@@ -1125,12 +1114,10 @@
                             plugins: {
                                 legend: {
                                     position: 'bottom',
-                                    labels: { font: { family: 'Rabar' } }
+                                    labels: { font: { family: 'Rabar', size: 12 } }
                                 },
                                 title: {
-                                    display: true,
-                                    text: 'ڕێژەی سەرچاوەی تۆمارکردنەکان',
-                                    font: { family: 'Rabar', size: 14 }
+                                    display: false
                                 }
                             }
                         }
@@ -1140,7 +1127,6 @@
                 console.log("کێشە لە هێنانەوەی ئامار:", e);
             }
         }
-        // ===================================================
 
         async function updateDailyQuota() {
             let newQuota = document.getElementById("adminQuotaInput").value;
@@ -1273,7 +1259,6 @@
                 }
                 table.style.display = "table";
                 
-                // نوێکردنەوەی ئامارەکانیش لەگەڵ لیستەکە
                 loadAdminStats();
                 
             } catch (error) {
@@ -1380,7 +1365,7 @@
                 return;
             }
             let csvContent = "\uFEFFژمارە,ناو,ژمارەی تەلەفۆن,کاتی تۆمارکردن\n";
-            globalUsersData.forEach(u => {
+            globalUsersData.query.forEach(u => {
                 csvContent += `${u.rank},"${u.name}","${u.phone}","${u.createdAt}"\n`;
             });
             let blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
