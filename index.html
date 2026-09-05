@@ -566,9 +566,11 @@
 
                     if (!isTimeBlocked) {
                         if (count >= maxQuota) {
-                            setClosedUI(`دۆخی سیستەم: پشک تەواو بوو (${count}/${maxQuota})`);
+                            // ژمارە شاراوەیە، تەنها دەڵێت پشک تەواو بوو
+                            setClosedUI("دۆخی سیستەم: داخراوە (پشک تەواو بوو)");
                         } else {
-                            setOpenUI(`دۆخی سیستەم: کراوەیە (${count} لە ${maxQuota} گیراوە)`);
+                            // ژمارە شاراوەیە، تەنها دەڵێت کراوەیە
+                            setOpenUI("دۆخی سیستەم: کراوەیە بۆ تۆمارکردن");
                         }
                     }
                 }
@@ -715,7 +717,6 @@
             }
         }
 
-        // ==== گۆڕانکاری لێرەدایە: لادانی پاسوۆرد و ناردنی بۆ سێرڤەر ====
         async function showPreRegForm() {
             const { value: pwd } = await Swal.fire({
                 title: 'پاسوۆرد داخڵ بکە',
@@ -745,7 +746,6 @@
                 }
             }
         }
-        // ==============================================================
 
         async function adminRegisterUser() {
             let name = document.getElementById("adminNameInput").value.trim();
@@ -845,7 +845,6 @@
             }
         }
 
-        // ==== گۆڕانکاری لێرەدایە: لادانی پاسوۆرد و ناردنی بۆ سێرڤەر ====
         async function showAdminPanel() {
             const { value: pwd } = await Swal.fire({
                 title: 'تایبه‌ت به‌ ئه‌دمین',
@@ -873,7 +872,6 @@
                 }
             }
         }
-        // ==============================================================
 
         function hideAdminPanel() {
             document.getElementById("adminSection").style.display = "none";
