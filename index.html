@@ -374,7 +374,7 @@
 
     <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="گۆڕینی ڕەنگ">🌙</button>
 
-    <div class="main-content">
+    <div class="main-content" id="normalMainContent">
         <div class="header-title">
             <h1>بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە</h1>
             <p></p>
@@ -386,7 +386,7 @@
 
         <div class="news-ticker-container">
             <div class="news-ticker-text">
-                نۆره‌ گرتنی مۆڵه‌تی شۆفێری له‌ به‌ڕێوه‌به‌رایه‌تی هاتووچۆی پارێزگای هه‌ڵه‌بجه سه‌باره‌ت به‌و هاووڵاتیانه‌ی كه‌ ڕۆژانه‌ له‌ ئیمتیحانی پراكتیكی واته‌ ترای ده‌ر ده‌چن له‌و ڕۆژه‌دا نابێت سه‌ردانی به‌ڕێوه‌به‌رایەتی بكه‌ن ده‌بێت ئه‌وانیش ناوی خۆیان تۆمار بكه‌ن بۆ ڕۆژی دواتر  
+                نۆره‌ گرتنی مۆڵه‌تی شۆفێری له‌ به‌ڕێوه‌به‌رایه‌تی هاتووچۆی پارێزگای هه‌ڵه‌بجه سه‌باره‌ت به‌و هاووڵاتیانه‌ی كه‌ ڕۆژانه‌ له‌ ئیمتیحانی پراكتیكی واته‌ ترای ده‌ر ده‌چن له‌و ڕۆژه‌دا نابێت سه‌ردانی به‌ڕێوه‌به‌رایه‌تی بكه‌ن ده‌بێت ئه‌وانیش ناوی خۆیان تۆمار بكه‌ن بۆ ڕۆژی دواتر  
             </div>
         </div>
 
@@ -404,14 +404,6 @@
 
             <button id="registerBtn" onclick="registerUser()">تۆمارکردن</button>
             <div id="countdownTimer" class="timer-box"></div>
-        </div>
-
-        <div class="container" id="verifySection" style="display: none; border: 3px solid #0056b3;">
-            <h2 style="color: #0056b3;"><i class="fa-solid fa-shield-check"></i> دڵنیابوونەوەی پسوولە</h2>
-            <div id="verifyResult" style="padding: 15px; font-size: 16px; font-weight: bold; margin-top: 10px; border-radius: 8px; background: #e9ecef;">
-                تکایە چاوەڕێ بکە...
-            </div>
-            <button onclick="window.location.href=window.location.pathname" style="background: #0056b3; margin-top: 15px;">گەڕانەوە بۆ سەرەتا</button>
         </div>
 
         <div class="container" id="searchSection">
@@ -509,6 +501,15 @@
         </div>
     </div>
 
+    <!-- بەشی پشکنینی بارکۆد کە تەنها لە کاتی سکاندا بە تەنهایی دەردەکەوێت -->
+    <div class="container" id="verifySection" style="display: none; max-width: 450px; margin: 50px auto; border: 3px solid #0056b3;">
+        <h2 style="color: #0056b3; margin-top: 10px;"><i class="fa-solid fa-shield-check"></i> دڵنیابوونەوەی پسوولە</h2>
+        <div id="verifyResult" style="padding: 20px; font-size: 16px; font-weight: bold; margin-top: 15px; border-radius: 8px; background: #e9ecef;">
+            چاوەڕێ بکە... پشکنین ئەنجام دەدرێت
+        </div>
+        <button onclick="window.location.href=window.location.origin + window.location.pathname" style="background: #0056b3; margin-top: 20px;">گەڕانەوە بۆ سەرەتا</button>
+    </div>
+
     <footer>
         <p>هەموو مافێکی پارێزراوە بۆ بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە &copy; 2026</p>
         <p class="dev-name">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووچۆ ( ڕاستی محمد شێخ حیدر )</p>
@@ -552,10 +553,8 @@
             return true;
         }
 
-        // فەنکشنی دروستکردنی پسوولە کە ئێستا لە کاتی گەڕانشدا کار دەکات
         function generateTicketHTML(name, phone, rank, time, qrToken, dateStr) {
             let displayDate = dateStr || new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
-            
             let verifyUrl = window.location.origin + window.location.pathname + "?verify=" + encodeURIComponent(qrToken);
             
             setTimeout(() => {
@@ -718,14 +717,14 @@
             }
         }
         
+        // ==== پشکنینی بارکۆد بە شێوازێک کە تەنها ئەنجامەکە پیشان بدات و باقی سایتەکە بشارێتەوە ====
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const verifyToken = urlParams.get('verify');
             
             if (verifyToken) {
-                document.getElementById('userRegistrationSection').style.display = 'none';
-                document.getElementById('searchSection').style.display = 'none';
-                document.querySelector('.news-ticker-container').style.display = 'none';
+                // شاردنەوەی تەواوی بەشەکانی تری سایتەکە بە خاوێنی
+                document.getElementById('normalMainContent').style.display = 'none';
                 
                 let verifyDiv = document.getElementById('verifySection');
                 let resultDiv = document.getElementById('verifyResult');
@@ -742,11 +741,11 @@
                             resultDiv.style.backgroundColor = "#d4edda";
                             resultDiv.style.color = "#155724";
                             resultDiv.innerHTML = `
-                                <i class="fa-solid fa-circle-check" style="font-size: 35px; color: #28a745; margin-bottom: 10px;"></i><br>
-                                <span style="font-size: 18px; color: #155724;">${data.message}</span><br><br>
-                                <div style="text-align: right; background: white; padding: 12px; border-radius: 6px; border: 1px solid #c3e6cb;">
-                                    <p style="margin: 5px 0;"><strong>ناوی هاووڵاتی:</strong> ${data.name}</p>
-                                    <p style="margin: 5px 0;"><strong>ژمارەی تەلەفۆن:</strong> ${data.phone}</p>
+                                <i class="fa-solid fa-circle-check" style="font-size: 40px; color: #28a745; margin-bottom: 10px;"></i><br>
+                                <span style="font-size: 20px; color: #155724; font-weight: bold;">${data.message}</span><br><br>
+                                <div style="text-align: right; background: white; padding: 15px; border-radius: 8px; border: 1px solid #c3e6cb; font-size: 16px;">
+                                    <p style="margin: 8px 0;"><strong>ناوی هاووڵاتی:</strong> ${data.name}</p>
+                                    <p style="margin: 8px 0;"><strong>ژمارەی تەلەفۆن:</strong> ${data.phone}</p>
                                 </div>
                             `;
                         } else {
@@ -755,8 +754,8 @@
                             resultDiv.style.backgroundColor = "#f8d7da";
                             resultDiv.style.color = "#721c24";
                             resultDiv.innerHTML = `
-                                <i class="fa-solid fa-circle-xmark" style="font-size: 35px; color: #dc3545; margin-bottom: 10px;"></i><br>
-                                <span style="font-size: 18px; color: #721c24;">${data.message}</span>
+                                <i class="fa-solid fa-circle-xmark" style="font-size: 40px; color: #dc3545; margin-bottom: 10px;"></i><br>
+                                <span style="font-size: 20px; color: #721c24; font-weight: bold;">${data.message}</span>
                             `;
                         }
                     })
@@ -1005,7 +1004,6 @@
             }
         }
 
-        // ==== ڕاستکردنەوەی بەشی گەڕان بۆ ئەوەی بارکۆدی ڕاستەقینە و بەرواری دروست پیشان بدات ====
         async function searchUser() {
             let searchPhone = document.getElementById("searchInput").value.trim();
             if(searchPhone === "") {
@@ -1018,7 +1016,6 @@
                 let result = await response.json().catch(() => ({}));
                 
                 if(response.ok) {
-                    // دروستکردنی تووکن بۆ گەڕان بە هەمان شێوازی تۆمارکردن بۆ ئەوەی بارکۆدەکە کار بکات
                     let todayDateStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
                     let cleanDateForToken = todayDateStr.replace(/-/g, '');
                     let searchQrToken = btoa(result.phone + "|" + cleanDateForToken);
