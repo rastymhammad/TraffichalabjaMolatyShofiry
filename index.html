@@ -408,7 +408,7 @@
             </div>
             
             <button class="no-print" style="background: #17a2b8;" onclick="downloadExcel()">داونلۆدکردنی ئێکسڵ (Excel/CSV)</button>
-            <button class="no-print" style="background: #ffc107; color: black;" onclick="toggleSystemStatus()">ڕاگرتن / کردنەوەی سایت</button>
+            <button class="no-print" style="background: #ffc107; color: black;" onclick="toggleSystemStatus()">ڕاگرتن / کردنەوەی سایت (پشووی فەرمی)</button>
             <button class="no-print" style="background: #6c757d;" onclick="window.print()">چاپکردنی لیست (Print)</button>
             <button class="no-print" style="background: #dc3545; margin-top: 5px;" onclick="hideAdminPanel()">داخستنی بەشی ئەدمین</button>
             
@@ -457,6 +457,9 @@
         
         let tempAdminPassword = "";
         let tempPreRegPassword = "";
+        
+        // زیادکراو: بۆ ئەوەی بزانین ئێستا سایتەکە کراوەیە یان داخراوە
+        let globalSystemIsActive = true; 
 
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
@@ -508,7 +511,6 @@
                 regBtn.disabled = true;
                 regBtn.style.backgroundColor = "gray";
                 regBtn.style.cursor = "not-allowed";
-                regBtn.innerHTML = '<i class="fa-solid fa-lock"></i> کات ماوە بۆ کردنەوە';
             }
             document.getElementById("countdownTimer").style.display = "block";
             startCountdown();
@@ -544,11 +546,15 @@
 
             if (isWeekendClosed) {
                 setClosedUI("پشوو: سیستەم شەممە کاتژمێر 6ی ئێوارە دەکرێتەوە");
+                let regBtn = document.getElementById("registerBtn");
+                if (regBtn) regBtn.innerHTML = '<i class="fa-solid fa-lock"></i> کات ماوە بۆ کردنەوە';
                 return true;
             }
 
             if (iraqHour >= 14 && iraqHour < 18) {
                 setClosedUI("دۆخی سیستەم: داخراوە تا 6:00 ی ئێوارە");
+                let regBtn = document.getElementById("registerBtn");
+                if (regBtn) regBtn.innerHTML = '<i class="fa-solid fa-lock"></i> کات ماوە بۆ کردنەوە';
                 return true; 
             }
             return false;
@@ -561,15 +567,29 @@
                     let result = await response.json();
                     let count = result.count; 
                     let maxQuota = result.maxQuota || 40;
+                    
+                    let isActive = result.isActive !== undefined ? result.isActive : true;
+                    globalSystemIsActive = isActive; 
+                    let customCloseMessage = result.closeMessage || "سیستەم داخراوە";
+
+                    if (isActive === false) {
+                        setClosedUI("دۆخی سیستەم: " + customCloseMessage);
+                        let regBtn = document.getElementById("registerBtn");
+                        if (regBtn) {
+                            regBtn.innerHTML = '<i class="fa-solid fa-lock"></i> ' + customCloseMessage;
+                        }
+                        document.getElementById("countdownTimer").style.display = "none";
+                        return; 
+                    }
 
                     let isTimeBlocked = checkSystemTimeUI();
 
                     if (!isTimeBlocked) {
                         if (count >= maxQuota) {
-                            // ژمارە شاراوەیە، تەنها دەڵێت پشک تەواو بوو
                             setClosedUI("دۆخی سیستەم: داخراوە (پشک تەواو بوو)");
+                            let regBtn = document.getElementById("registerBtn");
+                            if (regBtn) regBtn.innerHTML = '<i class="fa-solid fa-lock"></i> کات ماوە بۆ کردنەوە';
                         } else {
-                            // ژمارە شاراوەیە، تەنها دەڵێت کراوەیە
                             setOpenUI("دۆخی سیستەم: کراوەیە بۆ تۆمارکردن");
                         }
                     }
@@ -922,21 +942,48 @@
             }
         }
 
+        // ==== گۆڕانکاری لێرەدایە: پرسیارکردن بۆ نامەی داخستن ====
         async function toggleSystemStatus() {
+            let customMsg = "";
+            
+            // ئەگەر سیستەم کراوە بێت (واتە دەمانەوێت دایبخەین)، داوای نامەیەک دەکات
+            if (globalSystemIsActive) {
+                const { value: text } = await Swal.fire({
+                    title: 'هۆکاری داخستنی سیستەم بنووسە',
+                    input: 'text',
+                    inputPlaceholder: 'نموونە: بەیانی پشووی فەرمییە...',
+                    showCancelButton: true,
+                    confirmButtonText: 'بەردەوام بە',
+                    cancelButtonText: 'پاشگەزبوونەوە'
+                });
+                
+                if (text === undefined) return; // ئەگەر پەشیمان بووەوە
+                customMsg = text.trim();
+            }
+
             const { value: password } = await Swal.fire({
-                title: 'گۆڕینی باری سایت',
+                title: globalSystemIsActive ? 'پاسوۆرد بۆ داخستنی سایت' : 'پاسوۆرد بۆ کردنەوەی سایت',
                 input: 'password',
                 inputPlaceholder: 'تایبه‌ت به‌ ئه‌دمین',
-                confirmButtonText: 'گۆڕین',
+                confirmButtonText: 'جێبەجێکردن',
                 showCancelButton: true
             });
+            
             if (!password) return;
+
             try {
-                let response = await fetch(`${baseUrl}/api/admin/toggle-status`, {
+                let url = `${baseUrl}/api/admin/toggle-status`;
+                if (globalSystemIsActive && customMsg !== "") {
+                    url += `?message=${encodeURIComponent(customMsg)}`;
+                }
+
+                let response = await fetch(url, {
                     method: "POST",
                     headers: { "Admin-Password": password }
                 });
+                
                 let result = await response.json().catch(() => ({}));
+                
                 if(response.ok) {
                     await Swal.fire('سەرکەوتوو', result.message || 'دۆخ گۆڕدرا!', 'success');
                     location.reload();
@@ -947,6 +994,7 @@
                 Swal.fire('کێشە', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error');
             }
         }
+        // =======================================================
 
         async function loadTodayUsers() {
             let table = document.getElementById("usersTable");
