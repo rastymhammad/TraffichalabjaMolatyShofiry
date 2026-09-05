@@ -408,7 +408,7 @@
             </div>
             
             <button class="no-print" style="background: #17a2b8;" onclick="downloadExcel()">داونلۆدکردنی ئێکسڵ (Excel/CSV)</button>
-            <button class="no-print" style="background: #ffc107; color: black;" onclick="toggleSystemStatus()">ڕاگرتن / کردنەوەی سایت (پشووی فەرمی)</button>
+            <button class="no-print" style="background: #ffc107; color: black;" onclick="toggleSystemStatus()">ڕاگرتن / کردنەوەی سایت</button>
             <button class="no-print" style="background: #6c757d;" onclick="window.print()">چاپکردنی لیست (Print)</button>
             <button class="no-print" style="background: #dc3545; margin-top: 5px;" onclick="hideAdminPanel()">داخستنی بەشی ئەدمین</button>
             
@@ -458,7 +458,6 @@
         let tempAdminPassword = "";
         let tempPreRegPassword = "";
         
-        // زیادکراو: بۆ ئەوەی بزانین ئێستا سایتەکە کراوەیە یان داخراوە
         let globalSystemIsActive = true; 
 
         if ('serviceWorker' in navigator) {
@@ -498,6 +497,7 @@
             `;
         }
 
+        // کۆنترۆڵکردنی دوگمە و دیزاین بە گشتی کاتێک دادەخرێت
         function setClosedUI(msg) {
             let badge = document.getElementById("statusBadge");
             if(badge) badge.className = "status-badge status-closed";
@@ -511,11 +511,13 @@
                 regBtn.disabled = true;
                 regBtn.style.backgroundColor = "gray";
                 regBtn.style.cursor = "not-allowed";
+                regBtn.onclick = registerUser; // گەڕانەوەی بۆ باری ئاسایی خۆی
             }
             document.getElementById("countdownTimer").style.display = "block";
             startCountdown();
         }
 
+        // دیزاینی کاتی کرانەوە
         function setOpenUI(msg) {
             let badge = document.getElementById("statusBadge");
             if(badge) badge.className = "status-badge status-open";
@@ -530,6 +532,7 @@
                 regBtn.style.backgroundColor = ""; 
                 regBtn.style.cursor = "pointer";
                 regBtn.innerHTML = 'تۆمارکردن';
+                regBtn.onclick = registerUser; 
             }
             document.getElementById("countdownTimer").style.display = "none";
         }
@@ -570,13 +573,31 @@
                     
                     let isActive = result.isActive !== undefined ? result.isActive : true;
                     globalSystemIsActive = isActive; 
-                    let customCloseMessage = result.closeMessage || "سیستەم داخراوە";
+                    let customCloseMessage = result.closeMessage || "سیستەم داخراوە لەلایەن بەڕێوەبەرایەتییەوە";
 
+                    // === کاتێک ئەدمین سیستەم دادەخات بۆ پشوو ===
                     if (isActive === false) {
-                        setClosedUI("دۆخی سیستەم: " + customCloseMessage);
+                        setClosedUI("دۆخی سیستەم: داخراوە (پەیامی بەڕێوەبەرایەتی)");
                         let regBtn = document.getElementById("registerBtn");
                         if (regBtn) {
-                            regBtn.innerHTML = '<i class="fa-solid fa-lock"></i> ' + customCloseMessage;
+                            regBtn.disabled = false; // دوگمەکە ئەکتیڤ دەکەینەوە بۆ ئەوەی کلیکی لێ بکرێت
+                            regBtn.style.backgroundColor = "#17a2b8"; // ڕەنگێکی شینی کاڵ و جوان
+                            regBtn.style.cursor = "pointer";
+                            regBtn.innerHTML = '<i class="fa-solid fa-envelope-open-text"></i> پەیامی بەڕێوەبەرایەتی بخوێنەوە';
+                            
+                            // ڕێکخستنی پەیامەکە بۆ ئەوەی بڕگەی تێدابێت ئەگەر درێژ بوو
+                            let formattedMsg = customCloseMessage.replace(/\n/g, '<br>');
+                            
+                            // گۆڕینی فەنکشنی دوگمەکە بۆ پیشاندانی پەیامەکە لە شێوەی پۆپ‌ئەپ
+                            regBtn.onclick = function() {
+                                Swal.fire({
+                                    title: 'ئاگاداری',
+                                    html: `<div style="line-height: 1.8; font-size: 15px; color: #333; text-align: center;">${formattedMsg}</div>`,
+                                    icon: 'info',
+                                    confirmButtonText: 'باشە، تێگەیشتم',
+                                    confirmButtonColor: '#0056b3'
+                                });
+                            };
                         }
                         document.getElementById("countdownTimer").style.display = "none";
                         return; 
@@ -588,7 +609,10 @@
                         if (count >= maxQuota) {
                             setClosedUI("دۆخی سیستەم: داخراوە (پشک تەواو بوو)");
                             let regBtn = document.getElementById("registerBtn");
-                            if (regBtn) regBtn.innerHTML = '<i class="fa-solid fa-lock"></i> کات ماوە بۆ کردنەوە';
+                            if (regBtn) {
+                                regBtn.innerHTML = '<i class="fa-solid fa-lock"></i> کات ماوە بۆ کردنەوە';
+                                regBtn.onclick = registerUser; // بۆ دڵنیایی فەنکشنەکە دەگەڕێنینەوە بۆ خۆی
+                            }
                         } else {
                             setOpenUI("دۆخی سیستەم: کراوەیە بۆ تۆمارکردن");
                         }
@@ -942,16 +966,16 @@
             }
         }
 
-        // ==== گۆڕانکاری لێرەدایە: پرسیارکردن بۆ نامەی داخستن ====
+        // ==== گۆڕانکاری بۆ پرسیارکردن دەربارەی نامەی داخستن ====
         async function toggleSystemStatus() {
             let customMsg = "";
             
-            // ئەگەر سیستەم کراوە بێت (واتە دەمانەوێت دایبخەین)، داوای نامەیەک دەکات
+            // ئەگەر سیستەم کراوە بێت (واتە دەمانەوێت دایبخەین)، پەنجەرەیەکی گەورە دەکاتەوە
             if (globalSystemIsActive) {
                 const { value: text } = await Swal.fire({
-                    title: 'هۆکاری داخستنی سیستەم بنووسە',
-                    input: 'text',
-                    inputPlaceholder: 'نموونە: بەیانی پشووی فەرمییە...',
+                    title: 'هۆکاری داخستنی سیستەم',
+                    input: 'textarea', // Textarea ڕێگەت پێدەدات چەند دێڕێک بنووسیت
+                    inputPlaceholder: 'دەتوانیت لێرەدا پەیامێکی درێژ بنووسیت بۆ هاووڵاتیان...',
                     showCancelButton: true,
                     confirmButtonText: 'بەردەوام بە',
                     cancelButtonText: 'پاشگەزبوونەوە'
@@ -994,7 +1018,6 @@
                 Swal.fire('کێشە', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error');
             }
         }
-        // =======================================================
 
         async function loadTodayUsers() {
             let table = document.getElementById("usersTable");
