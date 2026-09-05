@@ -219,35 +219,35 @@
             padding: 8px 10px; 
         }
         
-        /* قەبارەی نوێ و بچووک بۆ مۆبایل لە بەشی ئامارەکان */
+        /* قەبارەی زۆر بچووک و ڕێک بۆ مۆبایل */
         .dashboard-cards {
             display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
+            gap: 6px;
+            margin-bottom: 12px;
             justify-content: space-between;
         }
         .dash-card {
             background: #f8f9fa;
             border: 1px solid #dee2e6;
-            border-radius: 8px;
-            padding: 10px 5px;
+            border-radius: 6px;
+            padding: 8px 4px;
             flex: 1;
             text-align: center;
         }
         .dash-card h4 {
-            margin: 0 0 3px 0;
-            font-size: 12px;
+            margin: 0 0 2px 0;
+            font-size: 11px;
             color: #6c757d;
         }
         .dash-card h3 {
             margin: 0;
-            font-size: 18px;
+            font-size: 16px;
             color: #0056b3;
         }
         
-        /* کۆنتڕۆڵکردنی قەبارەی چارتەکە بۆ ئەوەی لە مۆبایلدا گەورە نەبێت */
+        /* کۆنتڕۆڵکردنی قەبارەی چارتەکە بۆ ئەوەی زۆر بچووک و قنج بێت */
         .chart-container {
-            max-width: 240px;
+            max-width: 180px;
             margin: 0 auto;
         }
         
@@ -428,9 +428,9 @@
         <div class="container printable-area" id="adminSection" style="display: none;">
             <h2>بەشی ئەدمین - کۆنتڕۆڵی سیستەم</h2>
 
-            <!-- ئامارەکان بە قەبارەی ڕێک و بچووک بۆ مۆبایل -->
-            <div class="no-print" style="margin-bottom: 20px;">
-                <h3 style="text-align: right; margin-bottom: 8px; font-size: 15px; color: #0056b3;">ئاماری ئەمڕۆ</h3>
+            <!-- ئامارەکان بە قەبارەی زۆر بچووک و ڕێک -->
+            <div class="no-print" style="margin-bottom: 15px;">
+                <h3 style="text-align: right; margin-bottom: 6px; font-size: 14px; color: #0056b3;">ئاماری ئەمڕۆ</h3>
                 <div class="dashboard-cards">
                     <div class="dash-card">
                         <h4>کۆی گشتی</h4>
@@ -446,7 +446,7 @@
                     </div>
                 </div>
                 
-                <div style="background: white; padding: 8px; border-radius: 8px; border: 1px solid #dee2e6;">
+                <div style="background: white; padding: 6px; border-radius: 8px; border: 1px solid #dee2e6;">
                     <div class="chart-container">
                         <canvas id="myChart"></canvas>
                     </div>
@@ -1114,7 +1114,7 @@
                             plugins: {
                                 legend: {
                                     position: 'bottom',
-                                    labels: { font: { family: 'Rabar', size: 12 } }
+                                    labels: { font: { family: 'Rabar', size: 10 } }
                                 },
                                 title: {
                                     display: false
@@ -1365,7 +1365,7 @@
                 return;
             }
             let csvContent = "\uFEFFژمارە,ناو,ژمارەی تەلەفۆن,کاتی تۆمارکردن\n";
-            globalUsersData.query.forEach(u => {
+            globalUsersData.forEach(u => {
                 csvContent += `${u.rank},"${u.name}","${u.phone}","${u.createdAt}"\n`;
             });
             let blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
