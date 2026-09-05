@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سیسته‌می سه‌ره‌گرتنی مۆڵه‌تی شۆفێری هاتووچۆی هه‌ڵه‌بجه‌</title>
     
+    <!-- تایبەتمەندی PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0056b3">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -334,7 +338,7 @@
             <p></p>
             <div id="statusBadge" class="status-badge status-open">
                 <span id="statusDot" class="dot dot-green"></span>
-                <span id="statusText">دۆخی سیستەم: کراوەیە بۆ تۆمارکردن</span>
+                <span id="statusText" style="direction: rtl;">دۆخی سیستەم: کراوەیە بۆ تۆمارکردن</span>
             </div>
         </div>
 
@@ -372,7 +376,17 @@
         <div class="container printable-area" id="adminSection" style="display: none;">
             <h2>بەشی ئەدمین - کۆنتڕۆڵی سیستەم</h2>
 
-            <div style="background: rgba(0, 86, 179, 0.08); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid rgba(0, 86, 179, 0.2);">
+            <!-- زیادکردنی بەشی گۆڕینی ژمارەی پشکەکان لە ئەدمین -->
+            <div style="background: rgba(40, 167, 69, 0.08); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid rgba(40, 167, 69, 0.2);" class="no-print">
+                <h3 style="margin-top: 0; font-size: 16px; color: #28a745;">گۆڕینی ژمارەی پشکی ڕۆژانە</h3>
+                <div class="input-wrapper" style="width: 100%;">
+                    <i class="fa-solid fa-users"></i>
+                    <input type="number" id="adminQuotaInput" placeholder="ژمارەی پشک (نموونە: 50)" min="1">
+                </div>
+                <button style="background: #28a745;" onclick="updateDailyQuota()">گۆڕینی پشک</button>
+            </div>
+
+            <div style="background: rgba(0, 86, 179, 0.08); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid rgba(0, 86, 179, 0.2);" class="no-print">
                 <h3 style="margin-top: 0; font-size: 16px; color: #0056b3;">تۆمارکردنی پێشوەختە لەلایەن ئەدمینەوە</h3>
                 
                 <button id="openPreRegBtn" style="background: #17a2b8;" onclick="showPreRegForm()">کردنەوەی بەشی تۆمارکردن</button>
@@ -390,15 +404,15 @@
                 </div>
             </div>
 
-            <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+            <div style="display: flex; gap: 10px; margin-bottom: 10px;" class="no-print">
                 <button class="search-btn" onclick="loadTodayUsers()" style="flex: 1; margin-top: 0;">نیشاندانی لیستی ئەمڕۆ</button>
                 <button style="background: #20c997; color: white; width: auto; margin-top: 0; padding: 12px 20px;" onclick="loadTodayUsers()" title="نوێکردنەوەی خشتەکە">🔄</button>
             </div>
             
-            <button style="background: #17a2b8;" onclick="downloadExcel()">داونلۆدکردنی ئێکسڵ (Excel/CSV)</button>
-            <button style="background: #ffc107; color: black;" onclick="toggleSystemStatus()">ڕاگرتن / کردنەوەی سایت</button>
-            <button style="background: #6c757d;" onclick="window.print()">چاپکردنی لیست (Print)</button>
-            <button style="background: #dc3545; margin-top: 5px;" onclick="hideAdminPanel()">داخستنی بەشی ئەدمین</button>
+            <button class="no-print" style="background: #17a2b8;" onclick="downloadExcel()">داونلۆدکردنی ئێکسڵ (Excel/CSV)</button>
+            <button class="no-print" style="background: #ffc107; color: black;" onclick="toggleSystemStatus()">ڕاگرتن / کردنەوەی سایت</button>
+            <button class="no-print" style="background: #6c757d;" onclick="window.print()">چاپکردنی لیست (Print)</button>
+            <button class="no-print" style="background: #dc3545; margin-top: 5px;" onclick="hideAdminPanel()">داخستنی بەشی ئەدمین</button>
             
             <div class="table-responsive">
                 <table id="usersTable" style="display: none;">
@@ -417,7 +431,7 @@
             </div>
         </div>
 
-        <div style="text-align: center; margin-top: 10px; margin-bottom: 20px;">
+        <div style="text-align: center; margin-top: 10px; margin-bottom: 20px;" class="no-print">
             <button onclick="handleAdminClick()" style="background: none; color: #aaa; border: none; font-size: 12px; cursor: pointer; width: auto;">ئەدمین</button>
         </div>
     </div>
@@ -446,6 +460,15 @@
         let tempAdminPassword = "";
         let tempPreRegPassword = "";
 
+        // تۆمارکردنی Service Worker بۆ PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').catch(err => {
+                    console.log('Service Worker failed: ', err);
+                });
+            });
+        }
+
         function onlyEnglishNumbers(event) {
             let charCode = (event.which) ? event.which : event.keyCode;
             if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -454,7 +477,6 @@
             return true;
         }
 
-        // دیزاینی پەنجەرەی پسوولەی ئەلیکترۆنی (Digital Ticket)
         function generateTicketHTML(name, phone, rank, time) {
             let dateToday = new Date().toISOString().slice(0,10);
             return `
@@ -476,7 +498,6 @@
             `;
         }
 
-        // کۆنترۆڵکردنی دیزاینی کاتی داخران
         function setClosedUI(msg) {
             let badge = document.getElementById("statusBadge");
             if(badge) badge.className = "status-badge status-closed";
@@ -496,14 +517,13 @@
             startCountdown();
         }
 
-        // کۆنترۆڵکردنی دیزاینی کاتی کرانەوە
-        function setOpenUI() {
+        function setOpenUI(msg) {
             let badge = document.getElementById("statusBadge");
             if(badge) badge.className = "status-badge status-open";
             let dot = document.getElementById("statusDot");
             if(dot) dot.className = "dot dot-green";
             let text = document.getElementById("statusText");
-            if(text) text.innerText = "دۆخی سیستەم: کراوەیە بۆ تۆمارکردن";
+            if(text) text.innerText = msg;
             
             let regBtn = document.getElementById("registerBtn");
             if (regBtn) {
@@ -520,23 +540,20 @@
             const iraqHour = dateInIraq.getHours();
             const dayOfWeek = dateInIraq.getDay(); 
 
-            // پشکنینی پشووی کۆتایی هەفتە
             let isWeekendClosed = false;
-            if (dayOfWeek === 4 && iraqHour >= 14) isWeekendClosed = true; // پێنجشەممە پاش 2ی نیوەڕۆ
-            if (dayOfWeek === 5) isWeekendClosed = true; // هەینی
-            if (dayOfWeek === 6 && iraqHour < 18) isWeekendClosed = true; // شەممە پێش 6ی ئێوارە
+            if (dayOfWeek === 4 && iraqHour >= 14) isWeekendClosed = true; 
+            if (dayOfWeek === 5) isWeekendClosed = true; 
+            if (dayOfWeek === 6 && iraqHour < 18) isWeekendClosed = true; 
 
             if (isWeekendClosed) {
                 setClosedUI("پشوو: سیستەم شەممە کاتژمێر 6ی ئێوارە دەکرێتەوە");
                 return true;
             }
 
-            // پشکنینی داخرانی ڕۆژانە
             if (iraqHour >= 14 && iraqHour < 18) {
                 setClosedUI("دۆخی سیستەم: داخراوە تا 6:00 ی ئێوارە");
                 return true; 
             }
-            
             return false;
         }
 
@@ -546,14 +563,15 @@
                 if (response.ok) {
                     let result = await response.json();
                     let count = result.count; 
+                    let maxQuota = result.maxQuota || 40;
 
                     let isTimeBlocked = checkSystemTimeUI();
 
                     if (!isTimeBlocked) {
-                        if (count >= 40) {
-                            setClosedUI("دۆخی سیستەم: داخراوە (پشک تەواو بوو)");
+                        if (count >= maxQuota) {
+                            setClosedUI(`دۆخی سیستەم: پشک تەواو بوو (${count}/${maxQuota})`);
                         } else {
-                            setOpenUI();
+                            setOpenUI(`دۆخی سیستەم: کراوەیە (${count} لە ${maxQuota} گیراوە)`);
                         }
                     }
                 }
@@ -563,7 +581,6 @@
         }
         checkQuotaAndTimer();
 
-        // ژمێرەری کات (کاتژمێرەکەی خوارەوە) کە زیرەکانە دەزانێت کەی دەکرێتەوە
         function startCountdown() {
             if (timerInterval) clearInterval(timerInterval);
             
@@ -576,21 +593,19 @@
                 let day = now.getDay();
                 let hour = now.getHours();
 
-                // ئەگەر لە پشوودا بێت
                 if ((day === 4 && hour >= 14) || day === 5 || (day === 6 && hour < 18)) {
                     let daysToSat = (6 - day + 7) % 7;
                     target.setDate(now.getDate() + daysToSat);
                 } 
-                // ئەگەر لە کاتی ئاسایی و داخرانی شەوانەدا بێت
                 else if (hour >= 18) {
-                    if (day === 3) target.setDate(now.getDate() + 3); // ئەگەر چوارشەممە شەو بوو پشک تەواو بوو
+                    if (day === 3) target.setDate(now.getDate() + 3); 
                     else if (day === 4) target.setDate(now.getDate() + 2);
                     else target.setDate(now.getDate() + 1);
                 } 
                 else if (hour >= 14 && hour < 18) {
-                    // هیچ ناکەین چونکە تارجێت ئەمڕۆ 18:00ـیە
+                    // هیچی ناوێ بۆ ئەمڕۆیە
                 } 
-                else { // کاتی بەیانیان ئەگەر پشک تەواو بوو
+                else { 
                     if (day === 4) target.setDate(now.getDate() + 2); 
                 }
 
@@ -679,7 +694,6 @@
                 let result = await response.json().catch(() => ({}));
 
                 if(response.ok) {
-                    // نیشاندانی پسوولەی ئەلیکترۆنی پاش تۆمارکردن
                     if(result.ticket) {
                         Swal.fire({
                             title: 'تۆمارکردن سەرکەوتوو بوو!',
@@ -797,7 +811,6 @@
                 let result = await response.json().catch(() => ({}));
                 
                 if(response.ok) {
-                    // پیشاندانی پسوولە لە کاتی گەڕان
                     Swal.fire({ 
                         title: 'ناو دۆزرایەوە', 
                         html: generateTicketHTML(result.name, result.phone, result.rank, result.timeMessage), 
@@ -850,6 +863,42 @@
             tempPreRegPassword = "";
             adminClickCount = 0;
         }
+
+        // === فەنکشنی نوێ بۆ گۆڕینی ژمارەی پشکەکان لەلایەن ئەدمن ===
+        async function updateDailyQuota() {
+            let newQuota = document.getElementById("adminQuotaInput").value;
+            if(!newQuota || newQuota < 1) {
+                Swal.fire('ئاگاداری', 'تکایە ژمارەیەکی دروست بنووسە', 'warning');
+                return;
+            }
+
+            const { value: password } = await Swal.fire({
+                title: 'پاسوۆردی ئەدمن',
+                input: 'password',
+                confirmButtonText: 'گۆڕین',
+                showCancelButton: true
+            });
+
+            if (!password) return;
+            
+            try {
+                let response = await fetch(`${baseUrl}/api/admin/quota?newQuota=${newQuota}`, {
+                    method: "PUT",
+                    headers: { "Admin-Password": password }
+                });
+                let result = await response.json().catch(() => ({}));
+                if(response.ok) {
+                    Swal.fire('سەرکەوتوو', result.message, 'success');
+                    checkQuotaAndTimer(); // نوێکردنەوەی ژمارەکە لەسەر شاشە
+                    document.getElementById("adminQuotaInput").value = "";
+                } else {
+                    Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە!', 'error');
+                }
+            } catch (error) {
+                Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە', 'error');
+            }
+        }
+        // ========================================================
 
         async function toggleSystemStatus() {
             const { value: password } = await Swal.fire({
