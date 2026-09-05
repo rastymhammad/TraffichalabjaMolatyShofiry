@@ -219,6 +219,7 @@
             padding: 8px 10px; 
         }
         
+        /* قەبارەی زۆر بچووک و ڕێک بۆ مۆبایل */
         .dashboard-cards {
             display: flex;
             gap: 6px;
@@ -244,6 +245,7 @@
             color: #0056b3;
         }
         
+        /* کۆنتڕۆڵکردنی قەبارەی چارتەکە بۆ ئەوەی زۆر بچووک و قنج بێت */
         .chart-container {
             max-width: 180px;
             margin: 0 auto;
@@ -406,13 +408,12 @@
             <div id="countdownTimer" class="timer-box"></div>
         </div>
 
-        <!-- بەشی پشکنینی بارکۆد کە بە ڕوونی دەردەکەوێت کاتێک سکان دەکرێت -->
-        <div class="container" id="verifySection" style="display: none; border: 3px solid #0056b3;">
-            <h2 style="color: #0056b3;"><i class="fa-solid fa-shield-check"></i> دڵنیابوونەوەی پسوولە</h2>
-            <div id="verifyResult" style="padding: 15px; font-size: 16px; font-weight: bold; margin-top: 10px; border-radius: 8px; background: #e9ecef;">
-                تکایە چاوەڕێ بکە...
+        <div class="container" id="verifySection" style="display: none; border: 3px solid #28a745;">
+            <h2 style="color: #28a745;"><i class="fa-solid fa-shield-check"></i> دڵنیابوونەوەی پسوولە</h2>
+            <div id="verifyResult" style="padding: 15px; font-size: 16px; font-weight: bold; margin-top: 10px; border-radius: 8px;">
+                بەدواداچوون دەکرێت...
             </div>
-            <button onclick="window.location.href=window.location.pathname" style="background: #0056b3; margin-top: 15px;">گەڕانەوە بۆ سەرەتا</button>
+            <button onclick="window.location.href='/'" style="background: #0056b3; margin-top: 15px;">گەڕانەوە بۆ سەرەتا</button>
         </div>
 
         <div class="container" id="searchSection">
@@ -427,6 +428,7 @@
         <div class="container printable-area" id="adminSection" style="display: none;">
             <h2>بەشی ئەدمین - کۆنتڕۆڵی سیستەم</h2>
 
+            <!-- ئامارەکان بە قەبارەی زۆر بچووک و ڕێک -->
             <div class="no-print" style="margin-bottom: 15px;">
                 <h3 style="text-align: right; margin-bottom: 6px; font-size: 14px; color: #0056b3;">ئاماری ئەمڕۆ</h3>
                 <div class="dashboard-cards">
@@ -556,13 +558,11 @@
         function generateTicketHTML(name, phone, rank, time, qrToken) {
             let dateToday = new Date().toISOString().slice(0,10);
             
-            // دروستکردنی لینکی پشکنین بە پشت بەستن بە ناونیشانی فەرمی پەڕەکە
-            let verifyUrl = window.location.origin + window.location.pathname + "?verify=" + encodeURIComponent(qrToken);
+            let verifyUrl = window.location.href.split('?')[0] + "?verify=" + encodeURIComponent(qrToken);
             
             setTimeout(() => {
                 let qrContainer = document.getElementById("qrCodeDiv");
                 if(qrContainer) {
-                    qrContainer.innerHTML = ""; // بۆ ئەوەی دوبارە دروست نەبێتەوە ئەگەر کرایەوە
                     new QRCode(qrContainer, {
                         text: verifyUrl,
                         width: 90,
@@ -593,7 +593,7 @@
                         <p style="margin: 5px 0; font-size: 12px; text-align: center; color: gray;">بەروار: ${dateToday}</p>
                     </div>
                     
-                    <p style="margin: 15px 0 0 0; font-size: 13px; color: #666; font-weight: bold;">تکایە سکرین شۆتی ئەم پسوولەیە بگرە بۆ کاتی سەردانیکردن. پۆلیس دەتوانێت سکانی بارکۆدەکە بکات بۆ دڵنیابوونەوە.</p>
+                    <p style="margin: 15px 0 0 0; font-size: 13px; color: #666; font-weight: bold;">تکایە سکرین شۆتی ئەم پسوولەیە بگرە بۆ کاتی سەردانیکردن. كارمه‌ندی هاتووچۆ دەتوانێت سکانی بارکۆدەکە بکات بۆ دڵنیابوونەوە.</p>
                 </div>
             `;
         }
@@ -719,7 +719,6 @@
             }
         }
         
-        // ==== پشکنینی ڕاستەوخۆی بارکۆد کاتێک لینکەکە دەکرێتەوە ====
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const verifyToken = urlParams.get('verify');
@@ -733,8 +732,6 @@
                 let resultDiv = document.getElementById('verifyResult');
                 verifyDiv.style.display = 'block';
                 
-                resultDiv.innerHTML = "چاوەڕێ بکە... پشکنین ئەنجام دەدرێت";
-
                 fetch(`${apiUrl}/verify-qr?token=${encodeURIComponent(verifyToken)}`)
                     .then(response => response.json())
                     .then(data => {
@@ -744,27 +741,24 @@
                             resultDiv.style.backgroundColor = "#d4edda";
                             resultDiv.style.color = "#155724";
                             resultDiv.innerHTML = `
-                                <i class="fa-solid fa-circle-check" style="font-size: 35px; color: #28a745; margin-bottom: 10px;"></i><br>
-                                <span style="font-size: 18px; color: #155724;">${data.message}</span><br><br>
-                                <div style="text-align: right; background: white; padding: 12px; border-radius: 6px; border: 1px solid #c3e6cb;">
-                                    <p style="margin: 5px 0;"><strong>ناوی هاووڵاتی:</strong> ${data.name}</p>
-                                    <p style="margin: 5px 0;"><strong>ژمارەی تەلەفۆن:</strong> ${data.phone}</p>
-                                </div>
+                                <i class="fa-solid fa-circle-check" style="font-size: 30px; margin-bottom: 10px;"></i><br>
+                                ${data.message}<br><br>
+                                <span style="font-weight: normal;">ناوی هاووڵاتی:</span> ${data.name}<br>
+                                <span style="font-weight: normal;">تەلەفۆن:</span> ${data.phone}
                             `;
                         } else {
                             verifyDiv.style.borderColor = "#dc3545";
                             document.querySelector('#verifySection h2').style.color = "#dc3545";
+                            document.querySelector('#verifySection h2 i').className = "fa-solid fa-shield-xmark";
                             resultDiv.style.backgroundColor = "#f8d7da";
                             resultDiv.style.color = "#721c24";
                             resultDiv.innerHTML = `
-                                <i class="fa-solid fa-circle-xmark" style="font-size: 35px; color: #dc3545; margin-bottom: 10px;"></i><br>
-                                <span style="font-size: 18px; color: #721c24;">${data.message}</span>
+                                <i class="fa-solid fa-circle-xmark" style="font-size: 30px; margin-bottom: 10px;"></i><br>
+                                ${data.message}
                             `;
                         }
                     })
                     .catch(err => {
-                        resultDiv.style.backgroundColor = "#f8d7da";
-                        resultDiv.style.color = "#721c24";
                         resultDiv.innerHTML = "کێشە لە پەیوەندی بە سێرڤەرەوە هەیە!";
                     });
             } else {
