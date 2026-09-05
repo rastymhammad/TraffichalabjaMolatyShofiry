@@ -13,6 +13,8 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- کتێبخانەی خوێندنەوەی دەق لە وێنەوە (OCR) -->
+    <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
 
     <style>
         @font-face {
@@ -386,17 +388,27 @@
 
         <div class="news-ticker-container">
             <div class="news-ticker-text">
-                نۆره‌ گرتنی مۆڵه‌تی شۆفێری له‌ به‌ڕێوه‌به‌رایه‌تی هاتووچۆی پارێزگای هه‌ڵه‌بجه سه‌باره‌ت به‌و هاووڵاتیانه‌ی كه‌ ڕۆژانه‌ له‌ ئیمتیحانی پراكتیكی واته‌ ترای ده‌ر ده‌چن له‌و ڕۆژه‌دا نابێت سه‌ردانی به‌ڕێوه‌به‌رایه‌تی بكه‌ن ده‌بێت ئه‌وانیش ناوی خۆیان تۆمار بكه‌ن بۆ ڕۆژی دواتر  
+                نۆره‌ گرتنی مۆڵه‌تی شۆفێری له‌ به‌ڕێوه‌به‌رایه‌تی هاتووچۆی پارێزگای هه‌ڵه‌بجه سه‌باره‌ت به‌و هاووڵاتیانه‌ی كه‌ ڕۆژانه‌ له‌ ئیمتیحانی پراكتیكی واته‌ ترای ده‌ر ده‌چن له‌و ڕۆژه‌دا نابێت سه‌ردانی به‌ڕێوه‌به‌رایەتی بكه‌ن ده‌بێت ئه‌وانیش ناوی خۆیان تۆمار بكه‌ن بۆ ڕۆژی دواتر  
             </div>
         </div>
 
         <div class="container" id="userRegistrationSection">
             <h2>تۆمارکردنی ناو</h2>
             
+            <!-- خانەی ناو و دوگمەی سکانی کارتی نیشتمانی -->
             <div class="input-wrapper">
                 <i class="fa-solid fa-user"></i>
-                <input type="text" id="nameInput" placeholder="ناوی چواری بنووسە...">
+                <input type="text" id="nameInput" placeholder="ناوی سیانی بنووسە...">
             </div>
+
+            <!-- دوگمەی بارکردن و سکانی وێنەی کارتی نیشتمانی -->
+            <div style="width: 90%; margin: 0 auto 10px auto;">
+                <input type="file" id="idCardImageInput" accept="image/*" capture="environment" style="display: none;" onchange="scanIdCard(event)">
+                <button type="button" onclick="document.getElementById('idCardImageInput').click()" style="background: #17a2b8; width: 100%; margin-top: 0; font-size: 14px; padding: 8px;">
+                    <i class="fa-solid fa-id-card"></i> سکانکردنی کارتی نیشتمانی (وێنە بگرە)
+                </button>
+            </div>
+
             <div class="input-wrapper">
                 <i class="fa-solid fa-phone"></i>
                 <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false">
@@ -459,7 +471,7 @@
                 <div id="preRegForm" style="display: none; margin-top: 15px;">
                     <div class="input-wrapper" style="width: 100%;">
                         <i class="fa-solid fa-user-shield"></i>
-                        <input type="text" id="adminNameInput" placeholder="ناوی چواری بنووسە...">
+                        <input type="text" id="adminNameInput" placeholder="ناوی سیانی بنووسە...">
                     </div>
                     <div class="input-wrapper" style="width: 100%;">
                         <i class="fa-solid fa-phone"></i>
@@ -501,7 +513,6 @@
         </div>
     </div>
 
-    <!-- بەشی پشکنینی بارکۆد کە تەنها لە کاتی سکاندا بە تەنهایی دەردەکەوێت -->
     <div class="container" id="verifySection" style="display: none; max-width: 450px; margin: 50px auto; border: 3px solid #0056b3;">
         <h2 style="color: #0056b3; margin-top: 10px;"><i class="fa-solid fa-shield-check"></i> دڵنیابوونەوەی پسوولە</h2>
         <div id="verifyResult" style="padding: 20px; font-size: 16px; font-weight: bold; margin-top: 15px; border-radius: 8px; background: #e9ecef;">
@@ -551,6 +562,56 @@
                 return false;
             }
             return true;
+        }
+
+        // ==== فەنکشنی سکانکردنی کارتی نیشتمانی (OCR) ====
+        async function scanIdCard(event) {
+            let file = event.target.files[0];
+            if (!file) return;
+
+            Swal.fire({
+                title: 'تکایە چاوەڕێ بکە...',
+                text: 'سەرقاڵی خوێندنەوەی کارتی نیشتمانین...',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            try {
+                // بەکارهێنانی Tesseract بۆ خوێندنەوەی دەق لە وێنەکەدا (بە زمانی عەرەبی و ئینگلیزی کە لە کارتدا هەبن)
+                let result = await Tesseract.recognize(file, 'ara+eng', {
+                    logger: m => console.log(m)
+                });
+
+                let extractedText = result.data.text;
+                console.log("Extracted Text:", extractedText);
+
+                Swal.close();
+
+                if (extractedText) {
+                    // دانانی دەقەکە یان ڕێگپێدان بە بەکارهێنەر بۆ پێداچوونەوە
+                    Swal.fire({
+                        title: 'ئەنجامی خوێندنەوە',
+                        html: `<p style="font-size:14px; color:#555;">دەقە دۆزراوەوەکە:</p><textarea id="swal-ocr-text" class="swal2-textarea" style="font-size:14px;">${extractedText}</textarea><p style="font-size:12px; color:gray;">تکایە ناوی سیانی خۆت لێرەدا ڕێک بخەرە ئەگەر پێویست کرد</p>`,
+                        confirmButtonText: 'پەسەندکردن و گواستنەوە بۆ خانەی ناو',
+                        confirmButtonColor: '#28a745',
+                        preConfirm: () => {
+                            return document.getElementById('swal-ocr-text').value;
+                        }
+                    }).then((res) => {
+                        if (res.isConfirmed && res.value) {
+                            // هەوڵدانی دەرکردنی تەنها ناوەکە یان خستنە ناو خانەکەوە
+                            document.getElementById('nameInput').value = res.value.trim().split('\n')[0];
+                        }
+                    });
+                } else {
+                    Swal.fire('ئاگاداری', 'نەتوانرا دەق لە وێنەکەدا بخوێنرێتەوە، تکایە ناوەکە بە دەست بنووسە.', 'warning');
+                }
+            } catch (err) {
+                Swal.close();
+                Swal.fire('هەڵە', 'کێشەیەک ڕووی دا لە کاتی سکانکردنی وێنەکەدا.', 'error');
+            }
         }
 
         function generateTicketHTML(name, phone, rank, time, qrToken, dateStr) {
@@ -717,13 +778,11 @@
             }
         }
         
-        // ==== پشکنینی بارکۆد بە شێوازێک کە تەنها ئەنجامەکە پیشان بدات و باقی سایتەکە بشارێتەوە ====
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const verifyToken = urlParams.get('verify');
             
             if (verifyToken) {
-                // شاردنەوەی تەواوی بەشەکانی تری سایتەکە بە خاوێنی
                 document.getElementById('normalMainContent').style.display = 'none';
                 
                 let verifyDiv = document.getElementById('verifySection');
@@ -842,13 +901,13 @@
 
             let englishRegex = /[a-zA-Z]/;
             if (englishRegex.test(name)) {
-                Swal.fire('ئاگاداری', 'تکایە ناوی چواری بە پیتی کوردی بنووسە!', 'warning');
+                Swal.fire('ئاگاداری', 'تکایە ناوی سیانی بە پیتی کوردی بنووسە!', 'warning');
                 return;
             }
 
             let nameParts = name.split(/\s+/);
-            if (nameParts.length < 4) {
-                Swal.fire('ئاگاداری', 'تکایە ناوی چواری بنووسە!', 'warning');
+            if (nameParts.length < 3) {
+                Swal.fire('ئاگاداری', 'تکایە ناوی سیانی بنووسە!', 'warning');
                 return;
             }
 
@@ -947,8 +1006,8 @@
             }
 
             let nameParts = name.split(/\s+/);
-            if (nameParts.length < 4) {
-                Swal.fire('ئاگاداری', 'تکایە ناوی چواری بنووسە!', 'warning');
+            if (nameParts.length < 3) {
+                Swal.fire('ئاگاداری', 'تکایە ناوی سیانی بنووسە!', 'warning');
                 return;
             }
 
@@ -1277,7 +1336,7 @@
             const { value: formValues } = await Swal.fire({
                 title: 'دەستکاریکردنی زانیاری',
                 html:
-                    `<input id="swal-input-name" class="swal2-input" value="${currentName}" placeholder="ناوی چواری">` +
+                    `<input id="swal-input-name" class="swal2-input" value="${currentName}" placeholder="ناوی سیانی">` +
                     `<input id="swal-input-phone" class="swal2-input" value="${currentPhone}" placeholder="ژمارەی مۆبایل">`,
                 focusConfirm: false,
                 showCancelButton: true,
