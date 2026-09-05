@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سیسته‌می سه‌ره‌گرتنی مۆڵه‌تی شۆفێری هاتووچۆی هه‌ڵه‌بجه‌</title>
     
-    <!-- تایبەتمەندی PWA -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0056b3">
     
@@ -376,7 +375,6 @@
         <div class="container printable-area" id="adminSection" style="display: none;">
             <h2>بەشی ئەدمین - کۆنتڕۆڵی سیستەم</h2>
 
-            <!-- زیادکردنی بەشی گۆڕینی ژمارەی پشکەکان لە ئەدمین -->
             <div style="background: rgba(40, 167, 69, 0.08); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid rgba(40, 167, 69, 0.2);" class="no-print">
                 <h3 style="margin-top: 0; font-size: 16px; color: #28a745;">گۆڕینی ژمارەی پشکی ڕۆژانە</h3>
                 <div class="input-wrapper" style="width: 100%;">
@@ -460,7 +458,6 @@
         let tempAdminPassword = "";
         let tempPreRegPassword = "";
 
-        // تۆمارکردنی Service Worker بۆ PWA
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js').catch(err => {
@@ -603,7 +600,6 @@
                     else target.setDate(now.getDate() + 1);
                 } 
                 else if (hour >= 14 && hour < 18) {
-                    // هیچی ناوێ بۆ ئەمڕۆیە
                 } 
                 else { 
                     if (day === 4) target.setDate(now.getDate() + 2); 
@@ -719,6 +715,7 @@
             }
         }
 
+        // ==== گۆڕانکاری لێرەدایە: لادانی پاسوۆرد و ناردنی بۆ سێرڤەر ====
         async function showPreRegForm() {
             const { value: pwd } = await Swal.fire({
                 title: 'پاسوۆرد داخڵ بکە',
@@ -730,11 +727,25 @@
             });
 
             if (pwd) { 
-                tempPreRegPassword = pwd; 
-                document.getElementById("openPreRegBtn").style.display = "none";
-                document.getElementById("preRegForm").style.display = "block";
+                try {
+                    let response = await fetch(`${baseUrl}/api/admin/verify?type=prereg`, {
+                        method: "POST",
+                        headers: { "Admin-Password": pwd }
+                    });
+                    
+                    if (response.ok) {
+                        tempPreRegPassword = pwd; 
+                        document.getElementById("openPreRegBtn").style.display = "none";
+                        document.getElementById("preRegForm").style.display = "block";
+                    } else {
+                        Swal.fire('هەڵە', 'پاسوۆردەکە هەڵەیە!', 'error');
+                    }
+                } catch(e) {
+                    Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە!', 'error');
+                }
             }
         }
+        // ==============================================================
 
         async function adminRegisterUser() {
             let name = document.getElementById("adminNameInput").value.trim();
@@ -834,6 +845,7 @@
             }
         }
 
+        // ==== گۆڕانکاری لێرەدایە: لادانی پاسوۆرد و ناردنی بۆ سێرڤەر ====
         async function showAdminPanel() {
             const { value: pwd } = await Swal.fire({
                 title: 'تایبه‌ت به‌ ئه‌دمین',
@@ -844,10 +856,24 @@
             });
 
             if (pwd) {
-                tempAdminPassword = pwd; 
-                document.getElementById("adminSection").style.display = "block";
+                try {
+                    let response = await fetch(`${baseUrl}/api/admin/verify?type=admin`, {
+                        method: "POST",
+                        headers: { "Admin-Password": pwd }
+                    });
+                    
+                    if (response.ok) {
+                        tempAdminPassword = pwd; 
+                        document.getElementById("adminSection").style.display = "block";
+                    } else {
+                        Swal.fire('هەڵە', 'پاسوۆردەکە هەڵەیە!', 'error');
+                    }
+                } catch(e) {
+                    Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە!', 'error');
+                }
             }
         }
+        // ==============================================================
 
         function hideAdminPanel() {
             document.getElementById("adminSection").style.display = "none";
@@ -864,7 +890,6 @@
             adminClickCount = 0;
         }
 
-        // === فەنکشنی نوێ بۆ گۆڕینی ژمارەی پشکەکان لەلایەن ئەدمن ===
         async function updateDailyQuota() {
             let newQuota = document.getElementById("adminQuotaInput").value;
             if(!newQuota || newQuota < 1) {
@@ -889,7 +914,7 @@
                 let result = await response.json().catch(() => ({}));
                 if(response.ok) {
                     Swal.fire('سەرکەوتوو', result.message, 'success');
-                    checkQuotaAndTimer(); // نوێکردنەوەی ژمارەکە لەسەر شاشە
+                    checkQuotaAndTimer(); 
                     document.getElementById("adminQuotaInput").value = "";
                 } else {
                     Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە!', 'error');
@@ -898,7 +923,6 @@
                 Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە', 'error');
             }
         }
-        // ========================================================
 
         async function toggleSystemStatus() {
             const { value: password } = await Swal.fire({
