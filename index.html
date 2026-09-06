@@ -923,16 +923,56 @@
         }
 
         async function confirmAndRegister() {
-            let name = document.getElementById("nameInput").value.trim(); let phone = document.getElementById("phoneInput").value.trim();
+            let name = document.getElementById("nameInput").value.trim(); 
+            let phone = document.getElementById("phoneInput").value.trim();
+
             const confirmation = await Swal.fire({
-                html: `<div style="text-align: right;"><p><strong>ناو:</strong> ${name}</p><p><strong>مۆبایل:</strong> ${phone}</p></div>`,
-                showCancelButton: true, confirmButtonText: 'تۆماری بکە', cancelButtonText: 'پاشگەزبوونەوە', confirmButtonColor: '#28a745'
+                title: 'دڵنیابوونەوە لە زانیارییەکان',
+                html: `
+                    <div style="text-align: right; direction: rtl;">
+                        <label style="font-size: 13px; font-weight: bold; color: #555; display: block; margin-bottom: 4px;">ناوی سیانی:</label>
+                        <input id="swal-input-name" class="swal2-input" value="${name}" style="margin: 0 0 12px 0; width: 100%; font-family: 'Rabar'; font-size: 14px;">
+                        
+                        <label style="font-size: 13px; font-weight: bold; color: #555; display: block; margin-bottom: 4px;">ژمارەی مۆبایل:</label>
+                        <input id="swal-input-phone" class="swal2-input" value="${phone}" maxlength="11" onkeypress="return onlyEnglishNumbers(event)" style="margin: 0; width: 100%; font-family: 'Rabar'; font-size: 14px;">
+                    </div>
+                `,
+                showCancelButton: true, 
+                confirmButtonText: 'تۆماری بکە و وەرگرتنی پسوولە', 
+                cancelButtonText: 'پاشگەزبوونەوە', 
+                confirmButtonColor: '#28a745',
+                cancelButtonColor: '#6c757d',
+                focusConfirm: false,
+                preConfirm: () => {
+                    const editedName = document.getElementById('swal-input-name').value.trim();
+                    const editedPhone = document.getElementById('swal-input-phone').value.trim();
+                    let nameParts = editedName.split(/\s+/);
+                    let englishRegex = /[a-zA-Z]/;
+
+                    if (!editedName || englishRegex.test(editedName) || nameParts.length < 3) {
+                        Swal.showValidationMessage('تکایە ناوی سیانی بە کوردی بە دروستی بنووسە');
+                        return false;
+                    }
+                    if (editedPhone.length !== 11 || (!editedPhone.startsWith("077") && !editedPhone.startsWith("075") && !editedPhone.startsWith("078"))) {
+                        Swal.showValidationMessage('ژمارەی مۆبایل دەبێت 11 ژمارە بێت و بە 077، 075 یان 078 دەست پێبکات');
+                        return false;
+                    }
+                    return { name: editedName, phone: editedPhone };
+                }
             });
-            if (confirmation.isConfirmed) {
+
+            if (confirmation.isConfirmed && confirmation.value) {
+                let finalName = confirmation.value.name;
+                let finalPhone = confirmation.value.phone;
+
+                // نوێکردنەوەی ناخ ناو فۆرمی سەرەکی ئەگەر گۆڕابێت
+                document.getElementById("nameInput").value = finalName;
+                document.getElementById("phoneInput").value = finalPhone;
+
                 let regBtn = document.getElementById("registerBtn"); let orig = regBtn.innerHTML;
                 regBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; regBtn.disabled = true;
                 try {
-                    let response = await fetch(apiUrl, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name: name, phone: phone }) });
+                    let response = await fetch(apiUrl, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name: finalName, phone: finalPhone }) });
                     let result = await response.json().catch(() => ({}));
                     if(response.ok && result.ticket) {
                         let todayDateStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
@@ -1215,7 +1255,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 const swCode = `
-                    const CACHE_NAME = 'traffic-halabja-offline-v3';
+                    const CACHE_NAME = 'traffic-halabja-offline-v4';
                     const ASSETS = [
                         './',
                         'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
