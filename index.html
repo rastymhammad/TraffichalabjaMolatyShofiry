@@ -120,7 +120,6 @@
             100% { transform: translateX(100%); }
         }
 
-        /* ستایلی دوگمەی دابەزاندنی ئەپەکە */
         .install-app-btn {
             background: #ffc107;
             color: #333;
@@ -376,6 +375,15 @@
         body.dark-mode .dash-card h3 {
             color: #4da3ff;
         }
+        
+        /* Dark Mode ستایلی بەشی پسوولە خەزنکراوەکە بۆ */
+        body.dark-mode #savedTicketDiv {
+            background-color: #2c2c2c !important;
+            border-color: #28a745 !important;
+        }
+        body.dark-mode #savedTicketDiv p {
+            color: #d4edda !important;
+        }
 
         .swal2-container {
             font-family: 'Rabar', Tahoma, Arial, sans-serif !important;
@@ -439,18 +447,28 @@
 
         <div class="container" id="userRegistrationSection">
             <h2>تۆمارکردنی ناو</h2>
+
+            <!-- بەشی دەرکەوتنی پسوولەی خەزنکراو (Offline Ticket Memory) -->
+            <div id="savedTicketDiv" style="display: none; background: #e9ecef; padding: 15px; border-radius: 8px; border: 2px solid #28a745; margin-bottom: 15px;">
+                <p style="margin: 0 0 10px 0; color: #155724; font-weight: bold; font-size: 14px;">بەڕێز، تۆ ئەمڕۆ نۆرەت گرتووە!</p>
+                <button onclick="showSavedTicket()" style="background: #28a745; width: 100%; margin: 0; padding: 10px; font-size: 15px;">
+                    <i class="fa-solid fa-ticket"></i> پیشاندانی پسوولەکەم
+                </button>
+            </div>
             
-            <div class="input-wrapper">
-                <i class="fa-solid fa-user"></i>
-                <input type="text" id="nameInput" placeholder="ناوی سیانی بنووسە..." oninput="validateFormInputs()">
-            </div>
+            <div id="registrationInputs">
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" id="nameInput" placeholder="ناوی سیانی بنووسە..." oninput="validateFormInputs()">
+                </div>
 
-            <div class="input-wrapper">
-                <i class="fa-solid fa-phone"></i>
-                <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false" oninput="validateFormInputs()">
-            </div>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-phone"></i>
+                    <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false" oninput="validateFormInputs()">
+                </div>
 
-            <button id="registerBtn" onclick="confirmAndRegister()" disabled style="background: #cccccc; cursor: not-allowed;">تۆمارکردن</button>
+                <button id="registerBtn" onclick="confirmAndRegister()" disabled style="background: #cccccc; cursor: not-allowed;">تۆمارکردن</button>
+            </div>
             <div id="countdownTimer" class="timer-box"></div>
         </div>
 
@@ -548,7 +566,6 @@
             <button onclick="handleAdminClick()" style="background: none; color: #aaa; border: none; font-size: 12px; cursor: pointer; width: auto;">ئەدمین</button>
         </div>
 
-        <!-- دوگمەی دابەزاندنی ئەپڵیکەیشن لێرەدا دانرا بە شێوەیەکی گونجاو لە خوارەوە -->
         <div id="pwaInstallContainer" class="no-print" style="display: none; text-align: center; margin-top: 20px;">
             <button class="install-app-btn" id="installAppBtn">
                 <i class="fa-solid fa-download"></i> دابەزاندنی ئەپڵیکەیشن بۆ مۆبایلەکەت
@@ -590,23 +607,19 @@
         let globalSystemIsActive = true; 
         let statChart = null;
 
-        // ==== کۆنتڕۆڵی دوگمەی ئەپڵیکەیشن (PWA Install Logic) ====
         let deferredPrompt;
         const installBtnContainer = document.getElementById('pwaInstallContainer');
         const installAppBtn = document.getElementById('installAppBtn');
 
-        // پشکنین ئایا بەکارهێنەر لەناو براوسەرە (واتە ئەپەکەی دانەبەزاندووە)
         const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 
         if (!isStandalone) {
-            // بۆ ئەندرۆید - گرتنی ڕووداوی دابەزاندن
             window.addEventListener('beforeinstallprompt', (e) => {
                 e.preventDefault();
                 deferredPrompt = e;
                 installBtnContainer.style.display = 'block';
             });
 
-            // بۆ ئایفۆن و ئەندرۆید - پیشاندانی دوگمەکە ئەگەر مۆبایل بێت
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
             if(isMobile) {
                 installBtnContainer.style.display = 'block';
@@ -614,7 +627,6 @@
 
             installAppBtn.addEventListener('click', async () => {
                 if (deferredPrompt) {
-                    // ئەندرۆید
                     deferredPrompt.prompt();
                     const { outcome } = await deferredPrompt.userChoice;
                     if (outcome === 'accepted') {
@@ -622,7 +634,6 @@
                     }
                     deferredPrompt = null;
                 } else {
-                    // ئایفۆن (iOS)
                     const isIos = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
                     if (isIos) {
                         Swal.fire({
@@ -639,7 +650,6 @@
             });
         }
 
-        // تۆمارکردنی Service Worker بە دروستی بۆ کارپێکردنی PWA
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js').catch(err => {
@@ -770,6 +780,39 @@
                 } catch(e) {
                     Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە!', 'error');
                 }
+            }
+        }
+
+        // ==== بەشی پشکنین و پیشاندانی پسوولەی ئۆفلاین ====
+        function checkSavedTicket() {
+            let saved = localStorage.getItem("my_daily_ticket");
+            if(saved) {
+                try {
+                    let ticket = JSON.parse(saved);
+                    let todayDateStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
+                    if(ticket.savedAt === todayDateStr) {
+                        // پیشاندانی دوگمەی پسوولەی خەزنکراو وە شاردنەوەی فۆڕمەکە بۆ ئەوەی دوو جار خۆی تۆمار نەکات
+                        let div = document.getElementById("savedTicketDiv");
+                        if (div) div.style.display = "block";
+                        
+                        document.getElementById("registrationInputs").style.display = "none";
+                    } else {
+                        localStorage.removeItem("my_daily_ticket"); 
+                    }
+                } catch(e){}
+            }
+        }
+
+        function showSavedTicket() {
+            let saved = localStorage.getItem("my_daily_ticket");
+            if(saved) {
+                let t = JSON.parse(saved);
+                Swal.fire({
+                    title: 'پسوولەکەی تۆ',
+                    html: generateTicketHTML(t.name, t.phone, t.rank, t.time, t.qrCode, t.date),
+                    confirmButtonText: 'داخستن',
+                    confirmButtonColor: '#28a745'
+                });
             }
         }
 
@@ -986,6 +1029,7 @@
                     });
             } else {
                 checkQuotaAndTimer();
+                checkSavedTicket(); // پێداچوونەوەی پسوولەی ئۆفلاین لە کاتی کردنەوەی سایتەکە
             }
         };
 
@@ -1031,8 +1075,20 @@
             timerInterval = setInterval(update, 1000);
         }
 
+        // ==== سیستەمی ئۆتۆماتیکی دارک مۆد و گۆڕینی ڕەنگ (Auto Dark Mode) ====
         const themeBtn = document.getElementById("themeToggleBtn");
-        if (localStorage.getItem("theme") === "dark") {
+        let currentTheme = localStorage.getItem("theme");
+
+        // ئەگەر پێشتر دیاری نەکراوە، بزانە ئایا مۆبایلەکەی خۆی لەسەر دارک مۆدە
+        if (!currentTheme) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                currentTheme = "dark";
+            } else {
+                currentTheme = "light";
+            }
+        }
+
+        if (currentTheme === "dark") {
             document.body.classList.add("dark-mode");
             themeBtn.innerText = "☀️";
         }
@@ -1096,6 +1152,20 @@
 
                 if(response.ok) {
                     if(result.ticket) {
+                        // خەزنکردنی پسوولەکە لەناو مۆبایلەکە
+                        let todayDateStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
+                        let myTicket = {
+                            name: result.ticket.name,
+                            phone: result.ticket.phone,
+                            rank: result.ticket.rank,
+                            time: result.ticket.time,
+                            qrCode: result.ticket.qrCode,
+                            date: result.ticket.date,
+                            savedAt: todayDateStr
+                        };
+                        localStorage.setItem("my_daily_ticket", JSON.stringify(myTicket));
+                        checkSavedTicket();
+
                         Swal.fire({
                             title: 'تۆمارکردن سەرکەوتوو بوو!',
                             html: generateTicketHTML(result.ticket.name, result.ticket.phone, result.ticket.rank, result.ticket.time, result.ticket.qrCode, result.ticket.date),
@@ -1188,6 +1258,19 @@
                     let todayDateStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
                     let cleanDateForToken = todayDateStr.replace(/-/g, '');
                     let searchQrToken = btoa(result.phone + "|" + cleanDateForToken);
+
+                    // خەزنکردنەوەی پسوولە لە کاتی گەڕانەوە ئەگەر پێشتر سڕابێتەوە
+                    let myTicket = {
+                        name: result.name,
+                        phone: result.phone,
+                        rank: result.rank,
+                        time: result.timeMessage,
+                        qrCode: searchQrToken,
+                        date: result.Date,
+                        savedAt: todayDateStr
+                    };
+                    localStorage.setItem("my_daily_ticket", JSON.stringify(myTicket));
+                    checkSavedTicket();
 
                     Swal.fire({ 
                         title: 'ناو دۆزرایەوە', 
