@@ -322,7 +322,7 @@
     <div class="main-content" id="mainWrapper">
         <div class="header-title no-print">
             <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="گۆڕینی ڕەنگ">🌙</button>
-            <h1>بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە</h1>
+            <h1>به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە</h1>
         </div>
 
         <!-- === پۆرتاڵ (مێنیوی سەرەکی) === -->
@@ -553,7 +553,7 @@
 
     <!-- === فوتەر و سۆشیاڵ میدیا === -->
     <footer>
-        <p style="margin: 0 0 5px 0;">هەموو مافێکی پارێزراوە بۆ بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە &copy; 2026</p>
+        <p style="margin: 0 0 5px 0;">هەموو مافێکی پارێزراوە بۆ بەڕێوەبەرایەتی هاتووچۆی هەڵەبجە &copy; 2026</p>
         <p class="dev-name" style="margin: 0;">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووچۆ ( ڕاستی محمد شێخ حیدر )</p>
         
         <div class="social-icons no-print">
@@ -586,6 +586,7 @@
         let globalUsersData = [];
 
         // ==== مێنیوی پۆرتاڵ ====
+        openSection('portal');
         function openSection(section) {
             document.getElementById('portalSection').style.display = 'none';
             document.getElementById('queueSection').style.display = 'none';
@@ -1001,7 +1002,7 @@
         }
 
         // ==========================================
-        //         لۆجیکی بەشی ئەدمین 
+        //         لۆجیکی بەشی ئەدمین (چارەسەرکردنی پاسوۆرد و لیست)
         // ==========================================
         function handleAdminClick() {
             adminClickCount++;
@@ -1028,6 +1029,7 @@
                     
                     if (response.ok) {
                         tempAdminPassword = pwd; 
+                        window.adminPwd = pwd; // پاراستنی تەواوی پاسوۆرد بۆ لیستەکان
                         document.getElementById("adminSection").style.display = "block";
                         loadAdminStats();
                     } else Swal.fire('هەڵەیه‌', 'پاسوۆردەکە هەڵەیە!', 'error');
@@ -1043,13 +1045,14 @@
             let openPreRegBtn = document.getElementById("openPreRegBtn");
             if(preRegForm) preRegForm.style.display = "none";
             if(openPreRegBtn) openPreRegBtn.style.display = "inline-block";
-            tempAdminPassword = ""; adminClickCount = 0;
+            tempAdminPassword = ""; window.adminPwd = ""; adminClickCount = 0;
         }
 
         async function loadAdminStats() {
-            if(!tempAdminPassword) return;
+            let activePwd = tempAdminPassword || window.adminPwd;
+            if(!activePwd) return;
             try {
-                let response = await fetch(`${baseUrl}/api/admin/stats`, { headers: { "Admin-Password": tempAdminPassword } });
+                let response = await fetch(`${baseUrl}/api/admin/stats`, { headers: { "Admin-Password": activePwd } });
                 if(response.ok) {
                     let stats = await response.json();
                     document.getElementById('statTotal').innerText = stats.today.total;
@@ -1122,8 +1125,12 @@
 
         async function loadTodayUsers() {
             let table = document.getElementById("usersTable"); let tbody = document.getElementById("tableBody");
+            let activePwd = tempAdminPassword || window.adminPwd;
+            if (!activePwd) {
+                return Swal.fire('ئاگاداری', 'تکایە سەرەتا لە بەشی ئەدمین چوونەژوورەوە بکە!', 'warning');
+            }
             try {
-                let response = await fetch(`${baseUrl}/api/admin/today-list`, { method: "GET", headers: { "Admin-Password": tempAdminPassword } });
+                let response = await fetch(`${baseUrl}/api/admin/today-list`, { method: "GET", headers: { "Admin-Password": activePwd } });
                 if (!response.ok) {
                     let errResult = await response.json().catch(() => ({}));
                     Swal.fire('هەڵە', errResult.message || 'پاسۆردی سەرەتا هەڵەبوو!', 'error');
@@ -1189,13 +1196,15 @@
                 if(response.ok) {
                     Swal.fire('سەرکەوتوو بوو', result.message || 'ناو بە سەرکەوتوویی لەلایەن ئەدمنەوە تۆمارکرا!', 'success');
                     document.getElementById("adminNameInput").value = ""; document.getElementById("adminPhoneInput").value = ""; validateAdminFormInputs();
-                    if(tempAdminPassword !== "") { loadAdminStats(); loadTodayUsers(); }
+                    let activePwd = tempAdminPassword || window.adminPwd;
+                    if(activePwd) { loadAdminStats(); loadTodayUsers(); }
                 } else Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان کێشەیەک هەیە!', 'error');
             } catch (error) { Swal.fire('کێشەی هێڵ', 'کێشە لە پەیوەندیکردن هەیە!', 'error'); } 
             finally { regBtn.innerHTML = originalText; regBtn.disabled = false; checkQuotaAndTimer(); }
         }
 
         async function editUser(id, currentName, currentPhone) {
+            let activePwd = tempAdminPassword || window.adminPwd;
             const { value: formValues } = await Swal.fire({
                 title: 'دەستکاریکردنی زانیاری', html: `<input id="swal-input-name" class="swal2-input" value="${currentName}" placeholder="ناوی سیانی"> <input id="swal-input-phone" class="swal2-input" value="${currentPhone}" placeholder="ژمارەی مۆبایل">`,
                 focusConfirm: false, showCancelButton: true, confirmButtonText: 'پاشەکەوتکردن', cancelButtonText: 'داخستن',
@@ -1207,7 +1216,7 @@
                 if (!newPhone.startsWith("077") && !newPhone.startsWith("075") && !newPhone.startsWith("078")) return Swal.fire('هەڵەیه‌', 'ژمارەی مۆبایل دەبێت بە 077 یان 075 یان 078 دەست پێبکات', 'error');
                 if (newPhone.length !== 11) return Swal.fire('هەڵەیه‌', 'ژمارەی مۆبایل دەبێت 11 ژمارە بێت', 'error');
                 try {
-                    let response = await fetch(`${apiUrl}/${id}`, { method: "PUT", headers: { "Content-Type": "application/json", "Admin-Password": tempAdminPassword }, body: JSON.stringify({ name: newName, phone: newPhone }) });
+                    let response = await fetch(`${apiUrl}/${id}`, { method: "PUT", headers: { "Content-Type": "application/json", "Admin-Password": activePwd }, body: JSON.stringify({ name: newName, phone: newPhone }) });
                     let resData = await response.json().catch(() => ({}));
                     if (response.ok) { Swal.fire('سەرکەوتوو بوو!', resData.message || 'زانیارییەکان گۆڕدران.', 'success'); loadTodayUsers(); }
                     else Swal.fire('هەڵە!', resData.message || 'کێشەیەک هەیە لە نوێکردنەوە!', 'error');
@@ -1216,13 +1225,14 @@
         }
 
         async function deleteUser(id) {
+            let activePwd = tempAdminPassword || window.adminPwd;
             const confirmResult = await Swal.fire({
                 title: 'دڵنیایت؟', text: "ئایا بەڕاستی دەتەوێت ئەم ناوە بسڕیتەوە؟", icon: 'warning',
                 showCancelButton: true, confirmButtonColor: '#dc3545', cancelButtonColor: '#6c757d', confirmButtonText: 'بەڵێ، بسڕەوە', cancelButtonText: 'نەخێر پەشیمان بوومەوە'
             });
             if (confirmResult.isConfirmed) {
                 try {
-                    let response = await fetch(`${apiUrl}/${id}`, { method: "DELETE", headers: { "Admin-Password": tempAdminPassword } });
+                    let response = await fetch(`${apiUrl}/${id}`, { method: "DELETE", headers: { "Admin-Password": activePwd } });
                     let resData = await response.json().catch(() => ({}));
                     if (response.ok) { Swal.fire('سڕایەوە!', resData.message || 'ناوەکە بە سەرکەوتوویی سڕایەوە.', 'success'); loadTodayUsers(); checkQuotaAndTimer(); }
                     else Swal.fire('هەڵە!', resData.message || 'کێشەیەک هەیە لە سڕینەوە!', 'error');
@@ -1257,7 +1267,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 const swCode = `
-                    const CACHE_NAME = 'traffic-halabja-offline-v9';
+                    const CACHE_NAME = 'traffic-halabja-offline-v10';
                     const ASSETS = [
                         './',
                         'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
