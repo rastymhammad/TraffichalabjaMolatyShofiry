@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>پۆرتاڵی هاتووچۆی هه‌ڵه‌بجه‌</title>
+    <title>به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هه‌ڵه‌بجه‌</title>
     
     <!-- PWA Settings -->
     <link rel="manifest" href="manifest.json">
@@ -1168,10 +1168,9 @@
                     let response = await fetch(`${baseUrl}/api/admin/verify?type=prereg`, { method: "POST", headers: { "Admin-Password": pwd } });
                     if (response.status === 429) return Swal.fire('ئاگاداری سزا', 'تۆ چەند جارێک پاسوۆردی هەڵەت لێدا؛ بەهۆی پاراستنی سیستەمەوە سزادراویت!', 'error');
                     if (response.ok) { 
-                        // پاشوۆردی 8899 دروستە، کەناڵی تۆماری پێشوەختە دەکرێتەوە
                         document.getElementById("openPreRegBtn").style.display = "none"; 
                         document.getElementById("preRegForm").style.display = "block";
-                        window.tempPreRegPwd = pwd; // خەزنکردنی کاتی بۆ کاتی ناردنی داتا
+                        window.tempPreRegPwd = pwd; 
                     } 
                     else Swal.fire('هەڵەیه‌', 'پاسوۆردەکە هەڵەیە!', 'warning');
                 } catch(e) { Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە!', 'error'); }
@@ -1258,7 +1257,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 const swCode = `
-                    const CACHE_NAME = 'traffic-halabja-offline-v7';
+                    const CACHE_NAME = 'traffic-halabja-offline-v8';
                     const ASSETS = [
                         './',
                         'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
