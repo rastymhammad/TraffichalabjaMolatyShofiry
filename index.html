@@ -2,15 +2,21 @@
 <html lang="ku" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>سیسته‌می سه‌ره‌گرتنی مۆڵه‌تی شۆفێری هاتووچۆی هه‌ڵه‌بجه‌</title>
     
+    <!-- PWA Settings -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0056b3">
     
+    <!-- iOS PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="نۆرەی هاتووچۆ">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -84,7 +90,7 @@
 
         .news-ticker-container {
             max-width: 400px;
-            margin: 0 auto 25px auto;
+            margin: 0 auto 15px auto;
             background-color: #0056b3;
             color: #ffffff;
             padding: 12px 0;
@@ -112,6 +118,27 @@
         @keyframes moveLeftToRight {
             0% { transform: translateX(0); }
             100% { transform: translateX(100%); }
+        }
+
+        /* ستایلی دوگمەی دابەزاندنی ئەپەکە */
+        .install-app-btn {
+            background: #ffc107;
+            color: #333;
+            font-weight: bold;
+            font-family: 'Rabar', sans-serif;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        .install-app-btn:hover {
+            background: #e0a800;
+            transform: scale(1.05);
         }
 
         .container {
@@ -145,12 +172,11 @@
             font-size: 18px;
         }
         
-        /* چواردەوری خانەکان بە ڕەنگی سووری کاڵ لە سەرەتادا */
         .input-wrapper input {
             width: 100%;
             padding: 12px 45px 12px 12px; 
             box-sizing: border-box;
-            border: 2px solid #f5c6cb; /* سووری کاڵ */
+            border: 2px solid #f5c6cb; 
             border-radius: 6px;
             font-size: 15px;
             font-family: 'Rabar', Tahoma, Arial, sans-serif;
@@ -159,13 +185,11 @@
             transition: 0.3s;
         }
         
-        /* کاتێک مەرجەکە دروست دەبێت دەبێتە سەوز */
         .input-wrapper input.valid-input {
             border-color: #28a745 !important;
             box-shadow: 0 0 5px rgba(40, 167, 69, 0.3);
         }
         
-        /* کاتێک هەڵەیە یان هێشتا تەواو نەبووە دەبێتە سووری کاڵ */
         .input-wrapper input.invalid-input {
             border-color: #f5c6cb !important;
             box-shadow: 0 0 5px rgba(245, 198, 203, 0.5);
@@ -186,7 +210,6 @@
             transition: 0.3s;
         }
         
-        /* شێوازی دوگمە کاتێک دیسەیبڵ (Disabled)ە */
         button:disabled {
             background: #cccccc !important;
             color: #666666 !important;
@@ -396,7 +419,7 @@
 </head>
 <body>
 
-    <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="گۆڕینی ڕەنگ">🌙</button>
+    <button class="theme-toggle-btn no-print" id="themeToggleBtn" onclick="toggleTheme()" title="گۆڕینی ڕەنگ">🌙</button>
 
     <div class="main-content" id="normalMainContent">
         <div class="header-title">
@@ -408,10 +431,17 @@
             </div>
         </div>
 
-        <div class="news-ticker-container">
+        <div class="news-ticker-container no-print">
             <div class="news-ticker-text">
                 نۆره‌ گرتنی مۆڵه‌تی شۆفێری له‌ به‌ڕێوه‌به‌رایه‌تی هاتووچۆی پارێزگای هه‌ڵه‌بجه سه‌باره‌ت به‌و هاووڵاتیانه‌ی كه‌ ڕۆژانه‌ له‌ ئیمتیحانی پراكتیكی واته‌ ترای ده‌ر ده‌چن له‌و ڕۆژه‌دا نابێت سه‌ردانی به‌ڕێوه‌به‌رایەتی بكه‌ن ده‌بێت ئه‌وانیش ناوی خۆیان تۆمار بكه‌ن بۆ ڕۆژی دواتر  
             </div>
+        </div>
+
+        <!-- دوگمەی دابەزاندنی ئەپڵیکەیشن (تەنها لەسەر مۆبایل و ئەگەر دابەزێنراو نەبێت دەردەکەوێت) -->
+        <div id="pwaInstallContainer" class="no-print" style="display: none;">
+            <button class="install-app-btn" id="installAppBtn">
+                <i class="fa-solid fa-download"></i> دابەزاندنی ئەپڵیکەیشن بۆ مۆبایلەکەت
+            </button>
         </div>
 
         <div class="container" id="userRegistrationSection">
@@ -554,13 +584,61 @@
         let globalUsersData = [];
         let adminClickCount = 0;
         let timerInterval = null;
-        
         let tempAdminPassword = "";
         let tempPreRegPassword = "";
         let globalSystemIsActive = true; 
-        
         let statChart = null;
 
+        // ==== کۆنتڕۆڵی دوگمەی ئەپڵیکەیشن (PWA Install Logic) ====
+        let deferredPrompt;
+        const installBtnContainer = document.getElementById('pwaInstallContainer');
+        const installAppBtn = document.getElementById('installAppBtn');
+
+        // پشکنین ئایا بەکارهێنەر لەناو براوسەرە (واتە ئەپەکەی دانەبەزاندووە)
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+        if (!isStandalone) {
+            // بۆ ئەندرۆید - گرتنی ڕووداوی دابەزاندن
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                installBtnContainer.style.display = 'block';
+            });
+
+            // بۆ ئایفۆن و ئەندرۆید - پیشاندانی دوگمەکە ئەگەر مۆبایل بێت
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            if(isMobile) {
+                installBtnContainer.style.display = 'block';
+            }
+
+            installAppBtn.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    // ئەندرۆید
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    if (outcome === 'accepted') {
+                        installBtnContainer.style.display = 'none';
+                    }
+                    deferredPrompt = null;
+                } else {
+                    // ئایفۆن (iOS)
+                    const isIos = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
+                    if (isIos) {
+                        Swal.fire({
+                            title: 'دابەزاندن بۆ ئایفۆن',
+                            html: `بۆ دابەزاندنی ئەم سیستەمە وەک ئەپڵیکەیشن،<br><br> ١. لە خوارەوەی شاشەکە کلیک لە نیشانەی <b>Share</b> <i class="fa-solid fa-arrow-up-from-bracket"></i> بکە.<br> ٢. پاشان بڕۆ خوارەوە و <b>Add to Home Screen</b> <i class="fa-solid fa-square-plus"></i> هەڵبژێرە.`,
+                            icon: 'info',
+                            confirmButtonText: 'تێگەیشتم',
+                            confirmButtonColor: '#0056b3'
+                        });
+                    } else {
+                        Swal.fire('ئاگاداری', 'بۆ دابەزاندن لە ڕێگەی براوسەری Chromeـەوە دەتوانیت لە ڕێکخستنەکان (سێ خاڵەکە) Add to Home screen هەڵبژێریت.', 'info');
+                    }
+                }
+            });
+        }
+
+        // تۆمارکردنی Service Worker بە دروستی بۆ کارپێکردنی PWA
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js').catch(err => {
@@ -577,7 +655,6 @@
             return true;
         }
 
-        // پشکنینی ڕاستەوخۆ بۆ خانەکانی تۆمارکردنی هاووڵاتی
         function validateFormInputs() {
             let nameInput = document.getElementById("nameInput");
             let phoneInput = document.getElementById("phoneInput");
@@ -618,7 +695,6 @@
             }
         }
 
-        // پشکنینی ڕاستەوخۆ بۆ خانەکانی تۆماری پێشوەختەی ئەدمین
         function validateAdminFormInputs() {
             let nameInput = document.getElementById("adminNameInput");
             let phoneInput = document.getElementById("adminPhoneInput");
@@ -659,7 +735,6 @@
             }
         }
 
-        // کردنەوەی بەشی تۆماری پێشوەختەی ئەدمین بە پشکنینی پاسوۆرد و ئاگادارکردنەوەی سزا (Rate Limit / 429)
         async function showPreRegForm() {
             const { value: pwd } = await Swal.fire({
                 title: 'چوونەژوورەوە بۆ تۆماری پێشوەختە',
@@ -679,7 +754,6 @@
                         headers: { "Admin-Password": pwd }
                     });
                     
-                    // پشکنینی سزای Rate Limit ئەگەر زۆر جار پاسوۆردی هەڵە لێدرابێت
                     if (response.status === 429) {
                         Swal.fire('ئاگاداری سزا', 'تۆ چەند جارێک پاسوۆردی هەڵەت لێدا؛ بەهۆی پاراستنی سیستەمەوە، بۆ ماوەیەک سزادراویت و ناتوانیت هەوڵ بدەیتەوە!', 'error');
                         return;
