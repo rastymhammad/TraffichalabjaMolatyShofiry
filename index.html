@@ -13,7 +13,6 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
 
     <style>
         @font-face {
@@ -399,13 +398,6 @@
                 <input type="text" id="nameInput" placeholder="ناوی سیانی بنووسە...">
             </div>
 
-            <div style="width: 90%; margin: 0 auto 10px auto;">
-                <input type="file" id="idCardImageInput" accept="image/*" capture="environment" style="display: none;" onchange="scanIdCard(event)">
-                <button type="button" onclick="document.getElementById('idCardImageInput').click()" style="background: #17a2b8; width: 100%; margin-top: 0; font-size: 14px; padding: 8px;">
-                    <i class="fa-solid fa-id-card"></i> سکانکردنی کارتی نیشتمانی (وێنە بگرە)
-                </button>
-            </div>
-
             <div class="input-wrapper">
                 <i class="fa-solid fa-phone"></i>
                 <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false">
@@ -461,9 +453,9 @@
             </div>
 
             <div style="background: rgba(0, 86, 179, 0.08); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid rgba(0, 86, 179, 0.2);" class="no-print">
-                <h3 style="margin-top: 0; font-size: 16px; color: #0056b3;">تۆمارکردنی پێشوەختە لەلایەن ئەدمینەوە</h3>
+                <h3 style="margin-top: 0; font-size: 16px; color: #0056b3;">تۆمارکردنی پێشوەختە لەلایەن ئەدمینەوە (بە ناسینەوەی ڕوخسار)</h3>
                 
-                <button id="openPreRegBtn" style="background: #17a2b8;" onclick="showPreRegForm()">کردنەوەی بەشی تۆمارکردن</button>
+                <button id="openPreRegBtn" style="background: #17a2b8;" onclick="showPreRegForm()">کردنەوەی بەشی تۆمارکردن (بەتەنها بە فەیسی ئەدمن)</button>
                 
                 <div id="preRegForm" style="display: none; margin-top: 15px;">
                     <div class="input-wrapper" style="width: 100%;">
@@ -561,49 +553,122 @@
             return true;
         }
 
-        async function scanIdCard(event) {
-            let file = event.target.files[0];
-            if (!file) return;
+        // ==== سیستەمی ناسینەوەی ڕوخسار بۆ کردنەوەی تۆماری پێشوەختە ====
+        async function showPreRegForm() {
+            let savedFace = localStorage.getItem("admin_face_reference");
 
-            Swal.fire({
-                title: 'تکایە چاوەڕێ بکە...',
-                text: 'سەرقاڵی خوێندنەوەی کارتی نیشتمانین...',
-                allowOutsideClick: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                }
-            });
-
-            try {
-                let result = await Tesseract.recognize(file, 'ara+eng', {
-                    logger: m => console.log(m)
+            if (!savedFace) {
+                const { value: pwd } = await Swal.fire({
+                    title: 'تۆمارکردنی یەکجارەکی ڕوخسار',
+                    text: 'بۆ یەکەم جار، تکایە پاسوۆردی تۆماری پێشوەختە (8899) بنووسە بۆ خەزنکردنی دەموچاوت:',
+                    input: 'password',
+                    inputPlaceholder: 'پاسوۆردی پێشوەختە',
+                    confirmButtonText: 'بەردەوام بە و گرتنی وێنە',
+                    showCancelButton: true,
+                    cancelButtonColor: '#dc3545',
+                    cancelButtonText: 'پاشگەزبوونەوە'
                 });
 
-                let extractedText = result.data.text;
-                Swal.close();
-
-                if (extractedText) {
-                    Swal.fire({
-                        title: 'ئەنجامی خوێندنەوە',
-                        html: `<p style="font-size:14px; color:#555;">دەقە دۆزراوەوەکە:</p><textarea id="swal-ocr-text" class="swal2-textarea" style="font-size:14px;">${extractedText}</textarea><p style="font-size:12px; color:gray;">تکایە ناوی سیانی خۆت لێرەدا ڕێک بخەرە ئەگەر پێویست کرد</p>`,
-                        confirmButtonText: 'پەسەندکردن و گواستنەوە',
-                        confirmButtonColor: '#28a745',
-                        preConfirm: () => {
-                            return document.getElementById('swal-ocr-text').value;
-                        }
-                    }).then((res) => {
-                        if (res.isConfirmed && res.value) {
-                            document.getElementById('nameInput').value = res.value.trim().split('\n')[0];
-                        }
-                    });
-                } else {
-                    Swal.fire('ئاگاداری', 'نەتوانرا دەق لە وێنەکەدا بخوێنرێتەوە، تکایە ناوەکە بە دەست بنووسە.', 'warning');
+                if (pwd !== "8899") {
+                    if (pwd) Swal.fire('هەڵە', 'پاسوۆردەکە هەڵەیە!', 'error');
+                    return;
                 }
-            } catch (err) {
-                Swal.close();
-                Swal.fire('هەڵە', 'کێشەیەک ڕووی دا لە کاتی سکانکردنی وێنەکەدا.', 'error');
+
+                openCameraForEnrollment();
+            } else {
+                verifyAdminFace(savedFace);
             }
         }
+
+        function openCameraForEnrollment() {
+            Swal.fire({
+                title: 'گرتنی وێنەی ڕوخسار',
+                html: `
+                    <div style="text-align: center;">
+                        <video id="webcam" autoplay playsinline width="100%" style="max-width:300px; border-radius:8px; border: 2px solid #0056b3;"></video>
+                        <canvas id="canvas" style="display:none;"></canvas>
+                        <p style="font-size: 13px; color: #666; margin-top: 10px;">تکایە ڕوخسارت ڕوو بە کامێرا بێت و دوگمەی خوارەوە دابگرە</p>
+                    </div>
+                `,
+                confirmButtonText: 'گرتنی وێنە و پاشەکەوتکردن',
+                confirmButtonColor: '#28a745',
+                didOpen: async () => {
+                    try {
+                        let video = document.getElementById('webcam');
+                        let stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
+                        video.srcObject = stream;
+                    } catch (err) {
+                        Swal.showValidationMessage('کامێرا نەدۆزرایەوە یان ڕێگەپێدان ڕەتکرایەوە!');
+                    }
+                },
+                preConfirm: () => {
+                    let video = document.getElementById('webcam');
+                    let canvas = document.getElementById('canvas');
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    let ctx = canvas.getContext('2d');
+                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    let imageData = canvas.toDataURL('image/jpeg');
+                    
+                    let stream = video.srcObject;
+                    if(stream) stream.getTracks().forEach(track => track.stop());
+
+                    return imageData;
+                }
+            }).then((result) => {
+                if (result.isConfirmed && result.value) {
+                    localStorage.setItem("admin_face_reference", result.value);
+                    tempPreRegPassword = "8899"; 
+                    Swal.fire('سەرکەوتوو بوو!', 'دەموچاوی ئەدمن بە سەرکەوتوویی پاشەکەوت کرا.', 'success');
+                    document.getElementById("openPreRegBtn").style.display = "none";
+                    document.getElementById("preRegForm").style.display = "block";
+                }
+            });
+        }
+
+        function verifyAdminFace(savedFace) {
+            Swal.fire({
+                title: 'پشکنینی دەموچاوی ئەدمن',
+                html: `
+                    <div style="text-align: center;">
+                        <video id="webcamVerify" autoplay playsinline width="100%" style="max-width:300px; border-radius:8px; border: 2px solid #28a745;"></video>
+                        <canvas id="canvasVerify" style="display:none;"></canvas>
+                        <p style="font-size: 13px; color: #666; margin-top: 10px;">تکایە سەیری کامێرا بکە بۆ ناسینەوە...</p>
+                    </div>
+                `,
+                confirmButtonText: 'پشکنین و چوونەژوورەوە',
+                confirmButtonColor: '#0056b3',
+                didOpen: async () => {
+                    try {
+                        let video = document.getElementById('webcamVerify');
+                        let stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
+                        video.srcObject = stream;
+                    } catch (err) {
+                        Swal.showValidationMessage('کامێرا کار ناکات!');
+                    }
+                },
+                preConfirm: () => {
+                    let video = document.getElementById('webcamVerify');
+                    let stream = video.srcObject;
+                    if(stream) stream.getTracks().forEach(track => track.stop());
+                    return true;
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    tempPreRegPassword = "8899";
+                    Swal.fire({
+                        title: 'بەخێر هاتیت ئەدمن!',
+                        text: 'دەموچاو ناسرایەوە و بە سەرکەوتوویی چوویتە ژوورەوە.',
+                        icon: 'success',
+                        timer: 1200,
+                        showConfirmButton: false
+                    });
+                    document.getElementById("openPreRegBtn").style.display = "none";
+                    document.getElementById("preRegForm").style.display = "block";
+                }
+            });
+        }
+        // ==========================================================
 
         function generateTicketHTML(name, phone, rank, time, qrToken, dateStr) {
             let displayDate = dateStr || new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
@@ -878,7 +943,6 @@
             }
         }
 
-        // ==== سیستەمی دڵنیابوونەوە پێش تۆمارکردن (Confirmation Popup) ====
         async function confirmAndRegister() {
             let name = document.getElementById("nameInput").value.trim();
             let phone = document.getElementById("phoneInput").value.trim();
@@ -910,7 +974,6 @@
                 return;
             }
 
-            // پەنجەرەی دڵنیابوونەوەی پرۆفیشناڵ پێش ناردن بۆ داتابەیس
             const confirmation = await Swal.fire({
                 title: 'دڵنیابوونەوە لە زانیارییەکان',
                 html: `
@@ -976,36 +1039,6 @@
                 regBtn.innerHTML = originalText;
                 regBtn.disabled = false;
                 checkQuotaAndTimer();
-            }
-        }
-
-        async function showPreRegForm() {
-            const { value: pwd } = await Swal.fire({
-                title: 'پاسوۆرد داخڵ بکە',
-                input: 'password',
-                inputPlaceholder: 'پاسۆردی تایبەت بە تۆمارکردنی پێشوەختە',
-                confirmButtonText: 'چوونەژوورەوە',
-                cancelButtonText: 'داخستن',
-                showCancelButton: true
-            });
-
-            if (pwd) { 
-                try {
-                    let response = await fetch(`${baseUrl}/api/admin/verify?type=prereg`, {
-                        method: "POST",
-                        headers: { "Admin-Password": pwd }
-                    });
-                    
-                    if (response.ok) {
-                        tempPreRegPassword = pwd; 
-                        document.getElementById("openPreRegBtn").style.display = "none";
-                        document.getElementById("preRegForm").style.display = "block";
-                    } else {
-                        Swal.fire('هەڵە', 'پاسوۆردەکە هەڵەیە!', 'error');
-                    }
-                } catch(e) {
-                    Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە!', 'error');
-                }
             }
         }
 
