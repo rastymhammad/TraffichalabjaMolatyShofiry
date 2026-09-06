@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>سیسته‌می سه‌ره‌گرتنی مۆڵه‌تی شۆفێری هاتووچۆی هه‌ڵه‌بجه‌</title>
+    <title>پۆرتاڵی هاتووچۆی هه‌ڵه‌بجه‌</title>
     
     <!-- PWA Settings -->
     <link rel="manifest" href="manifest.json">
@@ -12,7 +12,7 @@
     <!-- iOS PWA Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="نۆرەی هاتووچۆ">
+    <meta name="apple-mobile-web-app-title" content="هاتووچۆی هەڵەبجە">
     <link rel="apple-touch-icon" href="icon-192.png">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -24,13 +24,85 @@
         @font-face {
             font-family: 'Rabar';
             src: url('https://kurdish-fonts.com/fonts/rabar/Rabar_013.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
+            font-weight: normal; font-style: normal;
         }
+
+        /* --- بنچینەی هاوبەش --- */
+        :root {
+            --bg-body: #f0f8ff;
+            --bg-container: white;
+            --text-main: #333;
+            --border-container: #e2e8f0;
+            --header-bg: white;
+            --header-text: #0056b3;
+            --input-bg: white;
+            --input-border: #f5c6cb;
+            --input-text: #333;
+            
+            /* گۆڕاوەکانی بەشی غەرامە */
+            --badge-bg: linear-gradient(135deg, #1a365d, #2a4365);
+            --badge-text: white;
+            --toggle-bg: #f7fafc;
+            --toggle-border: #e2e8f0;
+            --slider-bg: #e2e8f0;
+            --date-bg: #fffaf0;
+            --date-border: #feebc8;
+            --date-title: #dd6b20;
+            --label-color: #718096;
+            --results-bg: #f7fafc;
+            --results-border: #e2e8f0;
+            --text-row: #4a5568;
+            --total-color: #2b6cb0;
+            --fine-color: #e53e3e;
+            --fee-color: #3182ce;
+            --info-bg: #edf2f7;
+            --info-text: #718096;
+            --modal-overlay: rgba(0, 0, 0, 0.4);
+            --modal-bg: white;
+            --modal-text: #2d3748;
+            --grid-bg: #edf2f7;
+            --dynamic-status-color: #48bb78;
+        }
+
+        body.dark-mode {
+            --bg-body: #121212;
+            --bg-container: #1e1e1e;
+            --text-main: #e0e0e0;
+            --border-container: #334155;
+            --header-bg: #1e1e1e;
+            --header-text: #4da3ff;
+            --input-bg: #2c2c2c;
+            --input-border: #444;
+            --input-text: #fff;
+
+            /* گۆڕاوەکانی بەشی غەرامە بۆ دارک مۆد */
+            --badge-bg: linear-gradient(135deg, #0f172a, #1e293b);
+            --badge-text: #f8fafc;
+            --toggle-bg: #1e293b;
+            --toggle-border: #334155;
+            --slider-bg: #475569;
+            --date-bg: rgba(245, 158, 11, 0.05);
+            --date-border: rgba(245, 158, 11, 0.2);
+            --date-title: #fbbf24;
+            --label-color: #94a3b8;
+            --results-bg: #0f172a;
+            --results-border: #334155;
+            --text-row: #94a3b8;
+            --total-color: #38bdf8;
+            --fine-color: #f87171;
+            --fee-color: #60a5fa;
+            --info-bg: #0f172a;
+            --info-text: #94a3b8;
+            --modal-overlay: rgba(15, 23, 42, 0.6);
+            --modal-bg: #1e293b;
+            --modal-text: #f8fafc;
+            --grid-bg: #334155;
+        }
+
         body {
             font-family: 'Rabar', Tahoma, Arial, sans-serif;
-            background-color: #f0f8ff;
-            color: #333;
+            background-color: var(--bg-body);
+            color: var(--text-main);
             padding: 20px 20px 0 20px;
             margin: 0;
             text-align: center;
@@ -40,765 +112,563 @@
             min-height: 100vh;
         }
         
-        .main-content {
-            flex: 1;
+        .main-content { flex: 1; width: 100%; max-width: 450px; margin: 0 auto; }
+
+        .theme-toggle-btn {
+            position: absolute; top: 20px; left: 20px; background: transparent; border: none;
+            font-size: 24px; cursor: pointer; padding: 0; margin: 0;
         }
 
         .header-title {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            max-width: 400px;
-            margin: auto auto 15px auto; 
-            border-bottom: 4px solid #0056b3;
+            background: var(--header-bg); padding: 20px; border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin: 15px auto; border-bottom: 4px solid #0056b3;
+            transition: 0.3s;
         }
+        body.dark-mode .header-title { border-bottom-color: #4da3ff; }
 
-        .header-title h1 {
-            color: #0056b3;
-            font-size: 20px;
-            margin: 0;
-            font-weight: bold;
-        }
-        .header-title p {
-            color: #555;
-            font-size: 14px;
-            margin: 8px 0 0 0;
-        }
+        .header-title h1 { color: var(--header-text); font-size: 20px; margin: 0; font-weight: bold; }
         
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 12px;
-            padding: 6px 14px;
-            font-size: 13px;
-            font-weight: bold;
-            border-radius: 20px;
+        /* --- ستایلی پۆرتاڵ (مێنیوی سەرەکی) --- */
+        .portal-cards { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+        .portal-card {
+            background: var(--header-bg); border: 2px solid var(--border-container); border-radius: 15px;
+            padding: 25px 20px; cursor: pointer; transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 15px; text-align: right;
         }
+        .portal-card:hover { transform: translateY(-5px); border-color: #0056b3; box-shadow: 0 8px 25px rgba(0,86,179,0.2); }
+        body.dark-mode .portal-card:hover { border-color: #4da3ff; box-shadow: 0 8px 25px rgba(77,163,255,0.2); }
+        .portal-card i { font-size: 35px; color: #0056b3; width: 50px; text-align: center; }
+        body.dark-mode .portal-card i { color: #4da3ff; }
+        .portal-card-content h3 { margin: 0 0 5px 0; font-size: 18px; color: var(--text-main); }
+        .portal-card-content p { margin: 0; font-size: 13px; color: var(--label-color); }
+
+        .back-btn {
+            background: #6c757d; color: white; border: none; padding: 10px 20px; border-radius: 8px;
+            font-family: 'Rabar'; font-size: 14px; font-weight: bold; cursor: pointer; margin-bottom: 15px; width: 100%; transition: 0.3s;
+        }
+        .back-btn:hover { background: #5a6268; }
+
+        /* --- ستایلی سیستەمی نۆرەگرتن --- */
+        .status-badge { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; padding: 6px 14px; font-size: 13px; font-weight: bold; border-radius: 20px; }
         .status-open { background: #d4edda; color: #155724; }
         .status-closed { background: #f8d7da; color: #721c24; }
-        
-        .dot {
-            height: 12px;
-            width: 12px;
-            border-radius: 50%;
-            display: inline-block;
-        }
+        .dot { height: 12px; width: 12px; border-radius: 50%; display: inline-block; }
         .dot-green { background-color: #28a745; box-shadow: 0 0 8px #28a745; }
         .dot-red { background-color: #dc3545; box-shadow: 0 0 8px #dc3545; }
 
-        .news-ticker-container {
-            max-width: 400px;
-            margin: 0 auto 15px auto;
-            background-color: #0056b3;
-            color: #ffffff;
-            padding: 12px 0;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            position: relative;
-            white-space: nowrap;
-            cursor: pointer;
-            display: flex;
-        }
-        
-        .news-ticker-container:hover .news-ticker-text {
-            animation-play-state: paused;
-        }
+        .container { background: var(--bg-container); padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: auto auto 25px auto; border: 1px solid var(--border-container); }
+        h2 { color: var(--header-text); margin-bottom: 20px; font-size: 18px; }
 
-        .news-ticker-text {
-            display: inline-block;
-            font-size: 15px;
-            font-weight: bold;
-            padding-right: 100%; 
-            animation: moveLeftToRight 25s linear infinite; 
-        }
-        
-        @keyframes moveLeftToRight {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(100%); }
-        }
-
-        .install-app-btn {
-            background: #ffc107;
-            color: #333;
-            font-weight: bold;
-            font-family: 'Rabar', sans-serif;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            font-size: 14px;
-            display: inline-block;
-            transition: all 0.3s;
-        }
-        .install-app-btn:hover {
-            background: #e0a800;
-            transform: scale(1.05);
-        }
-
-        .container {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            max-width: 400px;
-            margin: auto auto 25px auto;
-        }
-        #adminSection {
-            max-width: 700px;
-        }
-        h2 {
-            color: #0056b3;
-            margin-bottom: 20px;
-            font-size: 18px;
-        }
-
-        .input-wrapper {
-            position: relative;
-            width: 90%;
-            margin: 10px auto;
-        }
-        .input-wrapper i {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #0056b3;
-            font-size: 18px;
-        }
-        
+        .input-wrapper { position: relative; width: 90%; margin: 10px auto; }
+        .input-wrapper i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--header-text); font-size: 18px; }
         .input-wrapper input {
-            width: 100%;
-            padding: 12px 45px 12px 12px; 
-            box-sizing: border-box;
-            border: 2px solid #f5c6cb; 
-            border-radius: 6px;
-            font-size: 15px;
-            font-family: 'Rabar', Tahoma, Arial, sans-serif;
-            margin: 0;
-            outline: none;
-            transition: 0.3s;
+            width: 100%; padding: 12px 45px 12px 12px; box-sizing: border-box; border: 2px solid var(--input-border);
+            border-radius: 6px; font-size: 15px; font-family: 'Rabar', Tahoma, Arial, sans-serif; outline: none; transition: 0.3s;
+            background: var(--input-bg); color: var(--input-text);
         }
-        
-        .input-wrapper input.valid-input {
-            border-color: #28a745 !important;
-            box-shadow: 0 0 5px rgba(40, 167, 69, 0.3);
-        }
-        
-        .input-wrapper input.invalid-input {
-            border-color: #f5c6cb !important;
-            box-shadow: 0 0 5px rgba(245, 198, 203, 0.5);
-        }
+        .input-wrapper input.valid-input { border-color: #28a745 !important; box-shadow: 0 0 5px rgba(40, 167, 69, 0.3); }
+        .input-wrapper input.invalid-input { border-color: #f5c6cb !important; box-shadow: 0 0 5px rgba(245, 198, 203, 0.5); }
 
-        button {
-            background: #28a745;
-            color: white;
-            border: none;
-            padding: 12px 25px;
+        button.action-btn { background: #28a745; color: white; border: none; padding: 12px 25px; cursor: pointer; border-radius: 6px; font-size: 16px; font-weight: bold; width: 95%; margin-top: 10px; font-family: 'Rabar'; transition: 0.3s; }
+        button.action-btn:disabled { background: #cccccc !important; color: #666666 !important; cursor: not-allowed !important; box-shadow: none !important; }
+        button.action-btn:hover:not(:disabled) { background: #218838; }
+        .search-btn { background: #007bff; }
+        .search-btn:hover { background: #0056b3; }
+        .timer-box { font-size: 14px; color: #d9534f; margin-top: 15px; font-weight: bold; display: none; }
+
+        /* --- ستایلی سیستەمی غەرامە --- */
+        .fine-container { background: var(--bg-container); border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 20px; border: 2px solid var(--border-container); text-align: right; }
+        .toggle-container { display: flex; justify-content: space-between; align-items: center; background: var(--toggle-bg); padding: 12px; border-radius: 12px; margin-bottom: 12px; border: 1px solid var(--toggle-border); }
+        .switch { position: relative; display: inline-block; width: 60px; height: 34px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--slider-bg); border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: #48bb78; }
+        input:checked + .slider:before { transform: translateX(26px); }
+
+        .checklist-box { background: var(--toggle-bg); border: 1px solid var(--toggle-border); border-radius: 12px; padding: 12px 15px; margin-bottom: 15px; }
+        .checklist-title { font-size: 12.5px; font-weight: bold; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+        .checklist-items { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 11.5px; color: var(--label-color); }
+        .check-item { display: flex; align-items: center; gap: 5px; }
+
+        /* دیزاینی نوێی بۆکسەکانی بەروار */
+        .date-section { background: var(--date-bg); border: 1px solid var(--date-border); border-radius: 16px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+        .date-title-wrap { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .date-title { color: var(--date-title); font-weight: bold; font-size: 14px; }
+        .btn-reset { background: transparent; border: 1px solid var(--date-border); color: var(--date-title); border-radius: 6px; padding: 3px 10px; font-size: 11.5px; font-weight: bold; cursor: pointer; }
+        
+        .date-inputs { display: flex; gap: 10px; justify-content: center; }
+        .date-box { 
+            flex: 1; 
+            text-align: center; 
+            background: var(--bg-container); 
+            border: 1px solid var(--toggle-border); 
+            border-radius: 10px; 
+            padding: 8px 4px; 
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02); 
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; 
             cursor: pointer;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: bold;
-            width: 95%;
-            margin-top: 10px;
-            font-family: 'Rabar', Tahoma, Arial, sans-serif;
-            transition: 0.3s;
         }
-        
-        button:disabled {
-            background: #cccccc !important;
-            color: #666666 !important;
-            cursor: not-allowed !important;
-            box-shadow: none !important;
+        .date-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+            border-color: #0056b3;
         }
-
-        button:hover:not(:disabled) {
-            background: #218838;
-        }
-        .search-btn {
-            background: #007bff;
-        }
-        .search-btn:hover {
-            background: #0056b3;
-        }
-        .timer-box {
-            font-size: 14px;
-            color: #d9534f;
-            margin-top: 15px;
-            font-weight: bold;
-            display: none;
-        }
-        .theme-toggle-btn {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: transparent;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            width: auto;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .table-responsive {
-            width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            margin-top: 15px;
-        }
-        #usersTable {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: center;
-            font-size: 10px; 
-        }
-        #usersTable th, #usersTable td {
-            white-space: nowrap; 
-            padding: 6px 8px; 
-            border: 1px solid #ddd;
-        }
-        #usersTable th {
-            padding: 8px 10px; 
-        }
-        
-        .dashboard-cards {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 12px;
-            justify-content: space-between;
-        }
-        .dash-card {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 6px;
-            padding: 8px 4px;
-            flex: 1;
-            text-align: center;
-        }
-        .dash-card h4 {
-            margin: 0 0 2px 0;
-            font-size: 11px;
-            color: #6c757d;
-        }
-        .dash-card h3 {
-            margin: 0;
-            font-size: 16px;
-            color: #0056b3;
-        }
-        
-        .chart-container {
-            max-width: 180px;
-            margin: 0 auto;
-        }
-        
-        footer {
-            background-color: #0056b3;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 30px;
-            border-radius: 12px 12px 0 0;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-        footer .dev-name {
-            color: #d4edda;
-            font-weight: bold;
-            margin-top: 5px;
+        body.dark-mode .date-box:hover { border-color: #4da3ff; }
+        .date-box label { display: block; font-size: 12px; color: var(--label-color); margin-bottom: 2px; font-weight: bold; pointer-events: none;}
+        .date-custom-input { 
+            width: 100%; 
+            padding: 2px; 
+            border: none; 
+            background: transparent; 
+            text-align: center; 
+            font-size: 18px; 
+            font-weight: bold; 
+            color: var(--input-text); 
+            pointer-events: none;
         }
 
-        .social-icons {
-            margin-top: 15px;
-        }
-        .social-icons a {
-            color: #d4edda;
-            font-size: 26px;
-            margin: 0 10px;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-        }
-        .social-icons a:hover {
-            color: #ffffff;
-            transform: scale(1.2) translateY(-3px);
-        }
+        .results { background: var(--results-bg); border-radius: 12px; padding: 15px; border: 2px solid var(--dynamic-status-color); margin-bottom: 15px; position: relative; overflow: hidden; z-index: 1; }
+        .result-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed var(--results-border); font-size: 15px; color: var(--text-row); position: relative; z-index: 2; }
+        .result-row:last-child { border-bottom: none; }
+        .total-row { font-size: 18px; font-weight: bold; color: var(--total-color); }
+        .fine-row { color: var(--fine-color); font-weight: bold; }
+        .fee-row { color: var(--fee-color); font-weight: bold; }
 
-        body.dark-mode {
-            background-color: #121212;
-            color: #e0e0e0;
-        }
-        body.dark-mode .header-title,
-        body.dark-mode .container {
-            background-color: #1e1e1e;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            border-bottom-color: #4da3ff;
-        }
-        body.dark-mode .header-title h1,
-        body.dark-mode .header-title h2 {
-            color: #4da3ff;
-        }
-        body.dark-mode .header-title p {
-            color: #aaa;
-        }
-        body.dark-mode input {
-            background-color: #2c2c2c;
-            color: #fff;
-        }
-        body.dark-mode .input-wrapper i {
-            color: #4da3ff;
-        }
-        body.dark-mode .news-ticker-container {
-            background-color: #1e1e1e;
-            border: 1px solid #4da3ff;
-            color: #4da3ff;
-        }
-        body.dark-mode footer {
-            background-color: #1e1e1e;
-            border-top: 2px solid #4da3ff;
-        }
-        body.dark-mode #usersTable th, 
-        body.dark-mode #usersTable td {
-            border: 1px solid #444;
-        }
-        body.dark-mode .dash-card {
-            background: #2c2c2c;
-            border-color: #444;
-        }
-        body.dark-mode .dash-card h4 {
-            color: #aaa;
-        }
-        body.dark-mode .dash-card h3 {
-            color: #4da3ff;
-        }
-        
-        /* Dark Mode ستایلی بەشی پسوولە خەزنکراوەکە بۆ */
-        body.dark-mode #savedTicketDiv {
-            background-color: #2c2c2c !important;
-            border-color: #28a745 !important;
-        }
-        body.dark-mode #savedTicketDiv p {
-            color: #d4edda !important;
-        }
+        .gauge-container { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%); width: 220px; height: 110px; text-align: center; display: none; opacity: 0.25; pointer-events: none; z-index: 0; }
+        .gauge { position: relative; width: 220px; height: 110px; overflow: hidden; background: var(--slider-bg); border-top-left-radius: 110px; border-top-right-radius: 110px; }
+        .gauge-fill { position: absolute; top: 100%; left: 0; width: inherit; height: 100%; background: #48bb78; transform-origin: center top; transition: transform 0.8s ease-out, background 0.8s; border-bottom-left-radius: 110px; border-bottom-right-radius: 110px; }
+        .gauge-cover { position: absolute; top: 22px; left: 22px; width: 176px; height: 88px; background: var(--results-bg); border-top-left-radius: 88px; border-top-right-radius: 88px; }
+        .needle { position: absolute; bottom: 0; left: 50%; width: 5px; height: 90px; background: var(--input-text); transform-origin: bottom center; transform: translateX(-50%) rotate(-90deg); transition: transform 0.8s; border-radius: 5px; z-index: 2; }
 
-        .swal2-container {
-            font-family: 'Rabar', Tahoma, Arial, sans-serif !important;
-        }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-overlay); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: var(--modal-bg); padding: 20px; border-radius: 16px; width: 95%; max-width: 380px; text-align: center; }
+        .modal-content h3 { margin-bottom: 15px; color: var(--modal-text); font-size: 15px; }
+        .number-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; max-height: 85vh; overflow-y: auto; padding: 5px; }
+        .grid-item { padding: 10px; min-height: 44px; display: flex; align-items: center; justify-content: center; background: var(--grid-bg); border-radius: 8px; font-weight: bold; color: var(--input-text); cursor: pointer; }
+        .grid-item.selected-item { background: #3182ce !important; color: white !important; }
 
-        @media print {
-            body * { visibility: hidden; }
-            .table-responsive, .table-responsive * { visibility: visible; }
-            .table-responsive { 
-                position: absolute; 
-                right: 0; 
-                top: 0; 
-                width: 100%; 
-                overflow: visible; 
-            }
-            
-            #usersTable {
-                font-size: 14px !important; 
-                width: 100% !important;
-                border-collapse: collapse !important;
-            }
+        footer { background-color: var(--header-bg); color: var(--text-main); text-align: center; padding: 20px; margin-top: 30px; border-radius: 12px 12px 0 0; font-size: 14px; border-top: 1px solid var(--border-container); }
+        .dev-name { color: #0056b3; font-weight: bold; margin-top: 5px; }
+        body.dark-mode .dev-name { color: #4da3ff; }
 
-            #usersTable th, #usersTable td { 
-                white-space: normal !important; 
-                color: #000000 !important; 
-                border: 1px solid #000000 !important; 
-                padding: 10px 8px !important; 
-            }
-
-            #usersTable th {
-                background-color: #e6e6e6 !important; 
-                color: #000000 !important;
-                font-weight: bold !important;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-
-            .no-print { display: none !important; }
-        }
+        .no-print { display: block; }
+        @media print { body * { visibility: hidden; } .no-print { display: none !important; } }
     </style>
 </head>
 <body>
 
     <button class="theme-toggle-btn no-print" id="themeToggleBtn" onclick="toggleTheme()" title="گۆڕینی ڕەنگ">🌙</button>
 
-    <div class="main-content" id="normalMainContent">
+    <div class="main-content" id="mainWrapper">
         <div class="header-title">
             <h1>بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە</h1>
-            <p></p>
-            <div id="statusBadge" class="status-badge status-open">
+        </div>
+
+        <!-- === پۆرتاڵ (مێنیوی سەرەکی) === -->
+        <div id="portalSection">
+            <div class="portal-cards">
+                <div class="portal-card" onclick="openSection('queue')">
+                    <i class="fa-solid fa-users-line"></i>
+                    <div class="portal-card-content">
+                        <h3>سیستەمی نۆرەگرتن</h3>
+                        <p>بۆ نوێکردنەوەی مۆڵەت و مامەڵەکان</p>
+                    </div>
+                </div>
+                <div class="portal-card" onclick="openSection('fine')">
+                    <i class="fa-solid fa-calculator"></i>
+                    <div class="portal-card-content">
+                        <h3>هەژمارکردنی غەرامە</h3>
+                        <p>بزانە مۆڵەتەکەت چەند غەرامەی هەیە</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === سیستەمی نۆرەگرتن === -->
+        <div id="queueSection" style="display: none;">
+            <button class="back-btn" onclick="openSection('portal')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە بۆ سەرەتا</button>
+            
+            <div id="statusBadge" class="status-badge status-open" style="margin: 0 auto 15px auto; display: flex; width: fit-content;">
                 <span id="statusDot" class="dot dot-green"></span>
-                <span id="statusText" style="direction: rtl;">دۆخی سیستەم: کراوەیە بۆ تۆمارکردن</span>
+                <span id="statusText">دۆخی سیستەم: کراوەیە بۆ تۆمارکردن</span>
             </div>
-        </div>
 
-        <div class="news-ticker-container no-print">
-            <div class="news-ticker-text">
-                نۆره‌ گرتنی مۆڵه‌تی شۆفێری له‌ به‌ڕێوه‌به‌رایه‌تی هاتووچۆی پارێزگای هه‌ڵه‌بجه سه‌باره‌ت به‌و هاووڵاتیانه‌ی كه‌ ڕۆژانه‌ له‌ ئیمتیحانی پراكتیكی واته‌ ترای ده‌ر ده‌چن له‌و ڕۆژه‌دا نابێت سه‌ردانی به‌ڕێوه‌به‌رایەتی بكه‌ن ده‌بێت ئه‌وانیش ناوی خۆیان تۆمار بكه‌ن بۆ ڕۆژی دواتر  
-            </div>
-        </div>
+            <div class="container" id="userRegistrationSection">
+                <h2>تۆمارکردنی ناو</h2>
 
-        <div class="container" id="userRegistrationSection">
-            <h2>تۆمارکردنی ناو</h2>
-
-            <!-- بەشی دەرکەوتنی پسوولەی خەزنکراو (Offline Ticket Memory) -->
-            <div id="savedTicketDiv" style="display: none; background: #e9ecef; padding: 15px; border-radius: 8px; border: 2px solid #28a745; margin-bottom: 15px;">
-                <p style="margin: 0 0 10px 0; color: #155724; font-weight: bold; font-size: 14px;">بەڕێز، تۆ ئەمڕۆ نۆرەت گرتووە!</p>
-                <button onclick="showSavedTicket()" style="background: #28a745; width: 100%; margin: 0; padding: 10px; font-size: 15px;">
-                    <i class="fa-solid fa-ticket"></i> پیشاندانی پسوولەکەم
-                </button>
-            </div>
-            
-            <div id="registrationInputs">
-                <div class="input-wrapper">
-                    <i class="fa-solid fa-user"></i>
-                    <input type="text" id="nameInput" placeholder="ناوی سیانی بنووسە..." oninput="validateFormInputs()">
-                </div>
-
-                <div class="input-wrapper">
-                    <i class="fa-solid fa-phone"></i>
-                    <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false" oninput="validateFormInputs()">
-                </div>
-
-                <button id="registerBtn" onclick="confirmAndRegister()" disabled style="background: #cccccc; cursor: not-allowed;">تۆمارکردن</button>
-            </div>
-            <div id="countdownTimer" class="timer-box"></div>
-        </div>
-
-        <div class="container" id="searchSection">
-            <h2>دڵنیابوونەوە لە ناوت (بە ژمارەی تەلەفۆن)</h2>
-            <div class="input-wrapper">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="tel" id="searchInput" placeholder="ژمارەی تەلەفۆنەکەت بنووسە..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false">
-            </div>
-            <button class="search-btn" onclick="searchUser()">گەڕان</button>
-        </div>
-
-        <div class="container printable-area" id="adminSection" style="display: none;">
-            <h2>بەشی ئەدمین - کۆنتڕۆڵی سیستەم</h2>
-
-            <div class="no-print" style="margin-bottom: 15px;">
-                <h3 style="text-align: right; margin-bottom: 6px; font-size: 14px; color: #0056b3;">ئاماری ئەمڕۆ</h3>
-                <div class="dashboard-cards">
-                    <div class="dash-card">
-                        <h4>کۆی گشتی</h4>
-                        <h3 id="statTotal">0</h3>
-                    </div>
-                    <div class="dash-card">
-                        <h4>هاووڵاتیان</h4>
-                        <h3 id="statUser" style="color: #28a745;">0</h3>
-                    </div>
-                    <div class="dash-card">
-                        <h4>لە ئەدمینەوە</h4>
-                        <h3 id="statAdmin" style="color: #dc3545;">0</h3>
-                    </div>
+                <div id="savedTicketDiv" style="display: none; background: #e9ecef; padding: 15px; border-radius: 8px; border: 2px solid #28a745; margin-bottom: 15px;">
+                    <p style="margin: 0 0 10px 0; color: #155724; font-weight: bold; font-size: 14px;">بەڕێز، تۆ ئەمڕۆ نۆرەت گرتووە!</p>
+                    <button onclick="showSavedTicket()" class="action-btn" style="width: 100%; margin: 0; padding: 10px; font-size: 15px;">
+                        <i class="fa-solid fa-ticket"></i> پیشاندانی پسوولەکەم
+                    </button>
                 </div>
                 
-                <div style="background: white; padding: 6px; border-radius: 8px; border: 1px solid #dee2e6;">
-                    <div class="chart-container">
-                        <canvas id="myChart"></canvas>
+                <div id="registrationInputs">
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="nameInput" placeholder="ناوی سیانی بنووسە..." oninput="validateFormInputs()">
                     </div>
-                </div>
-            </div>
-
-            <div style="background: rgba(40, 167, 69, 0.08); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid rgba(40, 167, 69, 0.2);" class="no-print">
-                <h3 style="margin-top: 0; font-size: 16px; color: #28a745;">گۆڕینی ژمارەی پشکی ڕۆژانە</h3>
-                <div class="input-wrapper" style="width: 100%;">
-                    <i class="fa-solid fa-users"></i>
-                    <input type="number" id="adminQuotaInput" placeholder="ژمارەی پشک (نموونە: 50)" min="1">
-                </div>
-                <button style="background: #28a745;" onclick="updateDailyQuota()">گۆڕینی پشک</button>
-            </div>
-
-            <div style="background: rgba(0, 86, 179, 0.08); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid rgba(0, 86, 179, 0.2);" class="no-print">
-                <h3 style="margin-top: 0; font-size: 16px; color: #0056b3;">تۆمارکردنی پێشوەختە لەلایەن ئەدمینەوە</h3>
-                
-                <button id="openPreRegBtn" style="background: #17a2b8;" onclick="showPreRegForm()">کردنەوەی بەشی تۆمارکردن</button>
-                
-                <div id="preRegForm" style="display: none; margin-top: 15px;">
-                    <div class="input-wrapper" style="width: 100%;">
-                        <i class="fa-solid fa-user-shield"></i>
-                        <input type="text" id="adminNameInput" placeholder="ناوی سیانی بنووسە..." oninput="validateAdminFormInputs()">
-                    </div>
-                    <div class="input-wrapper" style="width: 100%;">
+                    <div class="input-wrapper">
                         <i class="fa-solid fa-phone"></i>
-                        <input type="tel" id="adminPhoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false" oninput="validateAdminFormInputs()">
+                        <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false" oninput="validateFormInputs()">
                     </div>
-                    <button id="adminRegBtn" style="background: #28a745;" onclick="adminRegisterUser()" disabled style="background: #cccccc; cursor: not-allowed; width: 95%;">تۆمارکردنی پێشوەختە</button>
+                    <button id="registerBtn" class="action-btn" onclick="confirmAndRegister()" disabled style="background: #cccccc; cursor: not-allowed;">تۆمارکردن</button>
+                </div>
+                <div id="countdownTimer" class="timer-box"></div>
+            </div>
+
+            <div class="container" id="searchSection">
+                <h2>دڵنیابوونەوە لە ناوت</h2>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="tel" id="searchInput" placeholder="ژمارەی تەلەفۆنەکەت بنووسە..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)">
+                </div>
+                <button class="action-btn search-btn" onclick="searchUser()">گەڕان</button>
+            </div>
+            
+            <div style="text-align: center; margin-bottom: 20px;">
+                <button onclick="handleAdminClick()" style="background: none; color: var(--label-color); border: none; font-size: 12px; cursor: pointer;">ئەدمین</button>
+            </div>
+        </div>
+
+        <!-- === سیستەمی غەرامە === -->
+        <div id="fineSection" style="display: none;">
+            <button class="back-btn" onclick="openSection('portal')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە بۆ سەرەتا</button>
+            
+            <div class="fine-container" id="fine-container-box">
+                <div style="text-align:center; font-size:11.5px; color:var(--info-text); margin-bottom:12px;">
+                    👁️ ژمارەی بەکارهێنەر: <b id="visitor-count-text">...</b>
+                </div>
+
+                <div class="toggle-container">
+                    <span id="fine-status-text" style="font-weight: bold; color: #48bb78;">✓ داشکاندنی غەرامە (٢٠٪) چالاکە</span>
+                    <label class="switch">
+                        <input type="checkbox" id="university-toggle" checked onchange="vibrate(); calculateFine()">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="checklist-box">
+                    <div class="checklist-title">📄 پێداویستییەکان بۆ نوێکردنەوە:</div>
+                    <div class="checklist-items">
+                        <div class="check-item">✅ کارتی نیشتیمانی</div>
+                        <div class="check-item">✅ کارتی زانیاری</div>
+                        <div class="check-item">✅ پاسپۆرت (ئەگەر هەبێت)</div>
+                        <div class="check-item">✅ پشکنینی چاو</div>
+                    </div>
+                </div>
+
+                <div class="date-section">
+                    <div class="date-title-wrap">
+                        <div class="date-title">📅 ڕێکەوتی بەسەرچوونی مۆڵەت:</div>
+                        <button class="btn-reset" onclick="resetToToday()">🔄 ئەمڕۆ</button>
+                    </div>
+                    <div class="date-inputs">
+                        <div class="date-box" onclick="openModal('day')">
+                            <label>ڕۆژ</label>
+                            <div class="date-custom-input" id="day-btn">10</div>
+                        </div>
+                        <div class="date-box" onclick="openModal('month')">
+                            <label>مانگ</label>
+                            <div class="date-custom-input" id="month-btn">7</div>
+                        </div>
+                        <div class="date-box" onclick="openModal('year')">
+                            <label>ساڵ</label>
+                            <div class="date-custom-input" id="year-btn">2026</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results" id="results-box">
+                    <div class="gauge-container" id="speed-gauge">
+                        <div class="gauge">
+                            <div class="gauge-fill" id="gauge-fill"></div>
+                            <div class="gauge-cover"></div>
+                            <div class="needle" id="gauge-needle"></div>
+                        </div>
+                    </div>
+
+                    <div class="result-row fee-row"><span>🔵 رسومات:</span><span id="fee-price">60,000 دینار</span></div>
+                    <div class="result-row fine-row"><span>🔴 غرامە:</span><span id="fine-price">0 دینار</span></div>
+                    <div class="result-row total-row"><span>💰 کۆی گشتی:</span><span id="total-price">0 دینار</span></div>
+                    <div class="result-row"><span>⏳ ماوەی بەسەرچوون:</span><span id="duration-text">0 مانگ</span></div>
                 </div>
             </div>
-
-            <div style="display: flex; gap: 10px; margin-bottom: 10px;" class="no-print">
-                <button class="search-btn" onclick="loadTodayUsers()" style="flex: 1; margin-top: 0;">نیشاندانی لیستی ئەمڕۆ</button>
-                <button style="background: #20c997; color: white; width: auto; margin-top: 0; padding: 12px 20px;" onclick="loadTodayUsers()" title="نوێکردنەوەی خشتەکە">🔄</button>
-            </div>
-            
-            <button class="no-print" style="background: #17a2b8;" onclick="downloadExcel()">داونلۆدکردنی ئێکسڵ (Excel/CSV)</button>
-            <button class="no-print" style="background: #ffc107; color: black;" onclick="toggleSystemStatus()"> ڕاگرتن / کردنەوەی سایت </button>
-            <button class="no-print" style="background: #6c757d;" onclick="window.print()">چاپکردنی لیست (Print)</button>
-            <button class="no-print" style="background: #dc3545; margin-top: 5px;" onclick="hideAdminPanel()">داخستنی بەشی ئەدمین</button>
-            
-            <div class="table-responsive">
-                <table id="usersTable" style="display: none;">
-                    <thead>
-                        <tr style="background: #0056b3; color: white;">
-                            <th>ژمارە</th>
-                            <th>ناو</th>
-                            <th>ژمارەی تەلەفۆن</th>
-                            <th>کاتی تۆمارکردن</th>
-                            <th class="no-print">کردارەکان</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div style="text-align: center; margin-top: 10px; margin-bottom: 20px;" class="no-print">
-            <button onclick="handleAdminClick()" style="background: none; color: #aaa; border: none; font-size: 12px; cursor: pointer; width: auto;">ئەدمین</button>
-        </div>
-
-        <div id="pwaInstallContainer" class="no-print" style="display: none; text-align: center; margin-top: 20px;">
-            <button class="install-app-btn" id="installAppBtn">
-                <i class="fa-solid fa-download"></i> دابەزاندنی ئەپڵیکەیشن بۆ مۆبایلەکەت
-            </button>
         </div>
 
     </div>
 
+    <!-- مۆدێلی ژمارەکان بۆ غەرامە -->
+    <div class="modal-overlay" id="picker-modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <h3 id="modal-title">دیاریکردنی ژمارە</h3>
+            <div class="number-grid" id="modal-grid"></div>
+        </div>
+    </div>
+
+    <!-- مۆدێلی ڤیریفای نۆرە -->
     <div class="container" id="verifySection" style="display: none; max-width: 450px; margin: 50px auto; border: 3px solid #0056b3;">
         <h2 style="color: #0056b3; margin-top: 10px;"><i class="fa-solid fa-shield-check"></i> دڵنیابوونەوەی پسوولە</h2>
-        <div id="verifyResult" style="padding: 20px; font-size: 16px; font-weight: bold; margin-top: 15px; border-radius: 8px; background: #e9ecef;">
-            چاوەڕێ بکە... پشکنین ئەنجام دەدرێت
-        </div>
-        <button onclick="window.location.href=window.location.origin + window.location.pathname" style="background: #0056b3; margin-top: 20px;">گەڕانەوە بۆ سەرەتا</button>
+        <div id="verifyResult" style="padding: 20px; font-size: 16px; font-weight: bold; margin-top: 15px; border-radius: 8px; background: #e9ecef;">چاوەڕێ بکە...</div>
+        <button class="action-btn" onclick="window.location.href=window.location.origin + window.location.pathname" style="background: #0056b3; margin-top: 20px;">گەڕانەوە بۆ سەرەتا</button>
     </div>
 
     <footer>
         <p>هەموو مافێکی پارێزراوە بۆ بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە &copy; 2026</p>
         <p class="dev-name">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووچۆ ( ڕاستی محمد شێخ حیدر )</p>
-        
-        <div class="social-icons no-print">
-            <a href="https://facebook.com/share/19ChSYyAyM?mibextid=wwXIfr" target="_blank" title="فەیسبووکی گەشەپێدەر">
-                <i class="fa-brands fa-facebook"></i>
-            </a>
-            <a href="https://wa.me/9647501116212" target="_blank" title="وەتسئەپی گەشەپێدەر">
-                <i class="fa-brands fa-whatsapp"></i>
-            </a>
-        </div>
     </footer>
 
     <script>
+        // ==== مێنیوی پۆرتاڵ ====
+        function openSection(section) {
+            document.getElementById('portalSection').style.display = 'none';
+            document.getElementById('queueSection').style.display = 'none';
+            document.getElementById('fineSection').style.display = 'none';
+
+            if(section === 'portal') document.getElementById('portalSection').style.display = 'block';
+            else if(section === 'queue') {
+                document.getElementById('queueSection').style.display = 'block';
+                checkQuotaAndTimer(); checkSavedTicket();
+            }
+            else if(section === 'fine') document.getElementById('fineSection').style.display = 'block';
+        }
+
+        // ==== دارک مۆد ====
+        let currentTheme = localStorage.getItem("theme");
+        if (!currentTheme) currentTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? "dark" : "light";
+        if (currentTheme === "dark") { document.body.classList.add("dark-mode"); document.getElementById("themeToggleBtn").innerText = "☀️"; }
+
+        function toggleTheme() {
+            vibrate();
+            document.body.classList.toggle("dark-mode");
+            if (document.body.classList.contains("dark-mode")) {
+                document.getElementById("themeToggleBtn").innerText = "☀️"; localStorage.setItem("theme", "dark");
+            } else {
+                document.getElementById("themeToggleBtn").innerText = "🌙"; localStorage.setItem("theme", "light");
+            }
+        }
+        function vibrate(ms = 15) { if (navigator.vibrate) navigator.vibrate(ms); }
+
+        // ==========================================
+        //         لۆجیکی سیستەمی غەرامە
+        // ==========================================
+        const today = new Date();
+        let selectedDay = today.getDate();
+        let selectedMonth = today.getMonth() + 1; 
+        let selectedYear = today.getFullYear();
+        let currentValues = { total: 0, fine: 0, duration: 0 };
+        let userSetDate = false;
+
+        document.getElementById('day-btn').textContent = selectedDay;
+        document.getElementById('month-btn').textContent = selectedMonth;
+        document.getElementById('year-btn').textContent = selectedYear;
+
+        function updateVisitorCounter() {
+            const el = document.getElementById('visitor-count-text');
+            if (!el) return;
+            const BASE_COUNT = 9000; 
+            const updateKey = '2026-08-05'; 
+            const namespace = 'traffic-halabja-app';
+            const countedFlag = 'counted_' + updateKey;
+            const alreadyCounted = sessionStorage.getItem(countedFlag);
+            const endpoint = alreadyCounted ? 'get' : 'hit';
+            const url = `https://abacus.jasoncameron.dev/${endpoint}/${namespace}/${updateKey}`;
+
+            fetch(url).then(res => res.json()).then(data => {
+                if (!alreadyCounted) sessionStorage.setItem(countedFlag, '1');
+                el.textContent = (BASE_COUNT + (data.value || 0)).toLocaleString();
+            }).catch(() => { el.textContent = BASE_COUNT.toLocaleString(); });
+        }
+        updateVisitorCounter();
+
+        function resetToToday() {
+            vibrate();
+            const now = new Date();
+            selectedDay = now.getDate(); selectedMonth = now.getMonth() + 1; selectedYear = now.getFullYear();
+            document.getElementById('day-btn').textContent = selectedDay; document.getElementById('month-btn').textContent = selectedMonth; document.getElementById('year-btn').textContent = selectedYear;
+            userSetDate = false; calculateFine();
+        }
+
+        function getDaysInMonth(month, year) { return new Date(year, month, 0).getDate(); }
+
+        function openModal(type) {
+            const modal = document.getElementById('picker-modal');
+            const title = document.getElementById('modal-title');
+            const grid = document.getElementById('modal-grid');
+            grid.innerHTML = ''; 
+            
+            if (type === 'day') {
+                title.textContent = '📅 ڕۆژێك دیاری بكه‌';
+                const daysCount = getDaysInMonth(selectedMonth, selectedYear);
+                for (let i = 1; i <= daysCount; i++) {
+                    let item = document.createElement('div'); item.className = 'grid-item';
+                    if (i === selectedDay) item.classList.add('selected-item');
+                    item.textContent = i;
+                    item.onclick = function() { vibrate(); selectedDay = i; userSetDate = true; document.getElementById('day-btn').textContent = i; modal.style.display = 'none'; calculateFine(); };
+                    grid.appendChild(item);
+                }
+            } else if (type === 'month') {
+                title.textContent = '📅 مانگێك دیاری بكه‌';
+                for (let i = 1; i <= 12; i++) {
+                    let item = document.createElement('div'); item.className = 'grid-item';
+                    if (i === selectedMonth) item.classList.add('selected-item');
+                    item.textContent = i;
+                    item.onclick = function() {
+                        vibrate(); selectedMonth = i; userSetDate = true; document.getElementById('month-btn').textContent = i;
+                        const maxDays = getDaysInMonth(i, selectedYear);
+                        if (selectedDay > maxDays) { selectedDay = maxDays; document.getElementById('day-btn').textContent = maxDays; }
+                        modal.style.display = 'none'; calculateFine();
+                    };
+                    grid.appendChild(item);
+                }
+            } else if (type === 'year') {
+                title.textContent = '📅 ساڵێك دیاری بكه‌';
+                for (let i = 2015; i <= 2035; i++) {
+                    let item = document.createElement('div'); item.className = 'grid-item';
+                    if (i === selectedYear) item.classList.add('selected-item');
+                    item.textContent = i;
+                    item.onclick = function() {
+                        vibrate(); selectedYear = i; userSetDate = true; document.getElementById('year-btn').textContent = i;
+                        const maxDays = getDaysInMonth(selectedMonth, i);
+                        if (selectedDay > maxDays) { selectedDay = maxDays; document.getElementById('day-btn').textContent = maxDays; }
+                        modal.style.display = 'none'; calculateFine();
+                    };
+                    grid.appendChild(item);
+                }
+            }
+            modal.style.display = 'flex';
+        }
+
+        function closeModal(event) { document.getElementById('picker-modal').style.display = 'none'; }
+
+        function animateValue(id, start, end, duration, isCurrency = true) {
+            let el = document.getElementById(id); if(!el) return;
+            let suffix = " " + (isCurrency ? "دینار" : "مانگ");
+            if (start === end) { el.textContent = end.toLocaleString() + suffix; return; }
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const current = Math.floor(progress * (end - start) + start);
+                el.textContent = current.toLocaleString() + suffix;
+                if (progress < 1) window.requestAnimationFrame(step);
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        function computeFine(expiryDate, asOfDate, isDiscount) {
+            const date2019 = new Date(2019, 11, 3); const date2022_Start = new Date(2022, 6, 6);
+            const date2022_M3_Start = new Date(2022, 6, 7); const date2022_M3_End = new Date(2022, 6, 17);
+            let totalMonths = 0, displayMonths = 0, fine = 0, baseFee = 60000;
+
+            if (expiryDate < asOfDate) {
+                let yearDiff = asOfDate.getFullYear() - expiryDate.getFullYear();
+                let monthDiff = asOfDate.getMonth() - expiryDate.getMonth();
+                let dayDiff = asOfDate.getDate() - expiryDate.getDate();
+                totalMonths = (yearDiff * 12) + monthDiff;
+                if (dayDiff > 0) totalMonths += 1;
+                displayMonths = totalMonths;
+
+                if (expiryDate <= date2019) fine = 15000;
+                else if (expiryDate >= date2022_M3_Start && expiryDate <= date2022_M3_End) fine = 20000;
+                else if (expiryDate > date2019 && expiryDate <= date2022_Start) {
+                    let totalYears = yearDiff;
+                    if (asOfDate.getMonth() > expiryDate.getMonth() || (asOfDate.getMonth() === expiryDate.getMonth() && asOfDate.getDate() > expiryDate.getDate())) totalYears += 1;
+                    if (totalYears === 0) totalYears = 1;
+                    fine = totalYears * 30000;
+                } else {
+                    let chargeableMonths = totalMonths > 1 ? totalMonths - 1 : 0;
+                    fine = chargeableMonths * 5000; displayMonths = chargeableMonths;
+                }
+            }
+            let finalFine = isDiscount ? fine * 0.8 : fine;
+            return { fine: finalFine, total: baseFee + finalFine, months: (expiryDate < asOfDate ? displayMonths : 0), baseFee };
+        }
+
+        function updateSpeedometer(fineAmount) {
+            const gaugeContainer = document.getElementById('speed-gauge');
+            if (fineAmount <= 0) { gaugeContainer.style.display = 'none'; return; }
+            gaugeContainer.style.display = 'block';
+            let percentage = Math.min(fineAmount / 250000, 1);
+            const degrees = (percentage * 180) - 90; 
+            const fillDegrees = percentage * 180;
+            const needle = document.getElementById('gauge-needle'); const fill = document.getElementById('gauge-fill');
+            needle.style.transform = `translateX(-50%) rotate(${degrees}deg)`;
+            fill.style.transform = `rotate(${fillDegrees}deg)`;
+            if (percentage < 0.2) fill.style.background = '#ecc94b'; else if (percentage < 0.5) fill.style.background = '#ed8936'; else fill.style.background = '#e53e3e';
+        }
+
+        function calculateFine(skipAnimation = false) {
+            const isDiscount = document.getElementById('university-toggle').checked;
+            const statusText = document.getElementById('fine-status-text');
+            if(isDiscount) { statusText.textContent = "✓ داشکاندنی غەرامە (٢٠٪) چالاکە"; statusText.style.color = "#48bb78"; }
+            else { statusText.textContent = "✕ داشکاندنی غەرامە ناچالاکە"; statusText.style.color = "#e53e3e"; }
+
+            const expiryDate = new Date(selectedYear, selectedMonth - 1, selectedDay);
+            const currentDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            const result = computeFine(expiryDate, currentDate, isDiscount);
+
+            let suffM = " مانگ", suffD = " دینار";
+            if (skipAnimation) {
+                document.getElementById('duration-text').textContent = result.months + suffM;
+                document.getElementById('fine-price').textContent = result.fine.toLocaleString() + suffD;
+                document.getElementById('total-price').textContent = result.total.toLocaleString() + suffD;
+            } else {
+                animateValue('duration-text', currentValues.duration, result.months, 250, false);
+                animateValue('fine-price', currentValues.fine, result.fine, 350, true);
+                animateValue('total-price', currentValues.total, result.total, 400, true);
+            }
+            currentValues.duration = result.months; currentValues.fine = result.fine; currentValues.total = result.total;
+            document.getElementById('fee-price').textContent = result.baseFee.toLocaleString() + suffD;
+
+            const fineBox = document.getElementById('fine-container-box');
+            if (expiryDate < currentDate && result.fine > 0) {
+                document.documentElement.style.setProperty('--dynamic-status-color', '#e53e3e');
+                fineBox.style.borderColor = 'rgba(229, 62, 62, 0.4)'; fineBox.style.boxShadow = '0 10px 30px rgba(229, 62, 62, 0.15)';
+            } else {
+                document.documentElement.style.setProperty('--dynamic-status-color', '#48bb78');
+                fineBox.style.borderColor = 'rgba(72, 187, 120, 0.4)'; fineBox.style.boxShadow = '0 10px 30px rgba(72, 187, 120, 0.15)';
+            }
+            updateSpeedometer(result.fine);
+        }
+
+        // ==========================================
+        //         لۆجیکی سیستەمی نۆرەگرتن 
+        // ==========================================
         const baseUrl = "https://rastymhammad-001-site1.itempurl.com";
         const apiUrl = `${baseUrl}/api/users`;
-        let globalUsersData = [];
-        let adminClickCount = 0;
-        let timerInterval = null;
-        let tempAdminPassword = "";
-        let tempPreRegPassword = "";
-        let globalSystemIsActive = true; 
-        let statChart = null;
-
-        let deferredPrompt;
-        const installBtnContainer = document.getElementById('pwaInstallContainer');
-        const installAppBtn = document.getElementById('installAppBtn');
-
-        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-
-        if (!isStandalone) {
-            window.addEventListener('beforeinstallprompt', (e) => {
-                e.preventDefault();
-                deferredPrompt = e;
-                installBtnContainer.style.display = 'block';
-            });
-
-            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-            if(isMobile) {
-                installBtnContainer.style.display = 'block';
-            }
-
-            installAppBtn.addEventListener('click', async () => {
-                if (deferredPrompt) {
-                    deferredPrompt.prompt();
-                    const { outcome } = await deferredPrompt.userChoice;
-                    if (outcome === 'accepted') {
-                        installBtnContainer.style.display = 'none';
-                    }
-                    deferredPrompt = null;
-                } else {
-                    const isIos = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
-                    if (isIos) {
-                        Swal.fire({
-                            title: 'دابەزاندن بۆ ئایفۆن',
-                            html: `بۆ دابەزاندنی ئەم سیستەمە وەک ئەپڵیکەیشن،<br><br> ١. لە خوارەوەی شاشەکە کلیک لە نیشانەی <b>Share</b> <i class="fa-solid fa-arrow-up-from-bracket"></i> بکە.<br> ٢. پاشان بڕۆ خوارەوە و <b>Add to Home Screen</b> <i class="fa-solid fa-square-plus"></i> هەڵبژێرە.`,
-                            icon: 'info',
-                            confirmButtonText: 'تێگەیشتم',
-                            confirmButtonColor: '#0056b3'
-                        });
-                    } else {
-                        Swal.fire('ئاگاداری', 'بۆ دابەزاندن لە ڕێگەی براوسەری Chromeـەوە دەتوانیت لە ڕێکخستنەکان (سێ خاڵەکە) Add to Home screen هەڵبژێریت.', 'info');
-                    }
-                }
-            });
-        }
-
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js').catch(err => {
-                    console.log('Service Worker failed: ', err);
-                });
-            });
-        }
+        let adminClickCount = 0; let timerInterval = null;
 
         function onlyEnglishNumbers(event) {
             let charCode = (event.which) ? event.which : event.keyCode;
-            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-                return false;
-            }
-            return true;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) return false; return true;
         }
 
         function validateFormInputs() {
-            let nameInput = document.getElementById("nameInput");
-            let phoneInput = document.getElementById("phoneInput");
+            let nameInput = document.getElementById("nameInput"); let phoneInput = document.getElementById("phoneInput");
             let registerBtn = document.getElementById("registerBtn");
-
-            let nameVal = nameInput.value.trim();
-            let phoneVal = phoneInput.value.trim();
-
-            let nameParts = nameVal.split(/\s+/);
-            let englishRegex = /[a-zA-Z]/;
+            let nameVal = nameInput.value.trim(); let phoneVal = phoneInput.value.trim();
+            let nameParts = nameVal.split(/\s+/); let englishRegex = /[a-zA-Z]/;
             let isNameValid = nameVal !== "" && !englishRegex.test(nameVal) && nameParts.length >= 3;
             let isPhoneValid = phoneVal.length === 11 && (phoneVal.startsWith("077") || phoneVal.startsWith("075") || phoneVal.startsWith("078"));
 
-            if (nameVal === "") {
-                nameInput.className = "";
-            } else if (isNameValid) {
-                nameInput.className = "valid-input";
-            } else {
-                nameInput.className = "invalid-input";
-            }
+            nameInput.className = nameVal === "" ? "" : (isNameValid ? "valid-input" : "invalid-input");
+            phoneInput.className = phoneVal === "" ? "" : (isPhoneValid ? "valid-input" : "invalid-input");
 
-            if (phoneVal === "") {
-                phoneInput.className = ""; 
-            } else if (isPhoneValid) {
-                phoneInput.className = "valid-input";
-            } else {
-                phoneInput.className = "invalid-input";
-            }
-
-            if (isNameValid && isPhoneValid) {
-                registerBtn.disabled = false;
-                registerBtn.style.background = "#28a745";
-                registerBtn.style.cursor = "pointer";
-            } else {
-                registerBtn.disabled = true;
-                registerBtn.style.background = "#cccccc";
-                registerBtn.style.cursor = "not-allowed";
-            }
+            if (isNameValid && isPhoneValid) { registerBtn.disabled = false; registerBtn.style.background = "#28a745"; registerBtn.style.cursor = "pointer"; } 
+            else { registerBtn.disabled = true; registerBtn.style.background = "#cccccc"; registerBtn.style.cursor = "not-allowed"; }
         }
 
-        function validateAdminFormInputs() {
-            let nameInput = document.getElementById("adminNameInput");
-            let phoneInput = document.getElementById("adminPhoneInput");
-            let adminRegBtn = document.getElementById("adminRegBtn");
-
-            let nameVal = nameInput.value.trim();
-            let phoneVal = phoneInput.value.trim();
-
-            let nameParts = nameVal.split(/\s+/);
-            let englishRegex = /[a-zA-Z]/;
-            let isNameValid = nameVal !== "" && !englishRegex.test(nameVal) && nameParts.length >= 3;
-            let isPhoneValid = phoneVal.length === 11 && (phoneVal.startsWith("077") || phoneVal.startsWith("075") || phoneVal.startsWith("078"));
-
-            if (nameVal === "") {
-                nameInput.className = "";
-            } else if (isNameValid) {
-                nameInput.className = "valid-input";
-            } else {
-                nameInput.className = "invalid-input";
-            }
-
-            if (phoneVal === "") {
-                phoneInput.className = ""; 
-            } else if (isPhoneValid) {
-                phoneInput.className = "valid-input";
-            } else {
-                phoneInput.className = "invalid-input";
-            }
-
-            if (isNameValid && isPhoneValid) {
-                adminRegBtn.disabled = false;
-                adminRegBtn.style.background = "#28a745";
-                adminRegBtn.style.cursor = "pointer";
-            } else {
-                adminRegBtn.disabled = true;
-                adminRegBtn.style.background = "#cccccc";
-                adminRegBtn.style.cursor = "not-allowed";
-            }
-        }
-
-        async function showPreRegForm() {
-            const { value: pwd } = await Swal.fire({
-                title: 'چوونەژوورەوە بۆ تۆماری پێشوەختە',
-                text: 'تکایە پاسوۆردی تایبەتی تۆماری پێشوەختە بنووسە:',
-                input: 'password',
-                inputPlaceholder: 'پاسوۆرد',
-                confirmButtonText: 'چوونەژوورەوە',
-                showCancelButton: true,
-                cancelButtonColor: '#dc3545',
-                cancelButtonText: 'پاشگەزبوونەوە'
-            });
-
-            if (pwd) {
-                try {
-                    let response = await fetch(`${baseUrl}/api/admin/verify?type=prereg`, {
-                        method: "POST",
-                        headers: { "Admin-Password": pwd }
-                    });
-                    
-                    if (response.status === 429) {
-                        Swal.fire('ئاگاداری سزا', 'تۆ چەند جارێک پاسوۆردی هەڵەت لێدا؛ بەهۆی پاراستنی سیستەمەوە، بۆ ماوەیەک سزادراویت و ناتوانیت هەوڵ بدەیتەوە!', 'error');
-                        return;
-                    }
-
-                    if (response.ok) {
-                        tempPreRegPassword = pwd;
-                        document.getElementById("openPreRegBtn").style.display = "none";
-                        document.getElementById("preRegForm").style.display = "block";
-                    } else {
-                        Swal.fire('هەڵەیه‌', 'پاسوۆردەکە هەڵەیە! ئاگاداربە ئەگەر چەند جارێکی تر هەڵە بکەیت سیستەمەکە کاتی دەکاتە سزا.', 'warning');
-                    }
-                } catch(e) {
-                    Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە!', 'error');
-                }
-            }
-        }
-
-        // ==== بەشی پشکنین و پیشاندانی پسوولەی ئۆفلاین ====
         function checkSavedTicket() {
             let saved = localStorage.getItem("my_daily_ticket");
             if(saved) {
                 try {
-                    let ticket = JSON.parse(saved);
-                    let todayDateStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
+                    let ticket = JSON.parse(saved); let todayDateStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
                     if(ticket.savedAt === todayDateStr) {
-                        // پیشاندانی دوگمەی پسوولەی خەزنکراو وە شاردنەوەی فۆڕمەکە بۆ ئەوەی دوو جار خۆی تۆمار نەکات
-                        let div = document.getElementById("savedTicketDiv");
-                        if (div) div.style.display = "block";
-                        
+                        document.getElementById("savedTicketDiv").style.display = "block";
                         document.getElementById("registrationInputs").style.display = "none";
-                    } else {
-                        localStorage.removeItem("my_daily_ticket"); 
-                    }
+                    } else localStorage.removeItem("my_daily_ticket"); 
                 } catch(e){}
             }
         }
@@ -807,835 +677,137 @@
             let saved = localStorage.getItem("my_daily_ticket");
             if(saved) {
                 let t = JSON.parse(saved);
-                Swal.fire({
-                    title: 'پسوولەکەی تۆ',
-                    html: generateTicketHTML(t.name, t.phone, t.rank, t.time, t.qrCode, t.date),
-                    confirmButtonText: 'داخستن',
-                    confirmButtonColor: '#28a745'
-                });
+                Swal.fire({ html: generateTicketHTML(t.name, t.phone, t.rank, t.time, t.qrCode, t.date), confirmButtonText: 'باشە', confirmButtonColor: '#28a745' });
             }
         }
 
         function generateTicketHTML(name, phone, rank, time, qrToken, dateStr) {
             let displayDate = dateStr || new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
             let verifyUrl = window.location.origin + window.location.pathname + "?verify=" + encodeURIComponent(qrToken);
-            
             setTimeout(() => {
                 let qrContainer = document.getElementById("qrCodeDiv");
-                if(qrContainer) {
-                    qrContainer.innerHTML = ""; 
-                    new QRCode(qrContainer, {
-                        text: verifyUrl,
-                        width: 90,
-                        height: 90,
-                        colorDark : "#000000",
-                        colorLight : "#ffffff",
-                        correctLevel : QRCode.CorrectLevel.H
-                    });
-                }
+                if(qrContainer) { qrContainer.innerHTML = ""; new QRCode(qrContainer, { text: verifyUrl, width: 90, height: 90, colorDark : "#000000", colorLight : "#ffffff", correctLevel : QRCode.CorrectLevel.H }); }
             }, 100);
-
             return `
-                <div style="border: 2px dashed #0056b3; padding: 20px; border-radius: 10px; background: #f0f8ff; text-align: center; font-family: 'Rabar', Tahoma, sans-serif;">
+                <div style="border: 2px dashed #0056b3; padding: 20px; border-radius: 10px; background: #f0f8ff; text-align: center;">
                     <i class="fa-solid fa-address-card" style="font-size: 40px; color: #0056b3; margin-bottom: 10px;"></i>
-                    <h3 style="margin: 0 0 15px 0; color: #0056b3; font-size: 18px;">بەڕێوەبەرایەتی هاتووچۆی هەڵەبجە</h3>
-                    
+                    <h3 style="margin: 0 0 15px 0; color: #0056b3; font-size: 18px;">هاتووچۆی هەڵەبجە</h3>
                     <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #cce5ff; text-align: right;">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div>
-                                <p style="margin: 5px 0; font-size: 15px;"><strong>ناوی هاووڵاتی:</strong> ${name}</p>
-                                <p style="margin: 5px 0; font-size: 15px;"><strong>ژمارەی تەلەفۆن:</strong> ${phone}</p>
-                            </div>
+                            <div><p style="margin: 5px 0; font-size: 15px;"><strong>ناو:</strong> ${name}</p><p style="margin: 5px 0; font-size: 15px;"><strong>مۆبایل:</strong> ${phone}</p></div>
                             <div id="qrCodeDiv" style="padding: 5px; background: white; border: 1px solid #eee; border-radius: 4px;"></div>
                         </div>
                         <hr style="border: 0; border-top: 1px dashed #ccc; margin: 12px 0;">
-                        <p style="margin: 5px 0; font-size: 16px; text-align: center;"><strong>ژمارەی نۆرە:</strong> <span style="font-size: 28px; color: #dc3545; font-weight: bold;">${rank}</span></p>
-                        <p style="margin: 5px 0; font-size: 15px; text-align: center;"><strong>کاتی ئامادەبوون:</strong> <span style="color: #28a745; font-weight: bold;">${time}</span></p>
+                        <p style="margin: 5px 0; font-size: 16px; text-align: center;"><strong>نۆرە:</strong> <span style="font-size: 28px; color: #dc3545; font-weight: bold;">${rank}</span></p>
+                        <p style="margin: 5px 0; font-size: 15px; text-align: center;"><strong>کات:</strong> <span style="color: #28a745; font-weight: bold;">${time}</span></p>
                         <p style="margin: 5px 0; font-size: 12px; text-align: center; color: gray;">بەروار: ${displayDate}</p>
                     </div>
-                    
-                    <p style="margin: 15px 0 0 0; font-size: 13px; color: #666; font-weight: bold;">تکایە سکرین شۆتی ئەم پسوولەیە بگرە بۆ کاتی سەردانیکردن. كارمه‌ندی ووردبین دەتوانێت سکانی بارکۆدەکە بکات بۆ دڵنیابوونەوە.</p>
-                </div>
-            `;
-        }
-
-        function setClosedUI(msg) {
-            let badge = document.getElementById("statusBadge");
-            if(badge) badge.className = "status-badge status-closed";
-            let dot = document.getElementById("statusDot");
-            if(dot) dot.className = "dot dot-red";
-            let text = document.getElementById("statusText");
-            if(text) text.innerText = msg;
-            
-            let regBtn = document.getElementById("registerBtn");
-            if (regBtn) {
-                regBtn.disabled = true;
-                regBtn.style.backgroundColor = "gray";
-                regBtn.style.cursor = "not-allowed";
-                regBtn.onclick = confirmAndRegister; 
-            }
-            document.getElementById("countdownTimer").style.display = "block";
-            startCountdown();
-        }
-
-        function setOpenUI(msg) {
-            let badge = document.getElementById("statusBadge");
-            if(badge) badge.className = "status-badge status-open";
-            let dot = document.getElementById("statusDot");
-            if(dot) dot.className = "dot dot-green";
-            let text = document.getElementById("statusText");
-            if(text) text.innerText = msg;
-            
-            let regBtn = document.getElementById("registerBtn");
-            if (regBtn) {
-                validateFormInputs();
-            }
-            document.getElementById("countdownTimer").style.display = "none";
-        }
-
-        function checkSystemTimeUI() {
-            const dateInIraq = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Baghdad"}));
-            const iraqHour = dateInIraq.getHours();
-            const dayOfWeek = dateInIraq.getDay(); 
-
-            let isWeekendClosed = false;
-            if (dayOfWeek === 4 && iraqHour >= 14) isWeekendClosed = true; 
-            if (dayOfWeek === 5) isWeekendClosed = true; 
-            if (dayOfWeek === 6 && iraqHour < 18) isWeekendClosed = true; 
-
-            if (isWeekendClosed) {
-                setClosedUI("پشوو: سیستەم شەممە کاتژمێر 6ی ئێوارە دەکرێتەوە");
-                let regBtn = document.getElementById("registerBtn");
-                if (regBtn) {
-                    regBtn.disabled = true;
-                    regBtn.innerHTML = '<i class="fa-solid fa-lock"></i> کات ماوە بۆ کردنەوە';
-                }
-                return true;
-            }
-
-            if (iraqHour >= 14 && iraqHour < 18) {
-                setClosedUI("دۆخی سیستەم: داخراوە تا كاتژمێر 6:00 ی ئێوارە");
-                let regBtn = document.getElementById("registerBtn");
-                if (regBtn) {
-                    regBtn.disabled = true;
-                    regBtn.innerHTML = '<i class="fa-solid fa-lock"></i> کات ماوە بۆ کردنەوە';
-                }
-                return true; 
-            }
-            return false;
+                    <p style="margin: 15px 0 0 0; font-size: 13px; color: #666; font-weight: bold;">تکایە سکرین شۆتی ئەم پسوولەیە بگرە.</p>
+                </div>`;
         }
 
         async function checkQuotaAndTimer() {
             try {
                 let response = await fetch(`${apiUrl}/count`, { method: "GET" });
                 if (response.ok) {
-                    let result = await response.json();
-                    let count = result.count; 
-                    let maxQuota = result.maxQuota || 40;
-                    
-                    let isActive = result.isActive !== undefined ? result.isActive : true;
-                    globalSystemIsActive = isActive; 
-                    let customCloseMessage = result.closeMessage || "سیستەم داخراوە لەلایەن بەڕێوەبەرایەتییەوە";
-
-                    if (isActive === false) {
-                        setClosedUI("دۆخی سیستەم: داخراوە (پەیامی بەڕێوەبەرایەتی)");
+                    let result = await response.json(); let count = result.count; let maxQuota = result.maxQuota || 40;
+                    if (result.isActive === false) {
+                        document.getElementById("statusBadge").className = "status-badge status-closed";
+                        document.getElementById("statusText").innerText = result.closeMessage;
                         let regBtn = document.getElementById("registerBtn");
-                        if (regBtn) {
-                            regBtn.disabled = false; 
-                            regBtn.style.backgroundColor = "#17a2b8"; 
-                            regBtn.style.cursor = "pointer";
-                            regBtn.innerHTML = '<i class="fa-solid fa-envelope-open-text"></i> پەیامی بەڕێوەبەرایەتی بخوێنەوە';
-                            
-                            let formattedMsg = customCloseMessage.replace(/\n/g, '<br>');
-                            
-                            regBtn.onclick = function() {
-                                Swal.fire({
-                                    title: 'ئاگاداری',
-                                    html: `<div style="line-height: 1.8; font-size: 15px; color: #333; text-align: center;">${formattedMsg}</div>`,
-                                    icon: 'info',
-                                    confirmButtonText: 'باشە، تێگەیشتم',
-                                    confirmButtonColor: '#0056b3'
-                                });
-                            };
-                        }
-                        document.getElementById("countdownTimer").style.display = "none";
+                        if (regBtn) { regBtn.disabled = true; regBtn.innerHTML = '<i class="fa-solid fa-lock"></i>'; }
                         return; 
                     }
-
-                    let isTimeBlocked = checkSystemTimeUI();
-
-                    if (!isTimeBlocked) {
-                        if (count >= maxQuota) {
-                            setClosedUI("دۆخی سیستەم: داخراوە (پشک تەواو بوو)");
-                            let regBtn = document.getElementById("registerBtn");
-                            if (regBtn) {
-                                regBtn.disabled = true;
-                                regBtn.innerHTML = '<i class="fa-solid fa-lock"></i> کات ماوە بۆ کردنەوە';
-                            }
-                        } else {
-                            setOpenUI("دۆخی سیستەم: کراوەیە بۆ تۆمارکردن");
-                        }
+                    const dateInIraq = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Baghdad"}));
+                    const iraqHour = dateInIraq.getHours(); const dayOfWeek = dateInIraq.getDay(); 
+                    let isBlocked = (dayOfWeek === 4 && iraqHour >= 14) || dayOfWeek === 5 || (dayOfWeek === 6 && iraqHour < 18) || (iraqHour >= 14 && iraqHour < 18);
+                    
+                    if (isBlocked || count >= maxQuota) {
+                        document.getElementById("statusBadge").className = "status-badge status-closed";
+                        document.getElementById("statusText").innerText = "سیستەم داخراوە یان پشک تەواو بووە";
+                        let regBtn = document.getElementById("registerBtn");
+                        if (regBtn) { regBtn.disabled = true; regBtn.innerHTML = '<i class="fa-solid fa-lock"></i>'; }
+                        startCountdown(); document.getElementById("countdownTimer").style.display = "block";
+                    } else {
+                        document.getElementById("statusBadge").className = "status-badge status-open";
+                        document.getElementById("statusText").innerText = "دۆخی سیستەم: کراوەیە بۆ تۆمارکردن";
+                        validateFormInputs();
                     }
                 }
-            } catch (e) {
-                console.log("کێشە لە هێنانەوەی ژمارەکان:", e);
-            }
+            } catch (e) { console.log(e); }
         }
-        
-        window.onload = function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const verifyToken = urlParams.get('verify');
-            
-            if (verifyToken) {
-                document.getElementById('normalMainContent').style.display = 'none';
-                
-                let verifyDiv = document.getElementById('verifySection');
-                let resultDiv = document.getElementById('verifyResult');
-                verifyDiv.style.display = 'block';
-                
-                resultDiv.innerHTML = "چاوەڕێ بکە... پشکنین ئەنجام دەدرێت";
-
-                fetch(`${apiUrl}/verify-qr?token=${encodeURIComponent(verifyToken)}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.isValid) {
-                            verifyDiv.style.borderColor = "#28a745";
-                            document.querySelector('#verifySection h2').style.color = "#28a745";
-                            resultDiv.style.backgroundColor = "#d4edda";
-                            resultDiv.style.color = "#155724";
-                            resultDiv.innerHTML = `
-                                <i class="fa-solid fa-circle-check" style="font-size: 40px; color: #28a745; margin-bottom: 10px;"></i><br>
-                                <span style="font-size: 20px; color: #155724; font-weight: bold;">${data.message}</span><br><br>
-                                <div style="text-align: right; background: white; padding: 15px; border-radius: 8px; border: 1px solid #c3e6cb; font-size: 16px;">
-                                    <p style="margin: 8px 0;"><strong>ناوی هاووڵاتی:</strong> ${data.name}</p>
-                                    <p style="margin: 8px 0;"><strong>ژمارەی تەلەفۆن:</strong> ${data.phone}</p>
-                                </div>
-                            `;
-                        } else {
-                            verifyDiv.style.borderColor = "#dc3545";
-                            document.querySelector('#verifySection h2').style.color = "#dc3545";
-                            resultDiv.style.backgroundColor = "#f8d7da";
-                            resultDiv.style.color = "#721c24";
-                            resultDiv.innerHTML = `
-                                <i class="fa-solid fa-circle-xmark" style="font-size: 40px; color: #dc3545; margin-bottom: 10px;"></i><br>
-                                <span style="font-size: 20px; color: #721c24; font-weight: bold;">${data.message}</span>
-                            `;
-                        }
-                    })
-                    .catch(err => {
-                        resultDiv.style.backgroundColor = "#f8d7da";
-                        resultDiv.style.color = "#721c24";
-                        resultDiv.innerHTML = "کێشە لە پەیوەندی بە سێرڤەرەوە هەیە!";
-                    });
-            } else {
-                checkQuotaAndTimer();
-                checkSavedTicket(); // پێداچوونەوەی پسوولەی ئۆفلاین لە کاتی کردنەوەی سایتەکە
-            }
-        };
 
         function startCountdown() {
             if (timerInterval) clearInterval(timerInterval);
-            
-            function update() {
-                const dateInIraq = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Baghdad"}));
-                let now = dateInIraq;
-                let target = new Date(now);
-                target.setHours(18, 0, 0, 0);
-
-                let day = now.getDay();
-                let hour = now.getHours();
-
-                if ((day === 4 && hour >= 14) || day === 5 || (day === 6 && hour < 18)) {
-                    let daysToSat = (6 - day + 7) % 7;
-                    target.setDate(now.getDate() + daysToSat);
-                } 
-                else if (hour >= 18) {
-                    if (day === 3) target.setDate(now.getDate() + 3); 
-                    else if (day === 4) target.setDate(now.getDate() + 2);
-                    else target.setDate(now.getDate() + 1);
-                } 
-                else if (hour >= 14 && hour < 18) {
-                } 
-                else { 
-                    if (day === 4) target.setDate(now.getDate() + 2); 
-                }
-
-                let diff = target - now;
-                if (diff < 0) diff = 0;
-
-                let days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                let seconds = Math.floor((diff % (1000 * 60)) / 1000);
-                
-                let dayStr = days > 0 ? `${days} ڕۆژ و ` : "";
-                document.getElementById("countdownTimer").innerText = ` کاتی کردنەوەی سیستەم: ${dayStr}${hours} : ${minutes} : ${seconds}`;
-            }
-            update();
-            timerInterval = setInterval(update, 1000);
-        }
-
-        // ==== سیستەمی ئۆتۆماتیکی دارک مۆد و گۆڕینی ڕەنگ (Auto Dark Mode) ====
-        const themeBtn = document.getElementById("themeToggleBtn");
-        let currentTheme = localStorage.getItem("theme");
-
-        // ئەگەر پێشتر دیاری نەکراوە، بزانە ئایا مۆبایلەکەی خۆی لەسەر دارک مۆدە
-        if (!currentTheme) {
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                currentTheme = "dark";
-            } else {
-                currentTheme = "light";
-            }
-        }
-
-        if (currentTheme === "dark") {
-            document.body.classList.add("dark-mode");
-            themeBtn.innerText = "☀️";
-        }
-
-        function toggleTheme() {
-            document.body.classList.toggle("dark-mode");
-            if (document.body.classList.contains("dark-mode")) {
-                themeBtn.innerText = "☀️";
-                localStorage.setItem("theme", "dark");
-            } else {
-                themeBtn.innerText = "🌙";
-                localStorage.setItem("theme", "light");
-            }
+            timerInterval = setInterval(() => {
+                const now = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Baghdad"}));
+                let target = new Date(now); target.setHours(18, 0, 0, 0);
+                let day = now.getDay(), hour = now.getHours();
+                if ((day === 4 && hour >= 14) || day === 5 || (day === 6 && hour < 18)) target.setDate(now.getDate() + ((6 - day + 7) % 7)); 
+                else if (hour >= 18) { if (day === 3) target.setDate(now.getDate() + 3); else if (day === 4) target.setDate(now.getDate() + 2); else target.setDate(now.getDate() + 1); } 
+                else if (hour >= 14 && hour < 18) {} else { if (day === 4) target.setDate(now.getDate() + 2); }
+                let diff = Math.max(target - now, 0);
+                let h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                let m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                let s = Math.floor((diff % (1000 * 60)) / 1000);
+                document.getElementById("countdownTimer").innerText = `${h}:${m}:${s}`;
+            }, 1000);
         }
 
         async function confirmAndRegister() {
-            let name = document.getElementById("nameInput").value.trim();
-            let phone = document.getElementById("phoneInput").value.trim();
-
+            let name = document.getElementById("nameInput").value.trim(); let phone = document.getElementById("phoneInput").value.trim();
             const confirmation = await Swal.fire({
-                title: 'دڵنیابوونەوە لە زانیارییەکان',
-                html: `
-                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; text-align: right; border: 1px solid #dee2e6; font-size: 15px;">
-                        <p style="margin: 8px 0;"><strong>ناوی سیانی:</strong> <span style="color: #0056b3;">${name}</span></p>
-                        <p style="margin: 8px 0;"><strong>ژمارەی مۆبایل:</strong> <span style="color: #28a745;">${phone}</span></p>
-                    </div>
-                    <p style="margin-top: 15px; font-size: 13px; color: #dc3545; font-weight: bold;">تکایە دڵنیابە لە دروستی ژمارە و ناوت، دوای تۆمارکردن قابل به گۆڕین نییە!</p>
-                `,
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'بەڵێ، تۆماری بکە',
-                cancelButtonText: 'پاشگەزبوونەوە / دەستکاری',
-                confirmButtonColor: '#28a745',
-                cancelButtonColor: '#dc3545'
+                html: `<div style="text-align: right;"><p><strong>ناو:</strong> ${name}</p><p><strong>مۆبایل:</strong> ${phone}</p></div>`,
+                showCancelButton: true, confirmButtonText: 'تۆماری بکە', cancelButtonText: 'پاشگەزبوونەوە', confirmButtonColor: '#28a745'
             });
-
             if (confirmation.isConfirmed) {
-                registerUser(name, phone);
-            }
-        }
-
-        async function registerUser(name, phone) {
-            let regBtn = document.getElementById("registerBtn");
-            let originalText = regBtn.innerHTML;
-            regBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> چاوەڕێ بکە...';
-            regBtn.disabled = true;
-
-            try {
-                let response = await fetch(apiUrl, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ name: name, phone: phone })
-                });
-
-                if (response.status === 429) {
-                    Swal.fire('ئاگاداری', 'زۆر خێرایت! تکایە دوای یەک خولەک دووبارە هەوڵ بدەرەوە. (ڕێگری لە سپام)', 'warning');
-                    return;
-                }
-
-                let result = await response.json().catch(() => ({}));
-
-                if(response.ok) {
-                    if(result.ticket) {
-                        // خەزنکردنی پسوولەکە لەناو مۆبایلەکە
+                let regBtn = document.getElementById("registerBtn"); let orig = regBtn.innerHTML;
+                regBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; regBtn.disabled = true;
+                try {
+                    let response = await fetch(apiUrl, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name: name, phone: phone }) });
+                    let result = await response.json().catch(() => ({}));
+                    if(response.ok && result.ticket) {
                         let todayDateStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
-                        let myTicket = {
-                            name: result.ticket.name,
-                            phone: result.ticket.phone,
-                            rank: result.ticket.rank,
-                            time: result.ticket.time,
-                            qrCode: result.ticket.qrCode,
-                            date: result.ticket.date,
-                            savedAt: todayDateStr
-                        };
-                        localStorage.setItem("my_daily_ticket", JSON.stringify(myTicket));
+                        localStorage.setItem("my_daily_ticket", JSON.stringify({ name: result.ticket.name, phone: result.ticket.phone, rank: result.ticket.rank, time: result.ticket.time, qrCode: result.ticket.qrCode, date: result.ticket.date, savedAt: todayDateStr }));
                         checkSavedTicket();
-
-                        Swal.fire({
-                            title: 'تۆمارکردن سەرکەوتوو بوو!',
-                            html: generateTicketHTML(result.ticket.name, result.ticket.phone, result.ticket.rank, result.ticket.time, result.ticket.qrCode, result.ticket.date),
-                            confirmButtonText: 'باشە، تێگەیشتم',
-                            confirmButtonColor: '#28a745'
-                        });
-                    } else {
-                        Swal.fire('سەرکەوتوو بوو', result.message || 'بە سەرکەوتوویی تۆمارکرا!', 'success');
-                    }
-                    
-                    document.getElementById("nameInput").value = "";
-                    document.getElementById("phoneInput").value = "";
-                    validateFormInputs();
-                } else {
-                    Swal.fire('هەڵە', result.message || 'کێشەیەک ڕوویدا', 'error');
-                }
-            } catch (error) {
-                Swal.fire('کێشەی هێڵ', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error');
-            } finally {
-                regBtn.innerHTML = originalText;
-                checkQuotaAndTimer();
-            }
-        }
-
-        async function adminRegisterUser() {
-            let name = document.getElementById("adminNameInput").value.trim();
-            let phone = document.getElementById("adminPhoneInput").value.trim();
-            let regBtn = document.getElementById("adminRegBtn");
-
-            if(name === "" || phone === "") {
-                Swal.fire('ئاگاداری', 'تکایە ناو و ژمارەی تەلەفۆن پڕبکەرەوە!', 'warning');
-                return;
-            }
-
-            let originalText = regBtn.innerHTML;
-            regBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> تکایە چاوەڕێ بکە...';
-            regBtn.disabled = true;
-
-            try {
-                let response = await fetch(apiUrl, {
-                    method: "POST",
-                    headers: { 
-                        "Content-Type": "application/json",
-                        "Admin-Password": tempPreRegPassword 
-                    },
-                    body: JSON.stringify({ name: name, phone: phone })
-                });
-
-                if (response.status === 429) {
-                    Swal.fire('ئاگاداری', 'تکایە کەمێک چاوەڕێ بکە (Rate Limit)', 'warning');
-                    return;
-                }
-
-                let result = await response.json().catch(() => ({}));
-
-                if(response.ok) {
-                    Swal.fire('سەرکەوتوو بوو', result.message || 'ناو بە سەرکەوتوویی لەلایەن ئەدمنەوە تۆمارکرا!', 'success');
-                    document.getElementById("adminNameInput").value = "";
-                    document.getElementById("adminPhoneInput").value = "";
-                    validateAdminFormInputs();
-                    
-                    if(tempAdminPassword !== "") {
-                        loadAdminStats();
-                        loadTodayUsers();
-                    }
-                } else {
-                    Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان کێشەیەک هەیە!', 'error');
-                }
-            } catch (error) {
-                Swal.fire('کێشەی هێڵ', 'کێشە لە پەیوەندیکردن هەیە!', 'error');
-            } finally {
-                regBtn.innerHTML = originalText;
-                regBtn.disabled = false;
-                checkQuotaAndTimer();
+                        Swal.fire({ html: generateTicketHTML(result.ticket.name, result.ticket.phone, result.ticket.rank, result.ticket.time, result.ticket.qrCode, result.ticket.date), confirmButtonText: 'باشە', confirmButtonColor: '#28a745' });
+                    } else Swal.fire('هەڵە', result.message || 'کێشەیەک ڕوویدا', 'error');
+                } catch (e) { Swal.fire('کێشەی هێڵ', 'کێشە لە سێرڤەر هەیە', 'error'); }
+                finally { regBtn.innerHTML = orig; checkQuotaAndTimer(); }
             }
         }
 
         async function searchUser() {
             let searchPhone = document.getElementById("searchInput").value.trim();
-            if(searchPhone === "") {
-                Swal.fire('ئاگاداری', 'تکایە ژمارەی تەلەفۆن بنووسە بۆ گەڕان!', 'warning');
-                return;
-            }
-
+            if(searchPhone === "") return;
             try {
                 let response = await fetch(`${apiUrl}/search/${encodeURIComponent(searchPhone)}`);
                 let result = await response.json().catch(() => ({}));
-                
                 if(response.ok) {
                     let todayDateStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
-                    let cleanDateForToken = todayDateStr.replace(/-/g, '');
-                    let searchQrToken = btoa(result.phone + "|" + cleanDateForToken);
-
-                    // خەزنکردنەوەی پسوولە لە کاتی گەڕانەوە ئەگەر پێشتر سڕابێتەوە
-                    let myTicket = {
-                        name: result.name,
-                        phone: result.phone,
-                        rank: result.rank,
-                        time: result.timeMessage,
-                        qrCode: searchQrToken,
-                        date: result.Date,
-                        savedAt: todayDateStr
-                    };
-                    localStorage.setItem("my_daily_ticket", JSON.stringify(myTicket));
+                    let searchQrToken = btoa(result.phone + "|" + todayDateStr.replace(/-/g, ''));
+                    localStorage.setItem("my_daily_ticket", JSON.stringify({ name: result.name, phone: result.phone, rank: result.rank, time: result.timeMessage, qrCode: searchQrToken, date: result.Date, savedAt: todayDateStr }));
                     checkSavedTicket();
-
-                    Swal.fire({ 
-                        title: 'ناو دۆزرایەوە', 
-                        html: generateTicketHTML(result.name, result.phone, result.rank, result.timeMessage, searchQrToken, result.Date), 
-                        confirmButtonText: 'داخستن',
-                        confirmButtonColor: '#0056b3'
-                    });
-                } else {
-                    Swal.fire('نەدۆزرایەوە', result.message || 'ناو نەدۆزرایەوە!', 'error');
-                }
+                    Swal.fire({ html: generateTicketHTML(result.name, result.phone, result.rank, result.timeMessage, searchQrToken, result.Date), confirmButtonText: 'باشە', confirmButtonColor: '#0056b3' });
+                } else Swal.fire('نەدۆزرایەوە', result.message || 'ناو نەدۆزرایەوە!', 'error');
                 document.getElementById("searchInput").value = "";
-            } catch (error) {
-                Swal.fire('کێشە', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error');
-            }
+            } catch (e) {}
         }
 
-        function handleAdminClick() {
-            adminClickCount++;
-            if (adminClickCount >= 5) {
-                adminClickCount = 0;
-                showAdminPanel();
-            }
-        }
+        window.onload = function() {
+            calculateFine(true);
+            const urlParams = new URLSearchParams(window.location.search);
+            const verifyToken = urlParams.get('verify');
+            if (verifyToken) {
+                document.getElementById('mainWrapper').style.display = 'none';
+                document.getElementById('verifySection').style.display = 'block';
+                fetch(`${apiUrl}/verify-qr?token=${encodeURIComponent(verifyToken)}`).then(res => res.json()).then(data => {
+                    document.getElementById('verifyResult').innerHTML = data.isValid ? `<span style="color:#28a745;">✓ ${data.message}</span>` : `<span style="color:#dc3545;">✕ ${data.message}</span>`;
+                }).catch(err => { document.getElementById('verifyResult').innerHTML = "کێشە هەیە!"; });
+            } else openSection('portal');
+        };
 
-        async function showAdminPanel() {
-            const { value: pwd } = await Swal.fire({
-                title: 'تایبه‌ت به‌ ئه‌دمین',
-                input: 'password',
-                confirmButtonText: 'چوونەژوورەوە',
-                cancelButtonText: 'داخستن',
-                showCancelButton: true
-            });
-
-            if (pwd) {
-                try {
-                    let response = await fetch(`${baseUrl}/api/admin/verify?type=admin`, {
-                        method: "POST",
-                        headers: { "Admin-Password": pwd }
-                    });
-                    
-                    if (response.ok) {
-                        tempAdminPassword = pwd; 
-                        document.getElementById("adminSection").style.display = "block";
-                        loadAdminStats();
-                    } else {
-                        Swal.fire('هەڵەیه‌', 'پاسوۆردەکە هەڵەیە!', 'error');
-                    }
-                } catch(e) {
-                    Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە!', 'error');
-                }
-            }
-        }
-
-        function hideAdminPanel() {
-            document.getElementById("adminSection").style.display = "none";
-            document.getElementById("usersTable").style.display = "none"; 
-            document.getElementById("tableBody").innerHTML = "";
-            
-            let preRegForm = document.getElementById("preRegForm");
-            let openPreRegBtn = document.getElementById("openPreRegBtn");
-            if(preRegForm) preRegForm.style.display = "none";
-            if(openPreRegBtn) openPreRegBtn.style.display = "inline-block";
-
-            tempAdminPassword = "";
-            tempPreRegPassword = "";
-            adminClickCount = 0;
-        }
-
-        async function loadAdminStats() {
-            if(!tempAdminPassword) return;
-            
-            try {
-                let response = await fetch(`${baseUrl}/api/admin/stats`, {
-                    headers: { "Admin-Password": tempAdminPassword }
-                });
-                
-                if(response.ok) {
-                    let stats = await response.json();
-                    
-                    document.getElementById('statTotal').innerText = stats.today.total;
-                    document.getElementById('statUser').innerText = stats.today.byUser;
-                    document.getElementById('statAdmin').innerText = stats.today.byAdmin;
-                    
-                    let ctx = document.getElementById('myChart').getContext('2d');
-                    
-                    if(statChart) statChart.destroy();
-                    
-                    statChart = new Chart(ctx, {
-                        type: 'doughnut',
-                        data: {
-                            labels: ['هاووڵاتیان', 'لە ئەدمینەوە'],
-                            datasets: [{
-                                data: [stats.today.byUser, stats.today.byAdmin],
-                                backgroundColor: ['#28a745', '#dc3545'],
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    position: 'bottom',
-                                    labels: { font: { family: 'Rabar', size: 10 } }
-                                },
-                                title: {
-                                    display: false
-                                }
-                            }
-                        }
-                    });
-                }
-            } catch(e) {
-                console.log("کێشە لە هێنانەوەی ئامار:", e);
-            }
-        }
-
-        async function updateDailyQuota() {
-            let newQuota = document.getElementById("adminQuotaInput").value;
-            if(!newQuota || newQuota < 1) {
-                Swal.fire('ئاگاداری', 'تکایە ژمارەیەکی دروست بنووسە', 'warning');
-                return;
-            }
-
-            const { value: password } = await Swal.fire({
-                title: 'پاسوۆردی ئەدمین',
-                input: 'password',
-                confirmButtonText: 'گۆڕین',
-                showCancelButton: true
-            });
-
-            if (!password) return;
-            
-            try {
-                let response = await fetch(`${baseUrl}/api/admin/quota?newQuota=${newQuota}`, {
-                    method: "PUT",
-                    headers: { "Admin-Password": password }
-                });
-                let result = await response.json().catch(() => ({}));
-                if(response.ok) {
-                    Swal.fire('سەرکەوتوو', result.message, 'success');
-                    checkQuotaAndTimer(); 
-                    document.getElementById("adminQuotaInput").value = "";
-                } else {
-                    Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە!', 'error');
-                }
-            } catch (error) {
-                Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە', 'error');
-            }
-        }
-
-        async function toggleSystemStatus() {
-            let customMsg = "";
-            
-            if (globalSystemIsActive) {
-                const { value: text } = await Swal.fire({
-                    title: 'هۆکاری داخستنی سیستەم',
-                    input: 'textarea', 
-                    inputPlaceholder: 'دەتوانیت لێرەدا پەیامێکی درێژ بنووسیت بۆ هاووڵاتیان...',
-                    showCancelButton: true,
-                    confirmButtonText: 'بەردەوام بە',
-                    cancelButtonText: 'پاشگەزبوونەوە'
-                });
-                
-                if (text === undefined) return; 
-                customMsg = text.trim();
-            }
-
-            const { value: password } = await Swal.fire({
-                title: globalSystemIsActive ? 'پاسوۆرد بۆ داخستنی سایت' : 'پاسوۆرد بۆ کردنەوەی سایت',
-                input: 'password',
-                inputPlaceholder: 'تایبه‌ت به‌ ئه‌دمین',
-                confirmButtonText: 'جێبەجێکردن',
-                showCancelButton: true
-            });
-            
-            if (!password) return;
-
-            try {
-                let url = `${baseUrl}/api/admin/toggle-status`;
-                if (globalSystemIsActive && customMsg !== "") {
-                    url += `?message=${encodeURIComponent(customMsg)}`;
-                }
-
-                let response = await fetch(url, {
-                    method: "POST",
-                    headers: { "Admin-Password": password }
-                });
-                
-                let result = await response.json().catch(() => ({}));
-                
-                if(response.ok) {
-                    await Swal.fire('سەرکەوتوو', result.message || 'دۆخ گۆڕدرا!', 'success');
-                    location.reload();
-                } else {
-                    Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە!', 'error');
-                }
-            } catch (error) {
-                Swal.fire('کێشە', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error');
-            }
-        }
-
-        async function loadTodayUsers() {
-            let table = document.getElementById("usersTable");
-            let tbody = document.getElementById("tableBody");
-
-            try {
-                let response = await fetch(`${apiUrl}/today-list`, {
-                    method: "GET",
-                    headers: { "Admin-Password": tempAdminPassword } 
-                });
-
-                if (!response.ok) {
-                    let errResult = await response.json().catch(() => ({}));
-                    Swal.fire('هەڵە', errResult.message || 'پاسۆردی سەرەتا هەڵەبوو!', 'error');
-                    tbody.innerHTML = "";
-                    table.style.display = "none";
-                    return;
-                }
-
-                globalUsersData = await response.json();
-                tbody.innerHTML = "";
-
-                if(globalUsersData.length === 0) {
-                    tbody.innerHTML = "<tr><td colspan='5' style='padding: 15px;'>هیچ ناوێک بۆ ئەمڕۆ تۆمار نەکراوە!</td></tr>";
-                } else {
-                    globalUsersData.forEach(user => {
-                        let row = `<tr>
-                            <td style="font-weight: bold; color: #4da3ff;">${user.rank}</td>
-                            <td>${user.name}</td>
-                            <td>${user.phone}</td>
-                            <td>${user.createdAt}</td>
-                            <td class="no-print">
-                                <div style="display: flex; gap: 5px; justify-content: center;">
-                                    <button onclick="editUser(${user.id || user.Id}, '${user.name}', '${user.phone}')" style="background: #ffc107; color: black; padding: 4px 8px; margin: 0; width: auto; font-size: 12px; border-radius: 4px;" title="دەستکاریکردن">
-                                        <i class="fa-solid fa-pen"></i>
-                                    </button>
-                                    <button onclick="deleteUser(${user.id || user.Id})" style="background: #dc3545; color: white; padding: 4px 8px; margin: 0; width: auto; font-size: 12px; border-radius: 4px;" title="سڕینەوە">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>`;
-                        tbody.innerHTML += row;
-                    });
-                }
-                table.style.display = "table";
-                
-                loadAdminStats();
-                
-            } catch (error) {
-                Swal.fire('کێشە', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error');
-            }
-        }
-
-        async function editUser(id, currentName, currentPhone) {
-            const { value: formValues } = await Swal.fire({
-                title: 'دەستکاریکردنی زانیاری',
-                html:
-                    `<input id="swal-input-name" class="swal2-input" value="${currentName}" placeholder="ناوی سیانی">` +
-                    `<input id="swal-input-phone" class="swal2-input" value="${currentPhone}" placeholder="ژمارەی مۆبایل">`,
-                focusConfirm: false,
-                showCancelButton: true,
-                confirmButtonText: 'پاشەکەوتکردن',
-                cancelButtonText: 'داخستن',
-                preConfirm: () => {
-                    return [
-                        document.getElementById('swal-input-name').value,
-                        document.getElementById('swal-input-phone').value
-                    ]
-                }
-            });
-
-            if (formValues) {
-                let newName = formValues[0].trim();
-                let newPhone = formValues[1].trim();
-
-                if (!newName || !newPhone) {
-                    Swal.fire('هەڵەیه‌', 'تکایە هەردوو خانەکە پڕبکەرەوە', 'error');
-                    return;
-                }
-
-                if (!newPhone.startsWith("077") && !newPhone.startsWith("075") && !newPhone.startsWith("078")) {
-                    Swal.fire('هەڵەیه‌', 'ژمارەی مۆبایل دەبێت بە 077 یان 075 یان 078 دەست پێبکات', 'error');
-                    return;
-                }
-
-                if (newPhone.length !== 11) {
-                    Swal.fire('هەڵەیه‌', 'ژمارەی مۆبایل دەبێت 11 ژمارە بێت', 'error');
-                    return;
-                }
-
-                try {
-                    let response = await fetch(`${apiUrl}/${id}`, {
-                        method: "PUT",
-                        headers: { 
-                            "Content-Type": "application/json",
-                            "Admin-Password": tempAdminPassword 
-                        },
-                        body: JSON.stringify({ name: newName, phone: newPhone })
-                    });
-
-                    let resData = await response.json().catch(() => ({}));
-
-                    if (response.ok) {
-                        Swal.fire('سەرکەوتوو بوو!', resData.message || 'زانیارییەکان گۆڕدران.', 'success');
-                        loadTodayUsers(); 
-                    } else {
-                        Swal.fire('هەڵە!', resData.message || 'کێشەیەک هەیە لە نوێکردنەوە!', 'error');
-                    }
-                } catch (error) {
-                    Swal.fire('کێشە', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error');
-                }
-            }
-        }
-
-        async function deleteUser(id) {
-            const confirmResult = await Swal.fire({
-                title: 'دڵنیایت؟',
-                text: "ئایا بەڕاستی دەتەوێت ئەم ناوە بسڕیتەوە؟",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#dc3545',
-                cancelButtonColor: '#6c757d',
-                confirmButtonText: 'بەڵێ، بسڕەوە',
-                cancelButtonText: 'نەخێر پەشیمان بوومەوە'
-            });
-
-            if (confirmResult.isConfirmed) {
-                try {
-                    let response = await fetch(`${apiUrl}/${id}`, {
-                        method: "DELETE",
-                        headers: { "Admin-Password": tempAdminPassword }
-                    });
-                    let resData = await response.json().catch(() => ({}));
-                    if (response.ok) {
-                        Swal.fire('سڕایەوە!', resData.message || 'ناوەکە بە سەرکەوتوویی سڕایەوە.', 'success');
-                        loadTodayUsers();
-                        checkQuotaAndTimer();
-                    } else {
-                        Swal.fire('هەڵە!', resData.message || 'کێشەیەک هەیە لە سڕینەوە!', 'error');
-                    }
-                } catch (error) {
-                    Swal.fire('کێشە', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error');
-                }
-            }
-        }
-
-        function downloadExcel() {
-            if (globalUsersData.length === 0) {
-                Swal.fire('ئاگاداری', "سەرەتا تکایە لە سەرەوە 'نیشاندانی لیستی ئەمڕۆ' دابگرە!", 'warning');
-                return;
-            }
-            let csvContent = "\uFEFFژمارە,ناو,ژمارەی تەلەفۆن,کاتی تۆمارکردن\n";
-            globalUsersData.forEach(u => {
-                csvContent += `${u.rank},"${u.name}","${u.phone}","${u.createdAt}"\n`;
-            });
-            let blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            let url = URL.createObjectURL(blob);
-            let a = document.createElement('a');
-            a.href = url;
-            a.download = `Traffic_List_${new Date().toISOString().slice(0,10)}.csv`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        }
+        if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(err => {}); }); }
     </script>
 </body>
 </html>
