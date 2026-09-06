@@ -619,7 +619,7 @@
                 if (result.isConfirmed && result.value) {
                     localStorage.setItem("admin_face_reference", result.value);
                     tempPreRegPassword = "8899"; 
-                    Swal.fire('سەرکەوتوو بوو!', 'دەموچاوی ئەدمن بە سەرکەوتوویی پاشەکەوت کرا.', 'success');
+                    Swal.fire('سەرکەوتوو بوو!', 'دەموچاوی ئەدمین بە سەرکەوتوویی پاشەکەوت کرا.', 'success');
                     document.getElementById("openPreRegBtn").style.display = "none";
                     document.getElementById("preRegForm").style.display = "block";
                 }
@@ -628,7 +628,7 @@
 
         function verifyAdminFace(savedFace) {
             Swal.fire({
-                title: 'پشکنینی دەموچاوی ئەدمن',
+                title: 'پشکنینی دەموچاوی ئەدمین',
                 html: `
                     <div style="text-align: center;">
                         <video id="webcamVerify" autoplay playsinline width="100%" style="max-width:300px; border-radius:8px; border: 2px solid #28a745;"></video>
@@ -658,7 +658,7 @@
                     tempPreRegPassword = "8899";
                     Swal.fire({
                         title: 'بەخێر هاتیت ئەدمن!',
-                        text: 'دەموچاو ناسرایەوە و بە سەرکەوتوویی چوویتە ژوورەوە.',
+                        text: 'ڕوخسار ناسرایەوە و بە سەرکەوتوویی چوویتە ژوورەوە.',
                         icon: 'success',
                         timer: 1200,
                         showConfirmButton: false
@@ -769,7 +769,7 @@
             }
 
             if (iraqHour >= 14 && iraqHour < 18) {
-                setClosedUI("دۆخی سیستەم: داخراوە تا 6:00 ی ئێوارە");
+                setClosedUI("دۆخی سیستەم: داخراوە تا كاتژمێر 6:00 ی ئێوارە");
                 let regBtn = document.getElementById("registerBtn");
                 if (regBtn) regBtn.innerHTML = '<i class="fa-solid fa-lock"></i> کات ماوە بۆ کردنەوە';
                 return true; 
