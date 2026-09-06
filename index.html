@@ -564,7 +564,7 @@
             return true;
         }
 
-        // ==== فەنکشنی سکانکردنی کارتی نیشتمانی (OCR) ====
+        // ==== فەنکشنی سکانکردنی کارتی نیشتمانی (OCR) - چاککراو بۆ ڕێکخستنی دەق ====
         async function scanIdCard(event) {
             let file = event.target.files[0];
             if (!file) return;
@@ -579,21 +579,36 @@
             });
 
             try {
-                // بەکارهێنانی Tesseract بۆ خوێندنەوەی دەق لە وێنەکەدا (بە زمانی عەرەبی و ئینگلیزی کە لە کارتدا هەبن)
                 let result = await Tesseract.recognize(file, 'ara+eng', {
                     logger: m => console.log(m)
                 });
 
                 let extractedText = result.data.text;
-                console.log("Extracted Text:", extractedText);
-
                 Swal.close();
 
                 if (extractedText) {
-                    // دانانی دەقەکە یان ڕێگپێدان بە بەکارهێنەر بۆ پێداچوونەوە
+                    let lines = extractedText.split('\n')
+                        .map(line => line.trim())
+                        .filter(line => line.length > 5);
+
+                    let suggestedName = "";
+                    for (let line of lines) {
+                        let words = line.split(/\s+/);
+                        if (words.length >= 3 && !/\d/.test(line)) {
+                            suggestedName = line;
+                            break;
+                        }
+                    }
+
+                    if (!suggestedName && lines.length > 0) {
+                        suggestedName = lines[0];
+                    }
+
                     Swal.fire({
                         title: 'ئەنجامی خوێندنەوە',
-                        html: `<p style="font-size:14px; color:#555;">دەقە دۆزراوەوەکە:</p><textarea id="swal-ocr-text" class="swal2-textarea" style="font-size:14px;">${extractedText}</textarea><p style="font-size:12px; color:gray;">تکایە ناوی سیانی خۆت لێرەدا ڕێک بخەرە ئەگەر پێویست کرد</p>`,
+                        html: `<p style="font-size:14px; color:#555;">دەقە دۆزراوەوەکە (تکایە پێداچوونەوەی بۆ بکە):</p>
+                               <textarea id="swal-ocr-text" class="swal2-textarea" style="font-size:14px; direction:rtl; text-align:right;">${suggestedName || extractedText}</textarea>
+                               <p style="font-size:12px; color:gray;">ئەگەر پیتەکان پێویستی بە ڕاستکردنەوە هەبوو، دەتوانیت لێرە دەستکاری بکەیت</p>`,
                         confirmButtonText: 'پەسەندکردن و گواستنەوە بۆ خانەی ناو',
                         confirmButtonColor: '#28a745',
                         preConfirm: () => {
@@ -601,8 +616,7 @@
                         }
                     }).then((res) => {
                         if (res.isConfirmed && res.value) {
-                            // هەوڵدانی دەرکردنی تەنها ناوەکە یان خستنە ناو خانەکەوە
-                            document.getElementById('nameInput').value = res.value.trim().split('\n')[0];
+                            document.getElementById('nameInput').value = res.value.trim();
                         }
                     });
                 } else {
