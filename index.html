@@ -28,6 +28,8 @@
         }
 
         /* --- بنچینەی هاوبەش --- */
+        * { box-sizing: border-box; }
+
         :root {
             --bg-body: #f0f8ff;
             --bg-container: white;
@@ -39,7 +41,6 @@
             --input-border: #f5c6cb;
             --input-text: #333;
             
-            /* گۆڕاوەکانی بەشی غەرامە */
             --badge-bg: linear-gradient(135deg, #1a365d, #2a4365);
             --badge-text: white;
             --toggle-bg: #f7fafc;
@@ -102,87 +103,93 @@
             font-family: 'Rabar', Tahoma, Arial, sans-serif;
             background-color: var(--bg-body);
             color: var(--text-main);
-            padding: 20px 20px 0 20px;
+            padding: 15px 10px 0 10px; /* کەمکردنەوەی بۆشایی لاتەنیشتەکان */
             margin: 0;
             text-align: center;
             transition: background-color 0.4s, color 0.4s;
             display: flex;
             flex-direction: column;
+            align-items: center; /* هێنانە ناوەڕاستی هەموو شتێک */
             min-height: 100vh;
         }
         
-        .main-content { flex: 1; width: 100%; max-width: 450px; margin: 0 auto; }
-        
-        #queueSection #adminSection { max-width: 700px; margin: 0 auto; }
-        @media (min-width: 768px) {
-            .main-content { max-width: 100%; display: flex; flex-direction: column; align-items: center; }
-            #portalSection, #queueSection, #fineSection { width: 100%; max-width: 450px; margin: 0 auto; }
-            #queueSection #adminSection { max-width: 700px; width: 100%; }
+        .main-content { 
+            flex: 1; 
+            width: 100%; 
+            max-width: 400px; /* بچووککردنەوەی قەبارەی گشتی سایتەکە بۆ جوانی */
+            margin: 0 auto; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
+        
+        /* بۆ ئەوەی هەموو بەشەکانی ناو main-content بە پڕی دەربکەون */
+        #portalSection, #queueSection, #fineSection { width: 100%; }
+        
+        #queueSection #adminSection { max-width: 700px; width: 100%; margin: 0 auto; }
 
         .theme-toggle-btn {
-            position: absolute; top: 20px; left: 20px; background: transparent; border: none;
-            font-size: 24px; cursor: pointer; padding: 0; margin: 0;
+            position: absolute; top: 15px; left: 15px; background: transparent; border: none;
+            font-size: 22px; cursor: pointer; padding: 0; margin: 0; z-index: 10;
         }
 
         .header-title {
-            background: var(--header-bg); padding: 20px; border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin: 15px auto; border-bottom: 4px solid #0056b3;
-            transition: 0.3s; max-width: 450px; width: 100%;
+            background: var(--header-bg); padding: 15px; border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin: 10px auto 15px auto; border-bottom: 4px solid #0056b3;
+            transition: 0.3s; width: 100%;
         }
         body.dark-mode .header-title { border-bottom-color: #4da3ff; }
-
-        .header-title h1 { color: var(--header-text); font-size: 20px; margin: 0; font-weight: bold; }
+        .header-title h1 { color: var(--header-text); font-size: 17px; margin: 0; font-weight: bold; }
         
-        /* --- ستایلی پۆرتاڵ (مێنیوی سەرەکی) --- */
-        .portal-cards { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+        /* --- ستایلی پۆرتاڵ --- */
+        .portal-cards { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; width: 100%; }
         .portal-card {
-            background: var(--header-bg); border: 2px solid var(--border-container); border-radius: 15px;
-            padding: 25px 20px; cursor: pointer; transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 15px; text-align: right;
+            background: var(--header-bg); border: 2px solid var(--border-container); border-radius: 12px;
+            padding: 20px 15px; cursor: pointer; transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 12px; text-align: right;
+            width: 100%;
         }
-        .portal-card:hover { transform: translateY(-5px); border-color: #0056b3; box-shadow: 0 8px 25px rgba(0,86,179,0.2); }
-        body.dark-mode .portal-card:hover { border-color: #4da3ff; box-shadow: 0 8px 25px rgba(77,163,255,0.2); }
-        .portal-card i { font-size: 35px; color: #0056b3; width: 50px; text-align: center; }
+        .portal-card:hover { transform: translateY(-4px); border-color: #0056b3; box-shadow: 0 8px 20px rgba(0,86,179,0.15); }
+        body.dark-mode .portal-card:hover { border-color: #4da3ff; box-shadow: 0 8px 20px rgba(77,163,255,0.15); }
+        .portal-card i { font-size: 30px; color: #0056b3; width: 40px; text-align: center; }
         body.dark-mode .portal-card i { color: #4da3ff; }
-        .portal-card-content h3 { margin: 0 0 5px 0; font-size: 18px; color: var(--text-main); }
-        .portal-card-content p { margin: 0; font-size: 13px; color: var(--label-color); }
+        .portal-card-content h3 { margin: 0 0 4px 0; font-size: 16px; color: var(--text-main); }
+        .portal-card-content p { margin: 0; font-size: 12px; color: var(--label-color); }
 
         .back-btn {
-            background: #6c757d; color: white; border: none; padding: 10px 20px; border-radius: 8px;
-            font-family: 'Rabar'; font-size: 14px; font-weight: bold; cursor: pointer; margin-bottom: 15px; width: 100%; transition: 0.3s;
+            background: #6c757d; color: white; border: none; padding: 10px 15px; border-radius: 8px;
+            font-family: 'Rabar'; font-size: 13px; font-weight: bold; cursor: pointer; margin-bottom: 12px; width: 100%; transition: 0.3s;
         }
         .back-btn:hover { background: #5a6268; }
 
-        /* --- ستایلی سیستەمی نۆرەگرتن --- */
-        .status-badge { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; padding: 6px 14px; font-size: 13px; font-weight: bold; border-radius: 20px; }
+        /* --- ستایلی نۆرەگرتن --- */
+        .status-badge { display: inline-flex; align-items: center; gap: 8px; margin: 0 auto 12px auto; padding: 6px 14px; font-size: 12px; font-weight: bold; border-radius: 20px; width: fit-content; }
         .status-open { background: #d4edda; color: #155724; }
         .status-closed { background: #f8d7da; color: #721c24; }
-        .dot { height: 12px; width: 12px; border-radius: 50%; display: inline-block; }
+        .dot { height: 10px; width: 10px; border-radius: 50%; display: inline-block; }
         .dot-green { background-color: #28a745; box-shadow: 0 0 8px #28a745; }
         .dot-red { background-color: #dc3545; box-shadow: 0 0 8px #dc3545; }
 
-        .container { background: var(--bg-container); padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: auto auto 25px auto; border: 1px solid var(--border-container); }
-        h2 { color: var(--header-text); margin-bottom: 20px; font-size: 18px; }
+        .container { background: var(--bg-container); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: 0 auto 20px auto; border: 1px solid var(--border-container); width: 100%; }
+        h2 { color: var(--header-text); margin-top: 0; margin-bottom: 15px; font-size: 16px; }
 
-        .input-wrapper { position: relative; width: 90%; margin: 10px auto; }
-        .input-wrapper i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--header-text); font-size: 18px; }
+        .input-wrapper { position: relative; width: 100%; margin: 8px 0; }
+        .input-wrapper i { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--header-text); font-size: 16px; }
         .input-wrapper input {
-            width: 100%; padding: 12px 45px 12px 12px; box-sizing: border-box; border: 2px solid var(--input-border);
-            border-radius: 6px; font-size: 15px; font-family: 'Rabar', Tahoma, Arial, sans-serif; outline: none; transition: 0.3s;
+            width: 100%; padding: 10px 35px 10px 10px; box-sizing: border-box; border: 2px solid var(--input-border);
+            border-radius: 6px; font-size: 14px; font-family: 'Rabar', Tahoma, Arial, sans-serif; outline: none; transition: 0.3s;
             background: var(--input-bg); color: var(--input-text);
         }
         .input-wrapper input.valid-input { border-color: #28a745 !important; box-shadow: 0 0 5px rgba(40, 167, 69, 0.3); }
         .input-wrapper input.invalid-input { border-color: #f5c6cb !important; box-shadow: 0 0 5px rgba(245, 198, 203, 0.5); }
 
-        button.action-btn { background: #28a745; color: white; border: none; padding: 12px 25px; cursor: pointer; border-radius: 6px; font-size: 16px; font-weight: bold; width: 95%; margin-top: 10px; font-family: 'Rabar'; transition: 0.3s; }
+        button.action-btn { background: #28a745; color: white; border: none; padding: 12px 20px; cursor: pointer; border-radius: 6px; font-size: 15px; font-weight: bold; width: 100%; margin-top: 8px; font-family: 'Rabar'; transition: 0.3s; }
         button.action-btn:disabled { background: #cccccc !important; color: #666666 !important; cursor: not-allowed !important; box-shadow: none !important; }
         button.action-btn:hover:not(:disabled) { background: #218838; }
         .search-btn { background: #007bff; }
         .search-btn:hover { background: #0056b3; }
-        .timer-box { font-size: 14px; color: #d9534f; margin-top: 15px; font-weight: bold; display: none; }
+        .timer-box { font-size: 13px; color: #d9534f; margin-top: 12px; font-weight: bold; display: none; }
 
-        /* ستایلی خشتەی ئەدمین */
         .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 15px; }
         #usersTable { width: 100%; border-collapse: collapse; text-align: center; font-size: 11px; }
         #usersTable th, #usersTable td { white-space: nowrap; padding: 8px; border: 1px solid var(--border-container); color: var(--text-main); }
@@ -191,61 +198,71 @@
 
         .dashboard-cards { display: flex; gap: 6px; margin-bottom: 12px; justify-content: space-between; }
         .dash-card { background: var(--bg-container); border: 1px solid var(--border-container); border-radius: 6px; padding: 8px 4px; flex: 1; text-align: center; }
-        .dash-card h4 { margin: 0 0 2px 0; font-size: 11px; color: var(--label-color); }
-        .dash-card h3 { margin: 0; font-size: 16px; color: #0056b3; }
+        .dash-card h4 { margin: 0 0 2px 0; font-size: 10px; color: var(--label-color); }
+        .dash-card h3 { margin: 0; font-size: 15px; color: #0056b3; }
         body.dark-mode .dash-card h3 { color: #4da3ff; }
-        .chart-container { max-width: 180px; margin: 0 auto; }
+        .chart-container { max-width: 160px; margin: 0 auto; }
 
-        /* --- ستایلی سیستەمی غەرامە --- */
-        .fine-container { background: var(--bg-container); border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 20px; border: 2px solid var(--border-container); text-align: right; }
-        .toggle-container { display: flex; justify-content: space-between; align-items: center; background: var(--toggle-bg); padding: 12px; border-radius: 12px; margin-bottom: 12px; border: 1px solid var(--toggle-border); }
-        .switch { position: relative; display: inline-block; width: 60px; height: 34px; }
+        /* --- ستایلی غەرامە --- */
+        .fine-container { background: var(--bg-container); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 18px; border: 2px solid var(--border-container); text-align: right; width: 100%; }
+        .toggle-container { display: flex; justify-content: space-between; align-items: center; background: var(--toggle-bg); padding: 10px; border-radius: 10px; margin-bottom: 12px; border: 1px solid var(--toggle-border); }
+        .switch { position: relative; display: inline-block; width: 50px; height: 28px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--slider-bg); border-radius: 34px; }
-        .slider:before { position: absolute; content: ""; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--slider-bg); border-radius: 28px; }
+        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: #48bb78; }
-        input:checked + .slider:before { transform: translateX(26px); }
+        input:checked + .slider:before { transform: translateX(22px); }
 
-        .checklist-box { background: var(--toggle-bg); border: 1px solid var(--toggle-border); border-radius: 12px; padding: 12px 15px; margin-bottom: 15px; }
-        .checklist-title { font-size: 12.5px; font-weight: bold; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-        .checklist-items { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 11.5px; color: var(--label-color); }
+        .checklist-box { background: var(--toggle-bg); border: 1px solid var(--toggle-border); border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; }
+        .checklist-title { font-size: 12px; font-weight: bold; color: var(--text-main); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+        .checklist-items { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 11px; color: var(--label-color); }
         .check-item { display: flex; align-items: center; gap: 5px; }
 
-        .date-section { background: var(--date-bg); border: 1px solid var(--date-border); border-radius: 16px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
-        .date-title-wrap { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-        .date-title { color: var(--date-title); font-weight: bold; font-size: 14px; }
-        .btn-reset { background: transparent; border: 1px solid var(--date-border); color: var(--date-title); border-radius: 6px; padding: 3px 10px; font-size: 11.5px; font-weight: bold; cursor: pointer; }
+        .date-section { background: var(--date-bg); border: 1px solid var(--date-border); border-radius: 12px; padding: 12px; margin-bottom: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+        .date-title-wrap { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .date-title { color: var(--date-title); font-weight: bold; font-size: 13px; }
+        .btn-reset { background: transparent; border: 1px solid var(--date-border); color: var(--date-title); border-radius: 5px; padding: 2px 8px; font-size: 11px; font-weight: bold; cursor: pointer; }
         
-        .date-inputs { display: flex; gap: 10px; justify-content: center; }
-        .date-box { flex: 1; text-align: center; background: var(--bg-container); border: 1px solid var(--toggle-border); border-radius: 10px; padding: 8px 4px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.02); transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; cursor: pointer; }
-        .date-box:hover { transform: translateY(-3px); box-shadow: 0 4px 10px rgba(0,0,0,0.06); border-color: #0056b3; }
+        .date-inputs { display: flex; gap: 8px; justify-content: center; }
+        .date-box { flex: 1; text-align: center; background: var(--bg-container); border: 1px solid var(--toggle-border); border-radius: 8px; padding: 6px 2px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.02); transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; cursor: pointer; }
+        .date-box:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.06); border-color: #0056b3; }
         body.dark-mode .date-box:hover { border-color: #4da3ff; }
-        .date-box label { display: block; font-size: 12px; color: var(--label-color); margin-bottom: 2px; font-weight: bold; pointer-events: none;}
-        .date-custom-input { width: 100%; padding: 2px; border: none; background: transparent; text-align: center; font-size: 18px; font-weight: bold; color: var(--input-text); pointer-events: none; }
+        .date-box label { display: block; font-size: 11px; color: var(--label-color); margin-bottom: 2px; font-weight: bold; pointer-events: none;}
+        .date-custom-input { width: 100%; padding: 0; border: none; background: transparent; text-align: center; font-size: 16px; font-weight: bold; color: var(--input-text); pointer-events: none; }
 
-        .results { background: var(--results-bg); border-radius: 12px; padding: 15px; border: 2px solid var(--dynamic-status-color); margin-bottom: 15px; position: relative; overflow: hidden; z-index: 1; }
-        .result-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed var(--results-border); font-size: 15px; color: var(--text-row); position: relative; z-index: 2; }
+        .results { background: var(--results-bg); border-radius: 10px; padding: 12px; border: 2px solid var(--dynamic-status-color); margin-bottom: 12px; position: relative; overflow: hidden; z-index: 1; }
+        .result-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed var(--results-border); font-size: 13px; color: var(--text-row); position: relative; z-index: 2; }
         .result-row:last-child { border-bottom: none; }
-        .total-row { font-size: 18px; font-weight: bold; color: var(--total-color); }
+        .total-row { font-size: 16px; font-weight: bold; color: var(--total-color); }
         .fine-row { color: var(--fine-color); font-weight: bold; }
         .fee-row { color: var(--fee-color); font-weight: bold; }
 
-        .gauge-container { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%); width: 220px; height: 110px; text-align: center; display: none; opacity: 0.25; pointer-events: none; z-index: 0; }
-        .gauge { position: relative; width: 220px; height: 110px; overflow: hidden; background: var(--slider-bg); border-top-left-radius: 110px; border-top-right-radius: 110px; }
-        .gauge-fill { position: absolute; top: 100%; left: 0; width: inherit; height: 100%; background: #48bb78; transform-origin: center top; transition: transform 0.8s ease-out, background 0.8s; border-bottom-left-radius: 110px; border-bottom-right-radius: 110px; }
-        .gauge-cover { position: absolute; top: 22px; left: 22px; width: 176px; height: 88px; background: var(--results-bg); border-top-left-radius: 88px; border-top-right-radius: 88px; }
-        .needle { position: absolute; bottom: 0; left: 50%; width: 5px; height: 90px; background: var(--input-text); transform-origin: bottom center; transform: translateX(-50%) rotate(-90deg); transition: transform 0.8s; border-radius: 5px; z-index: 2; }
+        .gauge-container { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%); width: 200px; height: 100px; text-align: center; display: none; opacity: 0.25; pointer-events: none; z-index: 0; }
+        .gauge { position: relative; width: 200px; height: 100px; overflow: hidden; background: var(--slider-bg); border-top-left-radius: 100px; border-top-right-radius: 100px; }
+        .gauge-fill { position: absolute; top: 100%; left: 0; width: inherit; height: 100%; background: #48bb78; transform-origin: center top; transition: transform 0.8s ease-out, background 0.8s; border-bottom-left-radius: 100px; border-bottom-right-radius: 100px; }
+        .gauge-cover { position: absolute; top: 20px; left: 20px; width: 160px; height: 80px; background: var(--results-bg); border-top-left-radius: 80px; border-top-right-radius: 80px; }
+        .needle { position: absolute; bottom: 0; left: 50%; width: 4px; height: 80px; background: var(--input-text); transform-origin: bottom center; transform: translateX(-50%) rotate(-90deg); transition: transform 0.8s; border-radius: 4px; z-index: 2; }
 
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-overlay); justify-content: center; align-items: center; z-index: 1000; }
-        .modal-content { background: var(--modal-bg); padding: 20px; border-radius: 16px; width: 95%; max-width: 380px; text-align: center; }
-        .modal-content h3 { margin-bottom: 15px; color: var(--modal-text); font-size: 15px; }
-        .number-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; max-height: 85vh; overflow-y: auto; padding: 5px; }
-        .grid-item { padding: 10px; min-height: 44px; display: flex; align-items: center; justify-content: center; background: var(--grid-bg); border-radius: 8px; font-weight: bold; color: var(--input-text); cursor: pointer; }
+        .modal-content { background: var(--modal-bg); padding: 15px; border-radius: 12px; width: 90%; max-width: 350px; text-align: center; }
+        .modal-content h3 { margin-top: 0; margin-bottom: 12px; color: var(--modal-text); font-size: 14px; }
+        .number-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; max-height: 75vh; overflow-y: auto; padding: 5px; }
+        .grid-item { padding: 8px; min-height: 38px; display: flex; align-items: center; justify-content: center; background: var(--grid-bg); border-radius: 6px; font-weight: bold; color: var(--input-text); cursor: pointer; font-size: 13px;}
         .grid-item.selected-item { background: #3182ce !important; color: white !important; }
 
-        footer { background-color: var(--header-bg); color: var(--text-main); text-align: center; padding: 20px; margin-top: 30px; border-radius: 12px 12px 0 0; font-size: 14px; border-top: 1px solid var(--border-container); width: 100%; }
+        /* --- Footer & Social Icons --- */
+        footer { 
+            background-color: var(--header-bg); color: var(--text-main); text-align: center; 
+            padding: 15px; margin-top: 25px; border-radius: 12px 12px 0 0; font-size: 12px; 
+            border-top: 1px solid var(--border-container); width: 100%; max-width: 400px;
+        }
         .dev-name { color: #0056b3; font-weight: bold; margin-top: 5px; }
         body.dark-mode .dev-name { color: #4da3ff; }
+        
+        .social-icons { margin-top: 10px; }
+        .social-icons a { color: #0056b3; font-size: 24px; margin: 0 10px; text-decoration: none; display: inline-block; transition: all 0.3s ease; }
+        .social-icons a:hover { transform: scale(1.1) translateY(-2px); }
+        body.dark-mode .social-icons a { color: #4da3ff; }
 
         .no-print { display: block; }
         @media print { 
@@ -289,10 +306,10 @@
         </div>
 
         <!-- === سیستەمی نۆرەگرتن === -->
-        <div id="queueSection" style="display: none; width: 100%;">
+        <div id="queueSection" style="display: none;">
             <button class="back-btn no-print" onclick="openSection('portal')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە بۆ سەرەتا</button>
             
-            <div id="statusBadge" class="status-badge status-open no-print" style="margin: 0 auto 15px auto; display: flex; width: fit-content;">
+            <div id="statusBadge" class="status-badge status-open no-print">
                 <span id="statusDot" class="dot dot-green"></span>
                 <span id="statusText">دۆخی سیستەم: کراوەیە بۆ تۆمارکردن</span>
             </div>
@@ -301,8 +318,8 @@
                 <h2>تۆمارکردنی ناو</h2>
 
                 <div id="savedTicketDiv" style="display: none; background: #e9ecef; padding: 15px; border-radius: 8px; border: 2px solid #28a745; margin-bottom: 15px;">
-                    <p style="margin: 0 0 10px 0; color: #155724; font-weight: bold; font-size: 14px;">بەڕێز، تۆ ئەمڕۆ نۆرەت گرتووە!</p>
-                    <button onclick="showSavedTicket()" class="action-btn" style="width: 100%; margin: 0; padding: 10px; font-size: 15px;">
+                    <p style="margin: 0 0 10px 0; color: #155724; font-weight: bold; font-size: 13px;">بەڕێز، تۆ ئەمڕۆ نۆرەت گرتووە!</p>
+                    <button onclick="showSavedTicket()" class="action-btn" style="margin: 0; padding: 10px; font-size: 14px;">
                         <i class="fa-solid fa-ticket"></i> پیشاندانی پسوولەکەم
                     </button>
                 </div>
@@ -330,12 +347,12 @@
                 <button class="action-btn search-btn" onclick="searchUser()">گەڕان</button>
             </div>
             
-            <!-- ====== بەشی ئەدمین (لێرەدا گەڕێندرایەوە) ====== -->
+            <!-- ====== بەشی ئەدمین ====== -->
             <div class="container printable-area" id="adminSection" style="display: none;">
                 <h2>بەشی ئەدمین - کۆنتڕۆڵی سیستەم</h2>
 
                 <div class="no-print" style="margin-bottom: 15px;">
-                    <h3 style="text-align: right; margin-bottom: 6px; font-size: 14px; color: #0056b3;">ئاماری ئەمڕۆ</h3>
+                    <h3 style="text-align: right; margin-bottom: 6px; font-size: 13px; color: #0056b3;">ئاماری ئەمڕۆ</h3>
                     <div class="dashboard-cards">
                         <div class="dash-card"><h4>کۆی گشتی</h4><h3 id="statTotal">0</h3></div>
                         <div class="dash-card"><h4>هاووڵاتیان</h4><h3 id="statUser" style="color: #28a745;">0</h3></div>
@@ -346,41 +363,41 @@
                     </div>
                 </div>
 
-                <div style="background: rgba(40, 167, 69, 0.08); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid rgba(40, 167, 69, 0.2);" class="no-print">
-                    <h3 style="margin-top: 0; font-size: 16px; color: #28a745;">گۆڕینی ژمارەی پشکی ڕۆژانە</h3>
-                    <div class="input-wrapper" style="width: 100%;">
+                <div style="background: rgba(40, 167, 69, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(40, 167, 69, 0.2);" class="no-print">
+                    <h3 style="margin-top: 0; font-size: 14px; color: #28a745;">گۆڕینی ژمارەی پشکی ڕۆژانە</h3>
+                    <div class="input-wrapper">
                         <i class="fa-solid fa-users"></i>
                         <input type="number" id="adminQuotaInput" placeholder="ژمارەی پشک (نموونە: 50)" min="1">
                     </div>
-                    <button class="action-btn" style="background: #28a745;" onclick="updateDailyQuota()">گۆڕینی پشک</button>
+                    <button class="action-btn" style="background: #28a745; padding: 10px;" onclick="updateDailyQuota()">گۆڕینی پشک</button>
                 </div>
 
-                <div style="background: rgba(0, 86, 179, 0.08); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid rgba(0, 86, 179, 0.2);" class="no-print">
-                    <h3 style="margin-top: 0; font-size: 16px; color: #0056b3;">تۆمارکردنی پێشوەختە لەلایەن ئەدمینەوە</h3>
-                    <button id="openPreRegBtn" class="action-btn" style="background: #17a2b8;" onclick="showPreRegForm()">کردنەوەی بەشی تۆمارکردن</button>
+                <div style="background: rgba(0, 86, 179, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(0, 86, 179, 0.2);" class="no-print">
+                    <h3 style="margin-top: 0; font-size: 14px; color: #0056b3;">تۆمارکردنی پێشوەختە لەلایەن ئەدمینەوە</h3>
+                    <button id="openPreRegBtn" class="action-btn" style="background: #17a2b8; padding: 10px;" onclick="showPreRegForm()">کردنەوەی بەشی تۆمارکردن</button>
                     
-                    <div id="preRegForm" style="display: none; margin-top: 15px;">
-                        <div class="input-wrapper" style="width: 100%;">
+                    <div id="preRegForm" style="display: none; margin-top: 10px;">
+                        <div class="input-wrapper">
                             <i class="fa-solid fa-user-shield"></i>
                             <input type="text" id="adminNameInput" placeholder="ناوی سیانی بنووسە..." oninput="validateAdminFormInputs()">
                         </div>
-                        <div class="input-wrapper" style="width: 100%;">
+                        <div class="input-wrapper">
                             <i class="fa-solid fa-phone"></i>
                             <input type="tel" id="adminPhoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false" oninput="validateAdminFormInputs()">
                         </div>
-                        <button id="adminRegBtn" class="action-btn" style="background: #28a745;" onclick="adminRegisterUser()" disabled style="background: #cccccc; cursor: not-allowed; width: 95%;">تۆمارکردنی پێشوەختە</button>
+                        <button id="adminRegBtn" class="action-btn" style="background: #28a745; padding: 10px;" onclick="adminRegisterUser()" disabled>تۆمارکردنی پێشوەختە</button>
                     </div>
                 </div>
 
-                <div style="display: flex; gap: 10px; margin-bottom: 10px;" class="no-print">
-                    <button class="action-btn search-btn" onclick="loadTodayUsers()" style="flex: 1; margin-top: 0;">نیشاندانی لیستی ئەمڕۆ</button>
-                    <button class="action-btn" style="background: #20c997; color: white; width: auto; margin-top: 0; padding: 12px 20px;" onclick="loadTodayUsers()" title="نوێکردنەوەی خشتەکە">🔄</button>
+                <div style="display: flex; gap: 8px; margin-bottom: 10px;" class="no-print">
+                    <button class="action-btn search-btn" onclick="loadTodayUsers()" style="flex: 1; margin-top: 0; padding: 10px;">نیشاندانی لیستی ئەمڕۆ</button>
+                    <button class="action-btn" style="background: #20c997; color: white; width: auto; margin-top: 0; padding: 10px 15px;" onclick="loadTodayUsers()" title="نوێکردنەوەی خشتەکە">🔄</button>
                 </div>
                 
-                <button class="action-btn no-print" style="background: #17a2b8;" onclick="downloadExcel()">داونلۆدکردنی ئێکسڵ (Excel/CSV)</button>
-                <button class="action-btn no-print" style="background: #ffc107; color: black;" onclick="toggleSystemStatus()"> ڕاگرتن / کردنەوەی سایت </button>
-                <button class="action-btn no-print" style="background: #6c757d;" onclick="window.print()">چاپکردنی لیست (Print)</button>
-                <button class="action-btn no-print" style="background: #dc3545; margin-top: 5px;" onclick="hideAdminPanel()">داخستنی بەشی ئەدمین</button>
+                <button class="action-btn no-print" style="background: #17a2b8; padding: 10px;" onclick="downloadExcel()">داونلۆدکردنی ئێکسڵ (Excel/CSV)</button>
+                <button class="action-btn no-print" style="background: #ffc107; color: black; padding: 10px;" onclick="toggleSystemStatus()"> ڕاگرتن / کردنەوەی سایت </button>
+                <button class="action-btn no-print" style="background: #6c757d; padding: 10px;" onclick="window.print()">چاپکردنی لیست (Print)</button>
+                <button class="action-btn no-print" style="background: #dc3545; margin-top: 5px; padding: 10px;" onclick="hideAdminPanel()">داخستنی بەشی ئەدمین</button>
                 
                 <div class="table-responsive">
                     <table id="usersTable" style="display: none;">
@@ -399,22 +416,22 @@
             </div>
             <!-- ====== کۆتایی بەشی ئەدمین ====== -->
             
-            <div style="text-align: center; margin-bottom: 20px;" class="no-print">
-                <button onclick="handleAdminClick()" style="background: none; color: var(--label-color); border: none; font-size: 12px; cursor: pointer;">ئەدمین</button>
+            <div style="text-align: center; margin-bottom: 15px;" class="no-print">
+                <button onclick="handleAdminClick()" style="background: none; color: var(--label-color); border: none; font-size: 11px; cursor: pointer;">ئەدمین</button>
             </div>
         </div>
 
         <!-- === سیستەمی غەرامە === -->
-        <div id="fineSection" style="display: none; width: 100%;">
+        <div id="fineSection" style="display: none;">
             <button class="back-btn" onclick="openSection('portal')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە بۆ سەرەتا</button>
             
             <div class="fine-container" id="fine-container-box">
-                <div style="text-align:center; font-size:11.5px; color:var(--info-text); margin-bottom:12px;">
+                <div style="text-align:center; font-size:11px; color:var(--info-text); margin-bottom:10px;">
                     👁️ ژمارەی بەکارهێنەر: <b id="visitor-count-text">...</b>
                 </div>
 
                 <div class="toggle-container">
-                    <span id="fine-status-text" style="font-weight: bold; color: #48bb78;">✓ داشکاندنی غەرامە (٢٠٪) چالاکە</span>
+                    <span id="fine-status-text" style="font-weight: bold; color: #48bb78; font-size: 13px;">✓ داشکاندنی غەرامە (٢٠٪) چالاکە</span>
                     <label class="switch">
                         <input type="checkbox" id="university-toggle" checked onchange="vibrate(); calculateFine()">
                         <span class="slider"></span>
@@ -480,15 +497,25 @@
     </div>
 
     <!-- مۆدێلی ڤیریفای نۆرە -->
-    <div class="container" id="verifySection" style="display: none; max-width: 450px; margin: 50px auto; border: 3px solid #0056b3;">
+    <div class="container" id="verifySection" style="display: none; max-width: 400px; margin: 50px auto; border: 3px solid #0056b3;">
         <h2 style="color: #0056b3; margin-top: 10px;"><i class="fa-solid fa-shield-check"></i> دڵنیابوونەوەی پسوولە</h2>
-        <div id="verifyResult" style="padding: 20px; font-size: 16px; font-weight: bold; margin-top: 15px; border-radius: 8px; background: #e9ecef;">چاوەڕێ بکە...</div>
-        <button class="action-btn" onclick="window.location.href=window.location.origin + window.location.pathname" style="background: #0056b3; margin-top: 20px;">گەڕانەوە بۆ سەرەتا</button>
+        <div id="verifyResult" style="padding: 15px; font-size: 15px; font-weight: bold; margin-top: 12px; border-radius: 8px; background: #e9ecef;">چاوەڕێ بکە...</div>
+        <button class="action-btn" onclick="window.location.href=window.location.origin + window.location.pathname" style="background: #0056b3; margin-top: 15px;">گەڕانەوە بۆ سەرەتا</button>
     </div>
 
+    <!-- === فوتەر و سۆشیاڵ میدیا === -->
     <footer>
-        <p>هەموو مافێکی پارێزراوە بۆ بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە &copy; 2026</p>
-        <p class="dev-name">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووچۆ ( ڕاستی محمد شێخ حیدر )</p>
+        <p style="margin: 0 0 5px 0;">هەموو مافێکی پارێزراوە بۆ بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە &copy; 2026</p>
+        <p class="dev-name" style="margin: 0;">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووچۆ ( ڕاستی محمد شێخ حیدر )</p>
+        
+        <div class="social-icons no-print">
+            <a href="https://facebook.com/share/19ChSYyAyM?mibextid=wwXIfr" target="_blank" title="فەیسبووکی گەشەپێدەر">
+                <i class="fa-brands fa-facebook"></i>
+            </a>
+            <a href="https://wa.me/9647501116212" target="_blank" title="وەتسئەپی گەشەپێدەر">
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
+        </div>
     </footer>
 
     <script>
@@ -874,7 +901,7 @@
         }
 
         // ==========================================
-        //         لۆجیکی بەشی ئەدمین (گەڕێندرایەوە)
+        //         لۆجیکی بەشی ئەدمین
         // ==========================================
         function handleAdminClick() {
             adminClickCount++;
