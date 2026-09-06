@@ -437,13 +437,6 @@
             </div>
         </div>
 
-        <!-- دوگمەی دابەزاندنی ئەپڵیکەیشن (تەنها لەسەر مۆبایل و ئەگەر دابەزێنراو نەبێت دەردەکەوێت) -->
-        <div id="pwaInstallContainer" class="no-print" style="display: none;">
-            <button class="install-app-btn" id="installAppBtn">
-                <i class="fa-solid fa-download"></i> دابەزاندنی ئەپڵیکەیشن بۆ مۆبایلەکەت
-            </button>
-        </div>
-
         <div class="container" id="userRegistrationSection">
             <h2>تۆمارکردنی ناو</h2>
             
@@ -554,6 +547,14 @@
         <div style="text-align: center; margin-top: 10px; margin-bottom: 20px;" class="no-print">
             <button onclick="handleAdminClick()" style="background: none; color: #aaa; border: none; font-size: 12px; cursor: pointer; width: auto;">ئەدمین</button>
         </div>
+
+        <!-- دوگمەی دابەزاندنی ئەپڵیکەیشن لێرەدا دانرا بە شێوەیەکی گونجاو لە خوارەوە -->
+        <div id="pwaInstallContainer" class="no-print" style="display: none; text-align: center; margin-top: 20px;">
+            <button class="install-app-btn" id="installAppBtn">
+                <i class="fa-solid fa-download"></i> دابەزاندنی ئەپڵیکەیشن بۆ مۆبایلەکەت
+            </button>
+        </div>
+
     </div>
 
     <div class="container" id="verifySection" style="display: none; max-width: 450px; margin: 50px auto; border: 3px solid #0056b3;">
@@ -1151,7 +1152,7 @@
                 let result = await response.json().catch(() => ({}));
 
                 if(response.ok) {
-                    Swal.fire('سەرکەوتوو بوو', result.message || 'ناو بە سەرکەوتوویی لەلایەن ئەدمینەوە تۆمارکرا!', 'success');
+                    Swal.fire('سەرکەوتوو بوو', result.message || 'ناو بە سەرکەوتوویی لەلایەن ئەدمنەوە تۆمارکرا!', 'success');
                     document.getElementById("adminNameInput").value = "";
                     document.getElementById("adminPhoneInput").value = "";
                     validateAdminFormInputs();
