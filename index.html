@@ -500,7 +500,7 @@
             </div>
             
             <button class="no-print" style="background: #17a2b8;" onclick="downloadExcel()">داونلۆدکردنی ئێکسڵ (Excel/CSV)</button>
-            <button class="no-print" style="background: #ffc107; color: black;" onclick="toggleSystemStatus()">ڕاگرتن / کردنەوەی سایت (پشووی فەرمی)</button>
+            <button class="no-print" style="background: #ffc107; color: black;" onclick="toggleSystemStatus()"> ڕاگرتن / کردنەوەی سایت </button>
             <button class="no-print" style="background: #6c757d;" onclick="window.print()">چاپکردنی لیست (Print)</button>
             <button class="no-print" style="background: #dc3545; margin-top: 5px;" onclick="hideAdminPanel()">داخستنی بەشی ئەدمین</button>
             
@@ -618,7 +618,7 @@
             }
         }
 
-        // پشکنینی ڕاستەوخۆ بۆ خانەکانی تۆماری پێشوەختەی ئەدمن
+        // پشکنینی ڕاستەوخۆ بۆ خانەکانی تۆماری پێشوەختەی ئەدمین
         function validateAdminFormInputs() {
             let nameInput = document.getElementById("adminNameInput");
             let phoneInput = document.getElementById("adminPhoneInput");
@@ -659,7 +659,7 @@
             }
         }
 
-        // کردنەوەی بەشی تۆماری پێشوەختەی ئەدمن بە پاسوۆردی ئاسایی بێ ڕوخسار
+        // کردنەوەی بەشی تۆماری پێشوەختەی ئەدمین بە پاسوۆردی ئاسایی بێ ڕوخسار
         async function showPreRegForm() {
             const { value: pwd } = await Swal.fire({
                 title: 'چوونەژوورەوە بۆ تۆماری پێشوەختە',
@@ -684,7 +684,7 @@
                         document.getElementById("openPreRegBtn").style.display = "none";
                         document.getElementById("preRegForm").style.display = "block";
                     } else {
-                        Swal.fire('هەڵە', 'پاسوۆردەکە هەڵەیە!', 'error');
+                        Swal.fire('هەڵەیه‌', 'پاسوۆردەکە هەڵەیە!', 'error');
                     }
                 } catch(e) {
                     Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە!', 'error');
@@ -790,7 +790,7 @@
             }
 
             if (iraqHour >= 14 && iraqHour < 18) {
-                setClosedUI("دۆخی سیستەم: داخراوە تا 6:00 ی ئێوارە");
+                setClosedUI("دۆخی سیستەم: داخراوە تا كاتژمێر 6:00 ی ئێوارە");
                 let regBtn = document.getElementById("registerBtn");
                 if (regBtn) {
                     regBtn.disabled = true;
@@ -1071,7 +1071,7 @@
                 let result = await response.json().catch(() => ({}));
 
                 if(response.ok) {
-                    Swal.fire('سەرکەوتوو بوو', result.message || 'ناو بە سەرکەوتوویی لەلایەن ئەدمنەوە تۆمارکرا!', 'success');
+                    Swal.fire('سەرکەوتوو بوو', result.message || 'ناو بە سەرکەوتوویی لەلایەن ئەدمینەوە تۆمارکرا!', 'success');
                     document.getElementById("adminNameInput").value = "";
                     document.getElementById("adminPhoneInput").value = "";
                     validateAdminFormInputs();
@@ -1231,7 +1231,7 @@
             }
 
             const { value: password } = await Swal.fire({
-                title: 'پاسوۆردی ئەدمن',
+                title: 'پاسوۆردی ئەدمین',
                 input: 'password',
                 confirmButtonText: 'گۆڕین',
                 showCancelButton: true
@@ -1384,17 +1384,17 @@
                 let newPhone = formValues[1].trim();
 
                 if (!newName || !newPhone) {
-                    Swal.fire('هەڵە', 'تکایە هەردوو خانەکە پڕبکەرەوە', 'error');
+                    Swal.fire('هەڵەیه‌', 'تکایە هەردوو خانەکە پڕبکەرەوە', 'error');
                     return;
                 }
 
                 if (!newPhone.startsWith("077") && !newPhone.startsWith("075") && !newPhone.startsWith("078")) {
-                    Swal.fire('هەڵە', 'ژمارەی مۆبایل دەبێت بە 077 یان 075 یان 078 دەست پێبکات', 'error');
+                    Swal.fire('هەڵەیه‌', 'ژمارەی مۆبایل دەبێت بە 077 یان 075 یان 078 دەست پێبکات', 'error');
                     return;
                 }
 
                 if (newPhone.length !== 11) {
-                    Swal.fire('هەڵە', 'ژمارەی مۆبایل دەبێت 11 ژمارە بێت', 'error');
+                    Swal.fire('هەڵەیه‌', 'ژمارەی مۆبایل دەبێت 11 ژمارە بێت', 'error');
                     return;
                 }
 
