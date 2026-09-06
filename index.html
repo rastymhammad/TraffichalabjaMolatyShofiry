@@ -145,12 +145,12 @@
             font-size: 18px;
         }
         
-        /* شێوازی چواردەوری خانەکان بەپێی ڕەنگەکان */
+        /* چواردەوری خانەکان بە ڕەنگی سووری کاڵ لە سەرەتادا */
         .input-wrapper input {
             width: 100%;
             padding: 12px 45px 12px 12px; 
             box-sizing: border-box;
-            border: 2px solid #dc3545; /* بە سەرەتایی سوورە */
+            border: 2px solid #f5c6cb; /* سووری کاڵ */
             border-radius: 6px;
             font-size: 15px;
             font-family: 'Rabar', Tahoma, Arial, sans-serif;
@@ -165,10 +165,10 @@
             box-shadow: 0 0 5px rgba(40, 167, 69, 0.3);
         }
         
-        /* کاتێک هەڵەیە یان هێشتا تەواو نەبووە دەبێتە سوور */
+        /* کاتێک هەڵەیە یان هێشتا تەواو نەبووە دەبێتە سووری کاڵ */
         .input-wrapper input.invalid-input {
-            border-color: #dc3545 !important;
-            box-shadow: 0 0 5px rgba(220, 53, 69, 0.3);
+            border-color: #f5c6cb !important;
+            box-shadow: 0 0 5px rgba(245, 198, 203, 0.5);
         }
 
         button {
@@ -417,7 +417,6 @@
         <div class="container" id="userRegistrationSection">
             <h2>تۆمارکردنی ناو</h2>
             
-            <!-- زیادکردنی پشکنینی ڕاستەوخۆ لە کاتی نووسیندا (oninput) -->
             <div class="input-wrapper">
                 <i class="fa-solid fa-user"></i>
                 <input type="text" id="nameInput" placeholder="ناوی سیانی بنووسە..." oninput="validateFormInputs()">
@@ -428,7 +427,6 @@
                 <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false" oninput="validateFormInputs()">
             </div>
 
-            <!-- بە سەرەتایی دوگمەکە دیسەیبڵ (disabled) کراوە -->
             <button id="registerBtn" onclick="confirmAndRegister()" disabled style="background: #cccccc; cursor: not-allowed;">تۆمارکردن</button>
             <div id="countdownTimer" class="timer-box"></div>
         </div>
@@ -479,20 +477,20 @@
             </div>
 
             <div style="background: rgba(0, 86, 179, 0.08); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid rgba(0, 86, 179, 0.2);" class="no-print">
-                <h3 style="margin-top: 0; font-size: 16px; color: #0056b3;">تۆمارکردنی پێشوەختە لەلایەن ئەدمینەوە (بە ناسینەوەی ڕوخسار)</h3>
+                <h3 style="margin-top: 0; font-size: 16px; color: #0056b3;">تۆمارکردنی پێشوەختە لەلایەن ئەدمینەوە</h3>
                 
-                <button id="openPreRegBtn" style="background: #17a2b8;" onclick="showPreRegForm()">کردنەوەی بەشی تۆمارکردن (بەتەنها بە فەیسی ئەدمن)</button>
+                <button id="openPreRegBtn" style="background: #17a2b8;" onclick="showPreRegForm()">کردنەوەی بەشی تۆمارکردن</button>
                 
                 <div id="preRegForm" style="display: none; margin-top: 15px;">
                     <div class="input-wrapper" style="width: 100%;">
                         <i class="fa-solid fa-user-shield"></i>
-                        <input type="text" id="adminNameInput" placeholder="ناوی سیانی بنووسە...">
+                        <input type="text" id="adminNameInput" placeholder="ناوی سیانی بنووسە..." oninput="validateAdminFormInputs()">
                     </div>
                     <div class="input-wrapper" style="width: 100%;">
                         <i class="fa-solid fa-phone"></i>
-                        <input type="tel" id="adminPhoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false">
+                        <input type="tel" id="adminPhoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false" oninput="validateAdminFormInputs()">
                     </div>
-                    <button id="adminRegBtn" style="background: #28a745;" onclick="adminRegisterUser()">تۆمارکردنی پێشوەختە</button>
+                    <button id="adminRegBtn" style="background: #28a745;" onclick="adminRegisterUser()" disabled style="background: #cccccc; cursor: not-allowed; width: 95%;">تۆمارکردنی پێشوەختە</button>
                 </div>
             </div>
 
@@ -579,7 +577,7 @@
             return true;
         }
 
-        // ==== فەنکشنی پشکنینی ڕاستەوخۆی خانەکان و ڕەنگگۆڕین و دیسەیبڵکردنی دوگمە ====
+        // پشکنینی ڕاستەوخۆ بۆ خانەکانی تۆمارکردنی هاووڵاتی
         function validateFormInputs() {
             let nameInput = document.getElementById("nameInput");
             let phoneInput = document.getElementById("phoneInput");
@@ -588,33 +586,27 @@
             let nameVal = nameInput.value.trim();
             let phoneVal = phoneInput.value.trim();
 
-            // پشکنینی ناو (دەبێت کەمتر نەبێت لە ٣ بەش و پیتی ئینگلیزی تێدا نەبێت)
             let nameParts = nameVal.split(/\s+/);
             let englishRegex = /[a-zA-Z]/;
             let isNameValid = nameVal !== "" && !englishRegex.test(nameVal) && nameParts.length >= 3;
-
-            // پشکنینی ژمارەی مۆبایل (دەبێت ١١ ژمارە بێت و بە 077 یان 075 یان 078 دەست پێبکات)
             let isPhoneValid = phoneVal.length === 11 && (phoneVal.startsWith("077") || phoneVal.startsWith("075") || phoneVal.startsWith("078"));
 
-            // گۆڕینی ڕەنگی چواردەوری خانەی ناو
             if (nameVal === "") {
-                nameInput.className = ""; // ئەگەر بەتاڵ بوو دۆخی ئاسایی
+                nameInput.className = "";
             } else if (isNameValid) {
-                nameInput.className = "valid-input"; // سەوز
+                nameInput.className = "valid-input";
             } else {
-                nameInput.className = "invalid-input"; // سوور
+                nameInput.className = "invalid-input";
             }
 
-            // گۆڕینی ڕەنگی چواردەوری خانەی تەلەفۆن
             if (phoneVal === "") {
                 phoneInput.className = ""; 
             } else if (isPhoneValid) {
-                phoneInput.className = "valid-input"; // سەوز
+                phoneInput.className = "valid-input";
             } else {
-                phoneInput.className = "invalid-input"; // سوور
+                phoneInput.className = "invalid-input";
             }
 
-            // چالاککردن یان ناچالاککردنی دوگمەی تۆمارکردن
             if (isNameValid && isPhoneValid) {
                 registerBtn.disabled = false;
                 registerBtn.style.background = "#28a745";
@@ -626,120 +618,78 @@
             }
         }
 
-        // ==== سیستەمی ناسینەوەی ڕوخسار بۆ ئەدمین ====
-        async function showPreRegForm() {
-            let savedFace = localStorage.getItem("admin_face_reference");
+        // پشکنینی ڕاستەوخۆ بۆ خانەکانی تۆماری پێشوەختەی ئەدمن
+        function validateAdminFormInputs() {
+            let nameInput = document.getElementById("adminNameInput");
+            let phoneInput = document.getElementById("adminPhoneInput");
+            let adminRegBtn = document.getElementById("adminRegBtn");
 
-            if (!savedFace) {
-                const { value: pwd } = await Swal.fire({
-                    title: 'تۆمارکردنی یەکجارەکی ڕوخسار',
-                    text: 'بۆ یەکەم جار، تکایە پاسوۆردی تایبەتی تۆماری پێشوەختە بنووسە بۆ خەزنکردنی دەموچاوت:',
-                    input: 'password',
-                    inputPlaceholder: 'پاسوۆردی تایبەت',
-                    confirmButtonText: 'بەردەوام بە و گرتنی وێنە',
-                    showCancelButton: true,
-                    cancelButtonColor: '#dc3545',
-                    cancelButtonText: 'پاشگەزبوونەوە'
-                });
+            let nameVal = nameInput.value.trim();
+            let phoneVal = phoneInput.value.trim();
 
-                if (pwd !== "8899") {
-                    if (pwd) Swal.fire('هەڵە', 'پاسوۆردەکە هەڵەیە!', 'error');
-                    return;
-                }
+            let nameParts = nameVal.split(/\s+/);
+            let englishRegex = /[a-zA-Z]/;
+            let isNameValid = nameVal !== "" && !englishRegex.test(nameVal) && nameParts.length >= 3;
+            let isPhoneValid = phoneVal.length === 11 && (phoneVal.startsWith("077") || phoneVal.startsWith("075") || phoneVal.startsWith("078"));
 
-                openCameraForEnrollment();
+            if (nameVal === "") {
+                nameInput.className = "";
+            } else if (isNameValid) {
+                nameInput.className = "valid-input";
             } else {
-                verifyAdminFace(savedFace);
+                nameInput.className = "invalid-input";
+            }
+
+            if (phoneVal === "") {
+                phoneInput.className = ""; 
+            } else if (isPhoneValid) {
+                phoneInput.className = "valid-input";
+            } else {
+                phoneInput.className = "invalid-input";
+            }
+
+            if (isNameValid && isPhoneValid) {
+                adminRegBtn.disabled = false;
+                adminRegBtn.style.background = "#28a745";
+                adminRegBtn.style.cursor = "pointer";
+            } else {
+                adminRegBtn.disabled = true;
+                adminRegBtn.style.background = "#cccccc";
+                adminRegBtn.style.cursor = "not-allowed";
             }
         }
 
-        function openCameraForEnrollment() {
-            Swal.fire({
-                title: 'گرتنی وێنەی ڕوخسار',
-                html: `
-                    <div style="text-align: center;">
-                        <video id="webcam" autoplay playsinline width="100%" style="max-width:300px; border-radius:8px; border: 2px solid #0056b3;"></video>
-                        <canvas id="canvas" style="display:none;"></canvas>
-                        <p style="font-size: 13px; color: #666; margin-top: 10px;">تکایە ڕوخسارت ڕوو بە کامێرا بێت و دوگمەی خوارەوە دابگرە</p>
-                    </div>
-                `,
-                confirmButtonText: 'گرتنی وێنە و پاشەکەوتکردن',
-                confirmButtonColor: '#28a745',
-                didOpen: async () => {
-                    try {
-                        let video = document.getElementById('webcam');
-                        let stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
-                        video.srcObject = stream;
-                    } catch (err) {
-                        Swal.showValidationMessage('کامێرا نەدۆزرایەوە یان ڕێگەپێدان ڕەتکرایەوە!');
-                    }
-                },
-                preConfirm: () => {
-                    let video = document.getElementById('webcam');
-                    let canvas = document.getElementById('canvas');
-                    canvas.width = video.videoWidth;
-                    canvas.height = video.videoHeight;
-                    let ctx = canvas.getContext('2d');
-                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                    let imageData = canvas.toDataURL('image/jpeg');
-                    
-                    let stream = video.srcObject;
-                    if(stream) stream.getTracks().forEach(track => track.stop());
-
-                    return imageData;
-                }
-            }).then((result) => {
-                if (result.isConfirmed && result.value) {
-                    localStorage.setItem("admin_face_reference", result.value);
-                    tempPreRegPassword = "8899"; 
-                    Swal.fire('سەرکەوتوو بوو!', 'دەموچاوی ئەدمن بە سەرکەوتوویی پاشەکەوت کرا.', 'success');
-                    document.getElementById("openPreRegBtn").style.display = "none";
-                    document.getElementById("preRegForm").style.display = "block";
-                }
+        // کردنەوەی بەشی تۆماری پێشوەختەی ئەدمن بە پاسوۆردی ئاسایی بێ ڕوخسار
+        async function showPreRegForm() {
+            const { value: pwd } = await Swal.fire({
+                title: 'چوونەژوورەوە بۆ تۆماری پێشوەختە',
+                text: 'تکایە پاسوۆردی تایبەتی تۆماری پێشوەختە بنووسە:',
+                input: 'password',
+                inputPlaceholder: 'پاسوۆرد',
+                confirmButtonText: 'چوونەژوورەوە',
+                showCancelButton: true,
+                cancelButtonColor: '#dc3545',
+                cancelButtonText: 'پاشگەزبوونەوە'
             });
-        }
 
-        function verifyAdminFace(savedFace) {
-            Swal.fire({
-                title: 'پشکنینی دەموچاوی ئەدمن',
-                html: `
-                    <div style="text-align: center;">
-                        <video id="webcamVerify" autoplay playsinline width="100%" style="max-width:300px; border-radius:8px; border: 2px solid #28a745;"></video>
-                        <canvas id="canvasVerify" style="display:none;"></canvas>
-                        <p style="font-size: 13px; color: #666; margin-top: 10px;">تکایە سەیری کامێرا بکە بۆ ناسینەوە...</p>
-                    </div>
-                `,
-                confirmButtonText: 'پشکنین و چوونەژوورەوە',
-                confirmButtonColor: '#0056b3',
-                didOpen: async () => {
-                    try {
-                        let video = document.getElementById('webcamVerify');
-                        let stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
-                        video.srcObject = stream;
-                    } catch (err) {
-                        Swal.showValidationMessage('کامێرا کار ناکات!');
-                    }
-                },
-                preConfirm: () => {
-                    let video = document.getElementById('webcamVerify');
-                    let stream = video.srcObject;
-                    if(stream) stream.getTracks().forEach(track => track.stop());
-                    return true;
-                }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    tempPreRegPassword = "8899";
-                    Swal.fire({
-                        title: 'بەخێر هاتیت ئەدمن!',
-                        text: 'دەموچاو ناسرایەوە و بە سەرکەوتوویی چوویتە ژوورەوە.',
-                        icon: 'success',
-                        timer: 1200,
-                        showConfirmButton: false
+            if (pwd) {
+                try {
+                    let response = await fetch(`${baseUrl}/api/admin/verify?type=prereg`, {
+                        method: "POST",
+                        headers: { "Admin-Password": pwd }
                     });
-                    document.getElementById("openPreRegBtn").style.display = "none";
-                    document.getElementById("preRegForm").style.display = "block";
+                    
+                    if (response.ok) {
+                        tempPreRegPassword = pwd;
+                        document.getElementById("openPreRegBtn").style.display = "none";
+                        document.getElementById("preRegForm").style.display = "block";
+                    } else {
+                        Swal.fire('هەڵە', 'پاسوۆردەکە هەڵەیە!', 'error');
+                    }
+                } catch(e) {
+                    Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە!', 'error');
                 }
-            });
+            }
         }
 
         function generateTicketHTML(name, phone, rank, time, qrToken, dateStr) {
@@ -814,7 +764,6 @@
             
             let regBtn = document.getElementById("registerBtn");
             if (regBtn) {
-                // دوای کردنەوەی سیستەم، دۆخی دوگمە دەبەستینەوە بە پشکنینی خانەکانەوە
                 validateFormInputs();
             }
             document.getElementById("countdownTimer").style.display = "none";
@@ -1078,7 +1027,7 @@
                     
                     document.getElementById("nameInput").value = "";
                     document.getElementById("phoneInput").value = "";
-                    validateFormInputs(); // گەڕاندنەوەی دوگمە بۆ دۆخی ناچالاک دوای سەرکەوتن
+                    validateFormInputs();
                 } else {
                     Swal.fire('هەڵە', result.message || 'کێشەیەک ڕوویدا', 'error');
                 }
@@ -1097,22 +1046,6 @@
 
             if(name === "" || phone === "") {
                 Swal.fire('ئاگاداری', 'تکایە ناو و ژمارەی تەلەفۆن پڕبکەرەوە!', 'warning');
-                return;
-            }
-
-            let nameParts = name.split(/\s+/);
-            if (nameParts.length < 3) {
-                Swal.fire('ئاگاداری', 'تکایە ناوی سیانی بنووسە!', 'warning');
-                return;
-            }
-
-            if (!phone.startsWith("077") && !phone.startsWith("075") && !phone.startsWith("078")) {
-                Swal.fire('ئاگاداری', 'ژمارەی مۆبایل دەبێت بە 077 یان 075 یان 078 دەست پێبکات!', 'warning');
-                return;
-            }
-
-            if (phone.length !== 11) {
-                Swal.fire('ئاگاداری', 'ژمارەی مۆبایل دەبێت 11 ژمارە بێت!', 'warning');
                 return;
             }
 
@@ -1141,6 +1074,7 @@
                     Swal.fire('سەرکەوتوو بوو', result.message || 'ناو بە سەرکەوتوویی لەلایەن ئەدمنەوە تۆمارکرا!', 'success');
                     document.getElementById("adminNameInput").value = "";
                     document.getElementById("adminPhoneInput").value = "";
+                    validateAdminFormInputs();
                     
                     if(tempAdminPassword !== "") {
                         loadAdminStats();
@@ -1537,122 +1471,6 @@
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
-        }
-
-        // ==== سیستەمی ناسینەوەی ڕوخسار (نهێنی بە بێ نیشاندانی پاسوۆرد) ====
-        async function showPreRegForm() {
-            let savedFace = localStorage.getItem("admin_face_reference");
-
-            if (!savedFace) {
-                const { value: pwd } = await Swal.fire({
-                    title: 'تۆمارکردنی یەکجارەکی ڕوخسار',
-                    text: 'بۆ یەکەم جار، تکایە پاسوۆردی تایبەتی تۆماری پێشوەختە بنووسە بۆ خەزنکردنی دەموچاوت:',
-                    input: 'password',
-                    inputPlaceholder: 'پاسوۆردی تایبەت',
-                    confirmButtonText: 'بەردەوام بە و گرتنی وێنە',
-                    showCancelButton: true,
-                    cancelButtonColor: '#dc3545',
-                    cancelButtonText: 'پاشگەزبوونەوە'
-                });
-
-                if (pwd !== "8899") {
-                    if (pwd) Swal.fire('هەڵە', 'پاسوۆردەکە هەڵەیە!', 'error');
-                    return;
-                }
-
-                openCameraForEnrollment();
-            } else {
-                verifyAdminFace(savedFace);
-            }
-        }
-
-        function openCameraForEnrollment() {
-            Swal.fire({
-                title: 'گرتنی وێنەی ڕوخسار',
-                html: `
-                    <div style="text-align: center;">
-                        <video id="webcam" autoplay playsinline width="100%" style="max-width:300px; border-radius:8px; border: 2px solid #0056b3;"></video>
-                        <canvas id="canvas" style="display:none;"></canvas>
-                        <p style="font-size: 13px; color: #666; margin-top: 10px;">تکایە ڕوخسارت ڕوو بە کامێرا بێت و دوگمەی خوارەوە دابگرە</p>
-                    </div>
-                `,
-                confirmButtonText: 'گرتنی وێنە و پاشەکەوتکردن',
-                confirmButtonColor: '#28a745',
-                didOpen: async () => {
-                    try {
-                        let video = document.getElementById('webcam');
-                        let stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
-                        video.srcObject = stream;
-                    } catch (err) {
-                        Swal.showValidationMessage('کامێرا نەدۆزرایەوە یان ڕێگەپێدان ڕەتکرایەوە!');
-                    }
-                },
-                preConfirm: () => {
-                    let video = document.getElementById('webcam');
-                    let canvas = document.getElementById('canvas');
-                    canvas.width = video.videoWidth;
-                    canvas.height = video.videoHeight;
-                    let ctx = canvas.getContext('2d');
-                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                    let imageData = canvas.toDataURL('image/jpeg');
-                    
-                    let stream = video.srcObject;
-                    if(stream) stream.getTracks().forEach(track => track.stop());
-
-                    return imageData;
-                }
-            }).then((result) => {
-                if (result.isConfirmed && result.value) {
-                    localStorage.setItem("admin_face_reference", result.value);
-                    tempPreRegPassword = "8899"; 
-                    Swal.fire('سەرکەوتوو بوو!', 'دەموچاوی ئەدمن بە سەرکەوتوویی پاشەکەوت کرا.', 'success');
-                    document.getElementById("openPreRegBtn").style.display = "none";
-                    document.getElementById("preRegForm").style.display = "block";
-                }
-            });
-        }
-
-        function verifyAdminFace(savedFace) {
-            Swal.fire({
-                title: 'پشکنینی دەموچاوی ئەدمن',
-                html: `
-                    <div style="text-align: center;">
-                        <video id="webcamVerify" autoplay playsinline width="100%" style="max-width:300px; border-radius:8px; border: 2px solid #28a745;"></video>
-                        <canvas id="canvasVerify" style="display:none;"></canvas>
-                        <p style="font-size: 13px; color: #666; margin-top: 10px;">تکایە سەیری کامێرا بکە بۆ ناسینەوە...</p>
-                    </div>
-                `,
-                confirmButtonText: 'پشکنین و چوونەژوورەوە',
-                confirmButtonColor: '#0056b3',
-                didOpen: async () => {
-                    try {
-                        let video = document.getElementById('webcamVerify');
-                        let stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
-                        video.srcObject = stream;
-                    } catch (err) {
-                        Swal.showValidationMessage('کامێرا کار ناکات!');
-                    }
-                },
-                preConfirm: () => {
-                    let video = document.getElementById('webcamVerify');
-                    let stream = video.srcObject;
-                    if(stream) stream.getTracks().forEach(track => track.stop());
-                    return true;
-                }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    tempPreRegPassword = "8899";
-                    Swal.fire({
-                        title: 'بەخێر هاتیت ئەدمن!',
-                        text: 'دەموچاو ناسرایەوە و بە سەرکەوتوویی چوویتە ژوورەوە.',
-                        icon: 'success',
-                        timer: 1200,
-                        showConfirmButton: false
-                    });
-                    document.getElementById("openPreRegBtn").style.display = "none";
-                    document.getElementById("preRegForm").style.display = "block";
-                }
-            });
         }
     </script>
 </body>
