@@ -1,19 +1,18 @@
 {
-  "name": "نۆرەگرتنی هاتووچۆ",
-  "short_name": "هاتووچۆ",
-  "start_url": ".",
+  "name": "سیستەمی هاتووچۆی هەڵەبجە",
+  "short_name": "نۆرەی هاتووچۆ",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f0f8ff",
   "theme_color": "#0056b3",
-  "description": "سیستەمی سەرەگرتنی مۆڵەتی شۆفێری هاتووچۆی هەڵەبجە",
   "icons": [
     {
-      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Apple_logo_grey.svg/512px-Apple_logo_grey.svg.png",
+      "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Apple_logo_grey.svg/512px-Apple_logo_grey.svg.png",
+      "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
