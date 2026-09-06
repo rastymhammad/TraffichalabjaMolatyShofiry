@@ -127,23 +127,29 @@
         
         #queueSection #adminSection { max-width: 700px; width: 100%; margin: 0 auto; }
 
-        /* دیزاینی نوێی سەردێڕ بە تێکەڵکردنی دوگمەی دارک مۆد */
+        /* دیزاینی سەردێڕ و دوگمەی ڕەنگ */
         .header-title {
+            position: relative;
             background: var(--header-bg); padding: 15px 20px; border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin: 10px auto 15px auto; border-bottom: 4px solid #0056b3;
             transition: 0.3s; width: 100%;
-            display: flex; align-items: center; justify-content: space-between; gap: 10px;
+            display: flex; align-items: center; justify-content: center;
         }
         body.dark-mode .header-title { border-bottom-color: #4da3ff; }
         
-        .header-title h1 { color: var(--header-text); font-size: 17px; margin: 0; font-weight: bold; text-align: right; flex: 1; }
+        .header-title h1 { color: var(--header-text); font-size: 17px; margin: 0; font-weight: bold; text-align: center; }
         
         .theme-toggle-btn {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
             background: transparent; border: none;
             font-size: 22px; cursor: pointer; padding: 0; margin: 0;
             transition: transform 0.2s;
+            z-index: 10;
         }
-        .theme-toggle-btn:hover { transform: scale(1.1); }
+        .theme-toggle-btn:hover { transform: translateY(-50%) scale(1.1); }
         
         /* --- ستایلی پۆرتاڵ --- */
         .portal-cards { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; width: 100%; }
