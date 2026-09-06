@@ -12,7 +12,7 @@
     <!-- iOS PWA Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="هاتووچۆی هەڵەبجە">
+    <meta name="apple-mobile-web-app-title" content="به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە">
     <link rel="apple-touch-icon" href="icon-192.png">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -404,7 +404,7 @@
                     <div class="dashboard-cards">
                         <div class="dash-card"><h4>کۆی گشتی</h4><h3 id="statTotal">0</h3></div>
                         <div class="dash-card"><h4>هاووڵاتیان</h4><h3 id="statUser" style="color: #28a745;">0</h3></div>
-                        <div class="dash-card"><h4>لە ئەدمینەوە</h4><h3 id="statAdmin" style="color: #dc3545;">0</h3></div>
+                        <div class="dash-card"><h4> ئەدمین</h4><h3 id="statAdmin" style="color: #dc3545;">0</h3></div>
                     </div>
                     <div style="background: var(--bg-container); padding: 6px; border-radius: 8px; border: 1px solid var(--border-container);">
                         <div class="chart-container"><canvas id="myChart"></canvas></div>
@@ -421,7 +421,7 @@
                 </div>
 
                 <div style="background: rgba(0, 86, 179, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(0, 86, 179, 0.2);" class="no-print">
-                    <h3 style="margin-top: 0; font-size: 14px; color: #0056b3;">تۆمارکردنی پێشوەختە لەلایەن ئەدمینەوە</h3>
+                    <h3 style="margin-top: 0; font-size: 14px; color: #0056b3;">ده‌سه‌ڵاتی ئه‌دمین</h3>
                     <button id="openPreRegBtn" class="action-btn" style="background: #17a2b8; padding: 10px;" onclick="showPreRegForm()">کردنەوەی بەشی تۆمارکردن</button>
                     
                     <div id="preRegForm" style="display: none; margin-top: 10px;">
@@ -937,7 +937,7 @@
                     </div>
                 `,
                 showCancelButton: true, 
-                confirmButtonText: 'تــۆمــاركــردن ', 
+                confirmButtonText: 'تـــۆمــاركــردن', 
                 cancelButtonText: 'پاشگەزبوونەوە', 
                 confirmButtonColor: '#28a745',
                 cancelButtonColor: '#6c757d',
@@ -1257,7 +1257,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 const swCode = `
-                    const CACHE_NAME = 'traffic-halabja-offline-v8';
+                    const CACHE_NAME = 'traffic-halabja-offline-v9';
                     const ASSETS = [
                         './',
                         'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
