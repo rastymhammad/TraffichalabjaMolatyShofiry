@@ -13,8 +13,6 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- کتێبخانەی خوێندنەوەی دەق لە وێنەوە (OCR) -->
-    <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
 
     <style>
         @font-face {
@@ -395,18 +393,21 @@
         <div class="container" id="userRegistrationSection">
             <h2>تۆمارکردنی ناو</h2>
             
-            <!-- خانەی ناو و دوگمەی سکانی کارتی نیشتمانی -->
             <div class="input-wrapper">
                 <i class="fa-solid fa-user"></i>
                 <input type="text" id="nameInput" placeholder="ناوی سیانی بنووسە...">
             </div>
 
-            <!-- دوگمەی بارکردن و سکانی وێنەی کارتی نیشتمانی -->
+            <!-- دوگمەی بارکردن و سکانی وێنەی ڕوخسار -->
             <div style="width: 90%; margin: 0 auto 10px auto;">
-                <input type="file" id="idCardImageInput" accept="image/*" capture="environment" style="display: none;" onchange="scanIdCard(event)">
-                <button type="button" onclick="document.getElementById('idCardImageInput').click()" style="background: #17a2b8; width: 100%; margin-top: 0; font-size: 14px; padding: 8px;">
-                    <i class="fa-solid fa-id-card"></i> سکانکردنی کارتی نیشتمانی (وێنە بگرە)
+                <input type="file" id="faceImageInput" accept="image/*" capture="user" style="display: none;" onchange="handleFaceCapture(event)">
+                <button type="button" id="faceCaptureBtn" onclick="document.getElementById('faceImageInput').click()" style="background: #17a2b8; width: 100%; margin-top: 0; font-size: 14px; padding: 8px;">
+                    <i class="fa-solid fa-camera"></i> گرتنی وێنەی ڕوخسار (Selfie)
                 </button>
+                <div id="facePreviewContainer" style="display: none; margin-top: 10px;">
+                    <img id="facePreview" src="" alt="ڕوخسار" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 2px solid #17a2b8;">
+                    <p style="font-size: 12px; color: #28a745; margin: 5px 0 0 0;"><i class="fa-solid fa-check"></i> وێنەکە وەرگیرا</p>
+                </div>
             </div>
 
             <div class="input-wrapper">
@@ -547,6 +548,9 @@
         let globalSystemIsActive = true; 
         
         let statChart = null;
+        
+        // گۆڕاوێک بۆ هەڵگرتنی وێنەی ڕوخسار بە شێوەی Base64
+        let capturedFaceBase64 = null;
 
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
@@ -564,68 +568,20 @@
             return true;
         }
 
-        // ==== فەنکشنی سکانکردنی کارتی نیشتمانی (OCR) - چاککراو بۆ ڕێکخستنی دەق ====
-        async function scanIdCard(event) {
+        // ==== فەنکشنی وەرگرتنی وێنەی ڕوخسار ====
+        function handleFaceCapture(event) {
             let file = event.target.files[0];
             if (!file) return;
 
-            Swal.fire({
-                title: 'تکایە چاوەڕێ بکە...',
-                text: 'سەرقاڵی خوێندنەوەی کارتی نیشتمانین...',
-                allowOutsideClick: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                }
-            });
-
-            try {
-                let result = await Tesseract.recognize(file, 'ara+eng', {
-                    logger: m => console.log(m)
-                });
-
-                let extractedText = result.data.text;
-                Swal.close();
-
-                if (extractedText) {
-                    let lines = extractedText.split('\n')
-                        .map(line => line.trim())
-                        .filter(line => line.length > 5);
-
-                    let suggestedName = "";
-                    for (let line of lines) {
-                        let words = line.split(/\s+/);
-                        if (words.length >= 3 && !/\d/.test(line)) {
-                            suggestedName = line;
-                            break;
-                        }
-                    }
-
-                    if (!suggestedName && lines.length > 0) {
-                        suggestedName = lines[0];
-                    }
-
-                    Swal.fire({
-                        title: 'ئەنجامی خوێندنەوە',
-                        html: `<p style="font-size:14px; color:#555;">دەقە دۆزراوەوەکە (تکایە پێداچوونەوەی بۆ بکە):</p>
-                               <textarea id="swal-ocr-text" class="swal2-textarea" style="font-size:14px; direction:rtl; text-align:right;">${suggestedName || extractedText}</textarea>
-                               <p style="font-size:12px; color:gray;">ئەگەر پیتەکان پێویستی بە ڕاستکردنەوە هەبوو، دەتوانیت لێرە دەستکاری بکەیت</p>`,
-                        confirmButtonText: 'پەسەندکردن و گواستنەوە بۆ خانەی ناو',
-                        confirmButtonColor: '#28a745',
-                        preConfirm: () => {
-                            return document.getElementById('swal-ocr-text').value;
-                        }
-                    }).then((res) => {
-                        if (res.isConfirmed && res.value) {
-                            document.getElementById('nameInput').value = res.value.trim();
-                        }
-                    });
-                } else {
-                    Swal.fire('ئاگاداری', 'نەتوانرا دەق لە وێنەکەدا بخوێنرێتەوە، تکایە ناوەکە بە دەست بنووسە.', 'warning');
-                }
-            } catch (err) {
-                Swal.close();
-                Swal.fire('هەڵە', 'کێشەیەک ڕووی دا لە کاتی سکانکردنی وێنەکەدا.', 'error');
-            }
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                capturedFaceBase64 = e.target.result;
+                document.getElementById('facePreview').src = capturedFaceBase64;
+                document.getElementById('facePreviewContainer').style.display = "block";
+                document.getElementById('faceCaptureBtn').style.backgroundColor = "#28a745";
+                document.getElementById('faceCaptureBtn').innerHTML = '<i class="fa-solid fa-camera-rotate"></i> وێنە گیرا (گۆڕین)';
+            };
+            reader.readAsDataURL(file);
         }
 
         function generateTicketHTML(name, phone, rank, time, qrToken, dateStr) {
@@ -638,14 +594,19 @@
                     qrContainer.innerHTML = ""; 
                     new QRCode(qrContainer, {
                         text: verifyUrl,
-                        width: 90,
-                        height: 90,
+                        width: 80,
+                        height: 80,
                         colorDark : "#000000",
                         colorLight : "#ffffff",
                         correctLevel : QRCode.CorrectLevel.H
                     });
                 }
             }, 100);
+
+            // نیشاندانی وێنەکە ئەگەر هەبوو، ئەگەر نەبوو هیچ نیشان نادات (بۆ کاتی گەڕان بەدوای ناو)
+            let faceImageHtml = capturedFaceBase64 
+                ? `<img src="${capturedFaceBase64}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 1px solid #ccc;">` 
+                : '';
 
             return `
                 <div style="border: 2px dashed #0056b3; padding: 20px; border-radius: 10px; background: #f0f8ff; text-align: center; font-family: 'Rabar', Tahoma, sans-serif;">
@@ -658,7 +619,10 @@
                                 <p style="margin: 5px 0; font-size: 15px;"><strong>ناوی هاووڵاتی:</strong> ${name}</p>
                                 <p style="margin: 5px 0; font-size: 15px;"><strong>ژمارەی تەلەفۆن:</strong> ${phone}</p>
                             </div>
-                            <div id="qrCodeDiv" style="padding: 5px; background: white; border: 1px solid #eee; border-radius: 4px;"></div>
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                ${faceImageHtml}
+                                <div id="qrCodeDiv" style="padding: 5px; background: white; border: 1px solid #eee; border-radius: 4px;"></div>
+                            </div>
                         </div>
                         <hr style="border: 0; border-top: 1px dashed #ccc; margin: 12px 0;">
                         <p style="margin: 5px 0; font-size: 16px; text-align: center;"><strong>ژمارەی نۆرە:</strong> <span style="font-size: 28px; color: #dc3545; font-weight: bold;">${rank}</span></p>
@@ -913,6 +877,12 @@
                 return;
             }
 
+            // مەرج بۆ ئەوەی بەکارهێنەر پێشتر وێنەی ڕوخساری گرتبێت
+            if (!capturedFaceBase64) {
+                Swal.fire('ئاگاداری', 'تکایە سەرەتا لە ڕێگەی دوگمەی شینەکەوە وێنەیەکی ڕوخسارت (Selfie) بگرە!', 'warning');
+                return;
+            }
+
             let englishRegex = /[a-zA-Z]/;
             if (englishRegex.test(name)) {
                 Swal.fire('ئاگاداری', 'تکایە ناوی سیانی بە پیتی کوردی بنووسە!', 'warning');
@@ -965,8 +935,15 @@
                         Swal.fire('سەرکەوتوو بوو', result.message || 'بە سەرکەوتوویی تۆمارکرا!', 'success');
                     }
                     
+                    // بەتاڵکردنەوەی فۆڕمەکە دوای سەرکەوتن
                     document.getElementById("nameInput").value = "";
                     document.getElementById("phoneInput").value = "";
+                    capturedFaceBase64 = null;
+                    document.getElementById('facePreviewContainer').style.display = "none";
+                    document.getElementById('faceCaptureBtn').style.backgroundColor = "#17a2b8";
+                    document.getElementById('faceCaptureBtn').innerHTML = '<i class="fa-solid fa-camera"></i> گرتنی وێنەی ڕوخسار (Selfie)';
+                    document.getElementById('faceImageInput').value = "";
+                    
                 } else {
                     Swal.fire('هەڵە', result.message || 'کێشەیەک ڕوویدا', 'error');
                 }
@@ -1083,6 +1060,9 @@
                 Swal.fire('ئاگاداری', 'تکایە ژمارەی تەلەفۆن بنووسە بۆ گەڕان!', 'warning');
                 return;
             }
+
+            // پاککردنەوەی وێنە لۆکاڵییەکە لە کاتی گەڕان چونکە سێرڤەر وێنەی لانییە
+            capturedFaceBase64 = null;
 
             try {
                 let response = await fetch(`${apiUrl}/search/${encodeURIComponent(searchPhone)}`);
