@@ -150,9 +150,19 @@
             z-index: 10;
         }
         .theme-toggle-btn:hover { transform: translateY(-50%) scale(1.1); }
+
+        /* دیزاینی ژمێرەری سەردانکەران */
+        .visitor-counter {
+            text-align: center; 
+            font-size: 12px; 
+            color: var(--label-color); 
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+        .visitor-counter b { color: var(--text-main); }
         
         /* --- ستایلی پۆرتاڵ --- */
-        .portal-cards { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; width: 100%; }
+        .portal-cards { display: flex; flex-direction: column; gap: 12px; width: 100%; }
         .portal-card {
             background: var(--header-bg); border: 2px solid var(--border-container); border-radius: 12px;
             padding: 20px 15px; cursor: pointer; transition: all 0.3s ease;
@@ -309,12 +319,16 @@
 
     <div class="main-content" id="mainWrapper">
         <div class="header-title no-print">
-            <h1>بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە</h1>
             <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="گۆڕینی ڕەنگ">🌙</button>
+            <h1>بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە</h1>
         </div>
 
         <!-- === پۆرتاڵ (مێنیوی سەرەکی) === -->
         <div id="portalSection">
+            <div class="visitor-counter no-print">
+                👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
+            </div>
+            
             <div class="portal-cards">
                 <div class="portal-card" onclick="openSection('queue')">
                     <i class="fa-solid fa-users-line"></i>
@@ -337,6 +351,10 @@
         <div id="queueSection" style="display: none;">
             <button class="back-btn no-print" onclick="openSection('portal')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە بۆ سەرەتا</button>
             
+            <div class="visitor-counter no-print">
+                👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
+            </div>
+
             <div id="statusBadge" class="status-badge status-open no-print">
                 <span id="statusDot" class="dot dot-green"></span>
                 <span id="statusText">دۆخی سیستەم: کراوەیە بۆ تۆمارکردن</span>
@@ -454,8 +472,8 @@
             <button class="back-btn" onclick="openSection('portal')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە بۆ سەرەتا</button>
             
             <div class="fine-container" id="fine-container-box">
-                <div style="text-align:center; font-size:11px; color:var(--info-text); margin-bottom:10px;">
-                    👁️ ژمارەی بەکارهێنەر: <b id="visitor-count-text">...</b>
+                <div class="visitor-counter">
+                    👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
                 </div>
 
                 <div class="toggle-container">
@@ -589,6 +607,30 @@
         function vibrate(ms = 15) { if (navigator.vibrate) navigator.vibrate(ms); }
 
         // ==========================================
+        //         لۆجیکی ژمێرەری سەردانکەران
+        // ==========================================
+        function updateVisitorCounter() {
+            const elements = document.querySelectorAll('.visitor-count-text');
+            if (elements.length === 0) return;
+            const BASE_COUNT = 9000; 
+            const updateKey = '2026-08-05'; 
+            const namespace = 'traffic-halabja-app';
+            const countedFlag = 'counted_' + updateKey;
+            const alreadyCounted = sessionStorage.getItem(countedFlag);
+            const endpoint = alreadyCounted ? 'get' : 'hit';
+            const url = `https://abacus.jasoncameron.dev/${endpoint}/${namespace}/${updateKey}`;
+
+            fetch(url).then(res => res.json()).then(data => {
+                if (!alreadyCounted) sessionStorage.setItem(countedFlag, '1');
+                const total = (BASE_COUNT + (data.value || 0)).toLocaleString();
+                elements.forEach(el => el.textContent = total);
+            }).catch(() => { 
+                elements.forEach(el => el.textContent = BASE_COUNT.toLocaleString());
+            });
+        }
+        updateVisitorCounter();
+
+        // ==========================================
         //         لۆجیکی سیستەمی غەرامە
         // ==========================================
         const today = new Date();
@@ -601,24 +643,6 @@
         document.getElementById('day-btn').textContent = selectedDay;
         document.getElementById('month-btn').textContent = selectedMonth;
         document.getElementById('year-btn').textContent = selectedYear;
-
-        function updateVisitorCounter() {
-            const el = document.getElementById('visitor-count-text');
-            if (!el) return;
-            const BASE_COUNT = 9000; 
-            const updateKey = '2026-08-05'; 
-            const namespace = 'traffic-halabja-app';
-            const countedFlag = 'counted_' + updateKey;
-            const alreadyCounted = sessionStorage.getItem(countedFlag);
-            const endpoint = alreadyCounted ? 'get' : 'hit';
-            const url = `https://abacus.jasoncameron.dev/${endpoint}/${namespace}/${updateKey}`;
-
-            fetch(url).then(res => res.json()).then(data => {
-                if (!alreadyCounted) sessionStorage.setItem(countedFlag, '1');
-                el.textContent = (BASE_COUNT + (data.value || 0)).toLocaleString();
-            }).catch(() => { el.textContent = BASE_COUNT.toLocaleString(); });
-        }
-        updateVisitorCounter();
 
         function resetToToday() {
             vibrate();
