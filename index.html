@@ -17,7 +17,7 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
@@ -203,10 +203,10 @@
         }
 
         /* --- ستایلی نۆرەگرتن --- */
-        .status-badge { display: inline-flex; align-items: center; gap: 8px; margin: 0 auto 12px auto; padding: 6px 14px; font-size: 12px; font-weight: bold; border-radius: 20px; width: fit-content; }
+        .status-badge { display: inline-flex; align-items: center; gap: 8px; margin: 0 auto 12px auto; padding: 6px 14px; font-size: 12px; font-weight: bold; border-radius: 20px; width: fit-content; text-align: center; }
         .status-open { background: #d4edda; color: #155724; }
         .status-closed { background: #f8d7da; color: #721c24; }
-        .dot { height: 10px; width: 10px; border-radius: 50%; display: inline-block; }
+        .dot { height: 10px; width: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
         .dot-green { background-color: #28a745; box-shadow: 0 0 8px #28a745; }
         .dot-red { background-color: #dc3545; box-shadow: 0 0 8px #dc3545; }
 
@@ -553,7 +553,7 @@
 
     <!-- === فوتەر و سۆشیاڵ میدیا === -->
     <footer>
-        <p style="margin: 0 0 5px 0;">هەموو مافێکی پارێزراوە بۆ بەڕێوەبەرایەتی هاتووچۆی هەڵەبجە &copy; 2026</p>
+        <p style="margin: 0 0 5px 0;">هەموو مافێکی پارێزراوە بۆ بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە &copy; 2026</p>
         <p class="dev-name" style="margin: 0;">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووچۆ ( ڕاستی محمد شێخ حیدر )</p>
         
         <div class="social-icons no-print">
@@ -879,26 +879,41 @@
                 let response = await fetch(`${baseUrl}/api/users/count`, { method: "GET" });
                 if (response.ok) {
                     let result = await response.json(); let count = result.count; let maxQuota = result.maxQuota || 40;
+                    
+                    let badge = document.getElementById("statusBadge");
+                    let dot = document.getElementById("statusDot");
+                    let statusText = document.getElementById("statusText");
+                    let regBtn = document.getElementById("registerBtn");
+
                     if (result.isActive === false) {
-                        document.getElementById("statusBadge").className = "status-badge status-closed";
-                        document.getElementById("statusText").innerText = result.closeMessage;
-                        let regBtn = document.getElementById("registerBtn");
+                        badge.className = "status-badge status-closed";
+                        dot.className = "dot dot-red";
+                        statusText.innerText = result.closeMessage;
                         if (regBtn) { regBtn.disabled = true; regBtn.innerHTML = '<i class="fa-solid fa-lock"></i>'; }
                         return; 
                     }
+                    
                     const dateInIraq = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Baghdad"}));
                     const iraqHour = dateInIraq.getHours(); const dayOfWeek = dateInIraq.getDay(); 
                     let isBlocked = (dayOfWeek === 4 && iraqHour >= 14) || dayOfWeek === 5 || (dayOfWeek === 6 && iraqHour < 18) || (iraqHour >= 14 && iraqHour < 18);
                     
                     if (isBlocked || count >= maxQuota) {
-                        document.getElementById("statusBadge").className = "status-badge status-closed";
-                        document.getElementById("statusText").innerText = "سیستەم داخراوە یان پشک تەواو بووە";
-                        let regBtn = document.getElementById("registerBtn");
+                        badge.className = "status-badge status-closed";
+                        dot.className = "dot dot-red";
+                        
+                        // گۆڕینی دەقی پەیامەکە کاتێک پشک پر دەبێت یان سیستەم دەوەستێت
+                        if (count >= maxQuota) {
+                            statusText.innerText = "نۆرەگرتن بۆ سبەینێ کۆتایی هاتووچووە. تکایە چاوەڕێ بکە تا سبەینێ سەعات 6 ئێواره‌ سیسته‌م دەكرێته‌وه‌ خۆت تۆمار بكه‌";
+                        } else {
+                            statusText.innerText = "سیستەم داخراوە یان پشک تەواو بووە";
+                        }
+
                         if (regBtn) { regBtn.disabled = true; regBtn.innerHTML = '<i class="fa-solid fa-lock"></i>'; }
                         startCountdown(); document.getElementById("countdownTimer").style.display = "block";
                     } else {
-                        document.getElementById("statusBadge").className = "status-badge status-open";
-                        document.getElementById("statusText").innerText = "دۆخی سیستەم: کراوەیە بۆ تۆمارکردن";
+                        badge.className = "status-badge status-open";
+                        dot.className = "dot dot-green";
+                        statusText.innerText = "دۆخی سیستەم: کراوەیە بۆ تۆمارکردن";
                         validateFormInputs();
                     }
                 }
@@ -1002,7 +1017,7 @@
         }
 
         // ==========================================
-        //         لۆجیکی بەشی ئەدمین (چارەسەرکردنی پاسوۆرد و لیست)
+        //         لۆجیکی بەشی ئەدمین 
         // ==========================================
         function handleAdminClick() {
             adminClickCount++;
@@ -1029,7 +1044,7 @@
                     
                     if (response.ok) {
                         tempAdminPassword = pwd; 
-                        window.adminPwd = pwd; // پاراستنی تەواوی پاسوۆرد بۆ لیستەکان
+                        window.adminPwd = pwd; 
                         document.getElementById("adminSection").style.display = "block";
                         loadAdminStats();
                     } else Swal.fire('هەڵەیه‌', 'پاسوۆردەکە هەڵەیە!', 'error');
@@ -1267,7 +1282,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 const swCode = `
-                    const CACHE_NAME = 'traffic-halabja-offline-v10';
+                    const CACHE_NAME = 'traffic-halabja-offline-v11';
                     const ASSETS = [
                         './',
                         'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
