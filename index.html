@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هه‌ڵه‌بجه‌</title>
+    <title>پۆرتاڵی هاتووچۆی هه‌ڵه‌بجه‌</title>
     
     <!-- PWA Settings -->
     <link rel="manifest" href="manifest.json">
@@ -17,7 +17,7 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
@@ -581,7 +581,6 @@
         let adminClickCount = 0; 
         let timerInterval = null;
         let tempAdminPassword = "";
-        let tempPreRegPassword = "";
         let globalSystemIsActive = true; 
         let statChart = null;
         let globalUsersData = [];
@@ -876,7 +875,7 @@
 
         async function checkQuotaAndTimer() {
             try {
-                let response = await fetch(`${apiUrl}/count`, { method: "GET" });
+                let response = await fetch(`${baseUrl}/api/users/count`, { method: "GET" });
                 if (response.ok) {
                     let result = await response.json(); let count = result.count; let maxQuota = result.maxQuota || 40;
                     if (result.isActive === false) {
@@ -965,7 +964,6 @@
                 let finalName = confirmation.value.name;
                 let finalPhone = confirmation.value.phone;
 
-                // نوێکردنەوەی ناخ ناو فۆرمی سەرەکی ئەگەر گۆڕابێت
                 document.getElementById("nameInput").value = finalName;
                 document.getElementById("phoneInput").value = finalPhone;
 
@@ -1003,7 +1001,7 @@
         }
 
         // ==========================================
-        //         لۆجیکی بەشی ئەدمین
+        //         لۆجیکی بەشی ئەدمین 
         // ==========================================
         function handleAdminClick() {
             adminClickCount++;
@@ -1045,7 +1043,7 @@
             let openPreRegBtn = document.getElementById("openPreRegBtn");
             if(preRegForm) preRegForm.style.display = "none";
             if(openPreRegBtn) openPreRegBtn.style.display = "inline-block";
-            tempAdminPassword = ""; tempPreRegPassword = ""; adminClickCount = 0;
+            tempAdminPassword = ""; adminClickCount = 0;
         }
 
         async function loadAdminStats() {
@@ -1125,7 +1123,7 @@
         async function loadTodayUsers() {
             let table = document.getElementById("usersTable"); let tbody = document.getElementById("tableBody");
             try {
-                let response = await fetch(`${apiUrl}/today-list`, { method: "GET", headers: { "Admin-Password": tempAdminPassword } });
+                let response = await fetch(`${baseUrl}/api/admin/today-list`, { method: "GET", headers: { "Admin-Password": tempAdminPassword } });
                 if (!response.ok) {
                     let errResult = await response.json().catch(() => ({}));
                     Swal.fire('هەڵە', errResult.message || 'پاسۆردی سەرەتا هەڵەبوو!', 'error');
@@ -1169,7 +1167,12 @@
                 try {
                     let response = await fetch(`${baseUrl}/api/admin/verify?type=prereg`, { method: "POST", headers: { "Admin-Password": pwd } });
                     if (response.status === 429) return Swal.fire('ئاگاداری سزا', 'تۆ چەند جارێک پاسوۆردی هەڵەت لێدا؛ بەهۆی پاراستنی سیستەمەوە سزادراویت!', 'error');
-                    if (response.ok) { tempPreRegPassword = pwd; document.getElementById("openPreRegBtn").style.display = "none"; document.getElementById("preRegForm").style.display = "block"; } 
+                    if (response.ok) { 
+                        // پاشوۆردی 8899 دروستە، کەناڵی تۆماری پێشوەختە دەکرێتەوە
+                        document.getElementById("openPreRegBtn").style.display = "none"; 
+                        document.getElementById("preRegForm").style.display = "block";
+                        window.tempPreRegPwd = pwd; // خەزنکردنی کاتی بۆ کاتی ناردنی داتا
+                    } 
                     else Swal.fire('هەڵەیه‌', 'پاسوۆردەکە هەڵەیە!', 'warning');
                 } catch(e) { Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە!', 'error'); }
             }
@@ -1181,7 +1184,7 @@
             if(name === "" || phone === "") return Swal.fire('ئاگاداری', 'تکایە ناو و ژمارەی تەلەفۆن پڕبکەرەوە!', 'warning');
             let originalText = regBtn.innerHTML; regBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> تکایە چاوەڕێ بکە...'; regBtn.disabled = true;
             try {
-                let response = await fetch(apiUrl, { method: "POST", headers: { "Content-Type": "application/json", "Admin-Password": tempPreRegPassword }, body: JSON.stringify({ name: name, phone: phone }) });
+                let response = await fetch(apiUrl, { method: "POST", headers: { "Content-Type": "application/json", "Admin-Password": window.tempPreRegPwd || "8899" }, body: JSON.stringify({ name: name, phone: phone }) });
                 if (response.status === 429) return Swal.fire('ئاگاداری', 'تکایە کەمێک چاوەڕێ بکە (Rate Limit)', 'warning');
                 let result = await response.json().catch(() => ({}));
                 if(response.ok) {
@@ -1255,7 +1258,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 const swCode = `
-                    const CACHE_NAME = 'traffic-halabja-offline-v4';
+                    const CACHE_NAME = 'traffic-halabja-offline-v7';
                     const ASSETS = [
                         './',
                         'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
