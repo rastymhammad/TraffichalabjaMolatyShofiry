@@ -415,7 +415,8 @@
                 <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false">
             </div>
 
-            <button id="registerBtn" onclick="registerUser()">تۆمارکردن</button>
+            <!-- دوگمەکە لەسەرەتادا لەکارخراوە تا وێنە دەگیرێت -->
+            <button id="registerBtn" onclick="registerUser()" style="background: gray; cursor: not-allowed;" disabled><i class="fa-solid fa-camera"></i> سەرەتا وێنە بگرە</button>
             <div id="countdownTimer" class="timer-box"></div>
         </div>
 
@@ -580,6 +581,9 @@
                 document.getElementById('facePreviewContainer').style.display = "block";
                 document.getElementById('faceCaptureBtn').style.backgroundColor = "#28a745";
                 document.getElementById('faceCaptureBtn').innerHTML = '<i class="fa-solid fa-camera-rotate"></i> وێنە گیرا (گۆڕین)';
+                
+                // دوای گرتنی وێنەکە، با دۆخی دوگمەکە نوێ بکرێتەوە تا چالاک بێت
+                checkQuotaAndTimer();
             };
             reader.readAsDataURL(file);
         }
@@ -603,7 +607,6 @@
                 }
             }, 100);
 
-            // نیشاندانی وێنەکە ئەگەر هەبوو، ئەگەر نەبوو هیچ نیشان نادات (بۆ کاتی گەڕان بەدوای ناو)
             let faceImageHtml = capturedFaceBase64 
                 ? `<img src="${capturedFaceBase64}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 1px solid #ccc;">` 
                 : '';
@@ -654,6 +657,7 @@
             startCountdown();
         }
 
+        // === گۆڕانکاری سەرەکی لێرەدا بۆ کۆنتڕۆڵکردنی دوگمەکە لەکاتی کراوەبوونی سیستەم ===
         function setOpenUI(msg) {
             let badge = document.getElementById("statusBadge");
             if(badge) badge.className = "status-badge status-open";
@@ -664,10 +668,17 @@
             
             let regBtn = document.getElementById("registerBtn");
             if (regBtn) {
-                regBtn.disabled = false;
-                regBtn.style.backgroundColor = ""; 
-                regBtn.style.cursor = "pointer";
-                regBtn.innerHTML = 'تۆمارکردن';
+                if (!capturedFaceBase64) {
+                    regBtn.disabled = true;
+                    regBtn.style.backgroundColor = "gray"; 
+                    regBtn.style.cursor = "not-allowed";
+                    regBtn.innerHTML = '<i class="fa-solid fa-camera"></i> سەرەتا وێنە بگرە';
+                } else {
+                    regBtn.disabled = false;
+                    regBtn.style.backgroundColor = ""; 
+                    regBtn.style.cursor = "pointer";
+                    regBtn.innerHTML = 'تۆمارکردن';
+                }
                 regBtn.onclick = registerUser; 
             }
             document.getElementById("countdownTimer").style.display = "none";
@@ -877,7 +888,6 @@
                 return;
             }
 
-            // مەرج بۆ ئەوەی بەکارهێنەر پێشتر وێنەی ڕوخساری گرتبێت
             if (!capturedFaceBase64) {
                 Swal.fire('ئاگاداری', 'تکایە سەرەتا لە ڕێگەی دوگمەی شینەکەوە وێنەیەکی ڕوخسارت (Selfie) بگرە!', 'warning');
                 return;
@@ -935,9 +945,10 @@
                         Swal.fire('سەرکەوتوو بوو', result.message || 'بە سەرکەوتوویی تۆمارکرا!', 'success');
                     }
                     
-                    // بەتاڵکردنەوەی فۆڕمەکە دوای سەرکەوتن
                     document.getElementById("nameInput").value = "";
                     document.getElementById("phoneInput").value = "";
+                    
+                    // گەڕاندنەوەی فۆڕمەکە بۆ دۆخی سەرەتا (وێنەکە بسڕێتەوە و دوگمەکە دیسان لەکاربکەوێت)
                     capturedFaceBase64 = null;
                     document.getElementById('facePreviewContainer').style.display = "none";
                     document.getElementById('faceCaptureBtn').style.backgroundColor = "#17a2b8";
@@ -952,7 +963,7 @@
             } finally {
                 regBtn.innerHTML = originalText;
                 regBtn.disabled = false;
-                checkQuotaAndTimer();
+                checkQuotaAndTimer(); // ئەمە دوگمەکە ڕێکدەخاتەوە و دیسان لەکاری دەخات چونکە وێنە نەماوە
             }
         }
 
@@ -1061,7 +1072,6 @@
                 return;
             }
 
-            // پاککردنەوەی وێنە لۆکاڵییەکە لە کاتی گەڕان چونکە سێرڤەر وێنەی لانییە
             capturedFaceBase64 = null;
 
             try {
