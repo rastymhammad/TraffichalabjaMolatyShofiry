@@ -659,7 +659,7 @@
             }
         }
 
-        // کردنەوەی بەشی تۆماری پێشوەختەی ئەدمین بە پاسوۆردی ئاسایی بێ ڕوخسار
+        // کردنەوەی بەشی تۆماری پێشوەختەی ئەدمین بە پشکنینی پاسوۆرد و ئاگادارکردنەوەی سزا (Rate Limit / 429)
         async function showPreRegForm() {
             const { value: pwd } = await Swal.fire({
                 title: 'چوونەژوورەوە بۆ تۆماری پێشوەختە',
@@ -679,12 +679,18 @@
                         headers: { "Admin-Password": pwd }
                     });
                     
+                    // پشکنینی سزای Rate Limit ئەگەر زۆر جار پاسوۆردی هەڵە لێدرابێت
+                    if (response.status === 429) {
+                        Swal.fire('ئاگاداری سزا', 'تۆ چەند جارێک پاسوۆردی هەڵەت لێدا؛ بەهۆی پاراستنی سیستەمەوە، بۆ ماوەیەک سزادراویت و ناتوانیت هەوڵ بدەیتەوە!', 'error');
+                        return;
+                    }
+
                     if (response.ok) {
                         tempPreRegPassword = pwd;
                         document.getElementById("openPreRegBtn").style.display = "none";
                         document.getElementById("preRegForm").style.display = "block";
                     } else {
-                        Swal.fire('هەڵەیه‌', 'پاسوۆردەکە هەڵەیە!', 'error');
+                        Swal.fire('هەڵەیه‌', 'پاسوۆردەکە هەڵەیە! ئاگاداربە ئەگەر چەند جارێکی تر هەڵە بکەیت سیستەمەکە کاتی دەکاتە سزا.', 'warning');
                     }
                 } catch(e) {
                     Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە!', 'error');
@@ -1152,7 +1158,7 @@
                         document.getElementById("adminSection").style.display = "block";
                         loadAdminStats();
                     } else {
-                        Swal.fire('هەڵە', 'پاسوۆردەکە هەڵەیە!', 'error');
+                        Swal.fire('هەڵەیه‌', 'پاسوۆردەکە هەڵەیە!', 'error');
                     }
                 } catch(e) {
                     Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە!', 'error');
