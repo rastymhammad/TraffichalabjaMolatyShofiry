@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هه‌ڵه‌بجه‌</title>
     
-    <!-- PWA Settings -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0056b3">
     
-    <!-- iOS PWA Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە">
@@ -343,7 +341,6 @@
             <h1>به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە</h1>
         </div>
 
-        <!-- === پۆرتاڵ (مێنیوی سەرەکی) === -->
         <div id="portalSection">
             <div class="visitor-counter no-print">
                 👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
@@ -367,7 +364,6 @@
             </div>
         </div>
 
-        <!-- === سیستەمی نۆرەگرتن === -->
         <div id="queueSection" style="display: none;">
             <button class="back-btn no-print" onclick="openSection('portal')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە بۆ سەرەتا</button>
             
@@ -416,7 +412,6 @@
                 <button class="action-btn search-btn" onclick="searchUser()">گەڕان</button>
             </div>
             
-            <!-- ====== بەشی ئەدمین ====== -->
             <div class="container printable-area" id="adminSection" style="display: none;">
                 <h2>بەشی ئەدمین - کۆنتڕۆڵی سیستەم</h2>
 
@@ -483,14 +478,11 @@
                     </table>
                 </div>
             </div>
-            <!-- ====== کۆتایی بەشی ئەدمین ====== -->
-            
             <div style="text-align: center; margin-bottom: 15px;" class="no-print">
                 <button onclick="handleAdminClick()" style="background: none; color: var(--label-color); border: none; font-size: 11px; cursor: pointer;">ئەدمین</button>
             </div>
         </div>
 
-        <!-- === سیستەمی غەرامە === -->
         <div id="fineSection" style="display: none;">
             <button class="back-btn" onclick="openSection('portal')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە بۆ سەرەتا</button>
             
@@ -557,7 +549,6 @@
 
     </div>
 
-    <!-- مۆدێلی ژمارەکان بۆ غەرامە -->
     <div class="modal-overlay" id="picker-modal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h3 id="modal-title">دیاریکردنی ژمارە</h3>
@@ -565,14 +556,12 @@
         </div>
     </div>
 
-    <!-- مۆدێلی ڤیریفای نۆرە -->
     <div class="container" id="verifySection" style="display: none; max-width: 400px; margin: 50px auto; border: 3px solid #0056b3;">
         <h2 style="color: #0056b3; margin-top: 10px;"><i class="fa-solid fa-shield-check"></i> دڵنیابوونەوەی پسوولە</h2>
         <div id="verifyResult" style="padding: 15px; font-size: 15px; font-weight: bold; margin-top: 12px; border-radius: 8px; background: #e9ecef;">چاوەڕێ بکە...</div>
         <button class="action-btn" onclick="window.location.href=window.location.origin + window.location.pathname" style="background: #0056b3; margin-top: 15px;">گەڕانەوە بۆ سەرەتا</button>
     </div>
 
-    <!-- === فوتەر و سۆشیاڵ میدیا === -->
     <footer>
         <p style="margin: 0 0 5px 0;">هەموو مافێکی پارێزراوە بۆ بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە &copy; 2026</p>
         <p class="dev-name" style="margin: 0;">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووچۆ ( ڕاستی محمد شێخ حیدر )</p>
@@ -1113,12 +1102,12 @@
             let newQuota = document.getElementById("adminQuotaInput").value;
             if(!newQuota || newQuota < 1) return Swal.fire('ئاگاداری', 'تکایە ژمارەیەکی دروست بنووسە', 'warning');
 
-            const { value: password } = await Swal.fire({ title: 'پاسوۆردی ئەدمین', input: 'password', confirmButtonText: 'گۆڕین', showCancelButton: true });
-            if (!password) return;
+            let activePwd = tempAdminPassword || window.adminPwd;
+            if (!activePwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە', 'warning');
             
             try {
                 let response = await fetch(`${baseUrl}/api/admin/quota?newQuota=${newQuota}`, {
-                    method: "PUT", headers: { "Admin-Password": password }
+                    method: "PUT", headers: { "Admin-Password": activePwd }
                 });
                 let result = await response.json().catch(() => ({}));
                 if(response.ok) {
@@ -1139,17 +1128,14 @@
                 customMsg = text.trim();
             }
 
-            const { value: password } = await Swal.fire({
-                title: globalSystemIsActive ? 'پاسوۆرد بۆ داخستنی سایت' : 'پاسوۆرد بۆ کردنەوەی سایت',
-                input: 'password', inputPlaceholder: 'تایبه‌ت به‌ ئه‌دمین', confirmButtonText: 'جێبەجێکردن', showCancelButton: true
-            });
-            if (!password) return;
+            let activePwd = tempAdminPassword || window.adminPwd;
+            if (!activePwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە', 'warning');
 
             try {
                 let url = `${baseUrl}/api/admin/toggle-status`;
                 if (globalSystemIsActive && customMsg !== "") url += `?message=${encodeURIComponent(customMsg)}`;
 
-                let response = await fetch(url, { method: "POST", headers: { "Admin-Password": password } });
+                let response = await fetch(url, { method: "POST", headers: { "Admin-Password": activePwd } });
                 let result = await response.json().catch(() => ({}));
                 if(response.ok) {
                     await Swal.fire('سەرکەوتوو', result.message || 'دۆخ گۆڕدرا!', 'success');
@@ -1161,6 +1147,7 @@
         async function loadTodayUsers() {
             let table = document.getElementById("usersTable"); let tbody = document.getElementById("tableBody");
             let activePwd = tempAdminPassword || window.adminPwd;
+            
             if (!activePwd) {
                 return Swal.fire('ئاگاداری', 'تکایە سەرەتا لە بەشی ئەدمین چوونەژوورەوە بکە!', 'warning');
             }
@@ -1223,9 +1210,13 @@
             let name = document.getElementById("adminNameInput").value.trim(); let phone = document.getElementById("adminPhoneInput").value.trim();
             let regBtn = document.getElementById("adminRegBtn");
             if(name === "" || phone === "") return Swal.fire('ئاگاداری', 'تکایە ناو و ژمارەی تەلەفۆن پڕبکەرەوە!', 'warning');
+            
             let originalText = regBtn.innerHTML; regBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> تکایە چاوەڕێ بکە...'; regBtn.disabled = true;
+            
+            let preRegPwd = window.tempPreRegPwd;
+            
             try {
-                let response = await fetch(apiUrl, { method: "POST", headers: { "Content-Type": "application/json", "Admin-Password": window.tempPreRegPwd || "8899" }, body: JSON.stringify({ name: name, phone: phone }) });
+                let response = await fetch(apiUrl, { method: "POST", headers: { "Content-Type": "application/json", "Admin-Password": preRegPwd }, body: JSON.stringify({ name: name, phone: phone }) });
                 if (response.status === 429) return Swal.fire('ئاگاداری', 'تکایە کەمێک چاوەڕێ بکە (Rate Limit)', 'warning');
                 let result = await response.json().catch(() => ({}));
                 if(response.ok) {
