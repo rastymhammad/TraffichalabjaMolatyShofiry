@@ -1223,7 +1223,7 @@
                 if(response.ok) {
                     Swal.fire('سەرکەوتوو بوو', result.message || 'ناو بە سەرکەوتوویی لەلایەن ئەدمنەوە تۆمارکرا!', 'success');
                     document.getElementById("adminNameInput").value = ""; document.getElementById("adminPhoneInput").value = ""; validateAdminFormInputs();
-                    if(window.adminPwd) { loadAdminStats(); loadTodayUsers(); }
+                    // لێرەدا فەنکشنی loadTodayUsers لانراوە تا تەنها پەیامی سەرکەوتن بدات و لیستەکە خۆکارانە نەکرێتەوە
                 } else Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان کێشەیەک هەیە!', 'error');
             } catch (error) { Swal.fire('کێشەی هێڵ', 'کێشە لە پەیوەندیکردن هەیە یان سێرڤەرەکە خەوتووە!', 'error'); } 
             finally { regBtn.innerHTML = originalText; regBtn.disabled = false; checkQuotaAndTimer(); }
