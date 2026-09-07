@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هه‌ڵه‌بجه‌</title>
     
+    <!-- PWA Settings -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0056b3">
     
+    <!-- iOS PWA Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە">
@@ -341,6 +343,7 @@
             <h1>به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە</h1>
         </div>
 
+        <!-- === پۆرتاڵ (مێنیوی سەرەکی) === -->
         <div id="portalSection">
             <div class="visitor-counter no-print">
                 👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
@@ -364,6 +367,7 @@
             </div>
         </div>
 
+        <!-- === سیستەمی نۆرەگرتن === -->
         <div id="queueSection" style="display: none;">
             <button class="back-btn no-print" onclick="openSection('portal')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە بۆ سەرەتا</button>
             
@@ -412,6 +416,7 @@
                 <button class="action-btn search-btn" onclick="searchUser()">گەڕان</button>
             </div>
             
+            <!-- ====== بەشی ئەدمین ====== -->
             <div class="container printable-area" id="adminSection" style="display: none;">
                 <h2>بەشی ئەدمین - کۆنتڕۆڵی سیستەم</h2>
 
@@ -478,11 +483,14 @@
                     </table>
                 </div>
             </div>
+            <!-- ====== کۆتایی بەشی ئەدمین ====== -->
+            
             <div style="text-align: center; margin-bottom: 15px;" class="no-print">
                 <button onclick="handleAdminClick()" style="background: none; color: var(--label-color); border: none; font-size: 11px; cursor: pointer;">ئەدمین</button>
             </div>
         </div>
 
+        <!-- === سیستەمی غەرامە === -->
         <div id="fineSection" style="display: none;">
             <button class="back-btn" onclick="openSection('portal')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە بۆ سەرەتا</button>
             
@@ -549,6 +557,7 @@
 
     </div>
 
+    <!-- مۆدێلی ژمارەکان بۆ غەرامە -->
     <div class="modal-overlay" id="picker-modal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h3 id="modal-title">دیاریکردنی ژمارە</h3>
@@ -556,12 +565,14 @@
         </div>
     </div>
 
+    <!-- مۆدێلی ڤیریفای نۆرە -->
     <div class="container" id="verifySection" style="display: none; max-width: 400px; margin: 50px auto; border: 3px solid #0056b3;">
         <h2 style="color: #0056b3; margin-top: 10px;"><i class="fa-solid fa-shield-check"></i> دڵنیابوونەوەی پسوولە</h2>
         <div id="verifyResult" style="padding: 15px; font-size: 15px; font-weight: bold; margin-top: 12px; border-radius: 8px; background: #e9ecef;">چاوەڕێ بکە...</div>
         <button class="action-btn" onclick="window.location.href=window.location.origin + window.location.pathname" style="background: #0056b3; margin-top: 15px;">گەڕانەوە بۆ سەرەتا</button>
     </div>
 
+    <!-- === فوتەر و سۆشیاڵ میدیا === -->
     <footer>
         <p style="margin: 0 0 5px 0;">هەموو مافێکی پارێزراوە بۆ بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە &copy; 2026</p>
         <p class="dev-name" style="margin: 0;">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووچۆ ( ڕاستی محمد شێخ حیدر )</p>
@@ -1037,28 +1048,36 @@
         }
 
         async function showAdminPanel() {
-            const { value: pwd } = await Swal.fire({
+            await Swal.fire({
                 title: 'تایبه‌ت به‌ ئه‌دمین',
                 input: 'password',
                 confirmButtonText: 'چوونەژوورەوە',
                 cancelButtonText: 'داخستن',
-                showCancelButton: true
+                showCancelButton: true,
+                showLoaderOnConfirm: true,
+                preConfirm: async (pwd) => {
+                    try {
+                        let response = await fetch(`${baseUrl}/api/admin/verify?type=admin`, {
+                            method: "POST", headers: { "Admin-Password": pwd }
+                        });
+                        if (!response.ok) {
+                            throw new Error('پاسوۆردەکە هەڵەیە!');
+                        }
+                        return pwd;
+                    } catch (error) {
+                        Swal.showValidationMessage(error.message || 'کێشە لە پەیوەندیکردن هەیە، تکایە چاوەڕێ بکە...');
+                    }
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+                if (result.isConfirmed && result.value) {
+                    tempAdminPassword = result.value; 
+                    window.adminPwd = result.value; 
+                    document.getElementById("adminSection").style.display = "block";
+                    document.getElementById("adminSection").scrollIntoView({ behavior: 'smooth' });
+                    loadAdminStats();
+                }
             });
-
-            if (pwd) {
-                try {
-                    let response = await fetch(`${baseUrl}/api/admin/verify?type=admin`, {
-                        method: "POST", headers: { "Admin-Password": pwd }
-                    });
-                    
-                    if (response.ok) {
-                        tempAdminPassword = pwd; 
-                        window.adminPwd = pwd; 
-                        document.getElementById("adminSection").style.display = "block";
-                        loadAdminStats();
-                    } else Swal.fire('هەڵەیه‌', 'پاسوۆردەکە هەڵەیە!', 'error');
-                } catch(e) { Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە!', 'error'); }
-            }
         }
 
         function hideAdminPanel() {
@@ -1191,19 +1210,35 @@
         }
 
         async function showPreRegForm() {
-            const { value: pwd } = await Swal.fire({ title: 'چوونەژوورەوە بۆ تۆماری پێشوەختە', input: 'password', inputPlaceholder: 'پاسوۆرد', confirmButtonText: 'چوونەژوورەوە', showCancelButton: true });
-            if (pwd) {
-                try {
-                    let response = await fetch(`${baseUrl}/api/admin/verify?type=prereg`, { method: "POST", headers: { "Admin-Password": pwd } });
-                    if (response.status === 429) return Swal.fire('ئاگاداری سزا', 'تۆ چەند جارێک پاسوۆردی هەڵەت لێدا؛ بەهۆی پاراستنی سیستەمەوە سزادراویت!', 'error');
-                    if (response.ok) { 
-                        document.getElementById("openPreRegBtn").style.display = "none"; 
-                        document.getElementById("preRegForm").style.display = "block";
-                        window.tempPreRegPwd = pwd; 
-                    } 
-                    else Swal.fire('هەڵەیه‌', 'پاسوۆردەکە هەڵەیە!', 'warning');
-                } catch(e) { Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە!', 'error'); }
-            }
+            await Swal.fire({ 
+                title: 'چوونەژوورەوە بۆ تۆماری پێشوەختە', 
+                input: 'password', 
+                inputPlaceholder: 'پاسوۆرد', 
+                confirmButtonText: 'چوونەژوورەوە', 
+                showCancelButton: true,
+                showLoaderOnConfirm: true,
+                preConfirm: async (pwd) => {
+                    try {
+                        let response = await fetch(`${baseUrl}/api/admin/verify?type=prereg`, { method: "POST", headers: { "Admin-Password": pwd } });
+                        if (response.status === 429) {
+                            throw new Error('تۆ چەند جارێک پاسوۆردی هەڵەت لێدا؛ سزادراویت!');
+                        }
+                        if (!response.ok) {
+                            throw new Error('پاسوۆردەکە هەڵەیە!');
+                        }
+                        return pwd;
+                    } catch (error) {
+                        Swal.showValidationMessage(error.message || 'کێشە لە پەیوەندیکردن هەیە!');
+                    }
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+                if (result.isConfirmed && result.value) {
+                    document.getElementById("openPreRegBtn").style.display = "none"; 
+                    document.getElementById("preRegForm").style.display = "block";
+                    window.tempPreRegPwd = result.value; 
+                }
+            });
         }
 
         async function adminRegisterUser() {
