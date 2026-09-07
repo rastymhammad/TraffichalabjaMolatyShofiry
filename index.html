@@ -806,18 +806,27 @@
             if(saved) {
                 try {
                     let ticket = JSON.parse(saved);
-                    let currentTime = new Date().getTime();
-                    
                     let isValid = false;
-                    
-                    // ئەگەر کاتی تۆمارکردنی تێدابوو، بزانە 20 کاتژمێری بەسەردا تێپەڕیوە یان نا
+
                     if (ticket.timestamp) {
-                        let hoursPassed = (currentTime - ticket.timestamp) / (1000 * 60 * 60);
-                        if (hoursPassed < 20) {
+                        let nowUTC = new Date();
+                        let lastResetUTC = new Date(nowUTC);
+                        // کاتی سڕینەوە لە عێراق 2 ی پاشنیوەڕۆیە (14:00)، کە دەکاتە 11:00 بە کاتی جیهانی (UTC)
+                        lastResetUTC.setUTCHours(11, 0, 0, 0); 
+
+                        // ئەگەر ئێستا پێش 11 ی جیهانییە، کەواتە کۆتا سڕینەوە دوێنێ بووە
+                        if (nowUTC.getTime() < lastResetUTC.getTime()) {
+                            lastResetUTC.setUTCDate(lastResetUTC.getUTCDate() - 1);
+                        }
+
+                        let lastResetEpoch = lastResetUTC.getTime();
+
+                        // پسوولەکە تەنها کاردەکات ئەگەر دوای کۆتا کاتی سڕینەوە گیرا بێت
+                        if (ticket.timestamp >= lastResetEpoch) {
                             isValid = true;
                         }
                     } else {
-                        // بۆ ئەو کەسانەی پێشتر تۆماریان کردووە و timestamp یان نییە
+                        // بۆ پسوولە زۆر کۆنەکان
                         let todayDateStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
                         if(ticket.savedAt === todayDateStr) {
                             isValid = true;
@@ -832,7 +841,7 @@
                         document.getElementById("savedTicketDiv").style.display = "none";
                         document.getElementById("registrationInputs").style.display = "block";
                     }
-                } catch(e){
+                } catch(e) {
                     localStorage.removeItem("my_daily_ticket");
                     document.getElementById("savedTicketDiv").style.display = "none";
                     document.getElementById("registrationInputs").style.display = "block";
