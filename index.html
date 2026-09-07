@@ -160,7 +160,7 @@
         }
         .visitor-counter b { color: var(--text-main); }
 
-        /* --- سلایدی تێبینی و پێداویستییەکان --- */
+        /* --- سلایدی تێبینی و پێداویستییەکان (جووڵەی هێواش لە چەپەوە بۆ ڕاست) --- */
         .notice-slider-box {
             background: var(--bg-container);
             border: 2px solid #0056b3;
@@ -170,26 +170,52 @@
             box-shadow: 0 4px 15px rgba(0,86,179,0.08);
             text-align: right;
             width: 100%;
+            overflow: hidden;
             position: relative;
         }
         body.dark-mode .notice-slider-box { border-color: #4da3ff; }
+        
         .notice-slider-title {
             font-size: 13px;
             font-weight: bold;
             color: #0056b3;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 6px;
+            border-bottom: 1px dashed var(--border-container);
+            padding-bottom: 6px;
         }
         body.dark-mode .notice-slider-title { color: #4da3ff; }
-        .notice-slider-content {
+
+        .notice-scroll-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .notice-scroll-text {
+            display: inline-block;
             font-size: 12px;
             color: var(--text-main);
-            line-height: 1.6;
+            line-height: 1.8;
             white-space: pre-line;
-            max-height: 120px;
-            overflow-y: auto;
+            text-align: right;
+            animation: slowScroll 25s linear infinite;
+        }
+
+        .notice-scroll-container:hover .notice-scroll-text {
+            animation-play-state: paused; /* کاتێک ماوس دەچێتە سەری ڕادەوەستێت بۆ خوێندنەوە */
+        }
+
+        @keyframes slowScroll {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
         }
         
         .portal-cards { display: flex; flex-direction: column; gap: 12px; width: 100%; }
@@ -369,10 +395,12 @@
                 👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
             </div>
 
-            <!-- سلایدی تێبینی و پێداویستییەکان -->
+            <!-- سلایدی تێبینی و پێداویستییەکان (لە سەرەتای نۆرەگرتن) -->
             <div class="notice-slider-box no-print">
                 <div class="notice-slider-title"><i class="fa-solid fa-circle-info"></i> ئاگاداری و پێداویستییەکان:</div>
-                <div class="notice-slider-content" id="noticeTextContainer">خەریکی بارکردنی تێبینییەکان...</div>
+                <div class="notice-scroll-container">
+                    <div class="notice-scroll-text" id="noticeTextContainer">خەریکی بارکردنی تێبینییەکان...</div>
+                </div>
             </div>
 
             <div id="statusBadge" class="status-badge status-open no-print">
@@ -440,7 +468,7 @@
                     <button class="action-btn" style="background: #28a745; padding: 10px;" onclick="updateDailyQuota()">گۆڕینی پشک</button>
                 </div>
 
-                <!-- بەشی نوێکردنەوەی تێبینی و پێداویستییەکان -->
+                <!-- بەشی نوێکردنەوەی تێبینی و پێداویستییەکان لەلایەن ئەدمینەوە -->
                 <div style="background: rgba(23, 162, 184, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(23, 162, 184, 0.2);" class="no-print">
                     <h3 style="margin-top: 0; font-size: 14px; color: #17a2b8;">گۆڕینی تێبینی و پێداویستییەکان (سلاید)</h3>
                     <div class="input-wrapper">
@@ -635,20 +663,25 @@
 
         async function updateNoticeText() {
             let newText = document.getElementById('adminNoticeInput').value;
-            if (!window.adminPwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە', 'warning');
+            if (!window.adminPwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە بە پاسوۆردی ئەدمین', 'warning');
             
             Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
             try {
                 let response = await fetch(`${baseUrl}/api/admin/notice`, {
                     method: "PUT",
-                    headers: { "Content-Type": "application/json", "Admin-Password": window.adminPwd },
+                    headers: { 
+                        "Content-Type": "application/json", 
+                        "Admin-Password": window.adminPwd 
+                    },
                     body: JSON.stringify({ text: newText })
                 });
                 let result = await response.json().catch(() => ({}));
                 if(response.ok) {
                     Swal.fire('سەرکەوتوو', result.message || 'تێبینییەکان نوێکرانەوە!', 'success');
                     loadNoticeText();
-                } else Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە!', 'error');
+                } else {
+                    Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە!', 'error');
+                }
             } catch(e) {
                 Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە', 'error');
             }
