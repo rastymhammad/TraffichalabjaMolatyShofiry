@@ -596,6 +596,12 @@
             }
         });
 
+        // یارمەتیدەر بۆ گۆڕینی ژمارەی کوردی/عەرەبی بۆ ئینگلیزی
+        function toEnglishDigits(str) {
+            if (!str) return str;
+            return str.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
+        }
+
         // ==== گۆڕاوە سەرەکییەکان ====
         const baseUrl = "https://rastymhammad-001-site1.itempurl.com";
         const apiUrl = `${baseUrl}/api/users`;
@@ -1057,28 +1063,31 @@
             });
 
             if (pwd) {
-                if (pwd === "0007") {
-                    tempAdminPassword = pwd; 
-                    window.adminPwd = pwd; 
+                let normalizedPwd = toEnglishDigits(pwd);
+                if (normalizedPwd === "0007") {
+                    tempAdminPassword = normalizedPwd; 
+                    window.adminPwd = normalizedPwd; 
                     document.getElementById("adminSection").style.display = "block";
                     document.getElementById("adminSection").scrollIntoView({ behavior: 'smooth' });
                     loadAdminStats();
                     return;
                 }
 
+                Swal.fire({ title: 'چاوەڕێ بکە...', text: 'پەیوەندی بە سێرڤەرەوە دەکرێت', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
                 try {
                     let response = await fetch(`${baseUrl}/api/admin/verify?type=admin`, {
-                        method: "POST", headers: { "Admin-Password": pwd }
+                        method: "POST", headers: { "Admin-Password": normalizedPwd }
                     });
                     
                     if (response.ok) {
-                        tempAdminPassword = pwd; 
-                        window.adminPwd = pwd; 
+                        Swal.close();
+                        tempAdminPassword = normalizedPwd; 
+                        window.adminPwd = normalizedPwd; 
                         document.getElementById("adminSection").style.display = "block";
                         document.getElementById("adminSection").scrollIntoView({ behavior: 'smooth' });
                         loadAdminStats();
                     } else Swal.fire('هەڵەیه‌', 'پاسوۆردەکە هەڵەیە!', 'error');
-                } catch(e) { Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە!', 'error'); }
+                } catch(e) { Swal.fire('کێشە', 'سێرڤەرەکە خەوتووە یان کێشەی هێڵ هەیە!', 'error'); }
             }
         }
 
@@ -1126,6 +1135,7 @@
             let activePwd = tempAdminPassword || window.adminPwd;
             if (!activePwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە', 'warning');
             
+            Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
             try {
                 let response = await fetch(`${baseUrl}/api/admin/quota?newQuota=${newQuota}`, {
                     method: "PUT", headers: { "Admin-Password": activePwd }
@@ -1135,7 +1145,7 @@
                     Swal.fire('سەرکەوتوو', result.message, 'success');
                     checkQuotaAndTimer(); document.getElementById("adminQuotaInput").value = "";
                 } else Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە!', 'error');
-            } catch (error) { Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە', 'error'); }
+            } catch (error) { Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە یان سێرڤەر خەوتووە', 'error'); }
         }
 
         async function toggleSystemStatus() {
@@ -1152,6 +1162,7 @@
             let activePwd = tempAdminPassword || window.adminPwd;
             if (!activePwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە', 'warning');
 
+            Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
             try {
                 let url = `${baseUrl}/api/admin/toggle-status`;
                 if (globalSystemIsActive && customMsg !== "") url += `?message=${encodeURIComponent(customMsg)}`;
@@ -1172,6 +1183,9 @@
             if (!activePwd) {
                 return Swal.fire('ئاگاداری', 'تکایە سەرەتا لە بەشی ئەدمین چوونەژوورەوە بکە!', 'warning');
             }
+
+            Swal.fire({ title: 'چاوەڕێ بکە...', html: '<b>خەریکی هێنانی داتاکانە لە سێرڤەرەوە...</b><br><small>گەر سێرڤەر خەوتبێت چەند چرکەیەک دەخایەنێت</small>', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
+
             try {
                 let response = await fetch(`${baseUrl}/api/admin/today-list`, { method: "GET", headers: { "Admin-Password": activePwd } });
                 if (!response.ok) {
@@ -1179,7 +1193,11 @@
                     Swal.fire('هەڵە', errResult.message || 'پاسۆردی سەرەتا هەڵەبوو!', 'error');
                     tbody.innerHTML = ""; table.style.display = "none"; return;
                 }
-                globalUsersData = await response.json(); tbody.innerHTML = "";
+                globalUsersData = await response.json(); 
+                tbody.innerHTML = "";
+                
+                if(!Array.isArray(globalUsersData)) globalUsersData = [];
+
                 if(globalUsersData.length === 0) tbody.innerHTML = "<tr><td colspan='5' style='padding: 15px;'>هیچ ناوێک بۆ ئەمڕۆ تۆمار نەکراوە!</td></tr>";
                 else {
                     globalUsersData.forEach(user => {
@@ -1195,7 +1213,10 @@
                     });
                 }
                 table.style.display = "table"; loadAdminStats();
-            } catch (error) { Swal.fire('کێشە', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error'); }
+                Swal.close();
+            } catch (error) { 
+                Swal.fire('کێشەی هێڵ', 'سێرڤەرەکە خەوتووە یان کێشەی هێڵ هەیە، تکایە دووبارە تاقیبکەرەوە!', 'error'); 
+            }
         }
 
         function validateAdminFormInputs() {
@@ -1221,23 +1242,26 @@
             });
             
             if (pwd) {
-                if (pwd === "8899") {
+                let normalizedPwd = toEnglishDigits(pwd);
+                if (normalizedPwd === "8899") {
                     document.getElementById("openPreRegBtn").style.display = "none"; 
                     document.getElementById("preRegForm").style.display = "block";
-                    window.tempPreRegPwd = pwd; 
+                    window.tempPreRegPwd = normalizedPwd; 
                     return;
                 }
 
+                Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
                 try {
-                    let response = await fetch(`${baseUrl}/api/admin/verify?type=prereg`, { method: "POST", headers: { "Admin-Password": pwd } });
+                    let response = await fetch(`${baseUrl}/api/admin/verify?type=prereg`, { method: "POST", headers: { "Admin-Password": normalizedPwd } });
                     if (response.status === 429) return Swal.fire('ئاگاداری سزا', 'تۆ چەند جارێک پاسوۆردی هەڵەت لێدا؛ بەهۆی پاراستنی سیستەمەوە سزادراویت!', 'error');
                     if (response.ok) { 
+                        Swal.close();
                         document.getElementById("openPreRegBtn").style.display = "none"; 
                         document.getElementById("preRegForm").style.display = "block";
-                        window.tempPreRegPwd = pwd; 
+                        window.tempPreRegPwd = normalizedPwd; 
                     } 
                     else Swal.fire('هەڵەیه‌', 'پاسوۆردەکە هەڵەیە!', 'warning');
-                } catch(e) { Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە!', 'error'); }
+                } catch(e) { Swal.fire('کێشە', 'سێرڤەرەکە خەوتووە یان کێشەی هێڵ هەیە!', 'error'); }
             }
         }
 
@@ -1260,7 +1284,7 @@
                     let activePwd = tempAdminPassword || window.adminPwd;
                     if(activePwd) { loadAdminStats(); loadTodayUsers(); }
                 } else Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان کێشەیەک هەیە!', 'error');
-            } catch (error) { Swal.fire('کێشەی هێڵ', 'کێشە لە پەیوەندیکردن هەیە!', 'error'); } 
+            } catch (error) { Swal.fire('کێشەی هێڵ', 'کێشە لە پەیوەندیکردن هەیە یان سێرڤەرەکە خەوتووە!', 'error'); } 
             finally { regBtn.innerHTML = originalText; regBtn.disabled = false; checkQuotaAndTimer(); }
         }
 
@@ -1276,6 +1300,8 @@
                 if (!newName || !newPhone) return Swal.fire('هەڵەیه‌', 'تکایە هەردوو خانەکە پڕبکەرەوە', 'error');
                 if (!newPhone.startsWith("077") && !newPhone.startsWith("075") && !newPhone.startsWith("078")) return Swal.fire('هەڵەیه‌', 'ژمارەی مۆبایل دەبێت بە 077 یان 075 یان 078 دەست پێبکات', 'error');
                 if (newPhone.length !== 11) return Swal.fire('هەڵەیه‌', 'ژمارەی مۆبایل دەبێت 11 ژمارە بێت', 'error');
+                
+                Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
                 try {
                     let response = await fetch(`${apiUrl}/${id}`, { method: "PUT", headers: { "Content-Type": "application/json", "Admin-Password": activePwd }, body: JSON.stringify({ name: newName, phone: newPhone }) });
                     let resData = await response.json().catch(() => ({}));
@@ -1292,6 +1318,7 @@
                 showCancelButton: true, confirmButtonColor: '#dc3545', cancelButtonColor: '#6c757d', confirmButtonText: 'بەڵێ، بسڕەوە', cancelButtonText: 'نەخێر پەشیمان بوومەوە'
             });
             if (confirmResult.isConfirmed) {
+                Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
                 try {
                     let response = await fetch(`${apiUrl}/${id}`, { method: "DELETE", headers: { "Admin-Password": activePwd } });
                     let resData = await response.json().catch(() => ({}));
