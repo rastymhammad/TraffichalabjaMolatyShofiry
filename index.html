@@ -160,7 +160,7 @@
         }
         .visitor-counter b { color: var(--text-main); }
 
-        /* --- سلایدی تێبینی زیرەک (والی و خاو و ڕاوەستان بە ماوس) --- */
+        /* --- سلایدی تێبینی زیرەک (سەنتەرکراو و خاو) --- */
         .notice-slider-box {
             background: var(--bg-container);
             border: 2px solid #0056b3;
@@ -200,7 +200,7 @@
             color: var(--text-main);
             font-weight: bold;
             width: 100%;
-            text-align: left;
+            text-align: center; /* سەنتەر */
         }
 
         .notice-scroll-container.vertical {
@@ -208,14 +208,14 @@
             height: 110px;
             overflow: hidden;
             position: relative;
-            text-align: left;
+            text-align: center;
         }
         .notice-scroll-container.vertical marquee {
             font-size: 12px;
             color: var(--text-main);
             line-height: 1.8;
             white-space: pre-line;
-            text-align: left;
+            text-align: center; /* سەنتەر */
             width: 100%;
             height: 100%;
         }
@@ -387,7 +387,7 @@
                 👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
             </div>
             
-            <!-- سلایدی تێبینی زیرەک (دەستپێکی ڕاستەوخۆ، والی، و خاوتر لەگەڵ ڕاوەستان بە ماوس) -->
+            <!-- سلایدی تێبینی زیرەک (سەنتەردار، ڕاستەوخۆ، خاو و وەستان بە ماوس) -->
             <div class="notice-slider-box no-print">
                 <div class="notice-header-row">
                     <span>ئاگاداری و پێداویستییەکان:</span>
@@ -654,7 +654,7 @@
 
         function toEnglishDigits(str) {
             if (!str) return str;
-            return str.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
+            return str.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦۷٨٩'.indexOf(d)).replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
         }
 
         // ==== گۆڕاوە سەرەکییەکان ====
@@ -666,7 +666,7 @@
         let statChart = null;
         let globalUsersData = [];
 
-        // ==== بارکردنی دەقی ئاگاداری و تێبینییەکان لە سەرەتادا (خاوتر، ڕاستەوخۆ، و وەستان بە ماوس) ====
+        // ==== بارکردنی دەقی ئاگاداری و تێبینییەکان لە سەرەتادا (سەنتەردار، ڕاستەوخۆ، خاو و وەستان بە ماوس) ====
         async function loadNoticeText() {
             try {
                 let res = await fetch(`${baseUrl}/api/notice`);
@@ -678,10 +678,10 @@
                     if(wrapper) {
                         if (text.includes('\n') || text.length > 100) {
                             wrapper.className = "notice-scroll-container vertical";
-                            wrapper.innerHTML = `<marquee direction="up" scrollamount="1" scrolldelay="90" onmouseover="this.stop();" onmouseout="this.start();" style="width:100%; height:100%; text-align: left;">${text.replace(/\n/g, '<br>')}</marquee>`;
+                            wrapper.innerHTML = `<marquee direction="up" scrollamount="1.5" scrolldelay="90" onmouseover="this.stop();" onmouseout="this.start();" style="width:100%; height:100%; text-align: center;">${text.replace(/\n/g, '<br>')}</marquee>`;
                         } else {
                             wrapper.className = "notice-scroll-container horizontal";
-                            wrapper.innerHTML = `<marquee direction="left" scrollamount="2" scrolldelay="90" onmouseover="this.stop();" onmouseout="this.start();" style="width:100%; text-align: left;">${text}</marquee>`;
+                            wrapper.innerHTML = `<marquee direction="left" scrollamount="2" scrolldelay="90" onmouseover="this.stop();" onmouseout="this.start();" style="width:100%; text-align: center;">${text}</marquee>`;
                         }
                     }
 
