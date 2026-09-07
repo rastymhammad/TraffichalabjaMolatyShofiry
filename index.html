@@ -607,7 +607,6 @@
         const apiUrl = `${baseUrl}/api/users`;
         let adminClickCount = 0; 
         let timerInterval = null;
-        let tempAdminPassword = "";
         let globalSystemIsActive = true; 
         let statChart = null;
         let globalUsersData = [];
@@ -907,6 +906,8 @@
                 if (response.ok) {
                     let result = await response.json(); let count = result.count; let maxQuota = result.maxQuota || 40;
                     
+                    globalSystemIsActive = (result.isActive !== false);
+
                     let badge = document.getElementById("statusBadge");
                     let dot = document.getElementById("statusDot");
                     let statusText = document.getElementById("statusText");
@@ -915,7 +916,7 @@
                     if (result.isActive === false) {
                         badge.className = "status-badge status-closed";
                         dot.className = "dot dot-red";
-                        statusText.innerText = result.closeMessage;
+                        statusText.innerText = result.closeMessage || "سیستەم داخراوە یان پشک تەواو بووە";
                         if (regBtn) { regBtn.disabled = true; regBtn.innerHTML = '<i class="fa-solid fa-lock"></i>'; }
                         return; 
                     }
@@ -1065,29 +1066,12 @@
             if (pwd) {
                 let normalizedPwd = toEnglishDigits(pwd);
                 if (normalizedPwd === "0007") {
-                    tempAdminPassword = normalizedPwd; 
-                    window.adminPwd = normalizedPwd; 
                     document.getElementById("adminSection").style.display = "block";
                     document.getElementById("adminSection").scrollIntoView({ behavior: 'smooth' });
                     loadAdminStats();
-                    return;
+                } else {
+                    Swal.fire('هەڵەیه‌', 'پاسوۆردەکە هەڵەیە!', 'error');
                 }
-
-                Swal.fire({ title: 'چاوەڕێ بکە...', text: 'پەیوەندی بە سێرڤەرەوە دەکرێت', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
-                try {
-                    let response = await fetch(`${baseUrl}/api/admin/verify?type=admin`, {
-                        method: "POST", headers: { "Admin-Password": normalizedPwd }
-                    });
-                    
-                    if (response.ok) {
-                        Swal.close();
-                        tempAdminPassword = normalizedPwd; 
-                        window.adminPwd = normalizedPwd; 
-                        document.getElementById("adminSection").style.display = "block";
-                        document.getElementById("adminSection").scrollIntoView({ behavior: 'smooth' });
-                        loadAdminStats();
-                    } else Swal.fire('هەڵەیه‌', 'پاسوۆردەکە هەڵەیە!', 'error');
-                } catch(e) { Swal.fire('کێشە', 'سێرڤەرەکە خەوتووە یان کێشەی هێڵ هەیە!', 'error'); }
             }
         }
 
@@ -1099,14 +1083,12 @@
             let openPreRegBtn = document.getElementById("openPreRegBtn");
             if(preRegForm) preRegForm.style.display = "none";
             if(openPreRegBtn) openPreRegBtn.style.display = "inline-block";
-            tempAdminPassword = ""; window.adminPwd = ""; adminClickCount = 0;
+            adminClickCount = 0;
         }
 
         async function loadAdminStats() {
-            let activePwd = tempAdminPassword || window.adminPwd;
-            if(!activePwd) return;
             try {
-                let response = await fetch(`${baseUrl}/api/admin/stats`, { headers: { "Admin-Password": activePwd } });
+                let response = await fetch(`${baseUrl}/api/admin/stats`, { headers: { "Admin-Password": "0007" } });
                 if(response.ok) {
                     let stats = await response.json();
                     document.getElementById('statTotal').innerText = stats.today.total;
@@ -1132,13 +1114,10 @@
             let newQuota = document.getElementById("adminQuotaInput").value;
             if(!newQuota || newQuota < 1) return Swal.fire('ئاگاداری', 'تکایە ژمارەیەکی دروست بنووسە', 'warning');
 
-            let activePwd = tempAdminPassword || window.adminPwd;
-            if (!activePwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە', 'warning');
-            
             Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
             try {
                 let response = await fetch(`${baseUrl}/api/admin/quota?newQuota=${newQuota}`, {
-                    method: "PUT", headers: { "Admin-Password": activePwd }
+                    method: "PUT", headers: { "Admin-Password": "0007" }
                 });
                 let result = await response.json().catch(() => ({}));
                 if(response.ok) {
@@ -1150,6 +1129,8 @@
 
         async function toggleSystemStatus() {
             let customMsg = "";
+            
+            // ئەگەر سایتەکە کراوە بێت، ئەوا دەمانەوێت دایبخەین و هۆکار وەربگرین
             if (globalSystemIsActive) {
                 const { value: text } = await Swal.fire({
                     title: 'هۆکاری داخستنی سیستەم', input: 'textarea', inputPlaceholder: 'دەتوانیت لێرەدا پەیامێکی درێژ بنووسیت بۆ هاووڵاتیان...',
@@ -1157,17 +1138,25 @@
                 });
                 if (text === undefined) return; 
                 customMsg = text.trim();
+            } else {
+                // ئەگەر سایتەکە داخراو بێت، تەنها دڵنیابوونەوەی دەوێت بۆ کردنەوەی
+                const result = await Swal.fire({
+                    title: 'کردنەوەی سایت',
+                    text: 'ئایا دەتەوێت سایتەکە بکەیتەوە بۆ هاووڵاتیان؟',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'بەڵێ، بیکەرەوە',
+                    cancelButtonText: 'نەخێر'
+                });
+                if (!result.isConfirmed) return;
             }
-
-            let activePwd = tempAdminPassword || window.adminPwd;
-            if (!activePwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە', 'warning');
 
             Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
             try {
                 let url = `${baseUrl}/api/admin/toggle-status`;
                 if (globalSystemIsActive && customMsg !== "") url += `?message=${encodeURIComponent(customMsg)}`;
 
-                let response = await fetch(url, { method: "POST", headers: { "Admin-Password": activePwd } });
+                let response = await fetch(url, { method: "POST", headers: { "Admin-Password": "0007" } });
                 let result = await response.json().catch(() => ({}));
                 if(response.ok) {
                     await Swal.fire('سەرکەوتوو', result.message || 'دۆخ گۆڕدرا!', 'success');
@@ -1177,22 +1166,24 @@
         }
 
         async function loadTodayUsers() {
-            let table = document.getElementById("usersTable"); let tbody = document.getElementById("tableBody");
-            let activePwd = tempAdminPassword || window.adminPwd;
-            
-            if (!activePwd) {
-                return Swal.fire('ئاگاداری', 'تکایە سەرەتا لە بەشی ئەدمین چوونەژوورەوە بکە!', 'warning');
-            }
+            let table = document.getElementById("usersTable"); 
+            let tbody = document.getElementById("tableBody");
 
-            Swal.fire({ title: 'چاوەڕێ بکە...', html: '<b>خەریکی هێنانی داتاکانە لە سێرڤەرەوە...</b><br><small>گەر سێرڤەر خەوتبێت چەند چرکەیەک دەخایەنێت</small>', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
+            Swal.fire({ 
+                title: 'چاوەڕێ بکە...', 
+                html: '<b>خەریکی هێنانی داتاکانە لە سێرڤەرەوە...</b><br><small>گەر سێرڤەر خەوتبێت چەند چرکەیەک دەخایەنێت</small>', 
+                allowOutsideClick: false, 
+                didOpen: () => { Swal.showLoading() } 
+            });
 
             try {
-                let response = await fetch(`${baseUrl}/api/admin/today-list`, { method: "GET", headers: { "Admin-Password": activePwd } });
+                let response = await fetch(`${baseUrl}/api/admin/today-list`, { method: "GET", headers: { "Admin-Password": "0007" } });
                 if (!response.ok) {
                     let errResult = await response.json().catch(() => ({}));
                     Swal.fire('هەڵە', errResult.message || 'پاسۆردی سەرەتا هەڵەبوو!', 'error');
                     tbody.innerHTML = ""; table.style.display = "none"; return;
                 }
+                
                 globalUsersData = await response.json(); 
                 tbody.innerHTML = "";
                 
@@ -1212,7 +1203,8 @@
                         tbody.innerHTML += row;
                     });
                 }
-                table.style.display = "table"; loadAdminStats();
+                table.style.display = "table"; 
+                loadAdminStats();
                 Swal.close();
             } catch (error) { 
                 Swal.fire('کێشەی هێڵ', 'سێرڤەرەکە خەوتووە یان کێشەی هێڵ هەیە، تکایە دووبارە تاقیبکەرەوە!', 'error'); 
@@ -1246,50 +1238,37 @@
                 if (normalizedPwd === "8899") {
                     document.getElementById("openPreRegBtn").style.display = "none"; 
                     document.getElementById("preRegForm").style.display = "block";
-                    window.tempPreRegPwd = normalizedPwd; 
-                    return;
+                } else {
+                    Swal.fire('هەڵەیه‌', 'پاسوۆردەکە هەڵەیە!', 'error');
                 }
-
-                Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
-                try {
-                    let response = await fetch(`${baseUrl}/api/admin/verify?type=prereg`, { method: "POST", headers: { "Admin-Password": normalizedPwd } });
-                    if (response.status === 429) return Swal.fire('ئاگاداری سزا', 'تۆ چەند جارێک پاسوۆردی هەڵەت لێدا؛ بەهۆی پاراستنی سیستەمەوە سزادراویت!', 'error');
-                    if (response.ok) { 
-                        Swal.close();
-                        document.getElementById("openPreRegBtn").style.display = "none"; 
-                        document.getElementById("preRegForm").style.display = "block";
-                        window.tempPreRegPwd = normalizedPwd; 
-                    } 
-                    else Swal.fire('هەڵەیه‌', 'پاسوۆردەکە هەڵەیە!', 'warning');
-                } catch(e) { Swal.fire('کێشە', 'سێرڤەرەکە خەوتووە یان کێشەی هێڵ هەیە!', 'error'); }
             }
         }
 
         async function adminRegisterUser() {
-            let name = document.getElementById("adminNameInput").value.trim(); let phone = document.getElementById("adminPhoneInput").value.trim();
+            let name = document.getElementById("adminNameInput").value.trim(); 
+            let phone = document.getElementById("adminPhoneInput").value.trim();
             let regBtn = document.getElementById("adminRegBtn");
+            
             if(name === "" || phone === "") return Swal.fire('ئاگاداری', 'تکایە ناو و ژمارەی تەلەفۆن پڕبکەرەوە!', 'warning');
             
-            let originalText = regBtn.innerHTML; regBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> تکایە چاوەڕێ بکە...'; regBtn.disabled = true;
-            
-            let preRegPwd = window.tempPreRegPwd;
+            let originalText = regBtn.innerHTML; 
+            regBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> تکایە چاوەڕێ بکە...'; 
+            regBtn.disabled = true;
             
             try {
-                let response = await fetch(apiUrl, { method: "POST", headers: { "Content-Type": "application/json", "Admin-Password": preRegPwd }, body: JSON.stringify({ name: name, phone: phone }) });
+                let response = await fetch(apiUrl, { method: "POST", headers: { "Content-Type": "application/json", "Admin-Password": "8899" }, body: JSON.stringify({ name: name, phone: phone }) });
                 if (response.status === 429) return Swal.fire('ئاگاداری', 'تکایە کەمێک چاوەڕێ بکە (Rate Limit)', 'warning');
                 let result = await response.json().catch(() => ({}));
                 if(response.ok) {
                     Swal.fire('سەرکەوتوو بوو', result.message || 'ناو بە سەرکەوتوویی لەلایەن ئەدمنەوە تۆمارکرا!', 'success');
                     document.getElementById("adminNameInput").value = ""; document.getElementById("adminPhoneInput").value = ""; validateAdminFormInputs();
-                    let activePwd = tempAdminPassword || window.adminPwd;
-                    if(activePwd) { loadAdminStats(); loadTodayUsers(); }
+                    loadAdminStats(); loadTodayUsers();
                 } else Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان کێشەیەک هەیە!', 'error');
             } catch (error) { Swal.fire('کێشەی هێڵ', 'کێشە لە پەیوەندیکردن هەیە یان سێرڤەرەکە خەوتووە!', 'error'); } 
             finally { regBtn.innerHTML = originalText; regBtn.disabled = false; checkQuotaAndTimer(); }
         }
 
         async function editUser(id, currentName, currentPhone) {
-            let activePwd = tempAdminPassword || window.adminPwd;
             const { value: formValues } = await Swal.fire({
                 title: 'دەستکاریکردنی زانیاری', html: `<input id="swal-input-name" class="swal2-input" value="${currentName}" placeholder="ناوی سیانی"> <input id="swal-input-phone" class="swal2-input" value="${currentPhone}" placeholder="ژمارەی مۆبایل">`,
                 focusConfirm: false, showCancelButton: true, confirmButtonText: 'پاشەکەوتکردن', cancelButtonText: 'داخستن',
@@ -1303,7 +1282,7 @@
                 
                 Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
                 try {
-                    let response = await fetch(`${apiUrl}/${id}`, { method: "PUT", headers: { "Content-Type": "application/json", "Admin-Password": activePwd }, body: JSON.stringify({ name: newName, phone: newPhone }) });
+                    let response = await fetch(`${apiUrl}/${id}`, { method: "PUT", headers: { "Content-Type": "application/json", "Admin-Password": "0007" }, body: JSON.stringify({ name: newName, phone: newPhone }) });
                     let resData = await response.json().catch(() => ({}));
                     if (response.ok) { Swal.fire('سەرکەوتوو بوو!', resData.message || 'زانیارییەکان گۆڕدران.', 'success'); loadTodayUsers(); }
                     else Swal.fire('هەڵە!', resData.message || 'کێشەیەک هەیە لە نوێکردنەوە!', 'error');
@@ -1312,7 +1291,6 @@
         }
 
         async function deleteUser(id) {
-            let activePwd = tempAdminPassword || window.adminPwd;
             const confirmResult = await Swal.fire({
                 title: 'دڵنیایت؟', text: "ئایا بەڕاستی دەتەوێت ئەم ناوە بسڕیتەوە؟", icon: 'warning',
                 showCancelButton: true, confirmButtonColor: '#dc3545', cancelButtonColor: '#6c757d', confirmButtonText: 'بەڵێ، بسڕەوە', cancelButtonText: 'نەخێر پەشیمان بوومەوە'
@@ -1320,7 +1298,7 @@
             if (confirmResult.isConfirmed) {
                 Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
                 try {
-                    let response = await fetch(`${apiUrl}/${id}`, { method: "DELETE", headers: { "Admin-Password": activePwd } });
+                    let response = await fetch(`${apiUrl}/${id}`, { method: "DELETE", headers: { "Admin-Password": "0007" } });
                     let resData = await response.json().catch(() => ({}));
                     if (response.ok) { Swal.fire('سڕایەوە!', resData.message || 'ناوەکە بە سەرکەوتوویی سڕایەوە.', 'success'); loadTodayUsers(); checkQuotaAndTimer(); }
                     else Swal.fire('هەڵە!', resData.message || 'کێشەیەک هەیە لە سڕینەوە!', 'error');
