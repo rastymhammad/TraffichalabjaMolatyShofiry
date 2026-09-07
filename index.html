@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هه‌ڵه‌بجه‌</title>
     
-    <!-- PWA Settings -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0056b3">
     
-    <!-- iOS PWA Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە">
@@ -128,7 +126,6 @@
         
         #queueSection #adminSection { max-width: 700px; width: 100%; margin: 0 auto; }
 
-        /* دیزاینی سەردێڕ و دوگمەی ڕەنگ */
         .header-title {
             position: relative;
             background: var(--header-bg); padding: 15px 20px; border-radius: 12px;
@@ -152,7 +149,6 @@
         }
         .theme-toggle-btn:hover { transform: translateY(-50%) scale(1.1); }
 
-        /* دیزاینی ژمێرەری سەردانکەران */
         .visitor-counter {
             text-align: center; 
             font-size: 12px; 
@@ -162,7 +158,6 @@
         }
         .visitor-counter b { color: var(--text-main); }
         
-        /* --- ستایلی پۆرتاڵ --- */
         .portal-cards { display: flex; flex-direction: column; gap: 12px; width: 100%; }
         .portal-card {
             background: var(--header-bg); border: 2px solid var(--border-container); border-radius: 12px;
@@ -178,31 +173,13 @@
         .portal-card-content p { margin: 0; font-size: 12px; color: var(--label-color); }
 
         .back-btn {
-            background: #007bff; 
-            color: white; 
-            border: none; 
-            padding: 12px 15px; 
-            border-radius: 10px;
-            font-family: 'Rabar'; 
-            font-size: 13.5px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            margin-bottom: 15px; 
-            width: 100%; 
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            background: #007bff; color: white; border: none; padding: 12px 15px; border-radius: 10px;
+            font-family: 'Rabar'; font-size: 13.5px; font-weight: bold; cursor: pointer; 
+            margin-bottom: 15px; width: 100%; transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2); display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-        .back-btn:hover { 
-            background: #0056b3; 
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 86, 179, 0.3);
-        }
+        .back-btn:hover { background: #0056b3; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0, 86, 179, 0.3); }
 
-        /* --- ستایلی نۆرەگرتن --- */
         .status-badge { display: inline-flex; align-items: center; gap: 8px; margin: 0 auto 12px auto; padding: 6px 14px; font-size: 12px; font-weight: bold; border-radius: 20px; width: fit-content; text-align: center; }
         .status-open { background: #d4edda; color: #155724; }
         .status-closed { background: #f8d7da; color: #721c24; }
@@ -218,8 +195,7 @@
         .input-wrapper input {
             width: 100%; padding: 10px 35px 10px 10px; box-sizing: border-box; border: 2px solid var(--input-border);
             border-radius: 6px; font-size: 14px; font-family: 'Rabar', Tahoma, Arial, sans-serif; outline: none; transition: 0.3s;
-            background: var(--input-bg); color: var(--input-text);
-            user-select: text;
+            background: var(--input-bg); color: var(--input-text); user-select: text;
         }
         .input-wrapper input.valid-input { border-color: #28a745 !important; box-shadow: 0 0 5px rgba(40, 167, 69, 0.3); }
         .input-wrapper input.invalid-input { border-color: #f5c6cb !important; box-shadow: 0 0 5px rgba(245, 198, 203, 0.5); }
@@ -230,24 +206,8 @@
         .search-btn { background: #007bff; }
         .search-btn:hover { background: #0056b3; }
         
-        .timer-box { 
-            background: rgba(220, 53, 69, 0.08); 
-            border: 1px dashed #dc3545; 
-            padding: 8px 10px; 
-            border-radius: 8px; 
-            font-size: 13px; 
-            color: #d9534f; 
-            margin-top: 12px; 
-            font-weight: bold; 
-            display: none; 
-            text-align: center;
-        }
-        .timer-box span { 
-            font-size: 12px; 
-            color: #dc3545; 
-            display: inline-block; 
-            margin-left: 5px; 
-        }
+        .timer-box { background: rgba(220, 53, 69, 0.08); border: 1px dashed #dc3545; padding: 8px 10px; border-radius: 8px; font-size: 13px; color: #d9534f; margin-top: 12px; font-weight: bold; display: none; text-align: center; }
+        .timer-box span { font-size: 12px; color: #dc3545; display: inline-block; margin-left: 5px; }
 
         .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 15px; }
         #usersTable { width: 100%; border-collapse: collapse; text-align: center; font-size: 11px; }
@@ -262,7 +222,6 @@
         body.dark-mode .dash-card h3 { color: #4da3ff; }
         .chart-container { max-width: 160px; margin: 0 auto; }
 
-        /* --- ستایلی غەرامە --- */
         .fine-container { background: var(--bg-container); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 18px; border: 2px solid var(--border-container); text-align: right; width: 100%; }
         .toggle-container { display: flex; justify-content: space-between; align-items: center; background: var(--toggle-bg); padding: 10px; border-radius: 10px; margin-bottom: 12px; border: 1px solid var(--toggle-border); }
         .switch { position: relative; display: inline-block; width: 50px; height: 28px; }
@@ -309,15 +268,9 @@
         .grid-item { padding: 8px; min-height: 38px; display: flex; align-items: center; justify-content: center; background: var(--grid-bg); border-radius: 6px; font-weight: bold; color: var(--input-text); cursor: pointer; font-size: 13px;}
         .grid-item.selected-item { background: #3182ce !important; color: white !important; }
 
-        /* --- Footer & Social Icons --- */
-        footer { 
-            background-color: var(--header-bg); color: var(--text-main); text-align: center; 
-            padding: 15px; margin-top: 25px; border-radius: 12px 12px 0 0; font-size: 12px; 
-            border-top: 1px solid var(--border-container); width: 100%; max-width: 400px;
-        }
+        footer { background-color: var(--header-bg); color: var(--text-main); text-align: center; padding: 15px; margin-top: 25px; border-radius: 12px 12px 0 0; font-size: 12px; border-top: 1px solid var(--border-container); width: 100%; max-width: 400px; }
         .dev-name { color: #0056b3; font-weight: bold; margin-top: 5px; }
         body.dark-mode .dev-name { color: #4da3ff; }
-        
         .social-icons { margin-top: 10px; }
         .social-icons a { color: #0056b3; font-size: 24px; margin: 0 10px; text-decoration: none; display: inline-block; transition: all 0.3s ease; }
         .social-icons a:hover { transform: scale(1.1) translateY(-2px); }
@@ -343,12 +296,8 @@
             <h1>به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە</h1>
         </div>
 
-        <!-- === پۆرتاڵ (مێنیوی سەرەکی) === -->
         <div id="portalSection">
-            <div class="visitor-counter no-print">
-                👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
-            </div>
-            
+            <div class="visitor-counter no-print">👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b></div>
             <div class="portal-cards">
                 <div class="portal-card" onclick="openSection('queue')">
                     <i class="fa-solid fa-users-line"></i>
@@ -367,13 +316,10 @@
             </div>
         </div>
 
-        <!-- === سیستەمی نۆرەگرتن === -->
         <div id="queueSection" style="display: none;">
             <button class="back-btn no-print" onclick="openSection('portal')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە بۆ سەرەتا</button>
             
-            <div class="visitor-counter no-print">
-                👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
-            </div>
+            <div class="visitor-counter no-print">👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b></div>
 
             <div id="statusBadge" class="status-badge status-open no-print">
                 <span id="statusDot" class="dot dot-green"></span>
@@ -382,14 +328,12 @@
 
             <div class="container no-print" id="userRegistrationSection">
                 <h2>تۆمارکردنی ناو</h2>
-
                 <div id="savedTicketDiv" style="display: none; background: #e9ecef; padding: 15px; border-radius: 8px; border: 2px solid #28a745; margin-bottom: 15px;">
                     <p style="margin: 0 0 10px 0; color: #155724; font-weight: bold; font-size: 13px;">بەڕێز، تۆ ئەمڕۆ نۆرەت گرتووە!</p>
                     <button onclick="showSavedTicket()" class="action-btn" style="margin: 0; padding: 10px; font-size: 14px;">
                         <i class="fa-solid fa-ticket"></i> پیشاندانی پسوولەکەم
                     </button>
                 </div>
-                
                 <div id="registrationInputs">
                     <div class="input-wrapper">
                         <i class="fa-solid fa-user"></i>
@@ -416,7 +360,6 @@
                 <button class="action-btn search-btn" onclick="searchUser()">گەڕان</button>
             </div>
             
-            <!-- ====== بەشی ئەدمین ====== -->
             <div class="container printable-area" id="adminSection" style="display: none;">
                 <h2>بەشی ئەدمین - کۆنتڕۆڵی سیستەم</h2>
 
@@ -483,70 +426,41 @@
                     </table>
                 </div>
             </div>
-            <!-- ====== کۆتایی بەشی ئەدمین ====== -->
-            
             <div style="text-align: center; margin-bottom: 15px;" class="no-print">
                 <button onclick="handleAdminClick()" style="background: none; color: var(--label-color); border: none; font-size: 11px; cursor: pointer;">ئەدمین</button>
             </div>
         </div>
 
-        <!-- === سیستەمی غەرامە === -->
         <div id="fineSection" style="display: none;">
             <button class="back-btn" onclick="openSection('portal')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە بۆ سەرەتا</button>
             
             <div class="fine-container" id="fine-container-box">
-                <div class="visitor-counter">
-                    👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
-                </div>
-
+                <div class="visitor-counter">👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b></div>
                 <div class="toggle-container">
                     <span id="fine-status-text" style="font-weight: bold; color: #48bb78; font-size: 13px;">✓ داشکاندنی غەرامە (٢٠٪) چالاکە</span>
-                    <label class="switch">
-                        <input type="checkbox" id="university-toggle" checked onchange="vibrate(); calculateFine()">
-                        <span class="slider"></span>
-                    </label>
+                    <label class="switch"><input type="checkbox" id="university-toggle" checked onchange="vibrate(); calculateFine()"><span class="slider"></span></label>
                 </div>
-
                 <div class="checklist-box">
                     <div class="checklist-title">📄 پێداویستییەکان بۆ نوێکردنەوە:</div>
                     <div class="checklist-items">
-                        <div class="check-item">✅ کارتی نیشتیمانی</div>
-                        <div class="check-item">✅ کارتی زانیاری</div>
-                        <div class="check-item">✅ پاسپۆرت (ئەگەر هەبێت)</div>
-                        <div class="check-item">✅ پشکنینی چاو</div>
+                        <div class="check-item">✅ کارتی نیشتیمانی</div><div class="check-item">✅ کارتی زانیاری</div>
+                        <div class="check-item">✅ پاسپۆرت (ئەگەر هەبێت)</div><div class="check-item">✅ پشکنینی چاو</div>
                     </div>
                 </div>
-
                 <div class="date-section">
                     <div class="date-title-wrap">
-                        <div class="date-title">📅 ڕێکەوتی بەسەرچوونی مۆڵەت:</div>
-                        <button class="btn-reset" onclick="resetToToday()">🔄 ئەمڕۆ</button>
+                        <div class="date-title">📅 ڕێکەوتی بەسەرچوونی مۆڵەت:</div><button class="btn-reset" onclick="resetToToday()">🔄 ئەمڕۆ</button>
                     </div>
                     <div class="date-inputs">
-                        <div class="date-box" onclick="openModal('day')">
-                            <label>ڕۆژ</label>
-                            <div class="date-custom-input" id="day-btn">10</div>
-                        </div>
-                        <div class="date-box" onclick="openModal('month')">
-                            <label>مانگ</label>
-                            <div class="date-custom-input" id="month-btn">7</div>
-                        </div>
-                        <div class="date-box" onclick="openModal('year')">
-                            <label>ساڵ</label>
-                            <div class="date-custom-input" id="year-btn">2026</div>
-                        </div>
+                        <div class="date-box" onclick="openModal('day')"><label>ڕۆژ</label><div class="date-custom-input" id="day-btn">10</div></div>
+                        <div class="date-box" onclick="openModal('month')"><label>مانگ</label><div class="date-custom-input" id="month-btn">7</div></div>
+                        <div class="date-box" onclick="openModal('year')"><label>ساڵ</label><div class="date-custom-input" id="year-btn">2026</div></div>
                     </div>
                 </div>
-
                 <div class="results" id="results-box">
                     <div class="gauge-container" id="speed-gauge">
-                        <div class="gauge">
-                            <div class="gauge-fill" id="gauge-fill"></div>
-                            <div class="gauge-cover"></div>
-                            <div class="needle" id="gauge-needle"></div>
-                        </div>
+                        <div class="gauge"><div class="gauge-fill" id="gauge-fill"></div><div class="gauge-cover"></div><div class="needle" id="gauge-needle"></div></div>
                     </div>
-
                     <div class="result-row fee-row"><span>🔵 رسومات:</span><span id="fee-price">60,000 دینار</span></div>
                     <div class="result-row fine-row"><span>🔴 غرامە:</span><span id="fine-price">0 دینار</span></div>
                     <div class="result-row total-row"><span>💰 کۆی گشتی:</span><span id="total-price">0 دینار</span></div>
@@ -554,41 +468,26 @@
                 </div>
             </div>
         </div>
-
     </div>
 
-    <!-- مۆدێلی ژمارەکان بۆ غەرامە -->
-    <div class="modal-overlay" id="picker-modal" onclick="closeModal(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <h3 id="modal-title">دیاریکردنی ژمارە</h3>
-            <div class="number-grid" id="modal-grid"></div>
-        </div>
-    </div>
+    <div class="modal-overlay" id="picker-modal" onclick="closeModal(event)"><div class="modal-content" onclick="event.stopPropagation()"><h3 id="modal-title">دیاریکردنی ژمارە</h3><div class="number-grid" id="modal-grid"></div></div></div>
 
-    <!-- مۆدێلی ڤیریفای نۆرە -->
     <div class="container" id="verifySection" style="display: none; max-width: 400px; margin: 50px auto; border: 3px solid #0056b3;">
         <h2 style="color: #0056b3; margin-top: 10px;"><i class="fa-solid fa-shield-check"></i> دڵنیابوونەوەی پسوولە</h2>
         <div id="verifyResult" style="padding: 15px; font-size: 15px; font-weight: bold; margin-top: 12px; border-radius: 8px; background: #e9ecef;">چاوەڕێ بکە...</div>
         <button class="action-btn" onclick="window.location.href=window.location.origin + window.location.pathname" style="background: #0056b3; margin-top: 15px;">گەڕانەوە بۆ سەرەتا</button>
     </div>
 
-    <!-- === فوتەر و سۆشیاڵ میدیا === -->
     <footer>
         <p style="margin: 0 0 5px 0;">هەموو مافێکی پارێزراوە بۆ بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە &copy; 2026</p>
         <p class="dev-name" style="margin: 0;">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووچۆ ( ڕاستی محمد شێخ حیدر )</p>
-        
         <div class="social-icons no-print">
-            <a href="https://facebook.com/share/19ChSYyAyM?mibextid=wwXIfr" target="_blank" title="فەیسبووکی گەشەپێدەر">
-                <i class="fa-brands fa-facebook"></i>
-            </a>
-            <a href="https://wa.me/9647501116212" target="_blank" title="وەتسئەپی گەشەپێدەر">
-                <i class="fa-brands fa-whatsapp"></i>
-            </a>
+            <a href="https://facebook.com/share/19ChSYyAyM?mibextid=wwXIfr" target="_blank" title="فەیسبووکی گەشەپێدەر"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://wa.me/9647501116212" target="_blank" title="وەتسئەپی گەشەپێدەر"><i class="fa-brands fa-whatsapp"></i></a>
         </div>
     </footer>
 
     <script>
-        // ==== پاراستنی توند (ڕێگری لە کلیلەکانی Inspect) ====
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.addEventListener('keydown', event => {
             if (event.keyCode === 123 || (event.ctrlKey && event.shiftKey && (event.keyCode === 73 || event.keyCode === 67 || event.keyCode === 74)) || (event.ctrlKey && event.keyCode === 85)) {
@@ -596,13 +495,11 @@
             }
         });
 
-        // یارمەتیدەر بۆ گۆڕینی ژمارەی کوردی/عەرەبی بۆ ئینگلیزی
         function toEnglishDigits(str) {
             if (!str) return str;
             return str.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
         }
 
-        // ==== گۆڕاوە سەرەکییەکان ====
         const baseUrl = "https://rastymhammad-001-site1.itempurl.com";
         const apiUrl = `${baseUrl}/api/users`;
         let adminClickCount = 0; 
@@ -611,7 +508,6 @@
         let statChart = null;
         let globalUsersData = [];
 
-        // ==== مێنیوی پۆرتاڵ ====
         openSection('portal');
         function openSection(section) {
             document.getElementById('portalSection').style.display = 'none';
@@ -626,7 +522,6 @@
             else if(section === 'fine') document.getElementById('fineSection').style.display = 'block';
         }
 
-        // ==== دارک مۆد ====
         let currentTheme = localStorage.getItem("theme");
         if (!currentTheme) currentTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? "dark" : "light";
         if (currentTheme === "dark") { document.body.classList.add("dark-mode"); document.getElementById("themeToggleBtn").innerText = "☀️"; }
@@ -642,9 +537,6 @@
         }
         function vibrate(ms = 15) { if (navigator.vibrate) navigator.vibrate(ms); }
 
-        // ==========================================
-        //         لۆجیکی ژمێرەری سەردانکەران
-        // ==========================================
         function updateVisitorCounter() {
             const elements = document.querySelectorAll('.visitor-count-text');
             if (elements.length === 0) return;
@@ -666,9 +558,6 @@
         }
         updateVisitorCounter();
 
-        // ==========================================
-        //         لۆجیکی سیستەمی غەرامە
-        // ==========================================
         const today = new Date();
         let selectedDay = today.getDate();
         let selectedMonth = today.getMonth() + 1; 
@@ -695,7 +584,6 @@
             const title = document.getElementById('modal-title');
             const grid = document.getElementById('modal-grid');
             grid.innerHTML = ''; 
-            
             if (type === 'day') {
                 title.textContent = '📅 ڕۆژێك دیاری بكه‌';
                 const daysCount = getDaysInMonth(selectedMonth, selectedYear);
@@ -759,7 +647,6 @@
             const date2019 = new Date(2019, 11, 3); const date2022_Start = new Date(2022, 6, 6);
             const date2022_M3_Start = new Date(2022, 6, 7); const date2022_M3_End = new Date(2022, 6, 17);
             let totalMonths = 0, displayMonths = 0, fine = 0, baseFee = 60000;
-
             if (expiryDate < asOfDate) {
                 let yearDiff = asOfDate.getFullYear() - expiryDate.getFullYear();
                 let monthDiff = asOfDate.getMonth() - expiryDate.getMonth();
@@ -831,9 +718,6 @@
             updateSpeedometer(result.fine);
         }
 
-        // ==========================================
-        //         لۆجیکی سیستەمی نۆرەگرتن 
-        // ==========================================
         function onlyEnglishNumbers(event) {
             let charCode = (event.which) ? event.which : event.keyCode;
             if (charCode > 31 && (charCode < 48 || charCode > 57)) return false; return true;
@@ -928,13 +812,8 @@
                     if (isBlocked || count >= maxQuota) {
                         badge.className = "status-badge status-closed";
                         dot.className = "dot dot-red";
-                        
-                        if (count >= maxQuota) {
-                            statusText.innerText = "به‌ داوای لێبوردنه‌وه‌ تۆماركردن بۆ سبه‌ینێ كۆتای هات تكایه‌ سبه‌ی سه‌عات ٦ ئێواره‌ هه‌وڵ بده‌ره‌وه‌";
-                        } else {
-                            statusText.innerText = "سیستەم داخراوە یان پشک تەواو بووە";
-                        }
-
+                        if (count >= maxQuota) { statusText.innerText = "به‌ داوای لێبوردنه‌وه‌ تۆماركردن بۆ سبه‌ینێ كۆتای هات تكایه‌ سبه‌ی سه‌عات ٦ ئێواره‌ هه‌وڵ بده‌ره‌وه‌"; } 
+                        else { statusText.innerText = "سیستەم داخراوە یان پشک تەواو بووە"; }
                         if (regBtn) { regBtn.disabled = true; regBtn.innerHTML = '<i class="fa-solid fa-lock"></i>'; }
                         startCountdown(); document.getElementById("countdownTimer").style.display = "block";
                     } else {
@@ -967,49 +846,30 @@
         async function confirmAndRegister() {
             let name = document.getElementById("nameInput").value.trim(); 
             let phone = document.getElementById("phoneInput").value.trim();
-
             const confirmation = await Swal.fire({
                 title: 'دڵنیابوونەوە لە زانیارییەکان',
                 html: `
                     <div style="text-align: right; direction: rtl;">
                         <label style="font-size: 13px; font-weight: bold; color: #555; display: block; margin-bottom: 4px;">ناوی سیانی:</label>
                         <input id="swal-input-name" class="swal2-input" value="${name}" style="margin: 0 0 12px 0; width: 100%; font-family: 'Rabar'; font-size: 14px;">
-                        
                         <label style="font-size: 13px; font-weight: bold; color: #555; display: block; margin-bottom: 4px;">ژمارەی مۆبایل:</label>
                         <input id="swal-input-phone" class="swal2-input" value="${phone}" maxlength="11" onkeypress="return onlyEnglishNumbers(event)" style="margin: 0; width: 100%; font-family: 'Rabar'; font-size: 14px;">
                     </div>
                 `,
-                showCancelButton: true, 
-                confirmButtonText: 'تـــۆمــاركــردن', 
-                cancelButtonText: 'پاشگەزبوونەوە', 
-                confirmButtonColor: '#28a745',
-                cancelButtonColor: '#6c757d',
-                focusConfirm: false,
+                showCancelButton: true, confirmButtonText: 'تـــۆمــاركــردن', cancelButtonText: 'پاشگەزبوونەوە', confirmButtonColor: '#28a745', cancelButtonColor: '#6c757d', focusConfirm: false,
                 preConfirm: () => {
                     const editedName = document.getElementById('swal-input-name').value.trim();
                     const editedPhone = document.getElementById('swal-input-phone').value.trim();
-                    let nameParts = editedName.split(/\s+/);
-                    let englishRegex = /[a-zA-Z]/;
-
-                    if (!editedName || englishRegex.test(editedName) || nameParts.length < 3) {
-                        Swal.showValidationMessage('تکایە ناوی سیانی بە کوردی بە دروستی بنووسە');
-                        return false;
-                    }
-                    if (editedPhone.length !== 11 || (!editedPhone.startsWith("077") && !editedPhone.startsWith("075") && !editedPhone.startsWith("078"))) {
-                        Swal.showValidationMessage('ژمارەی مۆبایل دەبێت 11 ژمارە بێت و بە 077، 075 یان 078 دەست پێبکات');
-                        return false;
-                    }
+                    let nameParts = editedName.split(/\s+/); let englishRegex = /[a-zA-Z]/;
+                    if (!editedName || englishRegex.test(editedName) || nameParts.length < 3) { Swal.showValidationMessage('تکایە ناوی سیانی بە کوردی بە دروستی بنووسە'); return false; }
+                    if (editedPhone.length !== 11 || (!editedPhone.startsWith("077") && !editedPhone.startsWith("075") && !editedPhone.startsWith("078"))) { Swal.showValidationMessage('ژمارەی مۆبایل دەبێت 11 ژمارە بێت و بە 077، 075 یان 078 دەست پێبکات'); return false; }
                     return { name: editedName, phone: editedPhone };
                 }
             });
 
             if (confirmation.isConfirmed && confirmation.value) {
-                let finalName = confirmation.value.name;
-                let finalPhone = confirmation.value.phone;
-
-                document.getElementById("nameInput").value = finalName;
-                document.getElementById("phoneInput").value = finalPhone;
-
+                let finalName = confirmation.value.name; let finalPhone = confirmation.value.phone;
+                document.getElementById("nameInput").value = finalName; document.getElementById("phoneInput").value = finalPhone;
                 let regBtn = document.getElementById("registerBtn"); let orig = regBtn.innerHTML;
                 regBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; regBtn.disabled = true;
                 try {
@@ -1056,16 +916,11 @@
 
         async function showAdminPanel() {
             const { value: pwd } = await Swal.fire({
-                title: 'تایبه‌ت به‌ ئه‌دمین',
-                input: 'password',
-                confirmButtonText: 'چوونەژوورەوە',
-                cancelButtonText: 'داخستن',
-                showCancelButton: true
+                title: 'تایبه‌ت به‌ ئه‌دمین', input: 'password', confirmButtonText: 'چوونەژوورەوە', cancelButtonText: 'داخستن', showCancelButton: true
             });
 
             if (pwd) {
                 let normalizedPwd = toEnglishDigits(pwd);
-                
                 Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
 
                 try {
@@ -1080,7 +935,7 @@
                         document.getElementById("adminSection").scrollIntoView({ behavior: 'smooth' });
                         loadAdminStats();
                     } else {
-                        Swal.fire('هەڵەیه‌', 'پاسوۆردەکە هەڵەیە!', 'error');
+                        Swal.fire('هەڵەیه‌', 'پاسوۆردەکە هەڵەیە بەپێی سێرڤەرەکە!', 'error');
                     }
                 } catch(e) { 
                     Swal.fire('کێشە', 'سێرڤەرەکە خەوتووە یان کێشەی هێڵ هەیە، تکایە دووبارە تاقیبکەرەوە!', 'error'); 
@@ -1096,7 +951,7 @@
             let openPreRegBtn = document.getElementById("openPreRegBtn");
             if(preRegForm) preRegForm.style.display = "none";
             if(openPreRegBtn) openPreRegBtn.style.display = "inline-block";
-            window.adminPwd = ""; adminClickCount = 0;
+            window.adminPwd = ""; window.tempPreRegPwd = ""; adminClickCount = 0;
         }
 
         async function loadAdminStats() {
@@ -1108,10 +963,8 @@
                     document.getElementById('statTotal').innerText = stats.today.total;
                     document.getElementById('statUser').innerText = stats.today.byUser;
                     document.getElementById('statAdmin').innerText = stats.today.byAdmin;
-                    
                     let ctx = document.getElementById('myChart').getContext('2d');
                     if(statChart) statChart.destroy();
-                    
                     statChart = new Chart(ctx, {
                         type: 'doughnut',
                         data: {
@@ -1127,7 +980,6 @@
         async function updateDailyQuota() {
             let newQuota = document.getElementById("adminQuotaInput").value;
             if(!newQuota || newQuota < 1) return Swal.fire('ئاگاداری', 'تکایە ژمارەیەکی دروست بنووسە', 'warning');
-
             if (!window.adminPwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە', 'warning');
 
             Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
@@ -1145,22 +997,16 @@
 
         async function toggleSystemStatus() {
             let customMsg = "";
-            
             if (globalSystemIsActive) {
                 const { value: text } = await Swal.fire({
                     title: 'هۆکاری داخستنی سیستەم', input: 'textarea', inputPlaceholder: 'دەتوانیت لێرەدا پەیامێکی درێژ بنووسیت بۆ هاووڵاتیان...',
                     showCancelButton: true, confirmButtonText: 'بەردەوام بە', cancelButtonText: 'پاشگەزبوونەوە'
                 });
-                if (text === undefined) return; 
-                customMsg = text.trim();
+                if (text === undefined) return; customMsg = text.trim();
             } else {
                 const result = await Swal.fire({
-                    title: 'کردنەوەی سایت',
-                    text: 'ئایا دەتەوێت سایتەکە بکەیتەوە بۆ هاووڵاتیان؟',
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonText: 'بەڵێ، بیکەرەوە',
-                    cancelButtonText: 'نەخێر'
+                    title: 'کردنەوەی سایت', text: 'ئایا دەتەوێت سایتەکە بکەیتەوە بۆ هاووڵاتیان؟', icon: 'question',
+                    showCancelButton: true, confirmButtonText: 'بەڵێ، بیکەرەوە', cancelButtonText: 'نەخێر'
                 });
                 if (!result.isConfirmed) return;
             }
@@ -1171,7 +1017,6 @@
             try {
                 let url = `${baseUrl}/api/admin/toggle-status`;
                 if (globalSystemIsActive && customMsg !== "") url += `?message=${encodeURIComponent(customMsg)}`;
-
                 let response = await fetch(url, { method: "POST", headers: { "Admin-Password": window.adminPwd } });
                 let result = await response.json().catch(() => ({}));
                 if(response.ok) {
@@ -1182,31 +1027,22 @@
         }
 
         async function loadTodayUsers() {
-            let table = document.getElementById("usersTable"); 
-            let tbody = document.getElementById("tableBody");
+            let table = document.getElementById("usersTable"); let tbody = document.getElementById("tableBody");
 
-            if (!window.adminPwd) {
-                return Swal.fire('ئاگاداری', 'تکایە سەرەتا لە بەشی ئەدمین چوونەژوورەوە بکە!', 'warning');
-            }
+            if (!window.adminPwd) { return Swal.fire('ئاگاداری', 'تکایە سەرەتا لە بەشی ئەدمین چوونەژوورەوە بکە!', 'warning'); }
 
-            Swal.fire({ 
-                title: 'چاوەڕێ بکە...', 
-                html: '<b>خەریکی هێنانی داتاکانە لە سێرڤەرەوە...</b><br><small>گەر سێرڤەر خەوتبێت چەند چرکەیەک دەخایەنێت</small>', 
-                allowOutsideClick: false, 
-                didOpen: () => { Swal.showLoading() } 
-            });
+            Swal.fire({ title: 'چاوەڕێ بکە...', html: '<b>خەریکی هێنانی داتاکانە لە سێرڤەرەوە...</b>', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
 
             try {
                 let response = await fetch(`${baseUrl}/api/admin/today-list`, { method: "GET", headers: { "Admin-Password": window.adminPwd } });
                 if (!response.ok) {
                     let errResult = await response.json().catch(() => ({}));
-                    Swal.fire('هەڵە', errResult.message || 'پاسۆردی سەرەتا هەڵەبوو!', 'error');
+                    Swal.fire('هەڵە', errResult.message || 'پاسۆردەکە هەڵەیە بەپێی سێرڤەر!', 'error');
                     tbody.innerHTML = ""; table.style.display = "none"; return;
                 }
                 
                 globalUsersData = await response.json(); 
                 tbody.innerHTML = "";
-                
                 if(!Array.isArray(globalUsersData)) globalUsersData = [];
 
                 if(globalUsersData.length === 0) tbody.innerHTML = "<tr><td colspan='5' style='padding: 15px;'>هیچ ناوێک بۆ ئەمڕۆ تۆمار نەکراوە!</td></tr>";
@@ -1226,9 +1062,7 @@
                 table.style.display = "table"; 
                 loadAdminStats();
                 Swal.close();
-            } catch (error) { 
-                Swal.fire('کێشەی هێڵ', 'سێرڤەرەکە خەوتووە یان کێشەی هێڵ هەیە، تکایە دووبارە تاقیبکەرەوە!', 'error'); 
-            }
+            } catch (error) { Swal.fire('کێشەی هێڵ', 'سێرڤەرەکە خەوتووە یان کێشەی هێڵ هەیە، تکایە دووبارە تاقیبکەرەوە!', 'error'); }
         }
 
         function validateAdminFormInputs() {
@@ -1246,11 +1080,7 @@
 
         async function showPreRegForm() {
             const { value: pwd } = await Swal.fire({ 
-                title: 'چوونەژوورەوە بۆ تۆماری پێشوەختە', 
-                input: 'password', 
-                inputPlaceholder: 'پاسوۆرد', 
-                confirmButtonText: 'چوونەژوورەوە', 
-                showCancelButton: true 
+                title: 'چوونەژوورەوە بۆ تۆماری پێشوەختە', input: 'password', inputPlaceholder: 'پاسوۆرد', confirmButtonText: 'چوونەژوورەوە', showCancelButton: true 
             });
             
             if (pwd) {
@@ -1265,23 +1095,17 @@
                         document.getElementById("openPreRegBtn").style.display = "none"; 
                         document.getElementById("preRegForm").style.display = "block";
                         window.tempPreRegPwd = normalizedPwd; 
-                    } else {
-                        Swal.fire('هەڵەیه‌', 'پاسوۆردەکە هەڵەیە!', 'error');
-                    }
+                    } else { Swal.fire('هەڵەیه‌', 'پاسوۆردەکە هەڵەیە بەپێی سێرڤەرەکە!', 'error'); }
                 } catch(e) { Swal.fire('کێشە', 'سێرڤەرەکە خەوتووە یان کێشەی هێڵ هەیە!', 'error'); }
             }
         }
 
         async function adminRegisterUser() {
-            let name = document.getElementById("adminNameInput").value.trim(); 
-            let phone = document.getElementById("adminPhoneInput").value.trim();
+            let name = document.getElementById("adminNameInput").value.trim(); let phone = document.getElementById("adminPhoneInput").value.trim();
             let regBtn = document.getElementById("adminRegBtn");
-            
             if(name === "" || phone === "") return Swal.fire('ئاگاداری', 'تکایە ناو و ژمارەی تەلەفۆن پڕبکەرەوە!', 'warning');
             
-            let originalText = regBtn.innerHTML; 
-            regBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> تکایە چاوەڕێ بکە...'; 
-            regBtn.disabled = true;
+            let originalText = regBtn.innerHTML; regBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> تکایە چاوەڕێ بکە...'; regBtn.disabled = true;
             
             try {
                 let response = await fetch(apiUrl, { method: "POST", headers: { "Content-Type": "application/json", "Admin-Password": window.tempPreRegPwd }, body: JSON.stringify({ name: name, phone: phone }) });
@@ -1343,7 +1167,6 @@
             a.download = `Traffic_List_${new Date().toISOString().slice(0,10)}.csv`; document.body.appendChild(a); a.click(); document.body.removeChild(a);
         }
 
-        // ==== کۆدەکانی سکرین شۆتی ڤیریفای ====
         window.onload = function() {
             calculateFine(true);
             const urlParams = new URLSearchParams(window.location.search);
@@ -1357,7 +1180,6 @@
             } else openSection('portal');
         };
 
-        // ==== پشتبەستی تەواوی ئۆفلاین (Service Worker) ====
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 const swCode = `
