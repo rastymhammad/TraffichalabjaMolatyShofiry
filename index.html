@@ -160,7 +160,7 @@
         }
         .visitor-counter b { color: var(--text-main); }
 
-        /* --- سلایدی تێبینی و پێداویستییەکان (لە سەرەتای سایت) --- */
+        /* --- سلایدی تێبینی زیرەک (بەپێی قەبارەی دەق: خوارەوە بۆ سەرەوە یان چەپ بۆ ڕاست) --- */
         .notice-slider-box {
             background: var(--bg-container);
             border: 2px solid #0056b3;
@@ -168,51 +168,72 @@
             padding: 12px 15px;
             margin-bottom: 15px;
             box-shadow: 0 4px 15px rgba(0,86,179,0.08);
-            text-align: center;
+            text-align: right;
             width: 100%;
             overflow: hidden;
             position: relative;
         }
         body.dark-mode .notice-slider-box { border-color: #4da3ff; }
         
-        .notice-slider-title {
+        .notice-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 8px;
             font-size: 13px;
             font-weight: bold;
             color: #0056b3;
             margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
             border-bottom: 1px dashed var(--border-container);
             padding-bottom: 6px;
         }
-        body.dark-mode .notice-slider-title { color: #4da3ff; }
+        body.dark-mode .notice-header-row { color: #4da3ff; }
 
-        .notice-scroll-container {
+        /* حالەتی یەکەم: دەقی کەم (وەک سەردێڕ لە چەپەوە بۆ ڕاست) */
+        .notice-scroll-container.horizontal {
             width: 100%;
             overflow: hidden;
             position: relative;
             white-space: nowrap;
+            height: 30px;
+        }
+        .notice-scroll-container.horizontal .notice-scroll-text {
+            display: inline-block;
+            font-size: 12px;
+            color: var(--text-main);
+            white-space: nowrap;
+            animation: slowScrollHorizontal 25s linear infinite;
+        }
+        .notice-scroll-container.horizontal:hover .notice-scroll-text {
+            animation-play-state: paused;
+        }
+        @keyframes slowScrollHorizontal {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
-        .notice-scroll-text {
-            display: inline-block;
+        /* حالەتی دووەم: دەقی زۆر (لە خوارەوە بۆ سەرەوە) */
+        .notice-scroll-container.vertical {
+            width: 100%;
+            height: 80px;
+            overflow: hidden;
+            position: relative;
+        }
+        .notice-scroll-container.vertical .notice-scroll-text {
+            display: block;
             font-size: 12px;
             color: var(--text-main);
             line-height: 1.8;
             white-space: pre-line;
-            text-align: center;
-            animation: slowScroll 25s linear infinite;
+            text-align: right;
+            animation: slowScrollVertical 15s linear infinite;
         }
-
-        .notice-scroll-container:hover .notice-scroll-text {
+        .notice-scroll-container.vertical:hover .notice-scroll-text {
             animation-play-state: paused;
         }
-
-        @keyframes slowScroll {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+        @keyframes slowScrollVertical {
+            0% { transform: translateY(100%); }
+            100% { transform: translateY(-100%); }
         }
         
         .portal-cards { display: flex; flex-direction: column; gap: 12px; width: 100%; }
@@ -366,10 +387,13 @@
                 👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
             </div>
             
-            <!-- سلایدی تێبینی و پێداویستییەکان (لە سەرەتای سایت) -->
+            <!-- سلایدی تێبینی زیرەک (ئایکۆن لە دەستەڕاست و جووڵەی گونجاو بەپێی قەبارەی دەق) -->
             <div class="notice-slider-box no-print">
-                <div class="notice-slider-title"><i class="fa-solid fa-circle-info"></i> ئاگاداری و پێداویستییەکان:</div>
-                <div class="notice-scroll-container">
+                <div class="notice-header-row">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span>ئاگاداری و پێداویستییەکان:</span>
+                </div>
+                <div id="noticeScrollWrapper" class="notice-scroll-container horizontal">
                     <div class="notice-scroll-text" id="noticeTextContainer">خەریکی بارکردنی تێبینییەکان...</div>
                 </div>
             </div>
@@ -643,16 +667,29 @@
         let statChart = null;
         let globalUsersData = [];
 
-        // ==== بارکردنی دەقی ئاگاداری و تێبینییەکان لە سەرەتادا ====
+        // ==== بارکردنی دەقی ئاگاداری و تێبینییەکان لە سەرەتادا (بە پشکنینی قەبارەی دەق بۆ شێوازی جووڵە) ====
         async function loadNoticeText() {
             try {
                 let res = await fetch(`${baseUrl}/api/notice`);
                 if(res.ok) {
                     let data = await res.json();
+                    let text = data.notice || "";
                     let container = document.getElementById('noticeTextContainer');
-                    if(container) container.textContent = data.notice;
+                    let wrapper = document.getElementById('noticeScrollWrapper');
+                    
+                    if(container) container.textContent = text;
+                    
+                    // پشکنین: ئەگەر دەقەکە کەم بێت یان هێڵی کەم بێت (ئاسایی)، با بە ئاسۆیی (چەپ بۆ ڕاست) بڕوات، ئەگەر درێژ بوو با لە خوارەوە بۆ سەرەوە بڕوات
+                    if(wrapper && container) {
+                        if (text.includes('\n') || text.length > 100) {
+                            wrapper.className = "notice-scroll-container vertical";
+                        } else {
+                            wrapper.className = "notice-scroll-container horizontal";
+                        }
+                    }
+
                     let adminInput = document.getElementById('adminNoticeInput');
-                    if(adminInput) adminInput.value = data.notice;
+                    if(adminInput) adminInput.value = text;
                 }
             } catch(e) {}
         }
