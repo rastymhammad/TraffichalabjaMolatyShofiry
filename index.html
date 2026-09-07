@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هه‌ڵه‌بجه‌</title>
     
+    <!-- PWA Settings -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0056b3">
     
+    <!-- iOS PWA Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە">
@@ -268,9 +270,15 @@
         .grid-item { padding: 8px; min-height: 38px; display: flex; align-items: center; justify-content: center; background: var(--grid-bg); border-radius: 6px; font-weight: bold; color: var(--input-text); cursor: pointer; font-size: 13px;}
         .grid-item.selected-item { background: #3182ce !important; color: white !important; }
 
-        footer { background-color: var(--header-bg); color: var(--text-main); text-align: center; padding: 15px; margin-top: 25px; border-radius: 12px 12px 0 0; font-size: 12px; border-top: 1px solid var(--border-container); width: 100%; max-width: 400px; }
+        /* --- Footer & Social Icons --- */
+        footer { 
+            background-color: var(--header-bg); color: var(--text-main); text-align: center; 
+            padding: 15px; margin-top: 25px; border-radius: 12px 12px 0 0; font-size: 12px; 
+            border-top: 1px solid var(--border-container); width: 100%; max-width: 400px;
+        }
         .dev-name { color: #0056b3; font-weight: bold; margin-top: 5px; }
         body.dark-mode .dev-name { color: #4da3ff; }
+        
         .social-icons { margin-top: 10px; }
         .social-icons a { color: #0056b3; font-size: 24px; margin: 0 10px; text-decoration: none; display: inline-block; transition: all 0.3s ease; }
         .social-icons a:hover { transform: scale(1.1) translateY(-2px); }
@@ -296,8 +304,12 @@
             <h1>به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە</h1>
         </div>
 
+        <!-- === پۆرتاڵ (مێنیوی سەرەکی) === -->
         <div id="portalSection">
-            <div class="visitor-counter no-print">👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b></div>
+            <div class="visitor-counter no-print">
+                👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
+            </div>
+            
             <div class="portal-cards">
                 <div class="portal-card" onclick="openSection('queue')">
                     <i class="fa-solid fa-users-line"></i>
@@ -316,10 +328,13 @@
             </div>
         </div>
 
+        <!-- === سیستەمی نۆرەگرتن === -->
         <div id="queueSection" style="display: none;">
             <button class="back-btn no-print" onclick="openSection('portal')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە بۆ سەرەتا</button>
             
-            <div class="visitor-counter no-print">👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b></div>
+            <div class="visitor-counter no-print">
+                👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
+            </div>
 
             <div id="statusBadge" class="status-badge status-open no-print">
                 <span id="statusDot" class="dot dot-green"></span>
@@ -328,12 +343,14 @@
 
             <div class="container no-print" id="userRegistrationSection">
                 <h2>تۆمارکردنی ناو</h2>
+
                 <div id="savedTicketDiv" style="display: none; background: #e9ecef; padding: 15px; border-radius: 8px; border: 2px solid #28a745; margin-bottom: 15px;">
                     <p style="margin: 0 0 10px 0; color: #155724; font-weight: bold; font-size: 13px;">بەڕێز، تۆ ئەمڕۆ نۆرەت گرتووە!</p>
                     <button onclick="showSavedTicket()" class="action-btn" style="margin: 0; padding: 10px; font-size: 14px;">
                         <i class="fa-solid fa-ticket"></i> پیشاندانی پسوولەکەم
                     </button>
                 </div>
+                
                 <div id="registrationInputs">
                     <div class="input-wrapper">
                         <i class="fa-solid fa-user"></i>
@@ -346,8 +363,7 @@
                     <button id="registerBtn" class="action-btn" onclick="confirmAndRegister()" disabled style="background: #cccccc; cursor: not-allowed;">تۆمارکردن</button>
                 </div>
                 <div id="countdownTimer" class="timer-box">
-                    <span>⏳ کاتژمێری ماوە بۆ خۆتۆمارکردن:</span>
-                    <b id="timerValue" style="font-size: 14px; direction: ltr; display: inline-block;">00:00:00</b>
+                    <span id="timerValue" dir="ltr" style="font-size: 14px; font-weight: bold; display: inline-block;">00:00:00</span>
                 </div>
             </div>
 
@@ -360,6 +376,7 @@
                 <button class="action-btn search-btn" onclick="searchUser()">گەڕان</button>
             </div>
             
+            <!-- ====== بەشی ئەدمین ====== -->
             <div class="container printable-area" id="adminSection" style="display: none;">
                 <h2>بەشی ئەدمین - کۆنتڕۆڵی سیستەم</h2>
 
@@ -426,41 +443,70 @@
                     </table>
                 </div>
             </div>
+            <!-- ====== کۆتایی بەشی ئەدمین ====== -->
+            
             <div style="text-align: center; margin-bottom: 15px;" class="no-print">
                 <button onclick="handleAdminClick()" style="background: none; color: var(--label-color); border: none; font-size: 11px; cursor: pointer;">ئەدمین</button>
             </div>
         </div>
 
+        <!-- === سیستەمی غەرامە === -->
         <div id="fineSection" style="display: none;">
             <button class="back-btn" onclick="openSection('portal')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە بۆ سەرەتا</button>
             
             <div class="fine-container" id="fine-container-box">
-                <div class="visitor-counter">👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b></div>
+                <div class="visitor-counter">
+                    👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
+                </div>
+
                 <div class="toggle-container">
                     <span id="fine-status-text" style="font-weight: bold; color: #48bb78; font-size: 13px;">✓ داشکاندنی غەرامە (٢٠٪) چالاکە</span>
-                    <label class="switch"><input type="checkbox" id="university-toggle" checked onchange="vibrate(); calculateFine()"><span class="slider"></span></label>
+                    <label class="switch">
+                        <input type="checkbox" id="university-toggle" checked onchange="vibrate(); calculateFine()">
+                        <span class="slider"></span>
+                    </label>
                 </div>
+
                 <div class="checklist-box">
                     <div class="checklist-title">📄 پێداویستییەکان بۆ نوێکردنەوە:</div>
                     <div class="checklist-items">
-                        <div class="check-item">✅ کارتی نیشتیمانی</div><div class="check-item">✅ کارتی زانیاری</div>
-                        <div class="check-item">✅ پاسپۆرت (ئەگەر هەبێت)</div><div class="check-item">✅ پشکنینی چاو</div>
+                        <div class="check-item">✅ کارتی نیشتیمانی</div>
+                        <div class="check-item">✅ کارتی زانیاری</div>
+                        <div class="check-item">✅ پاسپۆرت (ئەگەر هەبێت)</div>
+                        <div class="check-item">✅ پشکنینی چاو</div>
                     </div>
                 </div>
+
                 <div class="date-section">
                     <div class="date-title-wrap">
-                        <div class="date-title">📅 ڕێکەوتی بەسەرچوونی مۆڵەت:</div><button class="btn-reset" onclick="resetToToday()">🔄 ئەمڕۆ</button>
+                        <div class="date-title">📅 ڕێکەوتی بەسەرچوونی مۆڵەت:</div>
+                        <button class="btn-reset" onclick="resetToToday()">🔄 ئەمڕۆ</button>
                     </div>
                     <div class="date-inputs">
-                        <div class="date-box" onclick="openModal('day')"><label>ڕۆژ</label><div class="date-custom-input" id="day-btn">10</div></div>
-                        <div class="date-box" onclick="openModal('month')"><label>مانگ</label><div class="date-custom-input" id="month-btn">7</div></div>
-                        <div class="date-box" onclick="openModal('year')"><label>ساڵ</label><div class="date-custom-input" id="year-btn">2026</div></div>
+                        <div class="date-box" onclick="openModal('day')">
+                            <label>ڕۆژ</label>
+                            <div class="date-custom-input" id="day-btn">10</div>
+                        </div>
+                        <div class="date-box" onclick="openModal('month')">
+                            <label>مانگ</label>
+                            <div class="date-custom-input" id="month-btn">7</div>
+                        </div>
+                        <div class="date-box" onclick="openModal('year')">
+                            <label>ساڵ</label>
+                            <div class="date-custom-input" id="year-btn">2026</div>
+                        </div>
                     </div>
                 </div>
+
                 <div class="results" id="results-box">
                     <div class="gauge-container" id="speed-gauge">
-                        <div class="gauge"><div class="gauge-fill" id="gauge-fill"></div><div class="gauge-cover"></div><div class="needle" id="gauge-needle"></div></div>
+                        <div class="gauge">
+                            <div class="gauge-fill" id="gauge-fill"></div>
+                            <div class="gauge-cover"></div>
+                            <div class="needle" id="gauge-needle"></div>
+                        </div>
                     </div>
+
                     <div class="result-row fee-row"><span>🔵 رسومات:</span><span id="fee-price">60,000 دینار</span></div>
                     <div class="result-row fine-row"><span>🔴 غرامە:</span><span id="fine-price">0 دینار</span></div>
                     <div class="result-row total-row"><span>💰 کۆی گشتی:</span><span id="total-price">0 دینار</span></div>
@@ -468,26 +514,41 @@
                 </div>
             </div>
         </div>
+
     </div>
 
-    <div class="modal-overlay" id="picker-modal" onclick="closeModal(event)"><div class="modal-content" onclick="event.stopPropagation()"><h3 id="modal-title">دیاریکردنی ژمارە</h3><div class="number-grid" id="modal-grid"></div></div></div>
+    <!-- مۆدێلی ژمارەکان بۆ غەرامە -->
+    <div class="modal-overlay" id="picker-modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <h3 id="modal-title">دیاریکردنی ژمارە</h3>
+            <div class="number-grid" id="modal-grid"></div>
+        </div>
+    </div>
 
+    <!-- مۆدێلی ڤیریفای نۆرە -->
     <div class="container" id="verifySection" style="display: none; max-width: 400px; margin: 50px auto; border: 3px solid #0056b3;">
         <h2 style="color: #0056b3; margin-top: 10px;"><i class="fa-solid fa-shield-check"></i> دڵنیابوونەوەی پسوولە</h2>
         <div id="verifyResult" style="padding: 15px; font-size: 15px; font-weight: bold; margin-top: 12px; border-radius: 8px; background: #e9ecef;">چاوەڕێ بکە...</div>
         <button class="action-btn" onclick="window.location.href=window.location.origin + window.location.pathname" style="background: #0056b3; margin-top: 15px;">گەڕانەوە بۆ سەرەتا</button>
     </div>
 
+    <!-- === فوتەر و سۆشیاڵ میدیا === -->
     <footer>
         <p style="margin: 0 0 5px 0;">هەموو مافێکی پارێزراوە بۆ بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە &copy; 2026</p>
         <p class="dev-name" style="margin: 0;">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووچۆ ( ڕاستی محمد شێخ حیدر )</p>
+        
         <div class="social-icons no-print">
-            <a href="https://facebook.com/share/19ChSYyAyM?mibextid=wwXIfr" target="_blank" title="فەیسبووکی گەشەپێدەر"><i class="fa-brands fa-facebook"></i></a>
-            <a href="https://wa.me/9647501116212" target="_blank" title="وەتسئەپی گەشەپێدەر"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="https://facebook.com/share/19ChSYyAyM?mibextid=wwXIfr" target="_blank" title="فەیسبووکی گەشەپێدەر">
+                <i class="fa-brands fa-facebook"></i>
+            </a>
+            <a href="https://wa.me/9647501116212" target="_blank" title="وەتسئەپی گەشەپێدەر">
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
         </div>
     </footer>
 
     <script>
+        // ==== پاراستنی توند (ڕێگری لە کلیلەکانی Inspect) ====
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.addEventListener('keydown', event => {
             if (event.keyCode === 123 || (event.ctrlKey && event.shiftKey && (event.keyCode === 73 || event.keyCode === 67 || event.keyCode === 74)) || (event.ctrlKey && event.keyCode === 85)) {
@@ -500,6 +561,7 @@
             return str.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
         }
 
+        // ==== گۆڕاوە سەرەکییەکان ====
         const baseUrl = "https://rastymhammad-001-site1.itempurl.com";
         const apiUrl = `${baseUrl}/api/users`;
         let adminClickCount = 0; 
@@ -508,6 +570,7 @@
         let statChart = null;
         let globalUsersData = [];
 
+        // ==== مێنیوی پۆرتاڵ ====
         openSection('portal');
         function openSection(section) {
             document.getElementById('portalSection').style.display = 'none';
@@ -839,7 +902,8 @@
                 let h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 let m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 let s = Math.floor((diff % (1000 * 60)) / 1000);
-                document.getElementById("timerValue").innerText = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+                
+                document.getElementById("timerValue").innerHTML = `⏳ کاتی ماوە بۆ کردنەوەی داهاتووی سیستەم: <span dir="ltr">${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}</span>`;
             }, 1000);
         }
 
@@ -903,9 +967,6 @@
             } catch (e) {}
         }
 
-        // ==========================================
-        //         لۆجیکی بەشی ئەدمین 
-        // ==========================================
         function handleAdminClick() {
             adminClickCount++;
             if (adminClickCount >= 5) {
@@ -927,7 +988,9 @@
                     let response = await fetch(`${baseUrl}/api/admin/verify?type=admin`, {
                         method: "POST", headers: { "Admin-Password": normalizedPwd }
                     });
-                    
+                    if (response.status === 429) {
+                        return Swal.fire('سزادراویت!', 'بەهۆی زۆر تاقیکردنەوەی هەڵە، ئایپییەکەت بۆ ١٥ خولەک سزادراوە. تکایە چاوەڕێ بکە یان ئینتەرنێتەکەت (Flight Mode) پێبکە و بکوژێنەوە.', 'error');
+                    }
                     if (response.ok) {
                         Swal.close();
                         window.adminPwd = normalizedPwd; 
@@ -1034,7 +1097,10 @@
             Swal.fire({ title: 'چاوەڕێ بکە...', html: '<b>خەریکی هێنانی داتاکانە لە سێرڤەرەوە...</b>', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
 
             try {
-                let response = await fetch(`${baseUrl}/api/admin/today-list`, { method: "GET", headers: { "Admin-Password": window.adminPwd } });
+                let response = await fetch(`${apiUrl}/today-list`, { method: "GET", headers: { "Admin-Password": window.adminPwd } });
+                if (response.status === 429) {
+                    return Swal.fire('سزادراویت!', 'بەهۆی زۆر تاقیکردنەوەی هەڵە، ئایپییەکەت سزادراوە. تکایە چاوەڕێ بکە.', 'error');
+                }
                 if (!response.ok) {
                     let errResult = await response.json().catch(() => ({}));
                     Swal.fire('هەڵە', errResult.message || 'پاسۆردەکە هەڵەیە بەپێی سێرڤەر!', 'error');
@@ -1114,7 +1180,7 @@
                 if(response.ok) {
                     Swal.fire('سەرکەوتوو بوو', result.message || 'ناو بە سەرکەوتوویی لەلایەن ئەدمنەوە تۆمارکرا!', 'success');
                     document.getElementById("adminNameInput").value = ""; document.getElementById("adminPhoneInput").value = ""; validateAdminFormInputs();
-                    loadAdminStats(); loadTodayUsers();
+                    if(window.adminPwd) { loadAdminStats(); loadTodayUsers(); }
                 } else Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان کێشەیەک هەیە!', 'error');
             } catch (error) { Swal.fire('کێشەی هێڵ', 'کێشە لە پەیوەندیکردن هەیە یان سێرڤەرەکە خەوتووە!', 'error'); } 
             finally { regBtn.innerHTML = originalText; regBtn.disabled = false; checkQuotaAndTimer(); }
