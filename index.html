@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هه‌ڵه‌بجه‌</title>
+    <title>به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە</title>
     
     <!-- PWA Settings -->
     <link rel="manifest" href="manifest.json">
@@ -155,10 +155,42 @@
             text-align: center; 
             font-size: 12px; 
             color: var(--label-color); 
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             font-weight: bold;
         }
         .visitor-counter b { color: var(--text-main); }
+
+        /* --- سلایدی تێبینی و پێداویستییەکان --- */
+        .notice-slider-box {
+            background: var(--bg-container);
+            border: 2px solid #0056b3;
+            border-radius: 12px;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0,86,179,0.08);
+            text-align: right;
+            width: 100%;
+            position: relative;
+        }
+        body.dark-mode .notice-slider-box { border-color: #4da3ff; }
+        .notice-slider-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: #0056b3;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        body.dark-mode .notice-slider-title { color: #4da3ff; }
+        .notice-slider-content {
+            font-size: 12px;
+            color: var(--text-main);
+            line-height: 1.6;
+            white-space: pre-line;
+            max-height: 120px;
+            overflow-y: auto;
+        }
         
         .portal-cards { display: flex; flex-direction: column; gap: 12px; width: 100%; }
         .portal-card {
@@ -337,6 +369,12 @@
                 👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
             </div>
 
+            <!-- سلایدی تێبینی و پێداویستییەکان -->
+            <div class="notice-slider-box no-print">
+                <div class="notice-slider-title"><i class="fa-solid fa-circle-info"></i> ئاگاداری و پێداویستییەکان:</div>
+                <div class="notice-slider-content" id="noticeTextContainer">خەریکی بارکردنی تێبینییەکان...</div>
+            </div>
+
             <div id="statusBadge" class="status-badge status-open no-print">
                 <span id="statusDot" class="dot dot-green"></span>
                 <span id="statusText">دۆخی سیستەم: کراوەیە بۆ تۆمارکردن</span>
@@ -400,6 +438,15 @@
                         <input type="number" id="adminQuotaInput" placeholder="ژمارەی پشک (نموونە: 50)" min="1">
                     </div>
                     <button class="action-btn" style="background: #28a745; padding: 10px;" onclick="updateDailyQuota()">گۆڕینی پشک</button>
+                </div>
+
+                <!-- بەشی نوێکردنەوەی تێبینی و پێداویستییەکان -->
+                <div style="background: rgba(23, 162, 184, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(23, 162, 184, 0.2);" class="no-print">
+                    <h3 style="margin-top: 0; font-size: 14px; color: #17a2b8;">گۆڕینی تێبینی و پێداویستییەکان (سلاید)</h3>
+                    <div class="input-wrapper">
+                        <textarea id="adminNoticeInput" rows="5" placeholder="دەقی ئاگاداری و پێداویستییەکان لێرە بنووسە..." style="width: 100%; padding: 10px; border: 2px solid var(--input-border); border-radius: 6px; font-family: 'Rabar'; background: var(--input-bg); color: var(--input-text); resize: vertical;"></textarea>
+                    </div>
+                    <button class="action-btn" style="background: #17a2b8; padding: 10px;" onclick="updateNoticeText()">پاشەکەوتکردنی تێبینی</button>
                 </div>
 
                 <div style="background: rgba(0, 86, 179, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(0, 86, 179, 0.2);" class="no-print">
@@ -571,6 +618,42 @@
         let statChart = null;
         let globalUsersData = [];
 
+        // ==== بارکردنی دەقی ئاگاداری و تێبینییەکان لە سەرەتادا ====
+        async function loadNoticeText() {
+            try {
+                let res = await fetch(`${baseUrl}/api/notice`);
+                if(res.ok) {
+                    let data = await res.json();
+                    let container = document.getElementById('noticeTextContainer');
+                    if(container) container.textContent = data.notice;
+                    let adminInput = document.getElementById('adminNoticeInput');
+                    if(adminInput) adminInput.value = data.notice;
+                }
+            } catch(e) {}
+        }
+        loadNoticeText();
+
+        async function updateNoticeText() {
+            let newText = document.getElementById('adminNoticeInput').value;
+            if (!window.adminPwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە', 'warning');
+            
+            Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
+            try {
+                let response = await fetch(`${baseUrl}/api/admin/notice`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json", "Admin-Password": window.adminPwd },
+                    body: JSON.stringify({ text: newText })
+                });
+                let result = await response.json().catch(() => ({}));
+                if(response.ok) {
+                    Swal.fire('سەرکەوتوو', result.message || 'تێبینییەکان نوێکرانەوە!', 'success');
+                    loadNoticeText();
+                } else Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە!', 'error');
+            } catch(e) {
+                Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە', 'error');
+            }
+        }
+
         // ==== مێنیوی پۆرتاڵ ====
         openSection('portal');
         function openSection(section) {
@@ -581,7 +664,7 @@
             if(section === 'portal') document.getElementById('portalSection').style.display = 'block';
             else if(section === 'queue') {
                 document.getElementById('queueSection').style.display = 'block';
-                checkQuotaAndTimer(); checkSavedTicket();
+                checkQuotaAndTimer(); checkSavedTicket(); loadNoticeText();
             }
             else if(section === 'fine') document.getElementById('fineSection').style.display = 'block';
         }
@@ -1040,6 +1123,7 @@
                         document.getElementById("adminSection").style.display = "block";
                         document.getElementById("adminSection").scrollIntoView({ behavior: 'smooth' });
                         loadAdminStats();
+                        loadNoticeText();
                     } else {
                         Swal.fire('هەڵە', 'پاسوۆردەکە هەڵەیە بەپێی سێرڤەرەکە!', 'error');
                     }
@@ -1223,7 +1307,6 @@
                 if(response.ok) {
                     Swal.fire('سەرکەوتوو بوو', result.message || 'ناو بە سەرکەوتوویی لەلایەن ئەدمنەوە تۆمارکرا!', 'success');
                     document.getElementById("adminNameInput").value = ""; document.getElementById("adminPhoneInput").value = ""; validateAdminFormInputs();
-                    // لێرەدا فەنکشنی loadTodayUsers لانراوە تا تەنها پەیامی سەرکەوتن بدات و لیستەکە خۆکارانە نەکرێتەوە
                 } else Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان کێشەیەک هەیە!', 'error');
             } catch (error) { Swal.fire('کێشەی هێڵ', 'کێشە لە پەیوەندیکردن هەیە یان سێرڤەرەکە خەوتووە!', 'error'); } 
             finally { regBtn.innerHTML = originalText; regBtn.disabled = false; checkQuotaAndTimer(); }
@@ -1278,6 +1361,7 @@
 
         window.onload = function() {
             calculateFine(true);
+            loadNoticeText();
             const urlParams = new URLSearchParams(window.location.search);
             const verifyToken = urlParams.get('verify');
             if (verifyToken) {
