@@ -160,7 +160,7 @@
         }
         .visitor-counter b { color: var(--text-main); }
 
-        /* --- سلایدی تێبینی و پێداویستییەکان (جووڵەی هێواش لە چەپەوە بۆ ڕاست) --- */
+        /* --- سلایدی تێبینی و پێداویستییەکان (لە سەرەتای سایت) --- */
         .notice-slider-box {
             background: var(--bg-container);
             border: 2px solid #0056b3;
@@ -168,7 +168,7 @@
             padding: 12px 15px;
             margin-bottom: 15px;
             box-shadow: 0 4px 15px rgba(0,86,179,0.08);
-            text-align: right;
+            text-align: center;
             width: 100%;
             overflow: hidden;
             position: relative;
@@ -182,6 +182,7 @@
             margin-bottom: 8px;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 6px;
             border-bottom: 1px dashed var(--border-container);
             padding-bottom: 6px;
@@ -201,33 +202,29 @@
             color: var(--text-main);
             line-height: 1.8;
             white-space: pre-line;
-            text-align: right;
+            text-align: center;
             animation: slowScroll 25s linear infinite;
         }
 
         .notice-scroll-container:hover .notice-scroll-text {
-            animation-play-state: paused; /* کاتێک ماوس دەچێتە سەری ڕادەوەستێت بۆ خوێندنەوە */
+            animation-play-state: paused;
         }
 
         @keyframes slowScroll {
-            0% {
-                transform: translateX(-100%);
-            }
-            100% {
-                transform: translateX(100%);
-            }
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
         
         .portal-cards { display: flex; flex-direction: column; gap: 12px; width: 100%; }
         .portal-card {
             background: var(--header-bg); border: 2px solid var(--border-container); border-radius: 12px;
             padding: 20px 15px; cursor: pointer; transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 12px; text-align: right;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px;
             width: 100%;
         }
         .portal-card:hover { transform: translateY(-4px); border-color: #0056b3; box-shadow: 0 8px 20px rgba(0,86,179,0.15); }
         body.dark-mode .portal-card:hover { border-color: #4da3ff; box-shadow: 0 8px 20px rgba(77,163,255,0.15); }
-        .portal-card i { font-size: 30px; color: #0056b3; width: 40px; text-align: center; }
+        .portal-card i { font-size: 32px; color: #0056b3; margin-bottom: 4px; }
         body.dark-mode .portal-card i { color: #4da3ff; }
         .portal-card-content h3 { margin: 0 0 4px 0; font-size: 16px; color: var(--text-main); }
         .portal-card-content p { margin: 0; font-size: 12px; color: var(--label-color); }
@@ -283,7 +280,7 @@
         body.dark-mode .dash-card h3 { color: #4da3ff; }
         .chart-container { max-width: 160px; margin: 0 auto; }
 
-        .fine-container { background: var(--bg-container); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 18px; border: 2px solid var(--border-container); text-align: right; width: 100%; }
+        .fine-container { background: var(--bg-container); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 18px; border: 2px solid var(--border-container); text-align: center; width: 100%; }
         .toggle-container { display: flex; justify-content: space-between; align-items: center; background: var(--toggle-bg); padding: 10px; border-radius: 10px; margin-bottom: 12px; border: 1px solid var(--toggle-border); }
         .switch { position: relative; display: inline-block; width: 50px; height: 28px; }
         .switch input { opacity: 0; width: 0; height: 0; }
@@ -292,7 +289,7 @@
         input:checked + .slider { background-color: #48bb78; }
         input:checked + .slider:before { transform: translateX(22px); }
 
-        .checklist-box { background: var(--toggle-bg); border: 1px solid var(--toggle-border); border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; }
+        .checklist-box { background: var(--toggle-bg); border: 1px solid var(--toggle-border); border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; text-align: right; }
         .checklist-title { font-size: 12px; font-weight: bold; color: var(--text-main); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
         .checklist-items { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 11px; color: var(--label-color); }
         .check-item { display: flex; align-items: center; gap: 5px; }
@@ -309,7 +306,7 @@
         .date-box label { display: block; font-size: 11px; color: var(--label-color); margin-bottom: 2px; font-weight: bold; pointer-events: none;}
         .date-custom-input { width: 100%; padding: 0; border: none; background: transparent; text-align: center; font-size: 16px; font-weight: bold; color: var(--input-text); pointer-events: none; }
 
-        .results { background: var(--results-bg); border-radius: 10px; padding: 12px; border: 2px solid var(--dynamic-status-color); margin-bottom: 12px; position: relative; overflow: hidden; z-index: 1; }
+        .results { background: var(--results-bg); border-radius: 10px; padding: 12px; border: 2px solid var(--dynamic-status-color); margin-bottom: 12px; position: relative; overflow: hidden; z-index: 1; text-align: right; }
         .result-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed var(--results-border); font-size: 13px; color: var(--text-row); position: relative; z-index: 2; }
         .result-row:last-child { border-bottom: none; }
         .total-row { font-size: 16px; font-weight: bold; color: var(--total-color); }
@@ -363,17 +360,25 @@
             <h1>به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە</h1>
         </div>
 
-        <!-- === پۆرتاڵ (مێنیوی سەرەکی) === -->
+        <!-- === پۆرتاڵ (مێنیوی سەرەکی - لەگەڵ سلاید لە سەرەتادا) === -->
         <div id="portalSection">
             <div class="visitor-counter no-print">
                 👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
             </div>
             
+            <!-- سلایدی تێبینی و پێداویستییەکان (لە سەرەتای سایت) -->
+            <div class="notice-slider-box no-print">
+                <div class="notice-slider-title"><i class="fa-solid fa-circle-info"></i> ئاگاداری و پێداویستییەکان:</div>
+                <div class="notice-scroll-container">
+                    <div class="notice-scroll-text" id="noticeTextContainer">خەریکی بارکردنی تێبینییەکان...</div>
+                </div>
+            </div>
+
             <div class="portal-cards">
                 <div class="portal-card" onclick="openSection('queue')">
-                    <i class="fa-solid fa-users-line"></i>
+                    <i class="fa-solid fa-id-card"></i>
                     <div class="portal-card-content">
-                        <h3>سیستەمی نۆرەگرتن</h3>
+                        <h3>سیستەمی نۆرەگرتنی مۆڵەتی شۆفێری</h3>
                         <p>بۆ نوێکردنەوەی مۆڵەت و مامەڵەکان</p>
                     </div>
                 </div>
@@ -393,14 +398,6 @@
             
             <div class="visitor-counter no-print">
                 👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
-            </div>
-
-            <!-- سلایدی تێبینی و پێداویستییەکان (لە سەرەتای نۆرەگرتن) -->
-            <div class="notice-slider-box no-print">
-                <div class="notice-slider-title"><i class="fa-solid fa-circle-info"></i> ئاگاداری و پێداویستییەکان:</div>
-                <div class="notice-scroll-container">
-                    <div class="notice-scroll-text" id="noticeTextContainer">خەریکی بارکردنی تێبینییەکان...</div>
-                </div>
             </div>
 
             <div id="statusBadge" class="status-badge status-open no-print">
@@ -694,10 +691,13 @@
             document.getElementById('queueSection').style.display = 'none';
             document.getElementById('fineSection').style.display = 'none';
 
-            if(section === 'portal') document.getElementById('portalSection').style.display = 'block';
+            if(section === 'portal') {
+                document.getElementById('portalSection').style.display = 'block';
+                loadNoticeText();
+            }
             else if(section === 'queue') {
                 document.getElementById('queueSection').style.display = 'block';
-                checkQuotaAndTimer(); checkSavedTicket(); loadNoticeText();
+                checkQuotaAndTimer(); checkSavedTicket();
             }
             else if(section === 'fine') document.getElementById('fineSection').style.display = 'block';
         }
