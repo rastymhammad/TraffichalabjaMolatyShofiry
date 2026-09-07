@@ -875,8 +875,11 @@
                     if (isBlocked || count >= maxQuota) {
                         badge.className = "status-badge status-closed";
                         dot.className = "dot dot-red";
-                        if (count >= maxQuota) { statusText.innerText = "به‌ داوای لێبوردنه‌وه‌ تۆماركردن بۆ سبه‌ینێ كۆتای هات تكایه‌ سبه‌ی سه‌عات ٦ ئێواره‌ هه‌وڵ بده‌ره‌وه‌"; } 
-                        else { statusText.innerText = "سیستەم داخراوە یان پشک تەواو بووە"; }
+                        if (count >= maxQuota) { 
+                            statusText.innerText = "پشکی سبەینێ تەواو بووە، چاوەڕێ بکە تا کاتژمێر 6ی ئێوارەی سبەینێ"; 
+                        } else { 
+                            statusText.innerText = "لە ئێستادا سیستەم داخراوە، کاتژمێر 6ی ئێوارە دەکرێتەوە"; 
+                        }
                         if (regBtn) { regBtn.disabled = true; regBtn.innerHTML = '<i class="fa-solid fa-lock"></i>'; }
                         startCountdown(); document.getElementById("countdownTimer").style.display = "block";
                     } else {
