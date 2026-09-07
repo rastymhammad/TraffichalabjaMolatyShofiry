@@ -806,31 +806,25 @@
             if(saved) {
                 try {
                     let ticket = JSON.parse(saved);
+                    let nowIraq = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Baghdad" }));
+                    let lastResetIraq = new Date(nowIraq);
+                    
+                    // کاتی سڕینەوەی سێرڤەر کاتژمێر 14:00 (٢ ی پاشنیوەڕۆ)
+                    lastResetIraq.setHours(14, 0, 0, 0);
+
+                    // ئەگەر ئێستا پێش ٢ی پاشنیوەڕۆیە، کەواتە کۆتا سڕینەوەی سێرڤەر دوێنێ کاتژمێر ٢ بووە
+                    if (nowIraq.getTime() < lastResetIraq.getTime()) {
+                        lastResetIraq.setDate(lastResetIraq.getDate() - 1);
+                    }
+
+                    let lastResetEpoch = lastResetIraq.getTime();
                     let isValid = false;
 
-                    if (ticket.timestamp) {
-                        let nowUTC = new Date();
-                        let lastResetUTC = new Date(nowUTC);
-                        // کاتی سڕینەوە لە عێراق 2 ی پاشنیوەڕۆیە (14:00)، کە دەکاتە 11:00 بە کاتی جیهانی (UTC)
-                        lastResetUTC.setUTCHours(11, 0, 0, 0); 
-
-                        // ئەگەر ئێستا پێش 11 ی جیهانییە، کەواتە کۆتا سڕینەوە دوێنێ بووە
-                        if (nowUTC.getTime() < lastResetUTC.getTime()) {
-                            lastResetUTC.setUTCDate(lastResetUTC.getUTCDate() - 1);
-                        }
-
-                        let lastResetEpoch = lastResetUTC.getTime();
-
-                        // پسوولەکە تەنها کاردەکات ئەگەر دوای کۆتا کاتی سڕینەوە گیرا بێت
-                        if (ticket.timestamp >= lastResetEpoch) {
-                            isValid = true;
-                        }
-                    } else {
-                        // بۆ پسوولە زۆر کۆنەکان
-                        let todayDateStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
-                        if(ticket.savedAt === todayDateStr) {
-                            isValid = true;
-                        }
+                    // ئەگەر پسوولەکە دوای کاتژمێر ٢ی پاشنیوەڕۆی ئەمڕۆ یان دوێنێ (کۆتا ڕێست) گیراوە، با بمێنێت
+                    if (ticket.timestamp && ticket.timestamp >= lastResetEpoch) {
+                        isValid = true;
+                    } else if (!ticket.timestamp && ticket.savedAt === new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' })) {
+                        isValid = true;
                     }
 
                     if(isValid) {
