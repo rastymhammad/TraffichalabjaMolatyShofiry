@@ -805,12 +805,41 @@
             let saved = localStorage.getItem("my_daily_ticket");
             if(saved) {
                 try {
-                    let ticket = JSON.parse(saved); let todayDateStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
-                    if(ticket.savedAt === todayDateStr) {
+                    let ticket = JSON.parse(saved);
+                    let currentTime = new Date().getTime();
+                    
+                    let isValid = false;
+                    
+                    // ئەگەر کاتی تۆمارکردنی تێدابوو، بزانە 20 کاتژمێری بەسەردا تێپەڕیوە یان نا
+                    if (ticket.timestamp) {
+                        let hoursPassed = (currentTime - ticket.timestamp) / (1000 * 60 * 60);
+                        if (hoursPassed < 20) {
+                            isValid = true;
+                        }
+                    } else {
+                        // بۆ ئەو کەسانەی پێشتر تۆماریان کردووە و timestamp یان نییە
+                        let todayDateStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
+                        if(ticket.savedAt === todayDateStr) {
+                            isValid = true;
+                        }
+                    }
+
+                    if(isValid) {
                         document.getElementById("savedTicketDiv").style.display = "block";
                         document.getElementById("registrationInputs").style.display = "none";
-                    } else localStorage.removeItem("my_daily_ticket"); 
-                } catch(e){}
+                    } else {
+                        localStorage.removeItem("my_daily_ticket");
+                        document.getElementById("savedTicketDiv").style.display = "none";
+                        document.getElementById("registrationInputs").style.display = "block";
+                    }
+                } catch(e){
+                    localStorage.removeItem("my_daily_ticket");
+                    document.getElementById("savedTicketDiv").style.display = "none";
+                    document.getElementById("registrationInputs").style.display = "block";
+                }
+            } else {
+                document.getElementById("savedTicketDiv").style.display = "none";
+                document.getElementById("registrationInputs").style.display = "block";
             }
         }
 
@@ -876,7 +905,7 @@
                         badge.className = "status-badge status-closed";
                         dot.className = "dot dot-red";
                         if (count >= maxQuota) { 
-                            statusText.innerText = "پشکی سبەینێ تەواو بووە، چاوەڕێ بکە تا کاتژمێر 6ی ئێوارەی سبەینێ"; 
+                            statusText.innerText = "پشکی بەیانی تەواو بووە، چاوەڕێ بکە تا کاتژمێر 6ی ئێوارەی سبەینێ"; 
                         } else { 
                             statusText.innerText = "لە ئێستادا سیستەم داخراوە، کاتژمێر 6ی ئێوارە دەکرێتەوە"; 
                         }
@@ -944,7 +973,8 @@
                     let result = await response.json().catch(() => ({}));
                     if(response.ok && result.ticket) {
                         let todayDateStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
-                        localStorage.setItem("my_daily_ticket", JSON.stringify({ name: result.ticket.name, phone: result.ticket.phone, rank: result.ticket.rank, time: result.ticket.time, qrCode: result.ticket.qrCode, date: result.ticket.date, savedAt: todayDateStr }));
+                        let currentTimestamp = new Date().getTime(); // پێدانی کاتی ئێستا
+                        localStorage.setItem("my_daily_ticket", JSON.stringify({ name: result.ticket.name, phone: result.ticket.phone, rank: result.ticket.rank, time: result.ticket.time, qrCode: result.ticket.qrCode, date: result.ticket.date, savedAt: todayDateStr, timestamp: currentTimestamp }));
                         checkSavedTicket();
                         Swal.fire({ html: generateTicketHTML(result.ticket.name, result.ticket.phone, result.ticket.rank, result.ticket.time, result.ticket.qrCode, result.ticket.date), confirmButtonText: 'باشە', confirmButtonColor: '#28a745' });
                     } else Swal.fire('هەڵە', result.message || 'کێشەیەک ڕوویدا', 'error');
@@ -962,7 +992,9 @@
                 if(response.ok) {
                     let todayDateStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
                     let searchQrToken = btoa(result.phone + "|" + todayDateStr.replace(/-/g, ''));
-                    localStorage.setItem("my_daily_ticket", JSON.stringify({ name: result.name, phone: result.phone, rank: result.rank, time: result.timeMessage, qrCode: searchQrToken, date: result.Date, savedAt: todayDateStr }));
+                    let oldTicket = JSON.parse(localStorage.getItem("my_daily_ticket") || "{}");
+                    let currentTimestamp = oldTicket.timestamp || new Date().getTime(); // پاراستنی کاتەکەی پێشوو
+                    localStorage.setItem("my_daily_ticket", JSON.stringify({ name: result.name, phone: result.phone, rank: result.rank, time: result.timeMessage, qrCode: searchQrToken, date: result.Date, savedAt: todayDateStr, timestamp: currentTimestamp }));
                     checkSavedTicket();
                     Swal.fire({ html: generateTicketHTML(result.name, result.phone, result.rank, result.timeMessage, searchQrToken, result.Date), confirmButtonText: 'باشە', confirmButtonColor: '#0056b3' });
                 } else Swal.fire('نەدۆزرایەوە', result.message || 'ناو نەدۆزرایەوە!', 'error');
@@ -1017,7 +1049,7 @@
             let openPreRegBtn = document.getElementById("openPreRegBtn");
             if(preRegForm) preRegForm.style.display = "none";
             if(openPreRegBtn) openPreRegBtn.style.display = "inline-block";
-            window.adminPwd = ""; window.tempPreRegPwd = ""; adminClickCount = 0;
+            window.adminPwd = ""; window.tempPreRegPwd = adminClickCount = 0;
         }
 
         async function loadAdminStats() {
