@@ -199,6 +199,7 @@
             border-radius: 6px; font-size: 14px; font-family: 'Rabar', Tahoma, Arial, sans-serif; outline: none; transition: 0.3s;
             background: var(--input-bg); color: var(--input-text); user-select: text;
         }
+        .input-wrapper input:disabled { background-color: #e9ecef; cursor: not-allowed; opacity: 0.7; }
         .input-wrapper input.valid-input { border-color: #28a745 !important; box-shadow: 0 0 5px rgba(40, 167, 69, 0.3); }
         .input-wrapper input.invalid-input { border-color: #f5c6cb !important; box-shadow: 0 0 5px rgba(245, 198, 203, 0.5); }
 
@@ -808,11 +809,8 @@
                     let ticket = JSON.parse(saved);
                     let nowIraq = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Baghdad" }));
                     let lastResetIraq = new Date(nowIraq);
-                    
-                    // کاتی سڕینەوەی سێرڤەر کاتژمێر 14:00 (٢ ی پاشنیوەڕۆ)
                     lastResetIraq.setHours(14, 0, 0, 0);
 
-                    // ئەگەر ئێستا پێش ٢ی پاشنیوەڕۆیە، کەواتە کۆتا سڕینەوەی سێرڤەر دوێنێ کاتژمێر ٢ بووە
                     if (nowIraq.getTime() < lastResetIraq.getTime()) {
                         lastResetIraq.setDate(lastResetIraq.getDate() - 1);
                     }
@@ -820,7 +818,6 @@
                     let lastResetEpoch = lastResetIraq.getTime();
                     let isValid = false;
 
-                    // ئەگەر پسوولەکە دوای کاتژمێر ٢ی پاشنیوەڕۆی ئەمڕۆ یان دوێنێ (کۆتا ڕێست) گیراوە، با بمێنێت
                     if (ticket.timestamp && ticket.timestamp >= lastResetEpoch) {
                         isValid = true;
                     } else if (!ticket.timestamp && ticket.savedAt === new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' })) {
@@ -891,12 +888,16 @@
                     let dot = document.getElementById("statusDot");
                     let statusText = document.getElementById("statusText");
                     let regBtn = document.getElementById("registerBtn");
+                    let nameInput = document.getElementById("nameInput");
+                    let phoneInput = document.getElementById("phoneInput");
 
                     if (result.isActive === false) {
                         badge.className = "status-badge status-closed";
                         dot.className = "dot dot-red";
                         statusText.innerText = result.closeMessage || "سیستەم داخراوە یان پشک تەواو بووە";
-                        if (regBtn) { regBtn.disabled = true; regBtn.innerHTML = '<i class="fa-solid fa-lock"></i>'; }
+                        if (regBtn) { regBtn.disabled = true; regBtn.innerHTML = '<i class="fa-solid fa-lock"></i> چاوەڕێ بکە'; }
+                        if (nameInput) nameInput.disabled = true;
+                        if (phoneInput) phoneInput.disabled = true;
                         return; 
                     }
                     
@@ -912,12 +913,16 @@
                         } else { 
                             statusText.innerText = "لە ئێستادا سیستەم داخراوە، کاتژمێر 6ی ئێوارە دەکرێتەوە"; 
                         }
-                        if (regBtn) { regBtn.disabled = true; regBtn.innerHTML = '<i class="fa-solid fa-lock"></i>'; }
+                        if (regBtn) { regBtn.disabled = true; regBtn.innerHTML = '<i class="fa-solid fa-lock"></i> چاوەڕێ بکە'; }
+                        if (nameInput) nameInput.disabled = true;
+                        if (phoneInput) phoneInput.disabled = true;
                         startCountdown(); document.getElementById("countdownTimer").style.display = "block";
                     } else {
                         badge.className = "status-badge status-open";
                         dot.className = "dot dot-green";
                         statusText.innerText = "دۆخی سیستەم: کراوەیە بۆ تۆمارکردن";
+                        if (nameInput) nameInput.disabled = false;
+                        if (phoneInput) phoneInput.disabled = false;
                         validateFormInputs();
                     }
                 }
@@ -976,7 +981,7 @@
                     let result = await response.json().catch(() => ({}));
                     if(response.ok && result.ticket) {
                         let todayDateStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
-                        let currentTimestamp = new Date().getTime(); // پێدانی کاتی ئێستا
+                        let currentTimestamp = new Date().getTime(); 
                         localStorage.setItem("my_daily_ticket", JSON.stringify({ name: result.ticket.name, phone: result.ticket.phone, rank: result.ticket.rank, time: result.ticket.time, qrCode: result.ticket.qrCode, date: result.ticket.date, savedAt: todayDateStr, timestamp: currentTimestamp }));
                         checkSavedTicket();
                         Swal.fire({ html: generateTicketHTML(result.ticket.name, result.ticket.phone, result.ticket.rank, result.ticket.time, result.ticket.qrCode, result.ticket.date), confirmButtonText: 'باشە', confirmButtonColor: '#28a745' });
@@ -996,7 +1001,7 @@
                     let todayDateStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
                     let searchQrToken = btoa(result.phone + "|" + todayDateStr.replace(/-/g, ''));
                     let oldTicket = JSON.parse(localStorage.getItem("my_daily_ticket") || "{}");
-                    let currentTimestamp = oldTicket.timestamp || new Date().getTime(); // پاراستنی کاتەکەی پێشوو
+                    let currentTimestamp = oldTicket.timestamp || new Date().getTime(); 
                     localStorage.setItem("my_daily_ticket", JSON.stringify({ name: result.name, phone: result.phone, rank: result.rank, time: result.timeMessage, qrCode: searchQrToken, date: result.Date, savedAt: todayDateStr, timestamp: currentTimestamp }));
                     checkSavedTicket();
                     Swal.fire({ html: generateTicketHTML(result.name, result.phone, result.rank, result.timeMessage, searchQrToken, result.Date), confirmButtonText: 'باشە', confirmButtonColor: '#0056b3' });
@@ -1036,7 +1041,7 @@
                         document.getElementById("adminSection").scrollIntoView({ behavior: 'smooth' });
                         loadAdminStats();
                     } else {
-                        Swal.fire('هەڵەیه‌', 'پاسوۆردەکە هەڵەیە بەپێی سێرڤەرەکە!', 'error');
+                        Swal.fire('هەڵە', 'پاسوۆردەکە هەڵەیە بەپێی سێرڤەرەکە!', 'error');
                     }
                 } catch(e) { 
                     Swal.fire('کێشە', 'سێرڤەرەکە خەوتووە یان کێشەی هێڵ هەیە، تکایە دووبارە تاقیبکەرەوە!', 'error'); 
@@ -1141,7 +1146,7 @@
                 }
                 if (!response.ok) {
                     let errResult = await response.json().catch(() => ({}));
-                    Swal.fire('هەڵە', errResult.message || 'پاسۆردەکە هەڵەیە بەپێی سێرڤەر!', 'error');
+                    Swal.fire('هەڵە', errResult.message || 'پاسوۆردەکە هەڵەیە بەپێی سێرڤەر!', 'error');
                     tbody.innerHTML = ""; table.style.display = "none"; return;
                 }
                 
@@ -1199,7 +1204,7 @@
                         document.getElementById("openPreRegBtn").style.display = "none"; 
                         document.getElementById("preRegForm").style.display = "block";
                         window.tempPreRegPwd = normalizedPwd; 
-                    } else { Swal.fire('هەڵەیه‌', 'پاسوۆردەکە هەڵەیە بەپێی سێرڤەرەکە!', 'error'); }
+                    } else { Swal.fire('هەڵە', 'پاسوۆردەکە هەڵەیە بەپێی سێرڤەرەکە!', 'error'); }
                 } catch(e) { Swal.fire('کێشە', 'سێرڤەرەکە خەوتووە یان کێشەی هێڵ هەیە!', 'error'); }
             }
         }
@@ -1232,9 +1237,9 @@
             });
             if (formValues) {
                 let newName = formValues[0].trim(); let newPhone = formValues[1].trim();
-                if (!newName || !newPhone) return Swal.fire('هەڵەیه‌', 'تکایە هەردوو خانەکە پڕبکەرەوە', 'error');
-                if (!newPhone.startsWith("077") && !newPhone.startsWith("075") && !newPhone.startsWith("078")) return Swal.fire('هەڵەیه‌', 'ژمارەی مۆبایل دەبێت بە 077 یان 075 یان 078 دەست پێبکات', 'error');
-                if (newPhone.length !== 11) return Swal.fire('هەڵەیه‌', 'ژمارەی مۆبایل دەبێت 11 ژمارە بێت', 'error');
+                if (!newName || !newPhone) return Swal.fire('هەڵە', 'تکایە هەردوو خانەکە پڕبکەرەوە', 'error');
+                if (!newPhone.startsWith("077") && !newPhone.startsWith("075") && !newPhone.startsWith("078")) return Swal.fire('هەڵە', 'ژمارەی مۆبایل دەبێت بە 077 یان 075 یان 078 دەست پێبکات', 'error');
+                if (newPhone.length !== 11) return Swal.fire('هەڵە', 'ژمارەی مۆبایل دەبێت 11 ژمارە بێت', 'error');
                 
                 Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
                 try {
@@ -1287,7 +1292,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 const swCode = `
-                    const CACHE_NAME = 'traffic-halabja-offline-v14';
+                    const CACHE_NAME = 'traffic-halabja-offline-v15';
                     const ASSETS = [
                         './',
                         'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
