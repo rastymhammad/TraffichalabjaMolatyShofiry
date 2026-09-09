@@ -1,6 +1,6 @@
 {
   "name": "سیستەمی هاتووچۆی هەڵەبجە",
-  "short_name": "نۆرەی هاتووچۆ",
+  "short_name": "Halabja Traffic",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f0f8ff",
