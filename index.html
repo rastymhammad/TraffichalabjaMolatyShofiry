@@ -628,6 +628,13 @@
         <button class="action-btn" onclick="window.location.href=window.location.origin + window.location.pathname" style="background: #0056b3; margin-top: 15px;">گەڕانەوە بۆ سەرەتا</button>
     </div>
 
+    <!-- === دوگمەی دابەزاندنی ئەپڵیکەیشن === -->
+    <div id="installAppContainer" style="display: none; text-align: center; margin-bottom: 15px;" class="no-print">
+        <button id="installAppBtn" class="action-btn" style="background: #28a745; width: auto; padding: 10px 25px; border-radius: 25px; box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);">
+            <i class="fa-solid fa-download"></i> دابەزاندنی ئەپڵیکەیشن (Install)
+        </button>
+    </div>
+
     <!-- === فوتەر و سۆشیاڵ میدیا === -->
     <footer>
         <p style="margin: 0 0 5px 0;">هەموو مافێکی پارێزراوە بۆ بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە &copy; 2026</p>
@@ -1440,47 +1447,53 @@
             } else openSection('portal');
         };
 
+        // ==== سیستەمی دابەزاندنی ئەپڵیکەیشن (PWA Install) ====
+        let deferredPrompt;
+        const installAppContainer = document.getElementById('installAppContainer');
+        const installAppBtn = document.getElementById('installAppBtn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // ڕێگریکردن لە دەرکەوتنی نامەی ئۆتۆماتیکی وێبگەڕ
+            e.preventDefault();
+            // پاشەکەوتکردنی ئیڤێنتەکە بۆ ئەوەی دواتر بە دوگمەکە کاری پێبکەین
+            deferredPrompt = e;
+            // نیشاندانی دوگمەی دابەزاندن
+            installAppContainer.style.display = 'block';
+        });
+
+        installAppBtn.addEventListener('click', async () => {
+            // شاردنەوەی دوگمەکە دوای کلیک کردن
+            installAppContainer.style.display = 'none';
+            
+            // نیشاندانی پەنجەرەی دابەزاندن بە بەکارهێنەر
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                // چاوەڕێی وەڵامی بەکارهێنەر بکە
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                } else {
+                    console.log('User dismissed the install prompt');
+                    // ئەگەر پەشیمان بووەوە، با دوگمەکە بگەڕێتەوە
+                    installAppContainer.style.display = 'block';
+                }
+                deferredPrompt = null;
+            }
+        });
+
+        // کاتێک ئەپەکە بە سەرکەوتوویی دادەبەزێت دوگمەکە بشارەوە
+        window.addEventListener('appinstalled', () => {
+            installAppContainer.style.display = 'none';
+            deferredPrompt = null;
+            console.log('PWA was installed');
+        });
+
+        // ==== تۆمارکردنی Service Worker ====
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                const swCode = `
-                    const CACHE_NAME = 'traffic-halabja-offline-v15';
-                    const ASSETS = [
-                        './',
-                        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
-                        'https://cdn.jsdelivr.net/npm/sweetalert2@11',
-                        'https://cdn.jsdelivr.net/npm/qrcodejs/1.0.0/qrcode.min.js',
-                        'https://cdn.jsdelivr.net/npm/chart.js'
-                    ];
-
-                    self.addEventListener('install', e => {
-                        e.waitUntil(
-                            caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting())
-                        );
-                    });
-
-                    self.addEventListener('activate', e => {
-                        e.waitUntil(
-                            caches.keys().then(keys => Promise.all(
-                                keys.map(k => k !== CACHE_NAME && caches.delete(k))
-                            )).then(() => self.clients.claim())
-                        );
-                    });
-
-                    self.addEventListener('fetch', e => {
-                        e.respondWith(
-                            caches.match(e.request).then(cachedRes => {
-                                return cachedRes || fetch(e.request).catch(() => {
-                                    if (e.request.mode === 'navigate') {
-                                        return caches.match('./');
-                                    }
-                                });
-                            })
-                        );
-                    });
-                `;
-                const swBlob = new Blob([swCode], {type: 'application/javascript'});
-                const swUrl = URL.createObjectURL(swBlob);
-                navigator.serviceWorker.register(swUrl).catch(err => console.log('SW Error:', err));
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('Service Worker تۆمارکرا بە سەرکەوتوویی', reg))
+                    .catch(err => console.log('کێشە لە تۆمارکردنی Service Worker', err));
             });
         }
     </script>
