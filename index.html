@@ -1108,18 +1108,12 @@
 
                 let diff = Math.max(target - now, 0);
                 
-                // هەژمارکردنی ڕۆژ، کات، خولەک و چرکە بە شێوازێکی تەواو
-                let days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                let h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                // هەژمارکردنی کۆی گشتی کاتژمێرەکان بۆ ئەوەی ڕوکارەکەی ڕێک و بێخەوش بێت
+                let totalHours = Math.floor(diff / (1000 * 60 * 60));
                 let m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 let s = Math.floor((diff % (1000 * 60)) / 1000);
                 
-                let timeString = "";
-                if (days > 0) {
-                    timeString = `${days} ڕۆژ و ${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-                } else {
-                    timeString = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-                }
+                let timeString = `${totalHours.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
 
                 document.getElementById("timerValue").innerHTML = `⏳ کاتی ماوە بۆ کردنەوەی داهاتووی سیستەم: <span dir="ltr">${timeString}</span>`;
             }, 1000);
