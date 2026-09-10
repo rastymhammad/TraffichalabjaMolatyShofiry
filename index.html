@@ -1060,7 +1060,9 @@
                     
                     const dateInIraq = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Baghdad"}));
                     const iraqHour = dateInIraq.getHours(); const dayOfWeek = dateInIraq.getDay(); 
-                    let isBlocked = (dayOfWeek === 4 && iraqHour >= 14) || dayOfWeek === 5 || (dayOfWeek === 6 && iraqHour < 18) || (iraqHour >= 14 && iraqHour < 18);
+                    
+                    // پێنجشەممە (4) لە کاتژمێر 14:00 بە دواوە، هەینی (5)، و شەممە (6) پێش کاتژمێر 18:00 داخراوە
+                    let isBlocked = (dayOfWeek === 4 && iraqHour >= 14) || dayOfWeek === 5 || (dayOfWeek === 6 && iraqHour < 18);
                     
                     if (isBlocked || count >= maxQuota) {
                         badge.className = "status-badge status-closed";
@@ -1068,7 +1070,7 @@
                         if (count >= maxQuota) { 
                             statusText.innerText = "پشکی بەیانی تەواو بووە، چاوەڕێ بکە تا کاتژمێر 6ی ئێوارەی سبەینێ"; 
                         } else { 
-                            statusText.innerText = "لە ئێستادا سیستەم داخراوە، کاتژمێر 6ی ئێوارە دەکرێتەوە"; 
+                            statusText.innerText = "لە ئێستادا سیستەم داخراوە، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێتەوە"; 
                         }
                         if (regBtn) { regBtn.disabled = true; regBtn.innerHTML = '<i class="fa-solid fa-lock"></i> چاوەڕێ بکە'; }
                         if (nameInput) nameInput.disabled = true;
@@ -1090,11 +1092,20 @@
             if (timerInterval) clearInterval(timerInterval);
             timerInterval = setInterval(() => {
                 const now = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Baghdad"}));
-                let target = new Date(now); target.setHours(18, 0, 0, 0);
-                let day = now.getDay(), hour = now.getHours();
-                if ((day === 4 && hour >= 14) || day === 5 || (day === 6 && hour < 18)) target.setDate(now.getDate() + ((6 - day + 7) % 7)); 
-                else if (hour >= 18) { if (day === 3) target.setDate(now.getDate() + 3); else if (day === 4) target.setDate(now.getDate() + 2); else target.setDate(now.getDate() + 1); } 
-                else if (hour >= 14 && hour < 18) {} else { if (day === 4) target.setDate(now.getDate() + 2); }
+                let target = new Date(now); 
+                let day = now.getDay();
+
+                // دیاریکردنی کاتی کردنەوە بۆ کاتژمێر 6ی ئێوارەی ڕۆژی شەممە
+                target.setHours(18, 0, 0, 0);
+
+                if (day === 4) {
+                    target.setDate(now.getDate() + 2); // دوو ڕۆژ پاش پێنجشەممە دەبێتە شەممە
+                } else if (day === 5) {
+                    target.setDate(now.getDate() + 1); // ڕۆژی هەینی یەک ڕۆژی دەوێت تا دەبێتە شەممە
+                } else if (day === 6 && now.getHours() >= 18) {
+                    target.setDate(now.getDate() + 7); // ئەگەر شەممە ئێوارە تێپەڕیبوو، با بۆ شەممەی داهاتوو بێت
+                }
+
                 let diff = Math.max(target - now, 0);
                 let h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 let m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
@@ -1453,35 +1464,25 @@
         const installAppBtn = document.getElementById('installAppBtn');
 
         window.addEventListener('beforeinstallprompt', (e) => {
-            // ڕێگریکردن لە دەرکەوتنی نامەی ئۆتۆماتیکی وێبگەڕ
             e.preventDefault();
-            // پاشەکەوتکردنی ئیڤێنتەکە بۆ ئەوەی دواتر بە دوگمەکە کاری پێبکەین
             deferredPrompt = e;
-            // نیشاندانی دوگمەی دابەزاندن
             installAppContainer.style.display = 'block';
         });
 
         installAppBtn.addEventListener('click', async () => {
-            // شاردنەوەی دوگمەکە دوای کلیک کردن
             installAppContainer.style.display = 'none';
-            
-            // نیشاندانی پەنجەرەی دابەزاندن بە بەکارهێنەر
             if (deferredPrompt) {
                 deferredPrompt.prompt();
-                // چاوەڕێی وەڵامی بەکارهێنەر بکە
                 const { outcome } = await deferredPrompt.userChoice;
                 if (outcome === 'accepted') {
                     console.log('User accepted the install prompt');
                 } else {
-                    console.log('User dismissed the install prompt');
-                    // ئەگەر پەشیمان بووەوە، با دوگمەکە بگەڕێتەوە
                     installAppContainer.style.display = 'block';
                 }
                 deferredPrompt = null;
             }
         });
 
-        // کاتێک ئەپەکە بە سەرکەوتوویی دادەبەزێت دوگمەکە بشارەوە
         window.addEventListener('appinstalled', () => {
             installAppContainer.style.display = 'none';
             deferredPrompt = null;
