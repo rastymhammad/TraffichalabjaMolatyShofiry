@@ -19,16 +19,12 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <!-- زیادکردنی سکریپتی پاراستنی Cloudflare Turnstile -->
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
     <style>
         @font-face {
-            font-family: 'Rudaw Bold';
-            src: url('https://kurdish-fonts.com/fonts/rudaw/Rudaw-Bold.ttf') format('truetype'),
-                 url('https://kurdish-fonts.com/fonts/rudaw/Rudaw.ttf') format('truetype');
-            font-weight: bold; font-style: normal;
+            font-family: 'Rabar';
+            src: url('https://kurdish-fonts.com/fonts/rabar/Rabar_013.ttf') format('truetype');
+            font-weight: normal; font-style: normal;
         }
 
         /* --- بنچینەی هاوبەش --- */
@@ -104,7 +100,7 @@
         }
 
         body {
-            font-family: 'Rudaw Bold', Tahoma, Arial, sans-serif;
+            font-family: 'Rabar', Tahoma, Arial, sans-serif;
             background-color: var(--bg-body);
             color: var(--text-main);
             padding: 15px 10px 0 10px;
@@ -129,73 +125,134 @@
         }
         
         #portalSection, #queueSection, #fineSection { width: 100%; }
+        
         #queueSection #adminSection { max-width: 700px; width: 100%; margin: 0 auto; }
 
         .header-title {
             position: relative;
-            background: var(--header-bg); padding: 15px 10px; border-radius: 12px;
+            background: var(--header-bg); padding: 15px 20px; border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin: 10px auto 15px auto; border-bottom: 4px solid #0056b3;
             transition: 0.3s; width: 100%;
-            display: flex; align-items: center; justify-content: center; min-height: 60px;
+            display: flex; align-items: center; justify-content: center;
         }
         body.dark-mode .header-title { border-bottom-color: #4da3ff; }
-        .header-title h1 { color: var(--header-text); font-size: 16px; margin: 0; font-weight: bold; text-align: center; width: 100%; }
-
+        
+        .header-title h1 { color: var(--header-text); font-size: 17px; margin: 0; font-weight: bold; text-align: center; }
+        
         .theme-toggle-btn {
             position: absolute;
-            left: 12px;
+            left: 15px;
             top: 50%;
             transform: translateY(-50%);
             background: transparent; border: none;
-            font-size: 20px; cursor: pointer; padding: 0; margin: 0;
-            transition: transform 0.2s; z-index: 10;
+            font-size: 22px; cursor: pointer; padding: 0; margin: 0;
+            transition: transform 0.2s;
+            z-index: 10;
         }
         .theme-toggle-btn:hover { transform: translateY(-50%) scale(1.1); }
 
-        .visitor-counter { text-align: center; font-size: 12px; color: var(--label-color); margin-bottom: 8px; font-weight: bold; }
+        .visitor-counter {
+            text-align: center; 
+            font-size: 12px; 
+            color: var(--label-color); 
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
         .visitor-counter b { color: var(--text-main); }
 
-        /* --- سلایدی تێبینی زیرەک --- */
+        /* --- سلایدی تێبینی زیرەک (سەنتەرکراو و خاو) --- */
         .notice-slider-box {
-            background: var(--bg-container); border: 2px solid #0056b3; border-radius: 12px;
-            padding: 12px 15px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,86,179,0.08);
-            text-align: center; width: 100%; overflow: hidden; position: relative;
+            background: var(--bg-container);
+            border: 2px solid #0056b3;
+            border-radius: 12px;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0,86,179,0.08);
+            text-align: center;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
         }
         body.dark-mode .notice-slider-box { border-color: #4da3ff; }
         
         .notice-header-row {
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            font-size: 13px; font-weight: bold; color: #0056b3; margin-bottom: 8px;
-            border-bottom: 1px dashed var(--border-container); padding-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #0056b3;
+            margin-bottom: 8px;
+            border-bottom: 1px dashed var(--border-container);
+            padding-bottom: 6px;
         }
         body.dark-mode .notice-header-row { color: #4da3ff; }
 
-        .notice-scroll-container.horizontal { width: 100%; height: 30px; display: flex; align-items: center; }
-        .notice-scroll-container.horizontal marquee { font-size: 12px; color: var(--text-main); font-weight: bold; width: 100%; text-align: center; }
-        
-        .notice-scroll-container.vertical { width: 100%; height: 110px; overflow: hidden; position: relative; text-align: center; }
-        .notice-scroll-container.vertical marquee { font-size: 12px; color: var(--text-main); line-height: 1.8; white-space: pre-line; text-align: center; width: 100%; height: 100%; }
+        .notice-scroll-container.horizontal {
+            width: 100%;
+            height: 30px;
+            display: flex;
+            align-items: center;
+        }
+        .notice-scroll-container.horizontal marquee {
+            font-size: 12px;
+            color: var(--text-main);
+            font-weight: bold;
+            width: 100%;
+            text-align: center; /* سەنتەر */
+        }
+
+        .notice-scroll-container.vertical {
+            width: 100%;
+            height: 110px;
+            overflow: hidden;
+            position: relative;
+            text-align: center;
+        }
+        .notice-scroll-container.vertical marquee {
+            font-size: 12px;
+            color: var(--text-main);
+            line-height: 1.8;
+            white-space: pre-line;
+            text-align: center; /* سەنتەر */
+            width: 100%;
+            height: 100%;
+        }
         
         /* --- پۆرتال و مێنیوی سەرەکی --- */
         .portal-cards { display: flex; flex-direction: column; gap: 12px; width: 100%; align-items: center; }
         .portal-card {
-            position: relative; background: var(--header-bg); border: 2px solid var(--border-container); border-radius: 12px;
-            padding: 20px 15px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
-            display: flex; align-items: center; justify-content: center; width: 100%; max-width: 380px; margin: 0 auto; min-height: 95px;
+            position: relative;
+            background: var(--header-bg); border: 2px solid var(--border-container); border-radius: 12px;
+            padding: 20px 15px; cursor: pointer; transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+            display: flex; align-items: center; justify-content: center; 
+            width: 100%; max-width: 380px; margin: 0 auto;
+            min-height: 95px;
         }
         .portal-card:hover { transform: translateY(-4px); border-color: #0056b3; box-shadow: 0 8px 20px rgba(0,86,179,0.15); }
         body.dark-mode .portal-card:hover { border-color: #4da3ff; box-shadow: 0 8px 20px rgba(77,163,255,0.15); }
         
-        .portal-card i { position: absolute; right: 20px; font-size: 32px; color: #0056b3; }
+        .portal-card i { 
+            position: absolute; 
+            right: 20px;
+            font-size: 32px; 
+            color: #0056b3; 
+        }
         body.dark-mode .portal-card i { color: #4da3ff; }
         
-        .portal-card-content { text-align: center; width: 100%; padding: 0 35px; }
+        .portal-card-content { 
+            text-align: center; 
+            width: 100%;
+            padding: 0 35px; 
+        }
         .portal-card-content h3 { margin: 0 0 6px 0; font-size: 15px; color: var(--text-main); font-weight: bold; }
         .portal-card-content p { margin: 0; font-size: 11px; color: var(--label-color); }
 
         .back-btn {
             background: #007bff; color: white; border: none; padding: 12px 15px; border-radius: 10px;
-            font-family: 'Rudaw Bold'; font-size: 13.5px; font-weight: bold; cursor: pointer; 
+            font-family: 'Rabar'; font-size: 13.5px; font-weight: bold; cursor: pointer; 
             margin-bottom: 15px; width: 100%; transition: all 0.3s ease;
             box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2); display: flex; align-items: center; justify-content: center; gap: 8px;
         }
@@ -213,62 +270,23 @@
 
         .input-wrapper { position: relative; width: 100%; margin: 8px 0; }
         .input-wrapper i { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--header-text); font-size: 16px; }
-        .input-wrapper input, .input-wrapper textarea {
-            width: 100%; box-sizing: border-box; border: 2px solid var(--input-border);
-            border-radius: 6px; font-size: 14px; font-family: 'Rudaw Bold', Tahoma, sans-serif; outline: none; transition: 0.3s;
+        .input-wrapper input {
+            width: 100%; padding: 10px 35px 10px 10px; box-sizing: border-box; border: 2px solid var(--input-border);
+            border-radius: 6px; font-size: 14px; font-family: 'Rabar', Tahoma, Arial, sans-serif; outline: none; transition: 0.3s;
             background: var(--input-bg); color: var(--input-text); user-select: text;
-            padding: 10px 35px 10px 10px;
         }
-
         .input-wrapper input:disabled { background-color: #e9ecef; cursor: not-allowed; opacity: 0.7; }
         .input-wrapper input.valid-input { border-color: #28a745 !important; box-shadow: 0 0 5px rgba(40, 167, 69, 0.3); }
         .input-wrapper input.invalid-input { border-color: #f5c6cb !important; box-shadow: 0 0 5px rgba(245, 198, 203, 0.5); }
-        
-        /* --- دوگمەکانی هەڵبژاردنی ڕۆژ (لە یەک ڕیزدا) --- */
-        .day-selector-container { margin: 10px 0 15px 0; text-align: right; }
-        .day-selector-label { font-size: 13px; font-weight: bold; color: var(--text-main); margin-bottom: 10px; display: block; }
-        
-        .day-btn-group { 
-            display: flex; gap: 5px; flex-wrap: nowrap; justify-content: space-between; 
-            overflow-x: auto; padding-bottom: 5px; -webkit-overflow-scrolling: touch;
-        }
-        
-        .day-btn {
-            background: var(--input-bg); border: 1px solid var(--border-container); color: var(--text-main);
-            padding: 8px 4px; border-radius: 10px; cursor: pointer; font-family: 'Rudaw Bold', Tahoma, sans-serif;
-            transition: 0.3s; flex: 1 0 auto; text-align: center; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
-            min-width: 60px;
-        }
-        .day-btn:hover { border-color: #0056b3; transform: translateY(-2px); }
-        body.dark-mode .day-btn:hover { border-color: #4da3ff; }
-        
-        .day-btn.active { background: #0056b3; color: white; border-color: #0056b3; transform: scale(1.05); }
-        body.dark-mode .day-btn.active { background: #4da3ff; color: #121212; border-color: #4da3ff; }
 
-        .day-name { font-size: 11px; }
-        .day-count { 
-            font-size: 10px; background: rgba(0,86,179,0.1); color: #0056b3; 
-            padding: 2px 6px; border-radius: 10px; font-weight: bold; 
-        }
-        
-        .day-btn.active .day-count { background: rgba(255,255,255,0.25); color: white; }
-        body.dark-mode .day-count { background: rgba(77,163,255,0.1); color: #4da3ff; }
-        body.dark-mode .day-btn.active .day-count { background: rgba(18,18,18,0.3); color: #121212; }
-
-        /* حاڵەتی پڕبوون (Full) */
-        .day-btn.full { cursor: not-allowed; opacity: 0.6; pointer-events: none;}
-        .day-btn.full .day-count { background: rgba(220, 53, 69, 0.1); color: #dc3545; }
-        .day-btn.full.active .day-count { color: #fff; background: rgba(255,255,255,0.3); }
-
-        button.action-btn { background: #28a745; color: white; border: none; padding: 12px 20px; cursor: pointer; border-radius: 6px; font-size: 15px; font-weight: bold; width: 100%; margin-top: 8px; font-family: 'Rudaw Bold'; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        button.action-btn { background: #28a745; color: white; border: none; padding: 12px 20px; cursor: pointer; border-radius: 6px; font-size: 15px; font-weight: bold; width: 100%; margin-top: 8px; font-family: 'Rabar'; transition: 0.3s; }
         button.action-btn:disabled { background: #cccccc !important; color: #666666 !important; cursor: not-allowed !important; box-shadow: none !important; }
         button.action-btn:hover:not(:disabled) { background: #218838; }
-        .search-btn { background: #007bff; margin-top: 8px;}
+        .search-btn { background: #007bff; }
         .search-btn:hover { background: #0056b3; }
         
         .timer-box { background: rgba(220, 53, 69, 0.08); border: 1px dashed #dc3545; padding: 8px 10px; border-radius: 8px; font-size: 13px; color: #d9534f; margin-top: 12px; font-weight: bold; display: none; text-align: center; }
-        .timer-box span { font-size: 12px; color: #dc3545; display: inline-block; margin: 0 5px; }
+        .timer-box span { font-size: 12px; color: #dc3545; display: inline-block; margin-left: 5px; }
 
         .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 15px; }
         #usersTable { width: 100%; border-collapse: collapse; text-align: center; font-size: 11px; }
@@ -283,12 +301,12 @@
         body.dark-mode .dash-card h3 { color: #4da3ff; }
         .chart-container { max-width: 160px; margin: 0 auto; }
 
-        .fine-container { background: var(--bg-container); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 18px; border: 2px solid var(--border-container); text-align: right; width: 100%; }
+        .fine-container { background: var(--bg-container); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 18px; border: 2px solid var(--border-container); text-align: center; width: 100%; }
         .toggle-container { display: flex; justify-content: space-between; align-items: center; background: var(--toggle-bg); padding: 10px; border-radius: 10px; margin-bottom: 12px; border: 1px solid var(--toggle-border); }
         .switch { position: relative; display: inline-block; width: 50px; height: 28px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--slider-bg); border-radius: 28px; }
-        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; left: 4px; }
+        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: #48bb78; }
         input:checked + .slider:before { transform: translateX(22px); }
 
@@ -329,6 +347,7 @@
         .grid-item { padding: 8px; min-height: 38px; display: flex; align-items: center; justify-content: center; background: var(--grid-bg); border-radius: 6px; font-weight: bold; color: var(--input-text); cursor: pointer; font-size: 13px;}
         .grid-item.selected-item { background: #3182ce !important; color: white !important; }
 
+        /* --- Footer & Social Icons --- */
         footer { 
             background-color: var(--header-bg); color: var(--text-main); text-align: center; 
             padding: 15px; margin-top: 25px; border-radius: 12px 12px 0 0; font-size: 12px; 
@@ -365,7 +384,7 @@
         <!-- === پۆرتاڵ (مێنیوی سەرەکی) === -->
         <div id="portalSection">
             <div class="visitor-counter no-print">
-                <span>👁️ ژمارەی بەکارهێنەر: </span><b class="visitor-count-text">...</b>
+                👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
             </div>
             
             <!-- سلایدی تێبینی زیرەک (سەنتەردار، ڕاستەوخۆ، خاو و وەستان بە ماوس) -->
@@ -399,12 +418,10 @@
 
         <!-- === سیستەمی نۆرەگرتن === -->
         <div id="queueSection" style="display: none;">
-            <button class="back-btn no-print" onclick="openSection('portal')">
-                <i class="fa-solid fa-arrow-right"></i> <span>گەڕانەوە بۆ سەرەتا</span>
-            </button>
+            <button class="back-btn no-print" onclick="openSection('portal')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە بۆ سەرەتا</button>
             
             <div class="visitor-counter no-print">
-                <span>👁️ ژمارەی بەکارهێنەر: </span><b class="visitor-count-text">...</b>
+                👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
             </div>
 
             <div id="statusBadge" class="status-badge status-open no-print">
@@ -418,56 +435,21 @@
                 <div id="savedTicketDiv" style="display: none; background: #e9ecef; padding: 15px; border-radius: 8px; border: 2px solid #28a745; margin-bottom: 15px;">
                     <p style="margin: 0 0 10px 0; color: #155724; font-weight: bold; font-size: 13px;">بەڕێز، تۆ ئەمڕۆ نۆرەت گرتووە!</p>
                     <button onclick="showSavedTicket()" class="action-btn" style="margin: 0; padding: 10px; font-size: 14px;">
-                        <i class="fa-solid fa-ticket"></i> <span>پیشاندانی پسوولەکەم</span>
+                        <i class="fa-solid fa-ticket"></i> پیشاندانی پسوولەکەم
                     </button>
                 </div>
                 
                 <div id="registrationInputs">
-                    
-                    <!-- بەشی هەڵبژاردنی ڕۆژی سەردان لە یەک ڕیزدا بە قەبارەی بچووکتر و ژمارەی کەسەکان -->
-                    <div class="day-selector-container">
-                        <label class="day-selector-label">ڕۆژی سەردانیکردن هەڵبژێرە:</label>
-                        <div class="day-btn-group" id="visitDayContainer">
-                            <button class="day-btn" onclick="selectVisitDay('یەکشەممە', this)" id="btn-day-Sun">
-                                <span class="day-name">یەکشەممە</span>
-                                <span class="day-count" id="count-Sun">...</span>
-                            </button>
-                            <button class="day-btn" onclick="selectVisitDay('دووشەممە', this)" id="btn-day-Mon">
-                                <span class="day-name">دووشەممە</span>
-                                <span class="day-count" id="count-Mon">...</span>
-                            </button>
-                            <button class="day-btn" onclick="selectVisitDay('سێشەممە', this)" id="btn-day-Tue">
-                                <span class="day-name">سێشەممە</span>
-                                <span class="day-count" id="count-Tue">...</span>
-                            </button>
-                            <button class="day-btn" onclick="selectVisitDay('چوارشەممە', this)" id="btn-day-Wed">
-                                <span class="day-name">چوارشەممە</span>
-                                <span class="day-count" id="count-Wed">...</span>
-                            </button>
-                            <button class="day-btn" onclick="selectVisitDay('پێنجشەممە', this)" id="btn-day-Thu">
-                                <span class="day-name">پێنجشەممە</span>
-                                <span class="day-count" id="count-Thu">...</span>
-                            </button>
-                        </div>
-                    </div>
-
                     <div class="input-wrapper">
                         <i class="fa-solid fa-user"></i>
                         <input type="text" id="nameInput" placeholder="ناوی سیانی بنووسە..." oninput="validateFormInputs()">
                     </div>
-                    
                     <div class="input-wrapper">
                         <i class="fa-solid fa-phone"></i>
                         <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false" oninput="validateFormInputs()">
                     </div>
-                    
-                    <div style="display: flex; justify-content: center; margin-top: 10px; margin-bottom: 10px; width: 100%;">
-                        <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-callback="onCaptchaSuccess" data-expired-callback="onCaptchaExpired" data-theme="auto"></div>
-                    </div>
-
-                    <button id="registerBtn" class="action-btn" onclick="confirmAndRegister()" disabled style="background: #cccccc; cursor: not-allowed;"><i class="fa-solid fa-check-circle"></i> تۆمارکردن</button>
+                    <button id="registerBtn" class="action-btn" onclick="confirmAndRegister()" disabled style="background: #cccccc; cursor: not-allowed;">تۆمارکردن</button>
                 </div>
-                
                 <div id="countdownTimer" class="timer-box">
                     <span id="timerValue" dir="ltr" style="font-size: 14px; font-weight: bold; display: inline-block;">00:00:00</span>
                 </div>
@@ -510,7 +492,7 @@
                 <div style="background: rgba(23, 162, 184, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(23, 162, 184, 0.2);" class="no-print">
                     <h3 style="margin-top: 0; font-size: 14px; color: #17a2b8;">گۆڕینی تێبینی و پێداویستییەکان (سلاید)</h3>
                     <div class="input-wrapper">
-                        <textarea id="adminNoticeInput" rows="5" placeholder="دەقی ئاگاداری و پێداویستییەکان لێرە بنووسە..." style="width: 100%; padding: 10px; border: 2px solid var(--input-border); border-radius: 6px; font-family: 'Rudaw Bold'; background: var(--input-bg); color: var(--input-text); resize: vertical;"></textarea>
+                        <textarea id="adminNoticeInput" rows="5" placeholder="دەقی ئاگاداری و پێداویستییەکان لێرە بنووسە..." style="width: 100%; padding: 10px; border: 2px solid var(--input-border); border-radius: 6px; font-family: 'Rabar'; background: var(--input-bg); color: var(--input-text); resize: vertical;"></textarea>
                     </div>
                     <button class="action-btn" style="background: #17a2b8; padding: 10px;" onclick="updateNoticeText()">پاشەکەوتکردنی تێبینی</button>
                 </div>
@@ -566,13 +548,11 @@
 
         <!-- === سیستەمی غەرامە === -->
         <div id="fineSection" style="display: none;">
-            <button class="back-btn" onclick="openSection('portal')">
-                <i class="fa-solid fa-arrow-right"></i> <span>گەڕانەوە بۆ سەرەتا</span>
-            </button>
+            <button class="back-btn" onclick="openSection('portal')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە بۆ سەرەتا</button>
             
             <div class="fine-container" id="fine-container-box">
                 <div class="visitor-counter">
-                    <span>👁️ ژمارەی بەکارهێنەر: </span><b class="visitor-count-text">...</b>
+                    👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
                 </div>
 
                 <div class="toggle-container">
@@ -626,7 +606,7 @@
                     <div class="result-row fee-row"><span>🔵 رسومات:</span><span id="fee-price">60,000 دینار</span></div>
                     <div class="result-row fine-row"><span>🔴 غرامە:</span><span id="fine-price">0 دینار</span></div>
                     <div class="result-row total-row"><span>💰 کۆی گشتی:</span><span id="total-price">0 دینار</span></div>
-                    <div class="result-row"><span><span>⏳ ماوەی بەسەرچوون:</span></span><span id="duration-text">0 مانگ</span></div>
+                    <div class="result-row"><span>⏳ ماوەی بەسەرچوون:</span><span id="duration-text">0 مانگ</span></div>
                 </div>
             </div>
         </div>
@@ -646,6 +626,13 @@
         <h2 style="color: #0056b3; margin-top: 10px;"><i class="fa-solid fa-shield-check"></i> دڵنیابوونەوەی پسوولە</h2>
         <div id="verifyResult" style="padding: 15px; font-size: 15px; font-weight: bold; margin-top: 12px; border-radius: 8px; background: #e9ecef;">چاوەڕێ بکە...</div>
         <button class="action-btn" onclick="window.location.href=window.location.origin + window.location.pathname" style="background: #0056b3; margin-top: 15px;">گەڕانەوە بۆ سەرەتا</button>
+    </div>
+
+    <!-- === دوگمەی دابەزاندنی ئەپڵیکەیشن === -->
+    <div id="installAppContainer" style="display: none; text-align: center; margin-bottom: 15px;" class="no-print">
+        <button id="installAppBtn" class="action-btn" style="background: #28a745; width: auto; padding: 10px 25px; border-radius: 25px; box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);">
+            <i class="fa-solid fa-download"></i> دابەزاندنی ئەپڵیکەیشن (Install)
+        </button>
     </div>
 
     <!-- === فوتەر و سۆشیاڵ میدیا === -->
@@ -685,49 +672,8 @@
         let globalSystemIsActive = true; 
         let statChart = null;
         let globalUsersData = [];
-        
-        let currentCaptchaToken = "";
-        let selectedVisitDay = "";
 
-        // ==== ئاماری ڕۆژەکانی هەفتە بەشێوەی ڕاستەوخۆ ====
-        async function updateDayCounts() {
-            // نموونەی داتاکانە کە وتت دووشەممە ٤٣٧ کەسە
-            let counts = {
-                'یەکشەممە': 120,
-                'دووشەممە': 437,
-                'سێشەممە': 54,
-                'چوارشەممە': 22,
-                'پێنجشەممە': 500 // وەکو تاقیکردنەوەیەکی پڕبوو
-            };
-            
-            const maxQuota = 500; // پشکی ڕۆژانە
-            
-            const days = [
-                { id: 'Sun', name: 'یەکشەممە' },
-                { id: 'Mon', name: 'دووشەممە' },
-                { id: 'Tue', name: 'سێشەممە' },
-                { id: 'Wed', name: 'چوارشەممە' },
-                { id: 'Thu', name: 'پێنجشەممە' }
-            ];
-
-            days.forEach(day => {
-                let countEl = document.getElementById(`count-${day.id}`);
-                let btnEl = document.getElementById(`btn-day-${day.id}`);
-                if (countEl && btnEl) {
-                    let currentCount = counts[day.name] || 0;
-                    countEl.innerText = toEnglishDigits(currentCount.toString());
-                    
-                    if (currentCount >= maxQuota) {
-                        btnEl.classList.add('full');
-                        countEl.innerText = 'پڕبووە';
-                    } else {
-                        btnEl.classList.remove('full');
-                    }
-                }
-            });
-        }
-
-        // ==== بارکردنی دەقی ئاگاداری و تێبینییەکان ====
+        // ==== بارکردنی دەقی ئاگاداری و تێبینییەکان لە سەرەتادا (سەنتەردار، ڕاستەوخۆ، خاو و وەستان بە ماوس) ====
         async function loadNoticeText() {
             try {
                 let res = await fetch(`${baseUrl}/api/notice`);
@@ -742,7 +688,7 @@
                             wrapper.innerHTML = `<marquee direction="up" scrollamount="1.5" scrolldelay="90" onmouseover="this.stop();" onmouseout="this.start();" style="width:100%; height:100%; text-align: center;">${text.replace(/\n/g, '<br>')}</marquee>`;
                         } else {
                             wrapper.className = "notice-scroll-container horizontal";
-                            wrapper.innerHTML = `<marquee direction="right" scrollamount="2" scrolldelay="90" onmouseover="this.stop();" onmouseout="this.start();" style="width:100%; text-align: center;">${text}</marquee>`;
+                            wrapper.innerHTML = `<marquee direction="left" scrollamount="2" scrolldelay="90" onmouseover="this.stop();" onmouseout="this.start();" style="width:100%; text-align: center;">${text}</marquee>`;
                         }
                     }
 
@@ -793,7 +739,6 @@
             else if(section === 'queue') {
                 document.getElementById('queueSection').style.display = 'block';
                 checkQuotaAndTimer(); checkSavedTicket();
-                updateDayCounts(); 
             }
             else if(section === 'fine') document.getElementById('fineSection').style.display = 'block';
         }
@@ -860,11 +805,8 @@
             const title = document.getElementById('modal-title');
             const grid = document.getElementById('modal-grid');
             grid.innerHTML = ''; 
-            
-            let dict = { 'day': 'ڕۆژ', 'month': 'مانگ', 'year': 'ساڵ' };
-            title.textContent = `📅 ${dict[type]}`;
-            
             if (type === 'day') {
+                title.textContent = '📅 ڕۆژێك دیاری بكه‌';
                 const daysCount = getDaysInMonth(selectedMonth, selectedYear);
                 for (let i = 1; i <= daysCount; i++) {
                     let item = document.createElement('div'); item.className = 'grid-item';
@@ -874,6 +816,7 @@
                     grid.appendChild(item);
                 }
             } else if (type === 'month') {
+                title.textContent = '📅 مانگێك دیاری بكه‌';
                 for (let i = 1; i <= 12; i++) {
                     let item = document.createElement('div'); item.className = 'grid-item';
                     if (i === selectedMonth) item.classList.add('selected-item');
@@ -887,6 +830,7 @@
                     grid.appendChild(item);
                 }
             } else if (type === 'year') {
+                title.textContent = '📅 ساڵێك دیاری بكه‌';
                 for (let i = 2015; i <= 2035; i++) {
                     let item = document.createElement('div'); item.className = 'grid-item';
                     if (i === selectedYear) item.classList.add('selected-item');
@@ -1000,54 +944,19 @@
             if (charCode > 31 && (charCode < 48 || charCode > 57)) return false; return true;
         }
 
-        // کەپچا و هەڵبژاردنی ڕۆژ
-        function onCaptchaSuccess(token) {
-            currentCaptchaToken = token;
-            validateFormInputs();
-        }
-
-        function onCaptchaExpired() {
-            currentCaptchaToken = "";
-            validateFormInputs();
-        }
-        
-        function selectVisitDay(dayStr, btnElement) {
-            if (btnElement.classList.contains('full')) {
-                Swal.fire('ئاگاداری', 'ببورە، پشکی ئەم ڕۆژە بە تەواوی پڕبووە. تکایە ڕۆژێکی تر هەڵبژێرە.', 'warning');
-                return;
-            }
-            
-            vibrate();
-            selectedVisitDay = dayStr;
-            let btns = document.querySelectorAll('.day-btn');
-            btns.forEach(b => b.classList.remove('active'));
-            btnElement.classList.add('active');
-            validateFormInputs();
-        }
-
         function validateFormInputs() {
             let nameInput = document.getElementById("nameInput"); let phoneInput = document.getElementById("phoneInput");
             let registerBtn = document.getElementById("registerBtn");
             let nameVal = nameInput.value.trim(); let phoneVal = phoneInput.value.trim();
             let nameParts = nameVal.split(/\s+/); let englishRegex = /[a-zA-Z]/;
-            
             let isNameValid = nameVal !== "" && !englishRegex.test(nameVal) && nameParts.length >= 3;
             let isPhoneValid = phoneVal.length === 11 && (phoneVal.startsWith("077") || phoneVal.startsWith("075") || phoneVal.startsWith("078"));
-            let isCaptchaValid = currentCaptchaToken !== "";
-            let isDayValid = selectedVisitDay !== "";
 
             nameInput.className = nameVal === "" ? "" : (isNameValid ? "valid-input" : "invalid-input");
             phoneInput.className = phoneVal === "" ? "" : (isPhoneValid ? "valid-input" : "invalid-input");
 
-            if (isNameValid && isPhoneValid && isCaptchaValid && isDayValid) { 
-                registerBtn.disabled = false; 
-                registerBtn.style.background = "#28a745"; 
-                registerBtn.style.cursor = "pointer"; 
-            } else { 
-                registerBtn.disabled = true; 
-                registerBtn.style.background = "#cccccc"; 
-                registerBtn.style.cursor = "not-allowed"; 
-            }
+            if (isNameValid && isPhoneValid) { registerBtn.disabled = false; registerBtn.style.background = "#28a745"; registerBtn.style.cursor = "pointer"; } 
+            else { registerBtn.disabled = true; registerBtn.style.background = "#cccccc"; registerBtn.style.cursor = "not-allowed"; }
         }
 
         function checkSavedTicket() {
@@ -1095,23 +1004,21 @@
             let saved = localStorage.getItem("my_daily_ticket");
             if(saved) {
                 let t = JSON.parse(saved);
-                Swal.fire({ html: generateTicketHTML(t.name, t.phone, t.rank, t.time, t.qrCode, t.date, t.visitDay), confirmButtonText: 'باشە', confirmButtonColor: '#28a745' });
+                Swal.fire({ html: generateTicketHTML(t.name, t.phone, t.rank, t.time, t.qrCode, t.date), confirmButtonText: 'باشە', confirmButtonColor: '#28a745' });
             }
         }
 
-        function generateTicketHTML(name, phone, rank, time, qrToken, dateStr, visitDayStr) {
+        function generateTicketHTML(name, phone, rank, time, qrToken, dateStr) {
             let displayDate = dateStr || new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
             let verifyUrl = window.location.origin + window.location.pathname + "?verify=" + encodeURIComponent(qrToken);
-            
             setTimeout(() => {
                 let qrContainer = document.getElementById("qrCodeDiv");
                 if(qrContainer) { qrContainer.innerHTML = ""; new QRCode(qrContainer, { text: verifyUrl, width: 90, height: 90, colorDark : "#000000", colorLight : "#ffffff", correctLevel : QRCode.CorrectLevel.H }); }
             }, 100);
-            
             return `
                 <div style="border: 2px dashed #0056b3; padding: 20px; border-radius: 10px; background: #f0f8ff; text-align: center;">
                     <i class="fa-solid fa-address-card" style="font-size: 40px; color: #0056b3; margin-bottom: 10px;"></i>
-                    <h3 style="margin: 0 0 15px 0; color: #0056b3; font-size: 18px;">به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە</h3>
+                    <h3 style="margin: 0 0 15px 0; color: #0056b3; font-size: 18px;">هاتووچۆی هەڵەبجە</h3>
                     <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #cce5ff; text-align: right;">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <div><p style="margin: 5px 0; font-size: 15px;"><strong>ناو:</strong> ${name}</p><p style="margin: 5px 0; font-size: 15px;"><strong>مۆبایل:</strong> ${phone}</p></div>
@@ -1119,9 +1026,8 @@
                         </div>
                         <hr style="border: 0; border-top: 1px dashed #ccc; margin: 12px 0;">
                         <p style="margin: 5px 0; font-size: 16px; text-align: center;"><strong>نۆرە:</strong> <span style="font-size: 28px; color: #dc3545; font-weight: bold;">${rank}</span></p>
-                        ${visitDayStr ? `<p style="margin: 5px 0; font-size: 15px; text-align: center;"><strong>ڕۆژی سەردان:</strong> <span style="color: #0056b3; font-weight: bold;">${visitDayStr}</span></p>` : ''}
                         <p style="margin: 5px 0; font-size: 15px; text-align: center;"><strong>کات:</strong> <span style="color: #28a745; font-weight: bold;">${time}</span></p>
-                        <p style="margin: 5px 0; font-size: 12px; text-align: center; color: gray;">${displayDate}</p>
+                        <p style="margin: 5px 0; font-size: 12px; text-align: center; color: gray;">بەروار: ${displayDate}</p>
                     </div>
                     <p style="margin: 15px 0 0 0; font-size: 13px; color: #666; font-weight: bold;">تکایە سکرین شۆتی ئەم پسوولەیە بگرە.</p>
                 </div>`;
@@ -1141,29 +1047,32 @@
                     let regBtn = document.getElementById("registerBtn");
                     let nameInput = document.getElementById("nameInput");
                     let phoneInput = document.getElementById("phoneInput");
-                    let dayContainer = document.getElementById("visitDayContainer");
 
+                    if (result.isActive === false) {
+                        badge.className = "status-badge status-closed";
+                        dot.className = "dot dot-red";
+                        statusText.innerText = result.closeMessage || "سیستەم داخراوە یان پشک تەواو بووە";
+                        if (regBtn) { regBtn.disabled = true; regBtn.innerHTML = '<i class="fa-solid fa-lock"></i> چاوەڕێ بکە'; }
+                        if (nameInput) nameInput.disabled = true;
+                        if (phoneInput) phoneInput.disabled = true;
+                        return; 
+                    }
+                    
                     const dateInIraq = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Baghdad"}));
                     const iraqHour = dateInIraq.getHours(); const dayOfWeek = dateInIraq.getDay(); 
                     let isBlocked = (dayOfWeek === 4 && iraqHour >= 14) || dayOfWeek === 5 || (dayOfWeek === 6 && iraqHour < 18) || (iraqHour >= 14 && iraqHour < 18);
-
-                    if (result.isActive === false || isBlocked || count >= maxQuota) {
+                    
+                    if (isBlocked || count >= maxQuota) {
                         badge.className = "status-badge status-closed";
                         dot.className = "dot dot-red";
-                        
-                        if (result.isActive === false) {
-                            statusText.innerText = "سیستەم داخراوە یان پشک تەواو بووە";
-                        } else if (count >= maxQuota) { 
+                        if (count >= maxQuota) { 
                             statusText.innerText = "پشکی بەیانی تەواو بووە، چاوەڕێ بکە تا کاتژمێر 6ی ئێوارەی سبەینێ"; 
                         } else { 
                             statusText.innerText = "لە ئێستادا سیستەم داخراوە، کاتژمێر 6ی ئێوارە دەکرێتەوە"; 
                         }
-                        
                         if (regBtn) { regBtn.disabled = true; regBtn.innerHTML = '<i class="fa-solid fa-lock"></i> چاوەڕێ بکە'; }
                         if (nameInput) nameInput.disabled = true;
                         if (phoneInput) phoneInput.disabled = true;
-                        if (dayContainer) { dayContainer.style.pointerEvents = "none"; dayContainer.style.opacity = "0.5"; }
-                        
                         startCountdown(); document.getElementById("countdownTimer").style.display = "block";
                     } else {
                         badge.className = "status-badge status-open";
@@ -1171,7 +1080,7 @@
                         statusText.innerText = "دۆخی سیستەم: کراوەیە بۆ تۆمارکردن";
                         if (nameInput) nameInput.disabled = false;
                         if (phoneInput) phoneInput.disabled = false;
-                        if (dayContainer) { dayContainer.style.pointerEvents = "auto"; dayContainer.style.opacity = "1"; }
+                        validateFormInputs();
                     }
                 }
             } catch (e) { console.log(e); }
@@ -1183,19 +1092,9 @@
                 const now = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Baghdad"}));
                 let target = new Date(now); target.setHours(18, 0, 0, 0);
                 let day = now.getDay(), hour = now.getHours();
-                
-                // ڕۆژانی پشوو و کردنەوە: پێنجشەممە پاش کاتژمێر ٢ دادەخرێت تا شەممە کاتژمێر ٦ی ئێوارە
-                if (day === 4 && hour >= 14) { target.setDate(now.getDate() + 2); } 
-                else if (day === 5) { target.setDate(now.getDate() + 1); } 
-                else if (day === 6 && hour < 18) { /* target remains today at 18:00 */ }
-                else if (hour >= 18) { 
-                    if (day === 3) target.setDate(now.getDate() + 3); 
-                    else if (day === 4) target.setDate(now.getDate() + 2); 
-                    else target.setDate(now.getDate() + 1); 
-                } 
-                else if (hour >= 14 && hour < 18) { /* target remains today at 18:00 */ } 
-                else { if (day === 4) target.setDate(now.getDate() + 2); }
-                
+                if ((day === 4 && hour >= 14) || day === 5 || (day === 6 && hour < 18)) target.setDate(now.getDate() + ((6 - day + 7) % 7)); 
+                else if (hour >= 18) { if (day === 3) target.setDate(now.getDate() + 3); else if (day === 4) target.setDate(now.getDate() + 2); else target.setDate(now.getDate() + 1); } 
+                else if (hour >= 14 && hour < 18) {} else { if (day === 4) target.setDate(now.getDate() + 2); }
                 let diff = Math.max(target - now, 0);
                 let h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 let m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
@@ -1208,22 +1107,17 @@
         async function confirmAndRegister() {
             let name = document.getElementById("nameInput").value.trim(); 
             let phone = document.getElementById("phoneInput").value.trim();
-
             const confirmation = await Swal.fire({
                 title: 'دڵنیابوونەوە لە زانیارییەکان',
                 html: `
-                    <div style="text-align: right;">
+                    <div style="text-align: right; direction: rtl;">
                         <label style="font-size: 13px; font-weight: bold; color: #555; display: block; margin-bottom: 4px;">ناوی سیانی:</label>
-                        <input id="swal-input-name" class="swal2-input" value="${name}" style="margin: 0 0 12px 0; width: 100%; font-family: 'Rudaw Bold'; font-size: 14px;">
-                        
+                        <input id="swal-input-name" class="swal2-input" value="${name}" style="margin: 0 0 12px 0; width: 100%; font-family: 'Rabar'; font-size: 14px;">
                         <label style="font-size: 13px; font-weight: bold; color: #555; display: block; margin-bottom: 4px;">ژمارەی مۆبایل:</label>
-                        <input id="swal-input-phone" class="swal2-input" value="${phone}" maxlength="11" onkeypress="return onlyEnglishNumbers(event)" style="margin: 0 0 12px 0; width: 100%; font-family: 'Rudaw Bold'; font-size: 14px;">
-                        
-                        <label style="font-size: 13px; font-weight: bold; color: #555; display: block; margin-bottom: 4px;">ڕۆژی سەردان:</label>
-                        <input class="swal2-input" value="${selectedVisitDay}" disabled style="margin: 0; width: 100%; font-family: 'Rudaw Bold'; font-size: 14px; background: #e9ecef; color: #0056b3; font-weight: bold;">
+                        <input id="swal-input-phone" class="swal2-input" value="${phone}" maxlength="11" onkeypress="return onlyEnglishNumbers(event)" style="margin: 0; width: 100%; font-family: 'Rabar'; font-size: 14px;">
                     </div>
                 `,
-                showCancelButton: true, confirmButtonText: 'تۆمارکردن', cancelButtonText: 'پاشگەزبوونەوە', confirmButtonColor: '#28a745', cancelButtonColor: '#6c757d', focusConfirm: false,
+                showCancelButton: true, confirmButtonText: 'تـــۆمــاركــردن', cancelButtonText: 'پاشگەزبوونەوە', confirmButtonColor: '#28a745', cancelButtonColor: '#6c757d', focusConfirm: false,
                 preConfirm: () => {
                     const editedName = document.getElementById('swal-input-name').value.trim();
                     const editedPhone = document.getElementById('swal-input-phone').value.trim();
@@ -1239,33 +1133,18 @@
                 document.getElementById("nameInput").value = finalName; document.getElementById("phoneInput").value = finalPhone;
                 let regBtn = document.getElementById("registerBtn"); let orig = regBtn.innerHTML;
                 regBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; regBtn.disabled = true;
-                
                 try {
-                    let response = await fetch(apiUrl, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name: finalName, phone: finalPhone, captchaToken: currentCaptchaToken, visitDay: selectedVisitDay }) });
+                    let response = await fetch(apiUrl, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name: finalName, phone: finalPhone }) });
                     let result = await response.json().catch(() => ({}));
                     if(response.ok && result.ticket) {
                         let todayDateStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
                         let currentTimestamp = new Date().getTime(); 
-                        localStorage.setItem("my_daily_ticket", JSON.stringify({ 
-                            name: result.ticket.name || finalName, 
-                            phone: result.ticket.phone || finalPhone, 
-                            rank: result.ticket.rank, 
-                            time: result.ticket.time, 
-                            visitDay: result.ticket.visitDay || selectedVisitDay,
-                            qrCode: result.ticket.qrCode, 
-                            date: result.ticket.date, 
-                            savedAt: todayDateStr, 
-                            timestamp: currentTimestamp 
-                        }));
+                        localStorage.setItem("my_daily_ticket", JSON.stringify({ name: result.ticket.name, phone: result.ticket.phone, rank: result.ticket.rank, time: result.ticket.time, qrCode: result.ticket.qrCode, date: result.ticket.date, savedAt: todayDateStr, timestamp: currentTimestamp }));
                         checkSavedTicket();
-                        Swal.fire({ html: generateTicketHTML(result.ticket.name || finalName, result.ticket.phone || finalPhone, result.ticket.rank, result.ticket.time, result.ticket.qrCode, result.ticket.date, result.ticket.visitDay || selectedVisitDay), confirmButtonText: 'باشە', confirmButtonColor: '#28a745' });
+                        Swal.fire({ html: generateTicketHTML(result.ticket.name, result.ticket.phone, result.ticket.rank, result.ticket.time, result.ticket.qrCode, result.ticket.date), confirmButtonText: 'باشە', confirmButtonColor: '#28a745' });
                     } else Swal.fire('هەڵە', result.message || 'کێشەیەک ڕوویدا', 'error');
                 } catch (e) { Swal.fire('کێشەی هێڵ', 'کێشە لە سێرڤەر هەیە', 'error'); }
-                finally { 
-                    regBtn.innerHTML = orig; 
-                    checkQuotaAndTimer(); 
-                    if(window.turnstile) { turnstile.reset(); currentCaptchaToken = ""; validateFormInputs(); }
-                }
+                finally { regBtn.innerHTML = orig; checkQuotaAndTimer(); }
             }
         }
 
@@ -1280,9 +1159,9 @@
                     let searchQrToken = btoa(result.phone + "|" + todayDateStr.replace(/-/g, ''));
                     let oldTicket = JSON.parse(localStorage.getItem("my_daily_ticket") || "{}");
                     let currentTimestamp = oldTicket.timestamp || new Date().getTime(); 
-                    localStorage.setItem("my_daily_ticket", JSON.stringify({ name: result.name, phone: result.phone, rank: result.rank, time: result.timeMessage, visitDay: result.visitDay, qrCode: searchQrToken, date: result.Date, savedAt: todayDateStr, timestamp: currentTimestamp }));
+                    localStorage.setItem("my_daily_ticket", JSON.stringify({ name: result.name, phone: result.phone, rank: result.rank, time: result.timeMessage, qrCode: searchQrToken, date: result.Date, savedAt: todayDateStr, timestamp: currentTimestamp }));
                     checkSavedTicket();
-                    Swal.fire({ html: generateTicketHTML(result.name, result.phone, result.rank, result.timeMessage, searchQrToken, result.Date, result.visitDay), confirmButtonText: 'باشە', confirmButtonColor: '#0056b3' });
+                    Swal.fire({ html: generateTicketHTML(result.name, result.phone, result.rank, result.timeMessage, searchQrToken, result.Date), confirmButtonText: 'باشە', confirmButtonColor: '#0056b3' });
                 } else Swal.fire('نەدۆزرایەوە', result.message || 'ناو نەدۆزرایەوە!', 'error');
                 document.getElementById("searchInput").value = "";
             } catch (e) {}
@@ -1356,7 +1235,7 @@
                             labels: ['هاووڵاتیان', 'لە ئەدمینەوە'],
                             datasets: [{ data: [stats.today.byUser, stats.today.byAdmin], backgroundColor: ['#28a745', '#dc3545'], borderWidth: 1 }]
                         },
-                        options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { font: { family: 'Rudaw Bold', size: 10 } } }, title: { display: false } } }
+                        options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { font: { family: 'Rabar', size: 10 } } }, title: { display: false } } }
                     });
                 }
             } catch(e) {}
@@ -1568,47 +1447,53 @@
             } else openSection('portal');
         };
 
+        // ==== سیستەمی دابەزاندنی ئەپڵیکەیشن (PWA Install) ====
+        let deferredPrompt;
+        const installAppContainer = document.getElementById('installAppContainer');
+        const installAppBtn = document.getElementById('installAppBtn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // ڕێگریکردن لە دەرکەوتنی نامەی ئۆتۆماتیکی وێبگەڕ
+            e.preventDefault();
+            // پاشەکەوتکردنی ئیڤێنتەکە بۆ ئەوەی دواتر بە دوگمەکە کاری پێبکەین
+            deferredPrompt = e;
+            // نیشاندانی دوگمەی دابەزاندن
+            installAppContainer.style.display = 'block';
+        });
+
+        installAppBtn.addEventListener('click', async () => {
+            // شاردنەوەی دوگمەکە دوای کلیک کردن
+            installAppContainer.style.display = 'none';
+            
+            // نیشاندانی پەنجەرەی دابەزاندن بە بەکارهێنەر
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                // چاوەڕێی وەڵامی بەکارهێنەر بکە
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                } else {
+                    console.log('User dismissed the install prompt');
+                    // ئەگەر پەشیمان بووەوە، با دوگمەکە بگەڕێتەوە
+                    installAppContainer.style.display = 'block';
+                }
+                deferredPrompt = null;
+            }
+        });
+
+        // کاتێک ئەپەکە بە سەرکەوتوویی دادەبەزێت دوگمەکە بشارەوە
+        window.addEventListener('appinstalled', () => {
+            installAppContainer.style.display = 'none';
+            deferredPrompt = null;
+            console.log('PWA was installed');
+        });
+
+        // ==== تۆمارکردنی Service Worker ====
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                const swCode = `
-                    const CACHE_NAME = 'traffic-halabja-offline-v15';
-                    const ASSETS = [
-                        './',
-                        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
-                        'https://cdn.jsdelivr.net/npm/sweetalert2@11',
-                        'https://cdn.jsdelivr.net/npm/qrcodejs/1.0.0/qrcode.min.js',
-                        'https://cdn.jsdelivr.net/npm/chart.js'
-                    ];
-
-                    self.addEventListener('install', e => {
-                        e.waitUntil(
-                            caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting())
-                        );
-                    });
-
-                    self.addEventListener('activate', e => {
-                        e.waitUntil(
-                            caches.keys().then(keys => Promise.all(
-                                keys.map(k => k !== CACHE_NAME && caches.delete(k))
-                            )).then(() => self.clients.claim())
-                        );
-                    });
-
-                    self.addEventListener('fetch', e => {
-                        e.respondWith(
-                            caches.match(e.request).then(cachedRes => {
-                                return cachedRes || fetch(e.request).catch(() => {
-                                    if (e.request.mode === 'navigate') {
-                                        return caches.match('./');
-                                    }
-                                });
-                            })
-                        );
-                    });
-                `;
-                const swBlob = new Blob([swCode], {type: 'application/javascript'});
-                const swUrl = URL.createObjectURL(swBlob);
-                navigator.serviceWorker.register(swUrl).catch(err => console.log('SW Error:', err));
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('Service Worker تۆمارکرا بە سەرکەوتوویی', reg))
+                    .catch(err => console.log('کێشە لە تۆمارکردنی Service Worker', err));
             });
         }
     </script>
