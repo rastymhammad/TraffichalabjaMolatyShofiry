@@ -19,30 +19,12 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- کتێبخانەی html2canvas بۆ داونلۆدکردنی پسوولە وەک وێنە -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
         @font-face {
             font-family: 'Rabar';
             src: url('https://kurdish-fonts.com/fonts/rabar/Rabar_013.ttf') format('truetype');
             font-weight: normal; font-style: normal;
-        }
-
-        /* --- پشکنینی هۆشداری ئۆفلاین --- */
-        #offlineBanner {
-            background-color: #dc3545;
-            color: white;
-            padding: 8px;
-            font-size: 12px;
-            font-weight: bold;
-            display: none;
-            text-align: center;
-            width: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 9999;
         }
 
         /* --- جووڵەی سەرنجڕاکێشی لۆگۆی چاوەڕوانی --- */
@@ -84,15 +66,6 @@
         .main-content > div {
             animation: fadeInUp 0.5s ease-out forwards;
         }
-
-        /* --- دیزاینی بەشی پرسیارە باوەکان (FAQ) --- */
-        .faq-container { width: 100%; margin-top: 15px; text-align: right; }
-        .faq-item { background: var(--bg-container); border: 1px solid var(--border-container); border-radius: 10px; margin-bottom: 10px; overflow: hidden; transition: 0.3s; }
-        .faq-question { padding: 12px 15px; font-size: 13.5px; font-weight: bold; color: var(--header-text); cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
-        .faq-question i { transition: transform 0.3s; font-size: 12px; }
-        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; padding: 0 15px; font-size: 12.5px; color: var(--text-main); line-height: 1.6; }
-        .faq-item.active .faq-answer { max-height: 200px; padding: 0 15px 12px 15px; border-top: 1px dashed var(--border-container); }
-        .faq-item.active .faq-question i { transform: rotate(180deg); }
 
         /* --- بنچینەی هاوبەش --- */
         * { box-sizing: border-box; }
@@ -339,26 +312,8 @@
 
         .input-wrapper { position: relative; width: 100%; margin: 8px 0; }
         .input-wrapper i { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--header-text); font-size: 16px; }
-        
-        /* پاککەرەوەی خێرای داخلکراوەکان (Clear X Button) */
-        .clear-input-btn {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: var(--label-color);
-            cursor: pointer;
-            font-size: 14px;
-            display: none;
-            padding: 0;
-            z-index: 5;
-        }
-        .clear-input-btn:hover { color: var(--fine-color); }
-
         .input-wrapper input {
-            width: 100%; padding: 10px 35px 10px 30px; box-sizing: border-box; border: 2px solid var(--input-border);
+            width: 100%; padding: 10px 35px 10px 10px; box-sizing: border-box; border: 2px solid var(--input-border);
             border-radius: 6px; font-size: 14px; font-family: 'Rabar', Tahoma, Arial, sans-serif; outline: none; transition: 0.3s;
             background: var(--input-bg); color: var(--input-text); user-select: text;
         }
@@ -462,9 +417,6 @@
 </head>
 <body>
 
-    <!-- هۆشداری ئۆفلاین (پێشنیاری ٣) -->
-    <div id="offlineBanner">⚠️ هێڵی ئینتەرنێت پچڕاوە! تکایە پەیوەندیکردنەکەت بپشکنە.</div>
-
     <div class="main-content" id="mainWrapper">
         <div class="header-title no-print">
             <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="گۆڕینی ڕەنگ">🌙</button>
@@ -481,7 +433,7 @@
                 👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
             </div>
             
-            <!-- سلایدی تێبینی زیرەک -->
+            <!-- سلایدی تێبینی زیرەک (سەنتەردار، ڕاستەوخۆ، خاو و وەستان بە ماوس) -->
             <div class="notice-slider-box no-print">
                 <div class="notice-header-row">
                     <span>ئاگاداری و پێداویستییەکان:</span>
@@ -508,42 +460,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- === بەشی پرسیارە باوەکان (FAQ) === -->
-            <div class="container no-print" style="margin-top: 15px;">
-                <h2><i class="fa-solid fa-circle-question" style="color: #0056b3;"></i> پرسیارە باوەکان (FAQ)</h2>
-                <div class="faq-container">
-                    <div class="faq-item" onclick="toggleFaq(this)">
-                        <div class="faq-question">
-                            <span>پێداویستییە سەرەکییەکانی نوێکردنەوەی مۆڵەت چین؟</span>
-                            <i class="fa-solid fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
-                            کارتی نیشتیمانی، کارتی زانیاری، پاسپۆرت (ئەگەر هەبێت)، و ئەنجامدانی پشکنینی چاو.
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item" onclick="toggleFaq(this)">
-                        <div class="faq-question">
-                            <span>کاتی کارکردنی سیستەمی نۆرەگرتن چۆنە؟</span>
-                            <i class="fa-solid fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
-                            سیستەم لە ڕۆژانی یەکشەممە تا پێنجشەممە (کاتژمێر 2ی پاشنیوەڕۆی پێنجشەممە داخراوە) کارا دەبێت تا کاتژمێر 6ی ئێوارەی ڕۆژی شەممە کە جارێکی تر دەکرێتەوە.
-                        </div>
-                    </div>
-
-                    <div class="faq-item" onclick="toggleFaq(this)">
-                        <div class="faq-question">
-                            <span>چۆن دڵنیا ببمەوە لەوەی کە نۆرەکەم گرتووە؟</span>
-                            <i class="fa-solid fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
-                            دەتوانیت لە بەشی "دڵنیابوونەوە لە ناوت" بە ژمارەی تەلەفۆنەکەت گەڕان ئەنجام بدەیت یان دوگمەی (پیشاندانی پسوولەکەم) بەکاربهێنیت.
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- === سیستەمی نۆرەگرتن === -->
@@ -564,29 +480,19 @@
 
                 <div id="savedTicketDiv" style="display: none; background: #e9ecef; padding: 15px; border-radius: 8px; border: 2px solid #28a745; margin-bottom: 15px;">
                     <p style="margin: 0 0 10px 0; color: #155724; font-weight: bold; font-size: 13px;">بەڕێز، تۆ ئەمڕۆ نۆرەت گرتووە!</p>
-                    <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
-                        <button onclick="showSavedTicket()" class="action-btn" style="margin: 0; padding: 10px; font-size: 14px; flex: 1;">
-                            <i class="fa-solid fa-ticket"></i> پیشاندانی پسوولەکەم
-                        </button>
-                        <!-- پێشنیاری ١: داونلۆدکردنی وێنەی پسوولە -->
-                        <button onclick="downloadTicketImage()" class="action-btn" style="margin: 0; padding: 10px; font-size: 14px; background: #17a2b8; flex: 1;">
-                            <i class="fa-solid fa-download"></i> داونلۆدی وێنەی پسوولە
-                        </button>
-                    </div>
+                    <button onclick="showSavedTicket()" class="action-btn" style="margin: 0; padding: 10px; font-size: 14px;">
+                        <i class="fa-solid fa-ticket"></i> پیشاندانی پسوولەکەم
+                    </button>
                 </div>
                 
                 <div id="registrationInputs">
-                    <!-- پێشنیاری ٢: زیادکردنی دوگمەی پاککەرەوە (Clear) بۆ خانەی ناو -->
                     <div class="input-wrapper">
                         <i class="fa-solid fa-user"></i>
-                        <input type="text" id="nameInput" placeholder="ناوی سیانی بنووسە..." oninput="handleInputChange('nameInput'); validateFormInputs()">
-                        <button type="button" class="clear-input-btn" id="clearNameBtn" onclick="clearInput('nameInput')" title="سڕینەوە"><i class="fa-solid fa-xmark"></i></button>
+                        <input type="text" id="nameInput" placeholder="ناوی سیانی بنووسە..." oninput="validateFormInputs()">
                     </div>
-                    <!-- پێشنیاری ٢: زیادکردنی دوگمەی پاککەرەوە بۆ خانەی مۆبایل و گەڕان -->
                     <div class="input-wrapper">
                         <i class="fa-solid fa-phone"></i>
-                        <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false" oninput="handleInputChange('phoneInput'); validateFormInputs()">
-                        <button type="button" class="clear-input-btn" id="clearPhoneBtn" onclick="clearInput('phoneInput')" title="سڕینەوە"><i class="fa-solid fa-xmark"></i></button>
+                        <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false" oninput="validateFormInputs()">
                     </div>
                     <button id="registerBtn" class="action-btn" onclick="confirmAndRegister()" disabled style="background: #cccccc; cursor: not-allowed;">تۆمارکردن</button>
                 </div>
@@ -599,8 +505,7 @@
                 <h2>دڵنیابوونەوە لە ناوت</h2>
                 <div class="input-wrapper">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="tel" id="searchInput" placeholder="ژمارەی تەلەفۆنەکەت بنووسە..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)" oninput="handleInputChange('searchInput')">
-                    <button type="button" class="clear-input-btn" id="clearSearchBtn" onclick="clearInput('searchInput')" title="سڕینەوە"><i class="fa-solid fa-xmark"></i></button>
+                    <input type="tel" id="searchInput" placeholder="ژمارەی تەلەفۆنەکەت بنووسە..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)">
                 </div>
                 <button class="action-btn search-btn" onclick="searchUser()">گەڕان</button>
             </div>
@@ -645,13 +550,11 @@
                     <div id="preRegForm" style="display: none; margin-top: 10px;">
                         <div class="input-wrapper">
                             <i class="fa-solid fa-user-shield"></i>
-                            <input type="text" id="adminNameInput" placeholder="ناوی سیانی بنووسە..." oninput="handleInputChange('adminNameInput'); validateAdminFormInputs()">
-                            <button type="button" class="clear-input-btn" id="clearAdminNameBtn" onclick="clearInput('adminNameInput')" title="سڕینەوە"><i class="fa-solid fa-xmark"></i></button>
+                            <input type="text" id="adminNameInput" placeholder="ناوی سیانی بنووسە..." oninput="validateAdminFormInputs()">
                         </div>
                         <div class="input-wrapper">
                             <i class="fa-solid fa-phone"></i>
-                            <input type="tel" id="adminPhoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false" oninput="handleInputChange('adminPhoneInput'); validateAdminFormInputs()">
-                            <button type="button" class="clear-input-btn" id="clearAdminPhoneBtn" onclick="clearInput('adminPhoneInput')" title="سڕینەوە"><i class="fa-solid fa-xmark"></i></button>
+                            <input type="tel" id="adminPhoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false" oninput="validateAdminFormInputs()">
                         </div>
                         <button id="adminRegBtn" class="action-btn" style="background: #28a745; padding: 10px;" onclick="adminRegisterUser()" disabled>تۆمارکردنی پێشوەختە</button>
                     </div>
@@ -794,68 +697,6 @@
     </footer>
 
     <script>
-        // ==== پشکنینی هۆشداری ئۆفلاین (پێشنیاری ٣) ====
-        window.addEventListener('online', updateOnlineStatus);
-        window.addEventListener('offline', updateOnlineStatus);
-
-        function updateOnlineStatus() {
-            const banner = document.getElementById('offlineBanner');
-            if (!navigator.onLine) {
-                banner.style.display = 'block';
-            } else {
-                banner.style.display = 'none';
-            }
-        }
-        updateOnlineStatus();
-
-        // ==== پاککەرەوەی خێرای خانەکان (Clear Input Button) (پێشنیاری ٢) ====
-        function handleInputChange(inputId) {
-            const input = document.getElementById(inputId);
-            const btnMap = {
-                'nameInput': 'clearNameBtn',
-                'phoneInput': 'clearPhoneBtn',
-                'searchInput': 'clearSearchBtn',
-                'adminNameInput': 'clearAdminNameBtn',
-                'adminPhoneInput': 'clearAdminPhoneBtn'
-            };
-            const btnId = btnMap[inputId];
-            if (btnId) {
-                const btn = document.getElementById(btnId);
-                if (btn) {
-                    btn.style.display = input.value.trim().length > 0 ? 'block' : 'none';
-                }
-            }
-        }
-
-        function clearInput(inputId) {
-            const input = document.getElementById(inputId);
-            if (input) {
-                input.value = '';
-                handleInputChange(inputId);
-                if (inputId === 'nameInput' || inputId === 'phoneInput') validateFormInputs();
-                if (inputId === 'adminNameInput' || inputId === 'adminPhoneInput') validateAdminFormInputs();
-                input.focus();
-            }
-        }
-
-        // ==== داونلۆدکردنی وێنەی پسوولە (پێشنیاری ١) ====
-        function downloadTicketImage() {
-            const ticketElement = document.querySelector('#swal2-html-container > div') || document.querySelector('.swal2-html-container');
-            if (!ticketElement) return Swal.fire('ئاگاداری', 'پسوولە نەدۆزرایەوە بۆ داونلۆدکردن', 'warning');
-            
-            Swal.fire({ title: 'خەریکی دروستکردنی وێنەی پسوولەیە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-            
-            html2canvas(ticketElement, { scale: 2, useCORS: true }).then(canvas => {
-                Swal.close();
-                let link = document.createElement('a');
-                link.download = `Traffic_Ticket_${new Date().toISOString().slice(0,10)}.png`;
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-            }).catch(() => {
-                Swal.fire('هەڵە', 'نەتوانرا وێنەی پسوولە دروست بکرێت', 'error');
-            });
-        }
-
         // ==== پاراستنی توند (ڕێگری لە کلیلەکانی Inspect) ====
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.addEventListener('keydown', event => {
@@ -867,15 +708,6 @@
         function toEnglishDigits(str) {
             if (!str) return str;
             return str.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦۷٨٩'.indexOf(d)).replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
-        }
-
-        // ==== کۆنترۆڵی کردنەوە و داخستنی پرسیارە باوەکان (FAQ) ====
-        function toggleFaq(element) {
-            const items = document.querySelectorAll('.faq-item');
-            items.forEach(item => {
-                if (item !== element) item.classList.remove('active');
-            });
-            element.classList.toggle('active');
         }
 
         // ==== گۆڕاوە سەرەکییەکان ====
@@ -1393,7 +1225,6 @@
                     Swal.fire({ html: generateTicketHTML(result.name, result.phone, result.rank, result.timeMessage, searchQrToken, result.Date), confirmButtonText: 'باشە', confirmButtonColor: '#0056b3' });
                 } else Swal.fire('نەدۆزرایەوە', result.message || 'ناو نەدۆزرایەوە!', 'error');
                 document.getElementById("searchInput").value = "";
-                handleInputChange('searchInput');
             } catch (e) {}
         }
 
@@ -1611,7 +1442,6 @@
                 if(response.ok) {
                     Swal.fire('سەرکەوتوو بوو', result.message || 'ناو بە سەرکەوتوویی لەلایەن ئەدمنەوە تۆمارکرا!', 'success');
                     document.getElementById("adminNameInput").value = ""; document.getElementById("adminPhoneInput").value = ""; validateAdminFormInputs();
-                    handleInputChange('adminNameInput'); handleInputChange('adminPhoneInput');
                 } else Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان کێشەیەک هەیە!', 'error');
             } catch (error) { Swal.fire('کێشەی هێڵ', 'کێشە لە پەیوەندیکردن هەیە یان سێرڤەرەکە خەوتووە!', 'error'); } 
             finally { regBtn.innerHTML = originalText; regBtn.disabled = false; checkQuotaAndTimer(); }
