@@ -1070,7 +1070,7 @@
                         if (count >= maxQuota) { 
                             statusText.innerText = "پشکی بەیانی تەواو بووە، چاوەڕێ بکە تا کاتژمێر 6ی ئێوارەی سبەینێ"; 
                         } else { 
-                            statusText.innerText = "لە ئێستادا سیستەم داخراوە، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێتەوە"; 
+                            statusText.innerText = "لە ئێستادا سیستەم داخراوە، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێنەوە"; 
                         }
                         if (regBtn) { regBtn.disabled = true; regBtn.innerHTML = '<i class="fa-solid fa-lock"></i> چاوەڕێ بکە'; }
                         if (nameInput) nameInput.disabled = true;
@@ -1103,15 +1103,25 @@
                 } else if (day === 5) {
                     target.setDate(now.getDate() + 1); // ڕۆژی هەینی یەک ڕۆژی دەوێت تا دەبێتە شەممە
                 } else if (day === 6 && now.getHours() >= 18) {
-                    target.setDate(now.getDate() + 7); // ئەگەر شەممە ئێوارە تێپەڕیبوو، با بۆ شەممەی داهاتوو بێت
+                    target.setDate(now.getDate() + 7); // ئەگەر شەممە ئێوارە تێپەڕیبوو
                 }
 
                 let diff = Math.max(target - now, 0);
+                
+                // هەژمارکردنی ڕۆژ، کات، خولەک و چرکە بە شێوازێکی تەواو
+                let days = Math.floor(diff / (1000 * 60 * 60 * 24));
                 let h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 let m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 let s = Math.floor((diff % (1000 * 60)) / 1000);
                 
-                document.getElementById("timerValue").innerHTML = `⏳ کاتی ماوە بۆ کردنەوەی داهاتووی سیستەم: <span dir="ltr">${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}</span>`;
+                let timeString = "";
+                if (days > 0) {
+                    timeString = `${days} ڕۆژ و ${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+                } else {
+                    timeString = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+                }
+
+                document.getElementById("timerValue").innerHTML = `⏳ کاتی ماوە بۆ کردنەوەی داهاتووی سیستەم: <span dir="ltr">${timeString}</span>`;
             }, 1000);
         }
 
