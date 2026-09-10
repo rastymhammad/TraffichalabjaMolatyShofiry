@@ -67,15 +67,6 @@
             animation: fadeInUp 0.5s ease-out forwards;
         }
 
-        /* --- دیزاینی بەشی پرسیارە باوەکان (FAQ) --- */
-        .faq-container { width: 100%; margin-top: 15px; text-align: right; }
-        .faq-item { background: var(--bg-container); border: 1px solid var(--border-container); border-radius: 10px; margin-bottom: 10px; overflow: hidden; transition: 0.3s; }
-        .faq-question { padding: 12px 15px; font-size: 13.5px; font-weight: bold; color: var(--header-text); cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
-        .faq-question i { transition: transform 0.3s; font-size: 12px; }
-        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; padding: 0 15px; font-size: 12.5px; color: var(--text-main); line-height: 1.6; }
-        .faq-item.active .faq-answer { max-height: 200px; padding: 0 15px 12px 15px; border-top: 1px dashed var(--border-container); }
-        .faq-item.active .faq-question i { transform: rotate(180deg); }
-
         /* --- بنچینەی هاوبەش --- */
         * { box-sizing: border-box; }
 
@@ -469,44 +460,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- === بەشی پرسیارە باوەکان (FAQ) === -->
-            <div class="container no-print" style="margin-top: 15px;">
-                <h2><i class="fa-solid fa-circle-question" style="color: #0056b3;"></i> پرسیارە باوەکان (FAQ)</h2>
-                <div class="faq-container">
-                    <div class="faq-item" onclick="toggleFaq(this)">
-                        <div class="faq-question">
-                            <span>پێداویستییە سەرەکییەکانی نوێکردنەوەی مۆڵەت چین؟</span>
-                            <i class="fa-solid fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
-                            کارتی نیشتیمانی، کارتی زانیاری، پاسپۆرت (ئەگەر هەبێت)، و ئەنجامدانی پشکنینی چاو.
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item" onclick="toggleFaq(this)">
-                        <div class="faq-question">
-                            <span>کاتی کارکردنی سیستەمی نۆرەگرتن چۆنە؟</span>
-                            <i class="fa-solid fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
-                            سیستەم لە ڕۆژانی یەکشەممە تا پێنجشەممە (کاتژمێر 2ی پاشنیوەڕۆی پێنجشەممە داخراوە) کارا دەبێت تا کاتژمێر 6ی ئێوارەی ڕۆژی شەممە کە جارێکی تر دەکرێتەوە.
-                        </div>
-                    </div>
-
-                    <div class="faq-item" onclick="toggleFaq(this)">
-                        <div class="faq-question">
-                            <span>چۆن دڵنیا ببمەوە لەوەی کە نۆرەکەم گرتووە؟</span>
-                            <i class="fa-solid fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
-                            دەتوانیت لە بەشی "دڵنیابوونەوە لە ناوت" بە ژمارەی تەلەفۆنەکەت گەڕان ئەنجام بدەیت یان دوگمەی (پیشاندانی پسوولەکەم) بەکاربهێنیت.
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- === کۆتایی بەشی پرسیارە باوەکان === -->
-
         </div>
 
         <!-- === سیستەمی نۆرەگرتن === -->
@@ -755,15 +708,6 @@
         function toEnglishDigits(str) {
             if (!str) return str;
             return str.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦۷٨٩'.indexOf(d)).replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
-        }
-
-        // ==== کۆنترۆڵی کردنەوە و داخستنی پرسیارە باوەکان (FAQ) ====
-        function toggleFaq(element) {
-            const items = document.querySelectorAll('.faq-item');
-            items.forEach(item => {
-                if (item !== element) item.classList.remove('active');
-            });
-            element.classList.toggle('active');
         }
 
         // ==== گۆڕاوە سەرەکییەکان ====
