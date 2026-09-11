@@ -13,18 +13,17 @@
     <meta name="apple-mobile-web-app-title" content="به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە">
     <link rel="apple-touch-icon" href="icon-192.png">
     
+    <!-- زیادکردنی فۆنتی Noto Sans Arabic لە سێرڤەری گوگڵەوە بۆ دڵنیابوون لەوەی لە هەموو ئامێرەکان وەک یەک بێت -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        @font-face {
-            font-family: 'Rabar';
-            src: url('https://kurdish-fonts.com/fonts/rabar/Rabar_013.ttf') format('truetype');
-            font-weight: normal; font-style: normal;
-        }
-
         @keyframes pulseRotate {
             0% { transform: scale(1) rotate(0deg); opacity: 0.8; }
             50% { transform: scale(1.15) rotate(180deg); opacity: 1; filter: drop-shadow(0 0 5px rgba(220, 53, 69, 0.7)); }
@@ -126,7 +125,7 @@
             --grid-bg: #334155;
         }
 
-        body { font-family: 'Rabar', Tahoma, Arial, sans-serif; background-color: var(--bg-body); color: var(--text-main); padding: 15px 10px 0 10px; margin: 0; text-align: center; transition: background-color 0.4s, color 0.4s; display: flex; flex-direction: column; align-items: center; min-height: 100vh; user-select: none; }
+        body { font-family: 'Noto Sans Arabic', Tahoma, Arial, sans-serif; background-color: var(--bg-body); color: var(--text-main); padding: 15px 10px 0 10px; margin: 0; text-align: center; transition: background-color 0.4s, color 0.4s; display: flex; flex-direction: column; align-items: center; min-height: 100vh; user-select: none; }
         .main-content { flex: 1; width: 100%; max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
         #portalSection, #queueSection, #fineSection { width: 100%; }
         #queueSection #adminSection { max-width: 700px; width: 100%; margin: 0 auto; }
@@ -156,7 +155,7 @@
         .portal-card-content { text-align: center; width: 100%; padding: 0 35px; }
         .portal-card-content h3 { margin: 0 0 6px 0; font-size: 15px; color: var(--text-main); font-weight: bold; }
         .portal-card-content p { margin: 0; font-size: 11px; color: var(--label-color); }
-        .back-btn { background: #007bff; color: white; border: none; padding: 12px 15px; border-radius: 10px; font-family: 'Rabar'; font-size: 13.5px; font-weight: bold; cursor: pointer; margin-bottom: 15px; width: 100%; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2); display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .back-btn { background: #007bff; color: white; border: none; padding: 12px 15px; border-radius: 10px; font-family: 'Noto Sans Arabic', Tahoma, sans-serif; font-size: 13.5px; font-weight: bold; cursor: pointer; margin-bottom: 15px; width: 100%; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2); display: flex; align-items: center; justify-content: center; gap: 8px; }
         .back-btn:hover { background: #0056b3; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0, 86, 179, 0.3); }
         .status-badge { display: inline-flex; align-items: center; gap: 8px; margin: 0 auto 12px auto; padding: 6px 14px; font-size: 12px; font-weight: bold; border-radius: 20px; width: fit-content; text-align: center; }
         .status-open { background: #d4edda; color: #155724; }
@@ -168,11 +167,11 @@
         h2 { color: var(--header-text); margin-top: 0; margin-bottom: 15px; font-size: 16px; }
         .input-wrapper { position: relative; width: 100%; margin: 8px 0; }
         .input-wrapper i { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--header-text); font-size: 16px; }
-        .input-wrapper input { width: 100%; padding: 10px 35px 10px 10px; box-sizing: border-box; border: 2px solid var(--input-border); border-radius: 6px; font-size: 14px; font-family: 'Rabar', Tahoma, Arial, sans-serif; outline: none; transition: 0.3s; background: var(--input-bg); color: var(--input-text); user-select: text; }
+        .input-wrapper input { width: 100%; padding: 10px 35px 10px 10px; box-sizing: border-box; border: 2px solid var(--input-border); border-radius: 6px; font-size: 14px; font-family: 'Noto Sans Arabic', Tahoma, Arial, sans-serif; outline: none; transition: 0.3s; background: var(--input-bg); color: var(--input-text); user-select: text; }
         .input-wrapper input:disabled { background-color: #e9ecef; cursor: not-allowed; opacity: 0.7; }
         .input-wrapper input.valid-input { border-color: #28a745 !important; box-shadow: 0 0 5px rgba(40, 167, 69, 0.3); }
         .input-wrapper input.invalid-input { border-color: #f5c6cb !important; box-shadow: 0 0 5px rgba(245, 198, 203, 0.5); }
-        button.action-btn { background: #28a745; color: white; border: none; padding: 12px 20px; cursor: pointer; border-radius: 6px; font-size: 15px; font-weight: bold; width: 100%; margin-top: 8px; font-family: 'Rabar'; transition: 0.3s; }
+        button.action-btn { background: #28a745; color: white; border: none; padding: 12px 20px; cursor: pointer; border-radius: 6px; font-size: 15px; font-weight: bold; width: 100%; margin-top: 8px; font-family: 'Noto Sans Arabic', Tahoma, sans-serif; transition: 0.3s; }
         button.action-btn:disabled { background: #cccccc !important; color: #666666 !important; cursor: not-allowed !important; box-shadow: none !important; }
         button.action-btn:hover:not(:disabled) { background: #218838; }
         .search-btn { background: #007bff; }
@@ -254,9 +253,9 @@
         .stars i { font-size: 26px; color: #cbd5e1; transition: color 0.2s, transform 0.2s; }
         .stars i:hover { transform: scale(1.1); }
         .stars i.active { color: #ffc107; text-shadow: 0 0 8px rgba(255, 193, 7, 0.4); }
-        .feedback-input { width: 100%; padding: 10px; border: 2px solid var(--input-border); border-radius: 6px; font-size: 12px; font-family: 'Rabar', Tahoma, Arial, sans-serif; background: var(--input-bg); color: var(--input-text); resize: none; margin-bottom: 12px; display: none; outline: none; transition: 0.3s; }
+        .feedback-input { width: 100%; padding: 10px; border: 2px solid var(--input-border); border-radius: 6px; font-size: 12px; font-family: 'Noto Sans Arabic', Tahoma, Arial, sans-serif; background: var(--input-bg); color: var(--input-text); resize: none; margin-bottom: 12px; display: none; outline: none; transition: 0.3s; }
         .feedback-input:focus { border-color: #0056b3; }
-        .submit-rating-btn { background: #0056b3; color: white; border: none; padding: 10px 15px; border-radius: 6px; font-family: 'Rabar'; font-size: 13px; font-weight: bold; cursor: pointer; display: none; width: 100%; transition: 0.3s; }
+        .submit-rating-btn { background: #0056b3; color: white; border: none; padding: 10px 15px; border-radius: 6px; font-family: 'Noto Sans Arabic', Tahoma, sans-serif; font-size: 13px; font-weight: bold; cursor: pointer; display: none; width: 100%; transition: 0.3s; }
         .submit-rating-btn:hover { background: #004494; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 86, 179, 0.2); }
         body.dark-mode .submit-rating-btn { background: #4da3ff; color: #121212; }
         .rating-thanks { display: none; color: #28a745; font-size: 13.5px; font-weight: bold; margin-top: 10px; }
@@ -381,14 +380,13 @@
                 <div id="noticeAdminBlock" style="background: rgba(23, 162, 184, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(23, 162, 184, 0.2);" class="no-print">
                     <h3 style="margin-top: 0; font-size: 14px; color: #17a2b8;">گۆڕینی تێبینی و پێداویستییەکان (سلاید)</h3>
                     <div class="input-wrapper">
-                        <textarea id="adminNoticeInput" rows="5" placeholder="دەقی ئاگاداری و پێداویستییەکان لێرە بنووسە..." style="width: 100%; padding: 10px; border: 2px solid var(--input-border); border-radius: 6px; font-family: 'Rabar'; background: var(--input-bg); color: var(--input-text); resize: vertical;"></textarea>
+                        <textarea id="adminNoticeInput" rows="5" placeholder="دەقی ئاگاداری و پێداویستییەکان لێرە بنووسە..." style="width: 100%; padding: 10px; border: 2px solid var(--input-border); border-radius: 6px; font-family: 'Noto Sans Arabic', Tahoma, sans-serif; background: var(--input-bg); color: var(--input-text); resize: vertical;"></textarea>
                     </div>
                     <button class="action-btn" style="background: #17a2b8; padding: 10px;" onclick="updateNoticeText()">پاشەکەوتکردنی تێبینی</button>
                 </div>
 
                 <div id="preRegAdminBlock" style="background: rgba(0, 86, 179, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(0, 86, 179, 0.2);" class="no-print">
                     <h3 style="margin-top: 0; font-size: 14px; color: #0056b3;">ده‌سه‌ڵاتی ئه‌دمین</h3>
-                    <!-- ئێستا سۆپەر ئەدمین بەبێ پاسوۆرد ئەمە دەکاتەوە -->
                     <button id="openPreRegBtn" class="action-btn" style="background: #17a2b8; padding: 10px;" onclick="showPreRegForm()">کردنەوەی بەشی تۆمارکردن</button>
                     
                     <div id="preRegForm" style="display: none; margin-top: 10px;">
@@ -1025,9 +1023,9 @@
                 html: `
                     <div style="text-align: right; direction: rtl;">
                         <label style="font-size: 13px; font-weight: bold; color: #555; display: block; margin-bottom: 4px;">ناوی سیانی:</label>
-                        <input id="swal-input-name" class="swal2-input" value="${name}" style="margin: 0 0 12px 0; width: 100%; font-family: 'Rabar'; font-size: 14px;">
+                        <input id="swal-input-name" class="swal2-input" value="${name}" style="margin: 0 0 12px 0; width: 100%; font-family: 'Noto Sans Arabic', Tahoma, sans-serif; font-size: 14px;">
                         <label style="font-size: 13px; font-weight: bold; color: #555; display: block; margin-bottom: 4px;">ژمارەی مۆبایل:</label>
-                        <input id="swal-input-phone" class="swal2-input" value="${phone}" maxlength="11" onkeypress="return onlyEnglishNumbers(event)" style="margin: 0; width: 100%; font-family: 'Rabar'; font-size: 14px;">
+                        <input id="swal-input-phone" class="swal2-input" value="${phone}" maxlength="11" onkeypress="return onlyEnglishNumbers(event)" style="margin: 0; width: 100%; font-family: 'Noto Sans Arabic', Tahoma, sans-serif; font-size: 14px;">
                     </div>
                 `,
                 showCancelButton: true, confirmButtonText: 'تـــۆمــاركــردن', cancelButtonText: 'پاشگەزبوونەوە', confirmButtonColor: '#28a745', cancelButtonColor: '#6c757d', focusConfirm: false,
@@ -1167,7 +1165,7 @@
                             labels: ['هاووڵاتیان', 'لە ئەدمینەوە'],
                             datasets: [{ data: [stats.today.byUser, stats.today.byAdmin], backgroundColor: ['#28a745', '#dc3545'], borderWidth: 1 }]
                         },
-                        options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { font: { family: 'Rabar', size: 10 } } }, title: { display: false } } }
+                        options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { font: { family: 'Noto Sans Arabic', size: 10 } } }, title: { display: false } } }
                     });
                 }
             } catch(e) {}
@@ -1289,7 +1287,6 @@
         }
 
         function showPreRegForm() {
-            // سۆپەر ئەدمینە و پێویستی بە پاسوۆردی تر نییە
             document.getElementById("openPreRegBtn").style.display = "none"; 
             document.getElementById("preRegForm").style.display = "block";
         }
