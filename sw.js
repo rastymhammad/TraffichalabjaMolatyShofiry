@@ -11,7 +11,7 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
     event.respondWith(
         fetch(event.request).catch(() => {
-            return new Response('سیستەمەکە ئێستا ئۆفلاینە.');
+            return new Response('تكایه‌ موبایله‌كه‌ت كۆنێكتی ئه‌نته‌رنێت بكه‌.');
         })
     );
 });
