@@ -545,7 +545,7 @@
 
     <footer>
         <p style="margin: 0 0 5px 0;">هەموو مافێکی پارێزراوە بۆ بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە &copy; 2026</p>
-        <p class="dev-name" style="margin: 0;">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووچۆ ( ڕاستی محمد شێخ حیدر )</p>
+        <p class="dev-name" style="margin: 0;">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووۆ ( ڕاستی محمد شێخ حیدر )</p>
         
         <div class="social-icons no-print">
             <a href="https://facebook.com/share/19ChSYyAyM?mibextid=wwXIfr" target="_blank" title="فەیسبووکی گەشەپێدەر">
@@ -974,7 +974,11 @@
                         if (count >= maxQuota) { 
                             statusText.innerText = "پشکی بەیانی تەواو بووە، چاوەڕێ بکە تا کاتژمێر 6ی ئێوارەی سبەینێ"; 
                         } else { 
-                            statusText.innerText = "لە ئێستادا سیستەم داخراوە، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێنەوە"; 
+                            if (dayOfWeek === 6) {
+                                statusText.innerText = "لە ئێستادا سیستەم داخراوە، ئەمڕۆ کاتژمێر 6ی ئێوارە دەکرێتەوە";
+                            } else {
+                                statusText.innerText = "لە ئێستادا سیستەم داخراوە، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێنەوە"; 
+                            }
                         }
                         if (regBtn) { regBtn.disabled = true; regBtn.innerHTML = '<i class="fa-solid fa-lock"></i> چاوەڕێ بکە'; }
                         if (nameInput) nameInput.disabled = true;
