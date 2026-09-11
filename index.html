@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە</title>
     
-    <!-- PWA Settings -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0056b3">
     
-    <!-- iOS PWA Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە">
@@ -27,7 +25,6 @@
             font-weight: normal; font-style: normal;
         }
 
-        /* --- جووڵەی سەرنجڕاکێشی لۆگۆی چاوەڕوانی --- */
         @keyframes pulseRotate {
             0% { transform: scale(1) rotate(0deg); opacity: 0.8; }
             50% { transform: scale(1.15) rotate(180deg); opacity: 1; filter: drop-shadow(0 0 5px rgba(220, 53, 69, 0.7)); }
@@ -39,35 +36,27 @@
             animation: pulseRotate 2.5s infinite ease-in-out;
         }
 
-        /* --- جوانکاری و لێدانی بریقەداری نەرم (Soft Glow & Pulse) بۆ نیشانەکان --- */
         @keyframes badgePulse {
             0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(72, 187, 120, 0.4); }
             70% { transform: scale(1.02); box-shadow: 0 0 0 8px rgba(72, 187, 120, 0); }
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(72, 187, 120, 0); }
         }
 
-        .status-badge {
-            animation: badgePulse 2s infinite;
-        }
+        .status-badge { animation: badgePulse 2s infinite; }
 
         @keyframes softGlow {
             0% { box-shadow: 0 0 5px rgba(40, 167, 69, 0.4); }
             50% { box-shadow: 0 0 18px rgba(40, 167, 69, 0.8); }
             100% { box-shadow: 0 0 5px rgba(40, 167, 69, 0.4); }
         }
-        button.action-btn:not(:disabled) {
-            animation: softGlow 3s infinite;
-        }
+        button.action-btn:not(:disabled) { animation: softGlow 3s infinite; }
 
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .main-content > div {
-            animation: fadeInUp 0.5s ease-out forwards;
-        }
+        .main-content > div { animation: fadeInUp 0.5s ease-out forwards; }
 
-        /* --- بنچینەی هاوبەش --- */
         * { box-sizing: border-box; }
 
         :root {
@@ -80,7 +69,6 @@
             --input-bg: white;
             --input-border: #f5c6cb;
             --input-text: #333;
-            
             --badge-bg: linear-gradient(135deg, #1a365d, #2a4365);
             --badge-text: white;
             --toggle-bg: #f7fafc;
@@ -115,7 +103,6 @@
             --input-bg: #2c2c2c;
             --input-border: #444;
             --input-text: #fff;
-
             --badge-bg: linear-gradient(135deg, #0f172a, #1e293b);
             --badge-text: #f8fafc;
             --toggle-bg: #1e293b;
@@ -139,210 +126,70 @@
             --grid-bg: #334155;
         }
 
-        body {
-            font-family: 'Rabar', Tahoma, Arial, sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            padding: 15px 10px 0 10px;
-            margin: 0;
-            text-align: center;
-            transition: background-color 0.4s, color 0.4s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            user-select: none;
-        }
-        
-        .main-content { 
-            flex: 1; 
-            width: 100%; 
-            max-width: 400px;
-            margin: 0 auto; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
+        body { font-family: 'Rabar', Tahoma, Arial, sans-serif; background-color: var(--bg-body); color: var(--text-main); padding: 15px 10px 0 10px; margin: 0; text-align: center; transition: background-color 0.4s, color 0.4s; display: flex; flex-direction: column; align-items: center; min-height: 100vh; user-select: none; }
+        .main-content { flex: 1; width: 100%; max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
         #portalSection, #queueSection, #fineSection { width: 100%; }
-        
         #queueSection #adminSection { max-width: 700px; width: 100%; margin: 0 auto; }
-
-        .header-title {
-            position: relative;
-            background: var(--header-bg); padding: 15px 20px; border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin: 10px auto 15px auto; border-bottom: 4px solid #0056b3;
-            transition: 0.3s; width: 100%;
-            display: flex; align-items: center; justify-content: center;
-        }
+        .header-title { position: relative; background: var(--header-bg); padding: 15px 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin: 10px auto 15px auto; border-bottom: 4px solid #0056b3; transition: 0.3s; width: 100%; display: flex; align-items: center; justify-content: center; }
         body.dark-mode .header-title { border-bottom-color: #4da3ff; }
-        
         .header-title h1 { color: var(--header-text); font-size: 17px; margin: 0; font-weight: bold; text-align: center; }
         .header-title h1 a { color: inherit; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; }
         .header-title h1 a:hover { opacity: 0.8; }
-        
-        .theme-toggle-btn {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: transparent; border: none;
-            font-size: 22px; cursor: pointer; padding: 0; margin: 0;
-            transition: transform 0.2s;
-            z-index: 10;
-        }
+        .theme-toggle-btn { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); background: transparent; border: none; font-size: 22px; cursor: pointer; padding: 0; margin: 0; transition: transform 0.2s; z-index: 10; }
         .theme-toggle-btn:hover { transform: translateY(-50%) scale(1.1); }
-
-        .visitor-counter {
-            text-align: center; 
-            font-size: 12px; 
-            color: var(--label-color); 
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
+        .visitor-counter { text-align: center; font-size: 12px; color: var(--label-color); margin-bottom: 8px; font-weight: bold; }
         .visitor-counter b { color: var(--text-main); }
-
-        /* --- سلایدی تێبینی زیرەک (سەنتەرکراو و خاو) --- */
-        .notice-slider-box {
-            background: var(--bg-container);
-            border: 2px solid #0056b3;
-            border-radius: 12px;
-            padding: 12px 15px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 15px rgba(0,86,179,0.08);
-            text-align: center;
-            width: 100%;
-            overflow: hidden;
-            position: relative;
-        }
+        .notice-slider-box { background: var(--bg-container); border: 2px solid #0056b3; border-radius: 12px; padding: 12px 15px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,86,179,0.08); text-align: center; width: 100%; overflow: hidden; position: relative; }
         body.dark-mode .notice-slider-box { border-color: #4da3ff; }
-        
-        .notice-header-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-size: 13px;
-            font-weight: bold;
-            color: #0056b3;
-            margin-bottom: 8px;
-            border-bottom: 1px dashed var(--border-container);
-            padding-bottom: 6px;
-        }
+        .notice-header-row { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: bold; color: #0056b3; margin-bottom: 8px; border-bottom: 1px dashed var(--border-container); padding-bottom: 6px; }
         body.dark-mode .notice-header-row { color: #4da3ff; }
-
-        .notice-scroll-container.horizontal {
-            width: 100%;
-            height: 30px;
-            display: flex;
-            align-items: center;
-        }
-        .notice-scroll-container.horizontal marquee {
-            font-size: 12px;
-            color: var(--text-main);
-            font-weight: bold;
-            width: 100%;
-            text-align: center; /* سەنتەر */
-        }
-
-        .notice-scroll-container.vertical {
-            width: 100%;
-            height: 110px;
-            overflow: hidden;
-            position: relative;
-            text-align: center;
-        }
-        .notice-scroll-container.vertical marquee {
-            font-size: 12px;
-            color: var(--text-main);
-            line-height: 1.8;
-            white-space: pre-line;
-            text-align: center; /* سەنتەر */
-            width: 100%;
-            height: 100%;
-        }
-        
-        /* --- پۆرتال و مێنیوی سەرەکی --- */
+        .notice-scroll-container.horizontal { width: 100%; height: 30px; display: flex; align-items: center; }
+        .notice-scroll-container.horizontal marquee { font-size: 12px; color: var(--text-main); font-weight: bold; width: 100%; text-align: center; }
+        .notice-scroll-container.vertical { width: 100%; height: 110px; overflow: hidden; position: relative; text-align: center; }
+        .notice-scroll-container.vertical marquee { font-size: 12px; color: var(--text-main); line-height: 1.8; white-space: pre-line; text-align: center; width: 100%; height: 100%; }
         .portal-cards { display: flex; flex-direction: column; gap: 12px; width: 100%; align-items: center; }
-        .portal-card {
-            position: relative;
-            background: var(--header-bg); border: 2px solid var(--border-container); border-radius: 12px;
-            padding: 20px 15px; cursor: pointer; transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
-            display: flex; align-items: center; justify-content: center; 
-            width: 100%; max-width: 380px; margin: 0 auto;
-            min-height: 95px;
-        }
+        .portal-card { position: relative; background: var(--header-bg); border: 2px solid var(--border-container); border-radius: 12px; padding: 20px 15px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; width: 100%; max-width: 380px; margin: 0 auto; min-height: 95px; }
         .portal-card:hover { transform: translateY(-4px); border-color: #0056b3; box-shadow: 0 8px 20px rgba(0,86,179,0.15); }
         body.dark-mode .portal-card:hover { border-color: #4da3ff; box-shadow: 0 8px 20px rgba(77,163,255,0.15); }
-        
-        .portal-card i { 
-            position: absolute; 
-            right: 20px;
-            font-size: 32px; 
-            color: #0056b3; 
-        }
+        .portal-card i { position: absolute; right: 20px; font-size: 32px; color: #0056b3; }
         body.dark-mode .portal-card i { color: #4da3ff; }
-        
-        .portal-card-content { 
-            text-align: center; 
-            width: 100%;
-            padding: 0 35px; 
-        }
+        .portal-card-content { text-align: center; width: 100%; padding: 0 35px; }
         .portal-card-content h3 { margin: 0 0 6px 0; font-size: 15px; color: var(--text-main); font-weight: bold; }
         .portal-card-content p { margin: 0; font-size: 11px; color: var(--label-color); }
-
-        .back-btn {
-            background: #007bff; color: white; border: none; padding: 12px 15px; border-radius: 10px;
-            font-family: 'Rabar'; font-size: 13.5px; font-weight: bold; cursor: pointer; 
-            margin-bottom: 15px; width: 100%; transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2); display: flex; align-items: center; justify-content: center; gap: 8px;
-        }
+        .back-btn { background: #007bff; color: white; border: none; padding: 12px 15px; border-radius: 10px; font-family: 'Rabar'; font-size: 13.5px; font-weight: bold; cursor: pointer; margin-bottom: 15px; width: 100%; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2); display: flex; align-items: center; justify-content: center; gap: 8px; }
         .back-btn:hover { background: #0056b3; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0, 86, 179, 0.3); }
-
         .status-badge { display: inline-flex; align-items: center; gap: 8px; margin: 0 auto 12px auto; padding: 6px 14px; font-size: 12px; font-weight: bold; border-radius: 20px; width: fit-content; text-align: center; }
         .status-open { background: #d4edda; color: #155724; }
         .status-closed { background: #f8d7da; color: #721c24; }
         .dot { height: 10px; width: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
         .dot-green { background-color: #28a745; box-shadow: 0 0 8px #28a745; }
         .dot-red { background-color: #dc3545; box-shadow: 0 0 8px #dc3545; }
-
         .container { background: var(--bg-container); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: 0 auto 20px auto; border: 1px solid var(--border-container); width: 100%; }
         h2 { color: var(--header-text); margin-top: 0; margin-bottom: 15px; font-size: 16px; }
-
         .input-wrapper { position: relative; width: 100%; margin: 8px 0; }
         .input-wrapper i { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--header-text); font-size: 16px; }
-        .input-wrapper input {
-            width: 100%; padding: 10px 35px 10px 10px; box-sizing: border-box; border: 2px solid var(--input-border);
-            border-radius: 6px; font-size: 14px; font-family: 'Rabar', Tahoma, Arial, sans-serif; outline: none; transition: 0.3s;
-            background: var(--input-bg); color: var(--input-text); user-select: text;
-        }
+        .input-wrapper input { width: 100%; padding: 10px 35px 10px 10px; box-sizing: border-box; border: 2px solid var(--input-border); border-radius: 6px; font-size: 14px; font-family: 'Rabar', Tahoma, Arial, sans-serif; outline: none; transition: 0.3s; background: var(--input-bg); color: var(--input-text); user-select: text; }
         .input-wrapper input:disabled { background-color: #e9ecef; cursor: not-allowed; opacity: 0.7; }
         .input-wrapper input.valid-input { border-color: #28a745 !important; box-shadow: 0 0 5px rgba(40, 167, 69, 0.3); }
         .input-wrapper input.invalid-input { border-color: #f5c6cb !important; box-shadow: 0 0 5px rgba(245, 198, 203, 0.5); }
-
         button.action-btn { background: #28a745; color: white; border: none; padding: 12px 20px; cursor: pointer; border-radius: 6px; font-size: 15px; font-weight: bold; width: 100%; margin-top: 8px; font-family: 'Rabar'; transition: 0.3s; }
         button.action-btn:disabled { background: #cccccc !important; color: #666666 !important; cursor: not-allowed !important; box-shadow: none !important; }
         button.action-btn:hover:not(:disabled) { background: #218838; }
         .search-btn { background: #007bff; }
         .search-btn:hover { background: #0056b3; }
-        
         .timer-box { background: rgba(220, 53, 69, 0.08); border: 1px dashed #dc3545; padding: 8px 10px; border-radius: 8px; font-size: 13px; color: #d9534f; margin-top: 12px; font-weight: bold; display: none; text-align: center; }
         .timer-box span { font-size: 12px; color: #dc3545; display: inline-block; margin-left: 5px; }
-
         .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 15px; }
         #usersTable { width: 100%; border-collapse: collapse; text-align: center; font-size: 11px; }
         #usersTable th, #usersTable td { white-space: nowrap; padding: 8px; border: 1px solid var(--border-container); color: var(--text-main); }
         #usersTable th { background: #0056b3; color: white; }
         body.dark-mode #usersTable th, body.dark-mode #usersTable td { border-color: #444; }
-
         .dashboard-cards { display: flex; gap: 6px; margin-bottom: 12px; justify-content: space-between; }
         .dash-card { background: var(--bg-container); border: 1px solid var(--border-container); border-radius: 6px; padding: 8px 4px; flex: 1; text-align: center; }
         .dash-card h4 { margin: 0 0 2px 0; font-size: 10px; color: var(--label-color); }
         .dash-card h3 { margin: 0; font-size: 15px; color: #0056b3; }
         body.dark-mode .dash-card h3 { color: #4da3ff; }
         .chart-container { max-width: 160px; margin: 0 auto; }
-
         .fine-container { background: var(--bg-container); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 18px; border: 2px solid var(--border-container); text-align: center; width: 100%; }
         .toggle-container { display: flex; justify-content: space-between; align-items: center; background: var(--toggle-bg); padding: 10px; border-radius: 10px; margin-bottom: 12px; border: 1px solid var(--toggle-border); }
         .switch { position: relative; display: inline-block; width: 50px; height: 28px; }
@@ -351,58 +198,44 @@
         .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: #48bb78; }
         input:checked + .slider:before { transform: translateX(22px); }
-
         .checklist-box { background: var(--toggle-bg); border: 1px solid var(--toggle-border); border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; text-align: right; }
         .checklist-title { font-size: 12px; font-weight: bold; color: var(--text-main); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
         .checklist-items { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 11px; color: var(--label-color); }
         .check-item { display: flex; align-items: center; gap: 5px; }
-
         .date-section { background: var(--date-bg); border: 1px solid var(--date-border); border-radius: 12px; padding: 12px; margin-bottom: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
         .date-title-wrap { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .date-title { color: var(--date-title); font-weight: bold; font-size: 13px; }
         .btn-reset { background: transparent; border: 1px solid var(--date-border); color: var(--date-title); border-radius: 5px; padding: 2px 8px; font-size: 11px; font-weight: bold; cursor: pointer; }
-        
         .date-inputs { display: flex; gap: 8px; justify-content: center; }
         .date-box { flex: 1; text-align: center; background: var(--bg-container); border: 1px solid var(--toggle-border); border-radius: 8px; padding: 6px 2px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.02); transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; cursor: pointer; }
         .date-box:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.06); border-color: #0056b3; }
         body.dark-mode .date-box:hover { border-color: #4da3ff; }
         .date-box label { display: block; font-size: 11px; color: var(--label-color); margin-bottom: 2px; font-weight: bold; pointer-events: none;}
         .date-custom-input { width: 100%; padding: 0; border: none; background: transparent; text-align: center; font-size: 16px; font-weight: bold; color: var(--input-text); pointer-events: none; }
-
         .results { background: var(--results-bg); border-radius: 10px; padding: 12px; border: 2px solid var(--dynamic-status-color); margin-bottom: 12px; position: relative; overflow: hidden; z-index: 1; text-align: right; }
         .result-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed var(--results-border); font-size: 13px; color: var(--text-row); position: relative; z-index: 2; }
         .result-row:last-child { border-bottom: none; }
         .total-row { font-size: 16px; font-weight: bold; color: var(--total-color); }
         .fine-row { color: var(--fine-color); font-weight: bold; }
         .fee-row { color: var(--fee-color); font-weight: bold; }
-
         .gauge-container { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%); width: 200px; height: 100px; text-align: center; display: none; opacity: 0.25; pointer-events: none; z-index: 0; }
         .gauge { position: relative; width: 200px; height: 100px; overflow: hidden; background: var(--slider-bg); border-top-left-radius: 100px; border-top-right-radius: 100px; }
         .gauge-fill { position: absolute; top: 100%; left: 0; width: inherit; height: 100%; background: #48bb78; transform-origin: center top; transition: transform 0.8s ease-out, background 0.8s; border-bottom-left-radius: 100px; border-bottom-right-radius: 100px; }
         .gauge-cover { position: absolute; top: 20px; left: 20px; width: 160px; height: 80px; background: var(--results-bg); border-top-left-radius: 80px; border-top-right-radius: 80px; }
         .needle { position: absolute; bottom: 0; left: 50%; width: 4px; height: 80px; background: var(--input-text); transform-origin: bottom center; transform: translateX(-50%) rotate(-90deg); transition: transform 0.8s; border-radius: 4px; z-index: 2; }
-
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-overlay); justify-content: center; align-items: center; z-index: 1000; }
         .modal-content { background: var(--modal-bg); padding: 15px; border-radius: 12px; width: 90%; max-width: 350px; text-align: center; }
         .modal-content h3 { margin-top: 0; margin-bottom: 12px; color: var(--modal-text); font-size: 14px; }
         .number-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; max-height: 75vh; overflow-y: auto; padding: 5px; }
         .grid-item { padding: 8px; min-height: 38px; display: flex; align-items: center; justify-content: center; background: var(--grid-bg); border-radius: 6px; font-weight: bold; color: var(--input-text); cursor: pointer; font-size: 13px;}
         .grid-item.selected-item { background: #3182ce !important; color: white !important; }
-
-        /* --- Footer & Social Icons --- */
-        footer { 
-            background-color: var(--header-bg); color: var(--text-main); text-align: center; 
-            padding: 15px; margin-top: 25px; border-radius: 12px 12px 0 0; font-size: 12px; 
-            border-top: 1px solid var(--border-container); width: 100%; max-width: 400px;
-        }
+        footer { background-color: var(--header-bg); color: var(--text-main); text-align: center; padding: 15px; margin-top: 25px; border-radius: 12px 12px 0 0; font-size: 12px; border-top: 1px solid var(--border-container); width: 100%; max-width: 400px; }
         .dev-name { color: #0056b3; font-weight: bold; margin-top: 5px; }
         body.dark-mode .dev-name { color: #4da3ff; }
-        
         .social-icons { margin-top: 10px; }
         .social-icons a { color: #0056b3; font-size: 24px; margin: 0 10px; text-decoration: none; display: inline-block; transition: all 0.3s ease; }
         .social-icons a:hover { transform: scale(1.1) translateY(-2px); }
         body.dark-mode .social-icons a { color: #4da3ff; }
-
         .no-print { display: block; }
         @media print { 
             body * { visibility: hidden; } 
@@ -414,39 +247,23 @@
             .no-print { display: none !important; } 
         }
 
-        /* --- بەشی فیدباک و هەڵسەنگاندن (Rating System) --- */
-        .rating-container {
-            background: var(--bg-container); border: 1px solid var(--border-container);
-            border-radius: 12px; padding: 15px; margin: 20px auto 5px auto; width: 100%; max-width: 400px;
-            text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: all 0.3s ease;
-        }
+        .rating-container { background: var(--bg-container); border: 1px solid var(--border-container); border-radius: 12px; padding: 15px; margin: 20px auto 5px auto; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: all 0.3s ease; }
         body.dark-mode .rating-container { border-color: #334155; }
         .rating-title { font-size: 14px; color: var(--header-text); font-weight: bold; margin-bottom: 12px; }
         .stars { display: flex; justify-content: center; gap: 8px; direction: ltr; margin-bottom: 10px; cursor: pointer; }
         .stars i { font-size: 26px; color: #cbd5e1; transition: color 0.2s, transform 0.2s; }
         .stars i:hover { transform: scale(1.1); }
         .stars i.active { color: #ffc107; text-shadow: 0 0 8px rgba(255, 193, 7, 0.4); }
-        .feedback-input {
-            width: 100%; padding: 10px; border: 2px solid var(--input-border);
-            border-radius: 6px; font-size: 12px; font-family: 'Rabar', Tahoma, Arial, sans-serif;
-            background: var(--input-bg); color: var(--input-text); resize: none; margin-bottom: 12px; display: none;
-            outline: none; transition: 0.3s;
-        }
+        .feedback-input { width: 100%; padding: 10px; border: 2px solid var(--input-border); border-radius: 6px; font-size: 12px; font-family: 'Rabar', Tahoma, Arial, sans-serif; background: var(--input-bg); color: var(--input-text); resize: none; margin-bottom: 12px; display: none; outline: none; transition: 0.3s; }
         .feedback-input:focus { border-color: #0056b3; }
-        .submit-rating-btn {
-            background: #0056b3; color: white; border: none; padding: 10px 15px; border-radius: 6px;
-            font-family: 'Rabar'; font-size: 13px; font-weight: bold; cursor: pointer; display: none; width: 100%;
-            transition: 0.3s;
-        }
+        .submit-rating-btn { background: #0056b3; color: white; border: none; padding: 10px 15px; border-radius: 6px; font-family: 'Rabar'; font-size: 13px; font-weight: bold; cursor: pointer; display: none; width: 100%; transition: 0.3s; }
         .submit-rating-btn:hover { background: #004494; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 86, 179, 0.2); }
         body.dark-mode .submit-rating-btn { background: #4da3ff; color: #121212; }
         .rating-thanks { display: none; color: #28a745; font-size: 13.5px; font-weight: bold; margin-top: 10px; }
-        
         .admin-feedbacks-container { display: none; margin-top: 15px; text-align: right; background: var(--info-bg); padding: 12px; border-radius: 8px; border: 1px solid var(--border-container); }
     </style>
 </head>
 <body>
-
     <div class="main-content" id="mainWrapper">
         <div class="header-title no-print">
             <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="گۆڕینی ڕەنگ">🌙</button>
@@ -457,13 +274,11 @@
             </h1>
         </div>
 
-        <!-- === پۆرتاڵ (مێنیوی سەرەکی) === -->
         <div id="portalSection">
             <div class="visitor-counter no-print">
                 👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
             </div>
             
-            <!-- سلایدی تێبینی زیرەک (سەنتەردار، ڕاستەوخۆ، خاو و وەستان بە ماوس) -->
             <div class="notice-slider-box no-print">
                 <div class="notice-header-row">
                     <span>ئاگاداری و پێداویستییەکان:</span>
@@ -492,7 +307,6 @@
             </div>
         </div>
 
-        <!-- === سیستەمی نۆرەگرتن === -->
         <div id="queueSection" style="display: none;">
             <button class="back-btn no-print" onclick="openSection('portal')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە بۆ سەرەتا</button>
             
@@ -540,7 +354,6 @@
                 <button class="action-btn search-btn" onclick="searchUser()">گەڕان</button>
             </div>
             
-            <!-- ====== بەشی ئەدمین ====== -->
             <div class="container printable-area" id="adminSection" style="display: none;">
                 <h2>بەشی ئەدمین - کۆنتڕۆڵی سیستەم</h2>
 
@@ -556,7 +369,7 @@
                     </div>
                 </div>
 
-                <div style="background: rgba(40, 167, 69, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(40, 167, 69, 0.2);" class="no-print">
+                <div id="quotaAdminBlock" style="background: rgba(40, 167, 69, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(40, 167, 69, 0.2);" class="no-print">
                     <h3 style="margin-top: 0; font-size: 14px; color: #28a745;">گۆڕینی ژمارەی پشکی ڕۆژانە</h3>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-users"></i>
@@ -565,7 +378,7 @@
                     <button class="action-btn" style="background: #28a745; padding: 10px;" onclick="updateDailyQuota()">گۆڕینی پشک</button>
                 </div>
 
-                <div style="background: rgba(23, 162, 184, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(23, 162, 184, 0.2);" class="no-print">
+                <div id="noticeAdminBlock" style="background: rgba(23, 162, 184, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(23, 162, 184, 0.2);" class="no-print">
                     <h3 style="margin-top: 0; font-size: 14px; color: #17a2b8;">گۆڕینی تێبینی و پێداویستییەکان (سلاید)</h3>
                     <div class="input-wrapper">
                         <textarea id="adminNoticeInput" rows="5" placeholder="دەقی ئاگاداری و پێداویستییەکان لێرە بنووسە..." style="width: 100%; padding: 10px; border: 2px solid var(--input-border); border-radius: 6px; font-family: 'Rabar'; background: var(--input-bg); color: var(--input-text); resize: vertical;"></textarea>
@@ -573,8 +386,9 @@
                     <button class="action-btn" style="background: #17a2b8; padding: 10px;" onclick="updateNoticeText()">پاشەکەوتکردنی تێبینی</button>
                 </div>
 
-                <div style="background: rgba(0, 86, 179, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(0, 86, 179, 0.2);" class="no-print">
+                <div id="preRegAdminBlock" style="background: rgba(0, 86, 179, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(0, 86, 179, 0.2);" class="no-print">
                     <h3 style="margin-top: 0; font-size: 14px; color: #0056b3;">ده‌سه‌ڵاتی ئه‌دمین</h3>
+                    <!-- ئێستا سۆپەر ئەدمین بەبێ پاسوۆرد ئەمە دەکاتەوە -->
                     <button id="openPreRegBtn" class="action-btn" style="background: #17a2b8; padding: 10px;" onclick="showPreRegForm()">کردنەوەی بەشی تۆمارکردن</button>
                     
                     <div id="preRegForm" style="display: none; margin-top: 10px;">
@@ -596,10 +410,10 @@
                 </div>
                 
                 <button class="action-btn no-print" style="background: #17a2b8; padding: 10px;" onclick="downloadExcel()">داونلۆدکردنی ئێکسڵ (Excel/CSV)</button>
-                <button class="action-btn no-print" style="background: #ffc107; color: black; padding: 10px;" onclick="toggleSystemStatus()"> ڕاگرتن / کردنەوەی سایت </button>
-                <!-- دوگمەی نوێ بۆ بینینی فیدباکەکان بۆ ئەدمین -->
+                
+                <button id="toggleStatusBtn" class="action-btn no-print" style="background: #ffc107; color: black; padding: 10px;" onclick="toggleSystemStatus()"> ڕاگرتن / کردنەوەی سایت </button>
+                
                 <button class="action-btn no-print" style="background: #8e44ad; color: white; padding: 10px;" onclick="loadFeedbacks()"> بینینی فیدباکەکان </button>
-
                 <button class="action-btn no-print" style="background: #6c757d; padding: 10px;" onclick="window.print()">چاپکردنی لیست (Print)</button>
                 <button class="action-btn no-print" style="background: #dc3545; margin-top: 5px; padding: 10px;" onclick="hideAdminPanel()">داخستنی بەشی ئەدمین</button>
                 
@@ -618,21 +432,17 @@
                     </table>
                 </div>
 
-                <!-- بەشی پیشاندانی فیدباکەکان لەناو ئەدمین -->
                 <div id="feedbacksContainer" class="admin-feedbacks-container no-print">
                     <h3 style="color: #8e44ad; font-size: 14px; margin-bottom: 10px;">فیدباک و هەڵسەنگاندنەکان:</h3>
                     <div id="feedbacksList"></div>
                 </div>
-
             </div>
-            <!-- ====== کۆتایی بەشی ئەدمین ====== -->
             
             <div style="text-align: center; margin-bottom: 15px;" class="no-print">
                 <button onclick="handleAdminClick()" style="background: none; color: var(--label-color); border: none; font-size: 11px; cursor: pointer;">ئەدمین</button>
             </div>
         </div>
 
-        <!-- === سیستەمی غەرامە === -->
         <div id="fineSection" style="display: none;">
             <button class="back-btn" onclick="openSection('portal')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە بۆ سەرەتا</button>
             
@@ -696,10 +506,8 @@
                 </div>
             </div>
         </div>
-
     </div>
 
-    <!-- مۆدێلی ژمارەکان بۆ غەرامە -->
     <div class="modal-overlay" id="picker-modal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h3 id="modal-title">دیاریکردنی ژمارە</h3>
@@ -707,21 +515,18 @@
         </div>
     </div>
 
-    <!-- مۆدێلی ڤیریفای نۆرە -->
     <div class="container" id="verifySection" style="display: none; max-width: 400px; margin: 50px auto; border: 3px solid #0056b3;">
         <h2 style="color: #0056b3; margin-top: 10px;"><i class="fa-solid fa-shield-check"></i> دڵنیابوونەوەی پسوولە</h2>
         <div id="verifyResult" style="padding: 15px; font-size: 15px; font-weight: bold; margin-top: 12px; border-radius: 8px; background: #e9ecef;">چاوەڕێ بکە...</div>
         <button class="action-btn" onclick="window.location.href=window.location.origin + window.location.pathname" style="background: #0056b3; margin-top: 15px;">گەڕانەوە بۆ سەرەتا</button>
     </div>
 
-    <!-- === دوگمەی دابەزاندنی ئەپڵیکەیشن === -->
     <div id="installAppContainer" style="display: none; text-align: center; margin-bottom: 15px;" class="no-print">
         <button id="installAppBtn" class="action-btn" style="background: #28a745; width: auto; padding: 10px 25px; border-radius: 25px; box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);">
             <i class="fa-solid fa-download"></i> دابەزاندنی ئەپڵیکەیشن (Install)
         </button>
     </div>
 
-    <!-- === بەشی فیدباک و هەڵسەنگاندن === -->
     <div class="rating-container no-print" id="ratingSystem">
         <div class="rating-title">هەڵسەنگاندنت بۆ سیستەمەکە چۆنە؟</div>
         <div class="stars" id="starContainer">
@@ -736,7 +541,6 @@
         <div id="ratingThanks" class="rating-thanks"><i class="fa-solid fa-circle-check"></i> زۆر سوپاس بۆ هەڵسەنگاندنەکەت!</div>
     </div>
 
-    <!-- === فوتەر و سۆشیاڵ میدیا === -->
     <footer>
         <p style="margin: 0 0 5px 0;">هەموو مافێکی پارێزراوە بۆ بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە &copy; 2026</p>
         <p class="dev-name" style="margin: 0;">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووچۆ ( ڕاستی محمد شێخ حیدر )</p>
@@ -752,7 +556,6 @@
     </footer>
 
     <script>
-        // ==== پاراستنی توند (ڕێگری لە کلیلەکانی Inspect) ====
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.addEventListener('keydown', event => {
             if (event.keyCode === 123 || (event.ctrlKey && event.shiftKey && (event.keyCode === 73 || event.keyCode === 67 || event.keyCode === 74)) || (event.ctrlKey && event.keyCode === 85)) {
@@ -765,7 +568,6 @@
             return str.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦۷٨٩'.indexOf(d)).replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
         }
 
-        // ==== گۆڕاوە سەرەکییەکان ====
         const baseUrl = "https://rastymhammad-001-site1.itempurl.com";
         const apiUrl = `${baseUrl}/api/users`;
         let adminClickCount = 0; 
@@ -774,7 +576,6 @@
         let statChart = null;
         let globalUsersData = [];
 
-        // ==== بارکردنی دەقی ئاگاداری و تێبینییەکان لە سەرەتادا (سەنتەردار، ڕاستەوخۆ، خاو و وەستان بە ماوس) ====
         async function loadNoticeText() {
             try {
                 let res = await fetch(`${baseUrl}/api/notice`);
@@ -819,14 +620,13 @@
                     Swal.fire('سەرکەوتوو', result.message || 'تێبینییەکان نوێکرانەوە!', 'success');
                     loadNoticeText();
                 } else {
-                    Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە!', 'error');
+                    Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان دەسەڵاتت نییە!', 'error');
                 }
             } catch(e) {
                 Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە', 'error');
             }
         }
 
-        // ==== مێنیوی پۆرتاڵ ====
         openSection('portal');
         function openSection(section) {
             document.getElementById('portalSection').style.display = 'none';
@@ -1162,7 +962,6 @@
                     const dateInIraq = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Baghdad"}));
                     const iraqHour = dateInIraq.getHours(); const dayOfWeek = dateInIraq.getDay(); 
                     
-                    // پێنجشەممە (4) لە کاتژمێر 14:00 بە دواوە، هەینی (5)، و شەممە (6) پێش کاتژمێر 18:00 داخراوە
                     let isBlocked = (dayOfWeek === 4 && iraqHour >= 14) || dayOfWeek === 5 || (dayOfWeek === 6 && iraqHour < 18);
                     
                     if (isBlocked || count >= maxQuota) {
@@ -1196,20 +995,18 @@
                 let target = new Date(now); 
                 let day = now.getDay();
 
-                // دیاریکردنی کاتی کردنەوە بۆ کاتژمێر 6ی ئێوارەی ڕۆژی شەممە
                 target.setHours(18, 0, 0, 0);
 
                 if (day === 4) {
-                    target.setDate(now.getDate() + 2); // دوو ڕۆژ پاش پێنجشەممە دەبێتە شەممە
+                    target.setDate(now.getDate() + 2); 
                 } else if (day === 5) {
-                    target.setDate(now.getDate() + 1); // ڕۆژی هەینی یەک ڕۆژی دەوێت تا دەبێتە شەممە
+                    target.setDate(now.getDate() + 1); 
                 } else if (day === 6 && now.getHours() >= 18) {
-                    target.setDate(now.getDate() + 7); // ئەگەر شەممە ئێوارە تێپەڕیبوو
+                    target.setDate(now.getDate() + 7); 
                 }
 
                 let diff = Math.max(target - now, 0);
                 
-                // هەژمارکردنی کۆی گشتی کاتژمێرەکان بۆ ئەوەی ڕوکارەکەی ڕێک و بێخەوش بێت
                 let totalHours = Math.floor(diff / (1000 * 60 * 60));
                 let m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 let s = Math.floor((diff % (1000 * 60)) / 1000);
@@ -1304,12 +1101,29 @@
                     let response = await fetch(`${baseUrl}/api/admin/verify?type=admin`, {
                         method: "POST", headers: { "Admin-Password": normalizedPwd }
                     });
+                    
                     if (response.status === 429) {
-                        return Swal.fire('سزادراویت!', 'بەهۆی زۆر تاقیکردنەوەی هەڵە، ئایپییەکەت بۆ ١٥ خولەک سزادراوە. تکایە چاوەڕێ بکە یان ئینتەرنێتەکەت (Flight Mode) پێبکە و بکوژێنەوە.', 'error');
+                        return Swal.fire('سزادراویت!', 'بەهۆی زۆر تاقیکردنەوەی هەڵە، ئایپییەکەت بۆ ١٥ خولەک سزادراوە. تکایە چاوەڕێ بکە.', 'error');
                     }
+                    
                     if (response.ok) {
+                        let resData = await response.json(); 
+                        window.adminRole = resData.role; 
                         Swal.close();
                         window.adminPwd = normalizedPwd; 
+
+                        if (window.adminRole === 'admin') {
+                            document.getElementById('quotaAdminBlock').style.display = 'none';
+                            document.getElementById('noticeAdminBlock').style.display = 'none';
+                            document.getElementById('preRegAdminBlock').style.display = 'none';
+                            document.getElementById('toggleStatusBtn').style.display = 'none';
+                        } else {
+                            document.getElementById('quotaAdminBlock').style.display = 'block';
+                            document.getElementById('noticeAdminBlock').style.display = 'block';
+                            document.getElementById('preRegAdminBlock').style.display = 'block';
+                            document.getElementById('toggleStatusBtn').style.display = 'inline-block';
+                        }
+
                         document.getElementById("adminSection").style.display = "block";
                         document.getElementById("adminSection").scrollIntoView({ behavior: 'smooth' });
                         loadAdminStats();
@@ -1332,7 +1146,8 @@
             let openPreRegBtn = document.getElementById("openPreRegBtn");
             if(preRegForm) preRegForm.style.display = "none";
             if(openPreRegBtn) openPreRegBtn.style.display = "inline-block";
-            window.adminPwd = ""; window.tempPreRegPwd = adminClickCount = 0;
+            window.adminPwd = ""; adminClickCount = 0;
+            window.adminRole = "";
         }
 
         async function loadAdminStats() {
@@ -1372,7 +1187,7 @@
                 if(response.ok) {
                     Swal.fire('سەرکەوتوو', result.message, 'success');
                     checkQuotaAndTimer(); document.getElementById("adminQuotaInput").value = "";
-                } else Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە!', 'error');
+                } else Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان دەسەڵاتت نییە!', 'error');
             } catch (error) { Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە یان سێرڤەر خەوتووە', 'error'); }
         }
 
@@ -1403,7 +1218,7 @@
                 if(response.ok) {
                     await Swal.fire('سەرکەوتوو', result.message || 'دۆخ گۆڕدرا!', 'success');
                     location.reload();
-                } else Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە!', 'error');
+                } else Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان دەسەڵاتت نییە!', 'error');
             } catch (error) { Swal.fire('کێشە', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error'); }
         }
 
@@ -1427,19 +1242,28 @@
                 
                 globalUsersData = await response.json(); 
                 tbody.innerHTML = "";
-                document.getElementById("feedbacksContainer").style.display = "none"; // حەشاردانی فیدباک کاتێک خشتە دەکرێتەوە
+                document.getElementById("feedbacksContainer").style.display = "none";
 
                 if(!Array.isArray(globalUsersData)) globalUsersData = [];
 
                 if(globalUsersData.length === 0) tbody.innerHTML = "<tr><td colspan='5' style='padding: 15px;'>هیچ ناوێک بۆ ئەمڕۆ تۆمار نەکراوە!</td></tr>";
                 else {
                     globalUsersData.forEach(user => {
+                        let actionButtons = '';
+                        if (window.adminRole === 'superadmin') {
+                            actionButtons = `
+                                <button onclick="editUser(${user.id || user.Id}, '${user.name}', '${user.phone}')" style="background: #ffc107; color: black; padding: 4px 8px; margin: 0; width: auto; font-size: 12px; border-radius: 4px;" title="دەستکاریکردن"><i class="fa-solid fa-pen"></i></button>
+                                <button onclick="deleteUser(${user.id || user.Id})" style="background: #dc3545; color: white; padding: 4px 8px; margin: 0; width: auto; font-size: 12px; border-radius: 4px;" title="سڕینەوە"><i class="fa-solid fa-trash"></i></button>
+                            `;
+                        } else {
+                            actionButtons = `<span style="color:var(--label-color); font-size:10px;">تەنها بۆ بینین</span>`;
+                        }
+
                         let row = `<tr>
                             <td style="font-weight: bold; color: #4da3ff;">${user.rank}</td><td>${user.name}</td><td>${user.phone}</td><td>${user.createdAt}</td>
                             <td class="no-print">
                                 <div style="display: flex; gap: 5px; justify-content: center;">
-                                    <button onclick="editUser(${user.id || user.Id}, '${user.name}', '${user.phone}')" style="background: #ffc107; color: black; padding: 4px 8px; margin: 0; width: auto; font-size: 12px; border-radius: 4px;" title="دەستکاریکردن"><i class="fa-solid fa-pen"></i></button>
-                                    <button onclick="deleteUser(${user.id || user.Id})" style="background: #dc3545; color: white; padding: 4px 8px; margin: 0; width: auto; font-size: 12px; border-radius: 4px;" title="سڕینەوە"><i class="fa-solid fa-trash"></i></button>
+                                    ${actionButtons}
                                 </div>
                             </td></tr>`;
                         tbody.innerHTML += row;
@@ -1464,26 +1288,10 @@
             else { adminRegBtn.disabled = true; adminRegBtn.style.background = "#cccccc"; adminRegBtn.style.cursor = "not-allowed"; }
         }
 
-        async function showPreRegForm() {
-            const { value: pwd } = await Swal.fire({ 
-                title: 'چوونەژوورەوە بۆ تۆماری پێشوەختە', input: 'password', inputPlaceholder: 'پاسوۆرد', confirmButtonText: 'چوونەژوورەوە', showCancelButton: true 
-            });
-            
-            if (pwd) {
-                let normalizedPwd = toEnglishDigits(pwd);
-                Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
-
-                try {
-                    let response = await fetch(`${baseUrl}/api/admin/verify?type=prereg`, { method: "POST", headers: { "Admin-Password": normalizedPwd } });
-                    if (response.status === 429) return Swal.fire('ئاگاداری سزا', 'تۆ چەند جارێک پاسوۆردی هەڵەت لێدا؛ بەهۆی پاراستنی سیستەمەوە سزادراویت!', 'error');
-                    if (response.ok) { 
-                        Swal.close();
-                        document.getElementById("openPreRegBtn").style.display = "none"; 
-                        document.getElementById("preRegForm").style.display = "block";
-                        window.tempPreRegPwd = normalizedPwd; 
-                    } else { Swal.fire('هەڵە', 'پاسوۆردەکە هەڵەیە بەپێی سێرڤەرەکە!', 'error'); }
-                } catch(e) { Swal.fire('کێشە', 'سێرڤەرەکە خەوتووە یان کێشەی هێڵ هەیە!', 'error'); }
-            }
+        function showPreRegForm() {
+            // سۆپەر ئەدمینە و پێویستی بە پاسوۆردی تر نییە
+            document.getElementById("openPreRegBtn").style.display = "none"; 
+            document.getElementById("preRegForm").style.display = "block";
         }
 
         async function adminRegisterUser() {
@@ -1494,7 +1302,7 @@
             let originalText = regBtn.innerHTML; regBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> تکایە چاوەڕێ بکە...'; regBtn.disabled = true;
             
             try {
-                let response = await fetch(apiUrl, { method: "POST", headers: { "Content-Type": "application/json", "Admin-Password": window.tempPreRegPwd }, body: JSON.stringify({ name: name, phone: phone }) });
+                let response = await fetch(apiUrl, { method: "POST", headers: { "Content-Type": "application/json", "Admin-Password": window.adminPwd }, body: JSON.stringify({ name: name, phone: phone }) });
                 if (response.status === 429) return Swal.fire('ئاگاداری', 'تکایە کەمێک چاوەڕێ بکە (Rate Limit)', 'warning');
                 let result = await response.json().catch(() => ({}));
                 if(response.ok) {
@@ -1522,7 +1330,7 @@
                     let response = await fetch(`${apiUrl}/${id}`, { method: "PUT", headers: { "Content-Type": "application/json", "Admin-Password": window.adminPwd }, body: JSON.stringify({ name: newName, phone: newPhone }) });
                     let resData = await response.json().catch(() => ({}));
                     if (response.ok) { Swal.fire('سەرکەوتوو بوو!', resData.message || 'زانیارییەکان گۆڕدران.', 'success'); loadTodayUsers(); }
-                    else Swal.fire('هەڵە!', resData.message || 'کێشەیەک هەیە لە نوێکردنەوە!', 'error');
+                    else Swal.fire('هەڵە!', resData.message || 'دەسەڵاتت نییە یان کێشەیەک هەیە!', 'error');
                 } catch (error) { Swal.fire('کێشە', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error'); }
             }
         }
@@ -1538,7 +1346,7 @@
                     let response = await fetch(`${apiUrl}/${id}`, { method: "DELETE", headers: { "Admin-Password": window.adminPwd } });
                     let resData = await response.json().catch(() => ({}));
                     if (response.ok) { Swal.fire('سڕایەوە!', resData.message || 'ناوەکە بە سەرکەوتوویی سڕایەوە.', 'success'); loadTodayUsers(); checkQuotaAndTimer(); }
-                    else Swal.fire('هەڵە!', resData.message || 'کێشەیەک هەیە لە سڕینەوە!', 'error');
+                    else Swal.fire('هەڵە!', resData.message || 'دەسەڵاتت نییە یان کێشەیەک هەیە!', 'error');
                 } catch (error) { Swal.fire('کێشە', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error'); }
             }
         }
@@ -1552,7 +1360,6 @@
             a.download = `Traffic_List_${new Date().toISOString().slice(0,10)}.csv`; document.body.appendChild(a); a.click(); document.body.removeChild(a);
         }
 
-        // ==== کۆدەکانی تایبەت بە سیستەمی فیدباک ====
         let currentRating = 0;
         const ratingStars = document.querySelectorAll('#starContainer i');
         const feedbackInput = document.getElementById('feedbackText');
@@ -1591,15 +1398,12 @@
             submitRatingBtn.disabled = true;
 
             try {
-                // ناردنی بۆ سێرڤەر (ئەگەر سێرڤەرەکە ئامادەکرابێت پێشتر)
                 await fetch(`${baseUrl}/api/feedback`, { 
                     method: "POST", 
                     headers: { "Content-Type": "application/json" }, 
-                    body: JSON.stringify({ rating: currentRating, text: feedback, date: new Date().toLocaleDateString('en-CA') }) 
+                    body: JSON.stringify({ rating: currentRating, text: feedback }) 
                 });
-            } catch(e) {
-                // تەنها بۆ ئەوەی پڕۆسەکە نەوەستێت ئەگەر سێرڤەر ئامادە نەبوو
-            }
+            } catch(e) {}
 
             localStorage.setItem('user_has_rated', 'true');
             
@@ -1617,13 +1421,11 @@
             }, 4000);
         }
 
-        // --- هێنانی فیدباکەکان بۆ ناو ئەدمین ---
         async function loadFeedbacks() {
             if (!window.adminPwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە!', 'warning');
             Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
             
             try {
-                // ئەم لینکە پێویستی بە دروستکردنە لە C# backend
                 let response = await fetch(`${baseUrl}/api/admin/feedback`, { headers: { "Admin-Password": window.adminPwd } });
                 
                 if (response.ok) {
@@ -1649,22 +1451,15 @@
                     }
                     
                     document.getElementById("feedbacksContainer").style.display = "block";
-                    document.getElementById("usersTable").style.display = "none"; // حەشاردانی خشتەی ناوەکان
+                    document.getElementById("usersTable").style.display = "none";
                     Swal.close();
                 } else {
-                    throw new Error("API Required");
+                    Swal.fire('هەڵە', 'دەسەڵاتت نییە یان کێشەیەک هەیە!', 'error');
                 }
             } catch (error) {
-                // نامەیەک بۆ ڕوونکردنەوەی ئەوەی کە دەبێت باکێندەکە ئەم کۆدە زیاد بکات
-                Swal.fire({
-                    icon: 'info',
-                    title: 'زانیاری بۆ گەشەپێدەر',
-                    text: 'ئەم بەشە پێویستی بەوەیە کە API تایبەت بە فیدباک لە سێرڤەری C# زیاد بکەیت (POST /api/feedback و GET /api/admin/feedback). تا ئەو کاتەی دروستی دەکەیت ئەم بەشە داتاکان ناهێنێت.',
-                    confirmButtonText: 'تێگەیشتم'
-                });
+                Swal.fire('کێشە', 'سێرڤەرەکە خەوتووە یان کێشەی هێڵ هەیە', 'error');
             }
         }
-
 
         window.onload = function() {
             calculateFine(true);
@@ -1680,7 +1475,6 @@
             } else openSection('portal');
         };
 
-        // ==== سیستەمی دابەزاندنی ئەپڵیکەیشن (PWA Install) ====
         let deferredPrompt;
         const installAppContainer = document.getElementById('installAppContainer');
         const installAppBtn = document.getElementById('installAppBtn');
@@ -1711,7 +1505,6 @@
             console.log('PWA was installed');
         });
 
-        // ==== تۆمارکردنی Service Worker ====
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
