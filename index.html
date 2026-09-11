@@ -592,7 +592,7 @@
                             wrapper.innerHTML = `<marquee direction="up" scrollamount="1.5" scrolldelay="90" onmouseover="this.stop();" onmouseout="this.start();" style="width:100%; height:100%; text-align: center;">${text.replace(/\n/g, '<br>')}</marquee>`;
                         } else {
                             wrapper.className = "notice-scroll-container horizontal";
-                            wrapper.innerHTML = `<marquee direction="left" scrollamount="2" scrolldelay="90" onmouseover="this.stop();" onmouseout="this.start();" style="width:100%; text-align: center;">${text}</marquee>`;
+                            wrapper.innerHTML = `<marquee direction="right" scrollamount="2" scrolldelay="90" onmouseover="this.stop();" onmouseout="this.start();" style="width:100%; text-align: center;">${text}</marquee>`;
                         }
                     }
 
