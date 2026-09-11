@@ -19,13 +19,12 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        /* زیادکردنی فۆنتی ڕووداو بە شێوازێکی دڵنیاکەرەوە بۆ هەموو ئامێرەکان */
+        /* --- خوێندنەوەی فۆنتی ڕووداو ڕاستەوخۆ لە سێرڤەرەکەی خۆتەوە (بۆ ئەوەی لە مۆبایل کێشەی نەبێت) --- */
         @font-face {
             font-family: 'Rudaw';
-            src: local('Rudaw'),
-                 url('https://cdn.fontcdn.ir/Font/Persian/Rudaw/Rudaw.ttf') format('truetype'),
-                 url('https://kurdish-fonts.com/fonts/rudaw/Rudaw.ttf') format('truetype');
-            font-weight: normal; font-style: normal;
+            src: url('./Rudaw.ttf') format('truetype');
+            font-weight: normal; 
+            font-style: normal;
             font-display: swap;
         }
 
