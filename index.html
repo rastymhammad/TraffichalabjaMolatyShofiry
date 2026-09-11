@@ -413,6 +413,36 @@
             #usersTable th { background-color: #e6e6e6 !important; color: #000 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
             .no-print { display: none !important; } 
         }
+
+        /* --- بەشی فیدباک و هەڵسەنگاندن (Rating System) --- */
+        .rating-container {
+            background: var(--bg-container); border: 1px solid var(--border-container);
+            border-radius: 12px; padding: 15px; margin: 20px auto 5px auto; width: 100%; max-width: 400px;
+            text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: all 0.3s ease;
+        }
+        body.dark-mode .rating-container { border-color: #334155; }
+        .rating-title { font-size: 14px; color: var(--header-text); font-weight: bold; margin-bottom: 12px; }
+        .stars { display: flex; justify-content: center; gap: 8px; direction: ltr; margin-bottom: 10px; cursor: pointer; }
+        .stars i { font-size: 26px; color: #cbd5e1; transition: color 0.2s, transform 0.2s; }
+        .stars i:hover { transform: scale(1.1); }
+        .stars i.active { color: #ffc107; text-shadow: 0 0 8px rgba(255, 193, 7, 0.4); }
+        .feedback-input {
+            width: 100%; padding: 10px; border: 2px solid var(--input-border);
+            border-radius: 6px; font-size: 12px; font-family: 'Rabar', Tahoma, Arial, sans-serif;
+            background: var(--input-bg); color: var(--input-text); resize: none; margin-bottom: 12px; display: none;
+            outline: none; transition: 0.3s;
+        }
+        .feedback-input:focus { border-color: #0056b3; }
+        .submit-rating-btn {
+            background: #0056b3; color: white; border: none; padding: 10px 15px; border-radius: 6px;
+            font-family: 'Rabar'; font-size: 13px; font-weight: bold; cursor: pointer; display: none; width: 100%;
+            transition: 0.3s;
+        }
+        .submit-rating-btn:hover { background: #004494; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 86, 179, 0.2); }
+        body.dark-mode .submit-rating-btn { background: #4da3ff; color: #121212; }
+        .rating-thanks { display: none; color: #28a745; font-size: 13.5px; font-weight: bold; margin-top: 10px; }
+        
+        .admin-feedbacks-container { display: none; margin-top: 15px; text-align: right; background: var(--info-bg); padding: 12px; border-radius: 8px; border: 1px solid var(--border-container); }
     </style>
 </head>
 <body>
@@ -567,6 +597,9 @@
                 
                 <button class="action-btn no-print" style="background: #17a2b8; padding: 10px;" onclick="downloadExcel()">داونلۆدکردنی ئێکسڵ (Excel/CSV)</button>
                 <button class="action-btn no-print" style="background: #ffc107; color: black; padding: 10px;" onclick="toggleSystemStatus()"> ڕاگرتن / کردنەوەی سایت </button>
+                <!-- دوگمەی نوێ بۆ بینینی فیدباکەکان بۆ ئەدمین -->
+                <button class="action-btn no-print" style="background: #8e44ad; color: white; padding: 10px;" onclick="loadFeedbacks()"> بینینی فیدباکەکان </button>
+
                 <button class="action-btn no-print" style="background: #6c757d; padding: 10px;" onclick="window.print()">چاپکردنی لیست (Print)</button>
                 <button class="action-btn no-print" style="background: #dc3545; margin-top: 5px; padding: 10px;" onclick="hideAdminPanel()">داخستنی بەشی ئەدمین</button>
                 
@@ -584,6 +617,13 @@
                         <tbody id="tableBody"></tbody>
                     </table>
                 </div>
+
+                <!-- بەشی پیشاندانی فیدباکەکان لەناو ئەدمین -->
+                <div id="feedbacksContainer" class="admin-feedbacks-container no-print">
+                    <h3 style="color: #8e44ad; font-size: 14px; margin-bottom: 10px;">فیدباک و هەڵسەنگاندنەکان:</h3>
+                    <div id="feedbacksList"></div>
+                </div>
+
             </div>
             <!-- ====== کۆتایی بەشی ئەدمین ====== -->
             
@@ -679,6 +719,21 @@
         <button id="installAppBtn" class="action-btn" style="background: #28a745; width: auto; padding: 10px 25px; border-radius: 25px; box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);">
             <i class="fa-solid fa-download"></i> دابەزاندنی ئەپڵیکەیشن (Install)
         </button>
+    </div>
+
+    <!-- === بەشی فیدباک و هەڵسەنگاندن === -->
+    <div class="rating-container no-print" id="ratingSystem">
+        <div class="rating-title">هەڵسەنگاندنت بۆ سیستەمەکە چۆنە؟</div>
+        <div class="stars" id="starContainer">
+            <i class="fa-solid fa-star" data-value="1"></i>
+            <i class="fa-solid fa-star" data-value="2"></i>
+            <i class="fa-solid fa-star" data-value="3"></i>
+            <i class="fa-solid fa-star" data-value="4"></i>
+            <i class="fa-solid fa-star" data-value="5"></i>
+        </div>
+        <textarea id="feedbackText" class="feedback-input" rows="2" placeholder="تێبینییەکانت لێرە بنووسە (ئارەزوومەندانە)..."></textarea>
+        <button id="submitRatingBtn" class="submit-rating-btn" onclick="submitRating()">ناردنی هەڵسەنگاندن</button>
+        <div id="ratingThanks" class="rating-thanks"><i class="fa-solid fa-circle-check"></i> زۆر سوپاس بۆ هەڵسەنگاندنەکەت!</div>
     </div>
 
     <!-- === فوتەر و سۆشیاڵ میدیا === -->
@@ -1272,6 +1327,7 @@
             document.getElementById("adminSection").style.display = "none";
             document.getElementById("usersTable").style.display = "none"; 
             document.getElementById("tableBody").innerHTML = "";
+            document.getElementById("feedbacksContainer").style.display = "none";
             let preRegForm = document.getElementById("preRegForm");
             let openPreRegBtn = document.getElementById("openPreRegBtn");
             if(preRegForm) preRegForm.style.display = "none";
@@ -1371,6 +1427,8 @@
                 
                 globalUsersData = await response.json(); 
                 tbody.innerHTML = "";
+                document.getElementById("feedbacksContainer").style.display = "none"; // حەشاردانی فیدباک کاتێک خشتە دەکرێتەوە
+
                 if(!Array.isArray(globalUsersData)) globalUsersData = [];
 
                 if(globalUsersData.length === 0) tbody.innerHTML = "<tr><td colspan='5' style='padding: 15px;'>هیچ ناوێک بۆ ئەمڕۆ تۆمار نەکراوە!</td></tr>";
@@ -1493,6 +1551,120 @@
             let url = URL.createObjectURL(blob); let a = document.createElement('a'); a.href = url;
             a.download = `Traffic_List_${new Date().toISOString().slice(0,10)}.csv`; document.body.appendChild(a); a.click(); document.body.removeChild(a);
         }
+
+        // ==== کۆدەکانی تایبەت بە سیستەمی فیدباک ====
+        let currentRating = 0;
+        const ratingStars = document.querySelectorAll('#starContainer i');
+        const feedbackInput = document.getElementById('feedbackText');
+        const submitRatingBtn = document.getElementById('submitRatingBtn');
+        const ratingThanks = document.getElementById('ratingThanks');
+        const ratingSystem = document.getElementById('ratingSystem');
+
+        if (localStorage.getItem('user_has_rated')) {
+            ratingSystem.style.display = 'none';
+        }
+
+        ratingStars.forEach(star => {
+            star.addEventListener('click', function() {
+                vibrate();
+                currentRating = parseInt(this.getAttribute('data-value'));
+                
+                ratingStars.forEach(s => {
+                    if (parseInt(s.getAttribute('data-value')) <= currentRating) {
+                        s.classList.add('active');
+                    } else {
+                        s.classList.remove('active');
+                    }
+                });
+                
+                feedbackInput.style.display = 'block';
+                submitRatingBtn.style.display = 'block';
+            });
+        });
+
+        async function submitRating() {
+            if(currentRating === 0) return;
+            let feedback = feedbackInput.value.trim();
+            let originalText = submitRatingBtn.innerHTML;
+            
+            submitRatingBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+            submitRatingBtn.disabled = true;
+
+            try {
+                // ناردنی بۆ سێرڤەر (ئەگەر سێرڤەرەکە ئامادەکرابێت پێشتر)
+                await fetch(`${baseUrl}/api/feedback`, { 
+                    method: "POST", 
+                    headers: { "Content-Type": "application/json" }, 
+                    body: JSON.stringify({ rating: currentRating, text: feedback, date: new Date().toLocaleDateString('en-CA') }) 
+                });
+            } catch(e) {
+                // تەنها بۆ ئەوەی پڕۆسەکە نەوەستێت ئەگەر سێرڤەر ئامادە نەبوو
+            }
+
+            localStorage.setItem('user_has_rated', 'true');
+            
+            document.getElementById('starContainer').style.display = 'none';
+            feedbackInput.style.display = 'none';
+            submitRatingBtn.style.display = 'none';
+            document.querySelector('.rating-title').style.display = 'none';
+            
+            ratingThanks.style.display = 'block';
+            vibrate(30);
+            
+            setTimeout(() => {
+                ratingSystem.style.opacity = '0';
+                setTimeout(() => ratingSystem.style.display = 'none', 300);
+            }, 4000);
+        }
+
+        // --- هێنانی فیدباکەکان بۆ ناو ئەدمین ---
+        async function loadFeedbacks() {
+            if (!window.adminPwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە!', 'warning');
+            Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
+            
+            try {
+                // ئەم لینکە پێویستی بە دروستکردنە لە C# backend
+                let response = await fetch(`${baseUrl}/api/admin/feedback`, { headers: { "Admin-Password": window.adminPwd } });
+                
+                if (response.ok) {
+                    let feedbacks = await response.json();
+                    let listDiv = document.getElementById("feedbacksList");
+                    listDiv.innerHTML = "";
+                    
+                    if (!feedbacks || feedbacks.length === 0) {
+                        listDiv.innerHTML = "<p style='text-align:center; color: var(--label-color);'>هیچ فیدباکێک نییە</p>";
+                    } else {
+                        feedbacks.forEach(fb => {
+                            let stars = '⭐'.repeat(fb.rating);
+                            listDiv.innerHTML += `
+                                <div style="background: var(--bg-container); border: 1px solid var(--border-container); padding: 10px; border-radius: 8px; margin-bottom: 8px;">
+                                    <div style="display:flex; justify-content:space-between; margin-bottom: 5px;">
+                                        <span style="color: #ffc107; font-size:12px;">${stars}</span>
+                                        <span style="color: var(--label-color); font-size:10px;">${fb.date || ''}</span>
+                                    </div>
+                                    <p style="margin:0; font-size:12px; color: var(--text-main);">${fb.text || 'بێ تێبینی'}</p>
+                                </div>
+                            `;
+                        });
+                    }
+                    
+                    document.getElementById("feedbacksContainer").style.display = "block";
+                    document.getElementById("usersTable").style.display = "none"; // حەشاردانی خشتەی ناوەکان
+                    Swal.close();
+                } else {
+                    throw new Error("API Required");
+                }
+            } catch (error) {
+                // نامەیەک بۆ ڕوونکردنەوەی ئەوەی کە دەبێت باکێندەکە ئەم کۆدە زیاد بکات
+                Swal.fire({
+                    icon: 'info',
+                    title: 'زانیاری بۆ گەشەپێدەر',
+                    text: 'ئەم بەشە پێویستی بەوەیە کە API تایبەت بە فیدباک لە سێرڤەری C# زیاد بکەیت (POST /api/feedback و GET /api/admin/feedback). تا ئەو کاتەی دروستی دەکەیت ئەم بەشە داتاکان ناهێنێت.',
+                    confirmButtonText: 'تێگەیشتم'
+                });
+            }
+        }
+
 
         window.onload = function() {
             calculateFine(true);
