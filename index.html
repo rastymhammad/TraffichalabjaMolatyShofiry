@@ -240,19 +240,15 @@
         .social-icons a:hover { transform: scale(1.1) translateY(-2px); }
         body.dark-mode .social-icons a { color: #4da3ff; }
         .no-print { display: block; }
-        
-        /* === گۆڕانکارییەکە تەنها لەم بەشەدا کراوە === */
         @media print { 
             body * { visibility: hidden; } 
             .table-responsive, .table-responsive * { visibility: visible; }
             .table-responsive { position: absolute; right: 0; top: 0; width: 100%; overflow: visible; }
             #usersTable { font-size: 14px !important; width: 100% !important; border-collapse: collapse !important; }
-            /* لێرەدا white-space: normal گۆڕدرا بۆ white-space: nowrap !important */
-            #usersTable th, #usersTable td { white-space: nowrap !important; color: #000 !important; border: 1px solid #000 !important; padding: 10px 8px !important; }
+            #usersTable th, #usersTable td { white-space: normal !important; color: #000 !important; border: 1px solid #000 !important; padding: 10px 8px !important; }
             #usersTable th { background-color: #e6e6e6 !important; color: #000 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
             .no-print { display: none !important; } 
         }
-        /* =========================================== */
 
         .rating-container { background: var(--bg-container); border: 1px solid var(--border-container); border-radius: 12px; padding: 15px; margin: 20px auto 5px auto; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: all 0.3s ease; }
         body.dark-mode .rating-container { border-color: #334155; }
@@ -1544,21 +1540,37 @@
             });
         }
 
-        // === دەستپێکی کۆدی نۆتیفیکەیشن (پێشنیاری نوێ) ===
+        // === دەستپێکی کۆدی نۆتیفیکەیشن (گۆڕانکاری نوێ) ===
         function requestNotificationPermission() {
-            if ("Notification" in window) {
-                if (Notification.permission === "default") {
-                    Notification.requestPermission().then(permission => {
-                        if (permission === "granted") {
-                            console.log("سوپاس! نۆتیفیکەیشن چالاککرا.");
-                            new Notification("هاتووچۆی هەڵەبجە", { 
-                                body: "سوپاس بۆ چالاککردنی ئاگادارییەکان. کاتێک سیستەم دەکرێتەوە ئاگادارت دەکەینەوە.", 
-                                icon: "icon-192.png",
-                                dir: "rtl"
-                            });
-                        }
-                    });
-                }
+            // تەنها ئەگەر مۆبایلەکە پشتگیری کرد و پێشتر بڕیاری نەدابوو
+            if ("Notification" in window && Notification.permission === "default" && !localStorage.getItem("notification_prompt_seen")) {
+                
+                Swal.fire({
+                    title: 'چالاککردنی ئاگاداری',
+                    text: 'دەتەوێت لە ڕێگەی نۆتیفیکەیشنەوە ئاگادار بکرێیتەوە لە کاتی کردنەوەی سیستەمەکە؟',
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonColor: '#0056b3',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'بەڵێ، ئاگادارم بکەرەوە',
+                    cancelButtonText: 'نەخێر سوپاس',
+                    reverseButtons: true
+                }).then((result) => {
+                    localStorage.setItem("notification_prompt_seen", "true"); // بۆ ئەوەی هەموو جارێک بێزاری نەکات
+                    
+                    if (result.isConfirmed) {
+                        Notification.requestPermission().then(permission => {
+                            if (permission === "granted") {
+                                console.log("سوپاس! نۆتیفیکەیشن چالاککرا.");
+                                new Notification("هاتووچۆی هەڵەبجە", { 
+                                    body: "سوپاس بۆ چالاککردنی ئاگادارییەکان. کاتێک سیستەم دەکرێتەوە ئاگادارت دەکەینەوە.", 
+                                    icon: "icon-192.png",
+                                    dir: "rtl"
+                                });
+                            }
+                        });
+                    }
+                });
             }
         }
 
