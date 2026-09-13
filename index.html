@@ -265,7 +265,16 @@
         .rating-thanks { display: none; color: #28a745; font-size: 13.5px; font-weight: bold; margin-top: 10px; }
         .admin-feedbacks-container { display: none; margin-top: 15px; text-align: right; background: var(--info-bg); padding: 12px; border-radius: 8px; border: 1px solid var(--border-container); }
     </style>
-</head>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3TLS1Z51YH"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-3TLS1Z51YH');
+    </script>
+    </head>
 <body>
     <div class="main-content" id="mainWrapper">
         <div class="header-title no-print">
@@ -544,7 +553,7 @@
     </div>
 
     <footer>
-        <p style="margin: 0 0 5px 0;">هەموو مافێکی پارێزراوە بۆ بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە &copy; 2026</p>
+        <p style="margin: 0 0 5px 0;">هەموو مافێکی پارێزراوە بۆ بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە © 2026</p>
         <p class="dev-name" style="margin: 0;">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووۆ ( ڕاستی محمد شێخ حیدر )</p>
         
         <div class="social-icons no-print">
@@ -1530,6 +1539,29 @@
                     .catch(err => console.log('کێشە لە تۆمارکردنی Service Worker', err));
             });
         }
+
+        // === دەستپێکی کۆدی نۆتیفیکەیشن (پێشنیاری نوێ) ===
+        function requestNotificationPermission() {
+            if ("Notification" in window) {
+                if (Notification.permission === "default") {
+                    Notification.requestPermission().then(permission => {
+                        if (permission === "granted") {
+                            console.log("سوپاس! نۆتیفیکەیشن چالاککرا.");
+                            new Notification("هاتووچۆی هەڵەبجە", { 
+                                body: "سوپاس بۆ چالاککردنی ئاگادارییەکان. کاتێک سیستەم دەکرێتەوە ئاگادارت دەکەینەوە.", 
+                                icon: "icon-192.png",
+                                dir: "rtl"
+                            });
+                        }
+                    });
+                }
+            }
+        }
+
+        window.addEventListener('load', () => {
+            setTimeout(requestNotificationPermission, 4000);
+        });
+        // === کۆتایی کۆدی نۆتیفیکەیشن ===
     </script>
 </body>
 </html>
