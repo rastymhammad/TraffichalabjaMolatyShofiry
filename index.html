@@ -998,6 +998,10 @@
 
         function startCountdown() {
             if (timerInterval) clearInterval(timerInterval);
+            
+            const timerBox = document.getElementById("countdownTimer");
+            if(timerBox) timerBox.style.display = "block";
+
             timerInterval = setInterval(() => {
                 const now = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Baghdad"}));
                 let target = new Date(now); 
