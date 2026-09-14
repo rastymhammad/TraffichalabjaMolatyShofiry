@@ -31,7 +31,6 @@
     <!-- ===================================== -->
 
     <style>
-        /* خوێندنەوەی فۆنتەکە ڕێک بەو ناوەی کە لە گیتھەب ئەپڵۆدت کردووە */
         @font-face {
             font-family: 'Rudaw';
             src: url('./rudawregular2.ttf') format('truetype');
@@ -1551,45 +1550,6 @@
                     .catch(err => console.log('کێشە لە تۆمارکردنی Service Worker', err));
             });
         }
-
-        // === دەستپێکی کۆدی نۆتیفیکەیشن (گۆڕانکاری نوێ) ===
-        function requestNotificationPermission() {
-            // تەنها ئەگەر مۆبایلەکە پشتگیری کرد و پێشتر بڕیاری نەدابوو
-            if ("Notification" in window && Notification.permission === "default" && !localStorage.getItem("notification_prompt_seen")) {
-                
-                Swal.fire({
-                    title: 'چالاککردنی ئاگاداری',
-                    text: 'دەتەوێت لە ڕێگەی نۆتیفیکەیشنەوە ئاگادار بکرێیتەوە لە کاتی کردنەوەی سیستەمەکە؟',
-                    icon: 'info',
-                    showCancelButton: true,
-                    confirmButtonColor: '#0056b3',
-                    cancelButtonColor: '#6c757d',
-                    confirmButtonText: 'بەڵێ، ئاگادارم بکەرەوە',
-                    cancelButtonText: 'نەخێر سوپاس',
-                    reverseButtons: true
-                }).then((result) => {
-                    localStorage.setItem("notification_prompt_seen", "true"); // بۆ ئەوەی هەموو جارێک بێزاری نەکات
-                    
-                    if (result.isConfirmed) {
-                        Notification.requestPermission().then(permission => {
-                            if (permission === "granted") {
-                                console.log("سوپاس! نۆتیفیکەیشن چالاککرا.");
-                                new Notification("هاتووچۆی هەڵەبجە", { 
-                                    body: "سوپاس بۆ چالاککردنی ئاگادارییەکان. کاتێک سیستەم دەکرێتەوە ئاگادارت دەکەینەوە.", 
-                                    icon: "icon-192.png",
-                                    dir: "rtl"
-                                });
-                            }
-                        });
-                    }
-                });
-            }
-        }
-
-        window.addEventListener('load', () => {
-            setTimeout(requestNotificationPermission, 4000);
-        });
-        // === کۆتایی کۆدی نۆتیفیکەیشن ===
     </script>
 </body>
 </html>
