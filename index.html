@@ -15,25 +15,11 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- === زیادکردنی سێرڤەری OneSignal === -->
-    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-    <script>
-      window.OneSignalDeferred = window.OneSignalDeferred || [];
-      OneSignalDeferred.push(async function(OneSignal) {
-        await OneSignal.init({
-          appId: "494b1234-ebf4-4821-8f43-85b7d73993f9",
-        });
-        
-        // ئەم دێڕە زۆر گرنگە بۆ ئەوەی پەنجەرەی ڕێگەپێدان دەربکەوێت و ببیتە بەشداربوو
-        OneSignal.Slidedown.promptPush();
-      });
-    </script>
-    <!-- ===================================== -->
-
     <style>
+        /* خوێندنەوەی فۆنتەکە ڕێک بەو ناوەی کە لە گیتھەب ئەپڵۆدت کردووە */
         @font-face {
             font-family: 'Rudaw';
             src: url('./rudawregular2.ttf') format('truetype');
@@ -253,13 +239,13 @@
         .social-icons a { color: #0056b3; font-size: 24px; margin: 0 10px; text-decoration: none; display: inline-block; transition: all 0.3s ease; }
         .social-icons a:hover { transform: scale(1.1) translateY(-2px); }
         body.dark-mode .social-icons a { color: #4da3ff; }
-        
+        .no-print { display: block; }
         @media print { 
             body * { visibility: hidden; } 
             .table-responsive, .table-responsive * { visibility: visible; }
             .table-responsive { position: absolute; right: 0; top: 0; width: 100%; overflow: visible; }
-            #usersTable { font-size: 14px !important; width: 100% !important; border-collapse: collapse !important; margin-top: 0 !important; }
-            #usersTable th, #usersTable td { white-space: nowrap !important; color: #000 !important; border: 1px solid #000 !important; padding: 10px 8px !important; text-align: center !important; }
+            #usersTable { font-size: 14px !important; width: 100% !important; border-collapse: collapse !important; }
+            #usersTable th, #usersTable td { white-space: normal !important; color: #000 !important; border: 1px solid #000 !important; padding: 10px 8px !important; }
             #usersTable th { background-color: #e6e6e6 !important; color: #000 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
             .no-print { display: none !important; } 
         }
@@ -279,16 +265,7 @@
         .rating-thanks { display: none; color: #28a745; font-size: 13.5px; font-weight: bold; margin-top: 10px; }
         .admin-feedbacks-container { display: none; margin-top: 15px; text-align: right; background: var(--info-bg); padding: 12px; border-radius: 8px; border: 1px solid var(--border-container); }
     </style>
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3TLS1Z51YH"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-3TLS1Z51YH');
-    </script>
-    </head>
+</head>
 <body>
     <div class="main-content" id="mainWrapper">
         <div class="header-title no-print">
@@ -567,7 +544,7 @@
     </div>
 
     <footer>
-        <p style="margin: 0 0 5px 0;">هەموو مافێکی پارێزراوە بۆ بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە © 2026</p>
+        <p style="margin: 0 0 5px 0;">هەموو مافێکی پارێزراوە بۆ بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە &copy; 2026</p>
         <p class="dev-name" style="margin: 0;">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووۆ ( ڕاستی محمد شێخ حیدر )</p>
         
         <div class="social-icons no-print">
@@ -989,25 +966,20 @@
                     const dateInIraq = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Baghdad"}));
                     const iraqHour = dateInIraq.getHours(); const dayOfWeek = dateInIraq.getDay(); 
                     
-                    let isWeekendBlocked = (dayOfWeek === 3 && iraqHour >= 14) || dayOfWeek === 4 || dayOfWeek === 5 || (dayOfWeek === 6 && iraqHour < 18);
-                    let isDailyBlocked = (iraqHour >= 14 && iraqHour < 18);
+                    let isBlocked = (dayOfWeek === 4 && iraqHour >= 14) || dayOfWeek === 5 || (dayOfWeek === 6 && iraqHour < 18);
                     
-                    if (isWeekendBlocked || isDailyBlocked || count >= maxQuota) {
+                    if (isBlocked || count >= maxQuota) {
                         badge.className = "status-badge status-closed";
                         dot.className = "dot dot-red";
-                        
-                        if (isWeekendBlocked) {
+                        if (count >= maxQuota) { 
+                            statusText.innerText = "پشکی بەیانی تەواو بووە، چاوەڕێ بکە تا کاتژمێر 6ی ئێوارەی سبەینێ"; 
+                        } else { 
                             if (dayOfWeek === 6) {
                                 statusText.innerText = "لە ئێستادا سیستەم داخراوە، ئەمڕۆ کاتژمێر 6ی ئێوارە دەکرێتەوە";
                             } else {
-                                statusText.innerText = "لە ئێستادا سیستەم داخراوە، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێتەوە"; 
+                                statusText.innerText = "لە ئێستادا سیستەم داخراوە، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێنەوە"; 
                             }
-                        } else if (isDailyBlocked) {
-                            statusText.innerText = "لە ئێستادا سیستەم داخراوە، ئەمڕۆ کاتژمێر 6ی ئێوارە دەکرێتەوە";
-                        } else if (count >= maxQuota) { 
-                            statusText.innerText = "پشکی ئەمڕۆ تەواو بووە، کاتژمێر 6ی ئێوارەی سبەینێ دەکرێتەوە"; 
                         }
-
                         if (regBtn) { regBtn.disabled = true; regBtn.innerHTML = '<i class="fa-solid fa-lock"></i> چاوەڕێ بکە'; }
                         if (nameInput) nameInput.disabled = true;
                         if (phoneInput) phoneInput.disabled = true;
@@ -1019,9 +991,6 @@
                         if (nameInput) nameInput.disabled = false;
                         if (phoneInput) phoneInput.disabled = false;
                         validateFormInputs();
-                        
-                        document.getElementById("countdownTimer").style.display = "none";
-                        if(timerInterval) clearInterval(timerInterval);
                     }
                 }
             } catch (e) { console.log(e); }
@@ -1033,18 +1002,15 @@
                 const now = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Baghdad"}));
                 let target = new Date(now); 
                 let day = now.getDay();
-                let hour = now.getHours();
 
                 target.setHours(18, 0, 0, 0);
 
-                if (day === 3 && hour >= 14) {
-                    target.setDate(now.getDate() + 3); 
-                } else if (day === 4) {
+                if (day === 4) {
                     target.setDate(now.getDate() + 2); 
                 } else if (day === 5) {
                     target.setDate(now.getDate() + 1); 
-                } else if (hour >= 18) {
-                    target.setDate(now.getDate() + 1); 
+                } else if (day === 6 && now.getHours() >= 18) {
+                    target.setDate(now.getDate() + 7); 
                 }
 
                 let diff = Math.max(target - now, 0);
