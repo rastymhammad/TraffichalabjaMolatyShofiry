@@ -18,6 +18,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <!-- === زیادکردنی سێرڤەری OneSignal === -->
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function(OneSignal) {
+        await OneSignal.init({
+          appId: "494b1234-ebf4-4821-8f43-85b7d73993f9",
+        });
+      });
+    </script>
+    <!-- ===================================== -->
+
     <style>
         /* خوێندنەوەی فۆنتەکە ڕێک بەو ناوەی کە لە گیتھەب ئەپڵۆدت کردووە */
         @font-face {
@@ -240,18 +252,15 @@
         .social-icons a:hover { transform: scale(1.1) translateY(-2px); }
         body.dark-mode .social-icons a { color: #4da3ff; }
         
-        /* === گۆڕانکارییەکە تەنها لەم بەشەدا کراوە === */
         @media print { 
             body * { visibility: hidden; } 
             .table-responsive, .table-responsive * { visibility: visible; }
             .table-responsive { position: absolute; right: 0; top: 0; width: 100%; overflow: visible; }
             #usersTable { font-size: 14px !important; width: 100% !important; border-collapse: collapse !important; margin-top: 0 !important; }
-            /* لێرەدا white-space: normal گۆڕدرا بۆ white-space: nowrap !important */
             #usersTable th, #usersTable td { white-space: nowrap !important; color: #000 !important; border: 1px solid #000 !important; padding: 10px 8px !important; text-align: center !important; }
             #usersTable th { background-color: #e6e6e6 !important; color: #000 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
             .no-print { display: none !important; } 
         }
-        /* =========================================== */
 
         .rating-container { background: var(--bg-container); border: 1px solid var(--border-container); border-radius: 12px; padding: 15px; margin: 20px auto 5px auto; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: all 0.3s ease; }
         body.dark-mode .rating-container { border-color: #334155; }
