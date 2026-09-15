@@ -982,7 +982,11 @@
                         } else if (isDailyBlocked) {
                             statusText.innerText = "لە ئێستادا سیستەم داخراوە، ئەمڕۆ کاتژمێر 6ی ئێوارە دەکرێتەوە";
                         } else if (count >= maxQuota) { 
-                            statusText.innerText = "پشکی ئەمڕۆ تەواو بووە، کاتژمێر 6ی ئێوارە دەکرێتەوە"; 
+                            if (iraqHour >= 18) {
+                                statusText.innerText = "پشکی سبەینێ تەواو بووە، کاتژمێر 6ی سبەی ئێوارە دەکرێتەوە";
+                            } else {
+                                statusText.innerText = "پشکی ئەمڕۆ تەواو بووە، کاتژمێر 6ی ئێوارەی ئەمڕۆ دەکرێتەوە";
+                            }
                         }
 
                         if (regBtn) { regBtn.disabled = true; regBtn.innerHTML = '<i class="fa-solid fa-lock"></i> چاوەڕێ بکە'; }
