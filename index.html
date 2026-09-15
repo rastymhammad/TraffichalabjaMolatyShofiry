@@ -966,25 +966,25 @@
                     const dateInIraq = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Baghdad"}));
                     const iraqHour = dateInIraq.getHours(); const dayOfWeek = dateInIraq.getDay(); 
                     
-                    let isBlocked = (dayOfWeek === 4 && iraqHour >= 14) || dayOfWeek === 5 || (dayOfWeek === 6 && iraqHour < 18);
+                    let isWeekendBlocked = (dayOfWeek === 3 && iraqHour >= 14) || dayOfWeek === 4 || dayOfWeek === 5 || (dayOfWeek === 6 && iraqHour < 18);
+                    let isDailyBlocked = (iraqHour >= 14 && iraqHour < 18);
                     
-                    if (isBlocked || count >= maxQuota) {
+                    if (isWeekendBlocked || isDailyBlocked || count >= maxQuota) {
                         badge.className = "status-badge status-closed";
                         dot.className = "dot dot-red";
-                        if (count >= maxQuota) { 
-                            // لۆژیکی زیرەک بۆ گۆڕینی سبەی بۆ ئەمڕۆ ئەگەر دوای کاتژمێر 12ی شەو بێت
-                            if (iraqHour < 6) {
-                                statusText.innerText = "پشکی ئەمڕۆ تەواو بووە، چاوەڕێ بکە تا کاتژمێر 6ی ئێوارەی ئەمڕۆ";
-                            } else {
-                                statusText.innerText = "پشکی بەیانی تەواو بووە، چاوەڕێ بکە تا کاتژمێر 6ی ئێوارەی سبەینێ"; 
-                            }
-                        } else { 
+                        
+                        if (isWeekendBlocked) {
                             if (dayOfWeek === 6) {
                                 statusText.innerText = "لە ئێستادا سیستەم داخراوە، ئەمڕۆ کاتژمێر 6ی ئێوارە دەکرێتەوە";
                             } else {
-                                statusText.innerText = "لە ئێستادا سیستەم داخراوە، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێنەوە"; 
+                                statusText.innerText = "لە ئێستادا سیستەم داخراوە، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێتەوە"; 
                             }
+                        } else if (isDailyBlocked) {
+                            statusText.innerText = "لە ئێستادا سیستەم داخراوە، ئەمڕۆ کاتژمێر 6ی ئێوارە دەکرێتەوە";
+                        } else if (count >= maxQuota) { 
+                            statusText.innerText = "پشکی ئەمڕۆ تەواو بووە، کاتژمێر 6ی ئێوارە دەکرێتەوە"; 
                         }
+
                         if (regBtn) { regBtn.disabled = true; regBtn.innerHTML = '<i class="fa-solid fa-lock"></i> چاوەڕێ بکە'; }
                         if (nameInput) nameInput.disabled = true;
                         if (phoneInput) phoneInput.disabled = true;
@@ -996,6 +996,9 @@
                         if (nameInput) nameInput.disabled = false;
                         if (phoneInput) phoneInput.disabled = false;
                         validateFormInputs();
+                        
+                        document.getElementById("countdownTimer").style.display = "none";
+                        if(timerInterval) clearInterval(timerInterval);
                     }
                 }
             } catch (e) { console.log(e); }
@@ -1003,23 +1006,22 @@
 
         function startCountdown() {
             if (timerInterval) clearInterval(timerInterval);
-            
-            const timerBox = document.getElementById("countdownTimer");
-            if(timerBox) timerBox.style.display = "block";
-
             timerInterval = setInterval(() => {
                 const now = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Baghdad"}));
                 let target = new Date(now); 
                 let day = now.getDay();
+                let hour = now.getHours();
 
                 target.setHours(18, 0, 0, 0);
 
-                if (day === 4) {
+                if (day === 3 && hour >= 14) {
+                    target.setDate(now.getDate() + 3); 
+                } else if (day === 4) {
                     target.setDate(now.getDate() + 2); 
                 } else if (day === 5) {
                     target.setDate(now.getDate() + 1); 
-                } else if (day === 6 && now.getHours() >= 18) {
-                    target.setDate(now.getDate() + 7); 
+                } else if (hour >= 18) {
+                    target.setDate(now.getDate() + 1); 
                 }
 
                 let diff = Math.max(target - now, 0);
