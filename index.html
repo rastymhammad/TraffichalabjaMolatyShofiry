@@ -982,8 +982,8 @@
                         } else if (isDailyBlocked) {
                             statusText.innerText = "لە ئێستادا سیستەم داخراوە، ئەمڕۆ کاتژمێر 6ی ئێوارە دەکرێتەوە";
                         } else if (count >= maxQuota) { 
-                            // لۆژیکی زیرەک: ئەگەر ئەمڕۆ چوارشەممە (3) بوو و پشک پر بوو، دەبێت بڵێت کاتژمێر 6ی ئێوارەی شەممە دەکرێتەوە
-                            if (dayOfWeek === 3) {
+                            // لۆژیکی زیرەک بۆ چوارشەممە (3) لە دوای نیوەشەو (کاتێک hour < 6 یان پێش ئێوارەیە)
+                            if (dayOfWeek === 3 || (dayOfWeek === 4 && iraqHour < 6)) {
                                 statusText.innerText = "پشکی سبەینێ تەواو بووە، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێتەوە";
                             } else if (iraqHour >= 18) {
                                 statusText.innerText = "پشکی سبەینێ تەواو بووە، کاتژمێر 6ی سبەی ئێوارە دەکرێتەوە";
@@ -1021,17 +1021,16 @@
 
                 target.setHours(18, 0, 0, 0);
 
-                // لۆژیکی ڕاستکردنەوەی کاتی تایمەر بۆ ڕۆژی چوارشەممە و پشووەکان
-                if (day === 3 && hour >= 18) { // چوارشەممە دوای 6ی ئێوارە (پشکی پێنجشەممە پر بووە یان تەواو بووە) -> تا شەممە ئێوارە دەمێنێتەوە
-                    target.setDate(now.getDate() + 3);
+                if ((day === 3 && hour >= 18) || (day === 4 && hour < 6)) { 
+                    target.setDate(now.getDate() + (day === 4 ? 2 : 3));
                     target.setHours(18, 0, 0, 0);
-                } else if (day === 4) { // پێنجشەممە
+                } else if (day === 4) { 
                     target.setDate(now.getDate() + 2); 
                     target.setHours(18, 0, 0, 0);
-                } else if (day === 5) { // هەینی
+                } else if (day === 5) { 
                     target.setDate(now.getDate() + 1); 
                     target.setHours(18, 0, 0, 0);
-                } else if (day === 6 && hour >= 18) { // شەممە دوای 6ی ئێوارە
+                } else if (day === 6 && hour >= 18) { 
                     target.setDate(now.getDate() + 7); 
                     target.setHours(18, 0, 0, 0);
                 } else if (hour >= 18 || (day === 3 && hour >= 14)) { 
