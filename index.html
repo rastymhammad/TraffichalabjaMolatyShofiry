@@ -914,7 +914,18 @@
         }
 
         function generateTicketHTML(name, phone, rank, time, qrToken, dateStr) {
-            let displayDate = dateStr || new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
+            let nowIraq = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Baghdad" }));
+            let currentHour = nowIraq.getHours();
+            
+            // لۆژیکی زیرەکانەی بەروار: 
+            // ئەگەر کەسێک لە نێوان کاتژمێر 6ی ئێوارە تا 12ی شەو نۆرە بگرێت، بەرواری ڕۆژی پاشتر (سبەی) دەنوسێت (نموونە: 16 گرت، دەبێتە 17)
+            // ئەگەر لە دوای کاتژمێر 12ی شەو نۆرە بگرێت، بەرواری هەمان ڕۆژ (ئەمڕۆ) دەنوسێت (چونکە بووەتە ڕۆژی نوێ)
+            let targetDate = new Date(nowIraq);
+            if (currentHour >= 18) {
+                targetDate.setDate(targetDate.getDate() + 1);
+            }
+            let displayDate = targetDate.toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
+
             let verifyUrl = window.location.origin + window.location.pathname + "?verify=" + encodeURIComponent(qrToken);
             setTimeout(() => {
                 let qrContainer = document.getElementById("qrCodeDiv");
@@ -931,8 +942,7 @@
                         </div>
                         <hr style="border: 0; border-top: 1px dashed #ccc; margin: 12px 0;">
                         <p style="margin: 5px 0; font-size: 16px; text-align: center;"><strong>نۆرە:</strong> <span style="font-size: 28px; color: #dc3545; font-weight: bold;">${rank}</span></p>
-                        <p style="margin: 5px 0; font-size: 15px; text-align: center;"><strong>کات:</strong> <span style="color: #28a745; font-weight: bold;">${time}</span></p>
-                        <p style="margin: 5px 0; font-size: 14px; text-align: center; color: #d9534f; font-weight: bold;">⚠️ دوای بەیانی ئامادەبە</p>
+                        <p style="margin: 5px 0; font-size: 15px; text-align: center;"><strong>کات:</strong> <span style="color: #28a745; font-weight: bold;">سەعات 8:30 ی بەیانی</span></p>
                         <p style="margin: 5px 0; font-size: 12px; text-align: center; color: gray;">بەروار: ${displayDate}</p>
                     </div>
                     <p style="margin: 15px 0 0 0; font-size: 13px; color: #666; font-weight: bold;">تکایە سکرین شۆتی ئەم پسوولەیە بگرە.</p>
