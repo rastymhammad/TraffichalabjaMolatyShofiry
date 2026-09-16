@@ -982,7 +982,10 @@
                         } else if (isDailyBlocked) {
                             statusText.innerText = "لە ئێستادا سیستەم داخراوە، ئەمڕۆ کاتژمێر 6ی ئێوارە دەکرێتەوە";
                         } else if (count >= maxQuota) { 
-                            if (iraqHour >= 18) {
+                            // لۆژیکی زیرەک: ئەگەر ئەمڕۆ چوارشەممە (3) بوو و پشک پر بوو، دەبێت بڵێت کاتژمێر 6ی ئێوارەی شەممە دەکرێتەوە
+                            if (dayOfWeek === 3) {
+                                statusText.innerText = "پشکی سبەینێ تەواو بووە، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێتەوە";
+                            } else if (iraqHour >= 18) {
                                 statusText.innerText = "پشکی سبەینێ تەواو بووە، کاتژمێر 6ی سبەی ئێوارە دەکرێتەوە";
                             } else {
                                 statusText.innerText = "پشکی ئەمڕۆ تەواو بووە، کاتژمێر 6ی ئێوارەی ئەمڕۆ دەکرێتەوە";
@@ -1018,15 +1021,20 @@
 
                 target.setHours(18, 0, 0, 0);
 
-                // لۆژیکی ڕاستکردنەوەی کاتی ماناوە بۆ کردنەوەی سیستەم بە پێی ڕۆژ و کاتژمێر
-                if (day === 4) { // پێنجشەممە (پشوو)
+                // لۆژیکی ڕاستکردنەوەی کاتی تایمەر بۆ ڕۆژی چوارشەممە و پشووەکان
+                if (day === 3 && hour >= 18) { // چوارشەممە دوای 6ی ئێوارە (پشکی پێنجشەممە پر بووە یان تەواو بووە) -> تا شەممە ئێوارە دەمێنێتەوە
+                    target.setDate(now.getDate() + 3);
+                    target.setHours(18, 0, 0, 0);
+                } else if (day === 4) { // پێنجشەممە
                     target.setDate(now.getDate() + 2); 
-                } else if (day === 5) { // هەینی (پشوو)
+                    target.setHours(18, 0, 0, 0);
+                } else if (day === 5) { // هەینی
                     target.setDate(now.getDate() + 1); 
+                    target.setHours(18, 0, 0, 0);
                 } else if (day === 6 && hour >= 18) { // شەممە دوای 6ی ئێوارە
                     target.setDate(now.getDate() + 7); 
+                    target.setHours(18, 0, 0, 0);
                 } else if (hour >= 18 || (day === 3 && hour >= 14)) { 
-                    // ئەگەر دوای 6ی ئێوارە بوو، یان چوارشەممە بوو دوای 2ی پاشنیوەڕۆ (بۆ کردنەوەی کاتژمێر 6ی هەمان ڕۆژ یان ڕۆژی پاشتر)
                     if (now >= target) {
                         target.setDate(now.getDate() + 1);
                     }
