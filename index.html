@@ -965,20 +965,24 @@
                     const dateInIraq = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Baghdad"}));
                     const iraqHour = dateInIraq.getHours(); const dayOfWeek = dateInIraq.getDay(); 
                     
-                    let isWeekendBlocked = (dayOfWeek === 4 && iraqHour >= 14) || dayOfWeek === 5 || (dayOfWeek === 6 && iraqHour < 18);
+                    // لۆژیکی ڕاستکردنەوەی پشوو: (ڕۆژی 4 کە پێنجشەممەیە لە دوای سەعات 2ی پاشنیوەڕۆ، وە ڕۆژی 5 کە هەینییە)
+                    let isThursdayAfternoon = (dayOfWeek === 4 && iraqHour >= 14);
+                    let isFriday = (dayOfWeek === 5);
+                    let isSaturdayBeforeEvening = (dayOfWeek === 6 && iraqHour < 18);
+                    let isWeekendBlocked = isThursdayAfternoon || isFriday || isSaturdayBeforeEvening;
+                    
                     let isDailyBlocked = (iraqHour >= 14 && iraqHour < 18);
                     
                     if (isWeekendBlocked || isDailyBlocked || count >= maxQuota) {
                         badge.className = "status-badge status-closed";
                         dot.className = "dot dot-red";
                         
-                        // لۆژیکی زیرەکانە بۆ ناسینەوەی ناوی ڕۆژ لە دوای کاتژمێر 12ی شەو
-                        if (dayOfWeek === 5) {
-                            statusText.innerText = "ئەمڕۆ هەینی پشووه‌، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێتەوە";
-                        } else if (dayOfWeek === 4 && iraqHour < 14) {
-                            statusText.innerText = "ئەمڕۆ هەینی پشووه‌، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێتەوە";
-                        } else if (isWeekendBlocked) {
-                            if (dayOfWeek === 6) {
+                        if (isWeekendBlocked) {
+                            if (dayOfWeek === 5) {
+                                statusText.innerText = "ئەمڕۆ هەینی پشووه‌، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێتەوە";
+                            } else if (dayOfWeek === 4 && iraqHour < 18) {
+                                statusText.innerText = "ئەمڕۆ پێنجشەممەیە و سیستەم داخراوە، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێتەوە";
+                            } else if (dayOfWeek === 6) {
                                 statusText.innerText = "لە ئێستادا سیستەم داخراوە، ئەمڕۆ کاتژمێر 6ی ئێوارە دەکرێتەوە";
                             } else {
                                 statusText.innerText = "لە ئێستادا سیستەم داخراوە، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێتەوە"; 
@@ -1166,7 +1170,7 @@
                         loadAdminStats();
                         loadNoticeText();
                     } else {
-                        Swal.fire('هەڵە', 'پاسوۆردەکە هەڵەیە یان بەپێی سێرڤەرەکە!', 'error');
+                        Swal.fire('هەڵە', 'پاسوۆردەکە هەڵەیە بەپێی سێرڤەرەکە!', 'error');
                     }
                 } catch(e) { 
                     Swal.fire('کێشە', 'سێرڤەرەکە خەوتووە یان کێشەی هێڵ هەیە، تکایە دووبارە تاقیبکەرەوە!', 'error'); 
