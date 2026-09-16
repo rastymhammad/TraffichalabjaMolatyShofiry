@@ -966,7 +966,8 @@
                     const dateInIraq = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Baghdad"}));
                     const iraqHour = dateInIraq.getHours(); const dayOfWeek = dateInIraq.getDay(); 
                     
-                    let isWeekendBlocked = (dayOfWeek === 3 && iraqHour >= 14) || dayOfWeek === 4 || dayOfWeek === 5 || (dayOfWeek === 6 && iraqHour < 18);
+                    // لێرەدا ڕۆژی چوارشەممە (3) لە دوای کاتژمێر 2ی پاشنیوەڕۆ نابێت بە بڵۆکی هەفتانە، بەڵکو دەبێتە بڵۆکی ئاسایی ڕۆژانە تا کاتژمێر 6ی ئێوارە
+                    let isWeekendBlocked = (dayOfWeek === 4 && iraqHour >= 14) || dayOfWeek === 5 || (dayOfWeek === 6 && iraqHour < 18);
                     let isDailyBlocked = (iraqHour >= 14 && iraqHour < 18);
                     
                     if (isWeekendBlocked || isDailyBlocked || count >= maxQuota) {
@@ -1018,13 +1019,13 @@
 
                 target.setHours(18, 0, 0, 0);
 
-                if (day === 3 && hour >= 14) {
-                    target.setDate(now.getDate() + 3); 
-                } else if (day === 4) {
+                if (day === 4) {
                     target.setDate(now.getDate() + 2); 
                 } else if (day === 5) {
                     target.setDate(now.getDate() + 1); 
-                } else if (hour >= 18) {
+                } else if (day === 6 && hour >= 18) {
+                    target.setDate(now.getDate() + 7); 
+                } else if (hour >= 18 || (day === 3 && hour >= 14)) {
                     target.setDate(now.getDate() + 1); 
                 }
 
