@@ -917,7 +917,7 @@
             let nowIraq = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Baghdad" }));
             let currentHour = nowIraq.getHours();
             
-            // لۆژیکی زیرەک بۆ بەرواری پسوولە (ئەگەر پێش کاتژمێر 12ی شەو بێت، بەرواری ڕۆژی پاشتر دەنوسێت، ئەگەر دوای 12ی شەو بێت بەرواری هەمان ڕۆژ دەنوسێت)
+            // لۆژیکی زیرەک بۆ بەرواری پسوولە (پێش کاتژمێر 12ی شەو یان دوای 12ی شەو)
             let targetDate = new Date(nowIraq);
             if (currentHour >= 18) {
                 targetDate.setDate(targetDate.getDate() + 1);
@@ -1359,7 +1359,7 @@
             const { value: formValues } = await Swal.fire({
                 title: 'دەستکاریکردنی زانیاری', html: `<input id="swal-input-name" class="swal2-input" value="${currentName}" placeholder="ناوی سیانی"> <input id="swal-input-phone" class="swal2-input" value="${currentPhone}" placeholder="ژمارەی مۆبایل">`,
                 focusConfirm: false, showCancelButton: true, confirmButtonText: 'پاشەکەوتکردن', cancelButtonText: 'داخستن',
-                preConfirm: () => [document.getElementById('swal-input-name').value, document.getElementById('swal-input-phone').value]
+                preConfirm: () => [document.getElementById('swal-input-name').value, document.getElementById('swal-input-phone'].value]
             });
             if (formValues) {
                 let newName = formValues[0].trim(); let newPhone = formValues[1].trim();
