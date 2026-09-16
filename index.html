@@ -972,7 +972,12 @@
                         badge.className = "status-badge status-closed";
                         dot.className = "dot dot-red";
                         
-                        if (isWeekendBlocked) {
+                        // کاتێک پشوو دەستپێدەکات (وەک پێنجشەممە یان هەینی دوای 12ی شەو)
+                        if (dayOfWeek === 4 && iraqHour < 14) {
+                            statusText.innerText = "ئەمڕۆ هەینی پشووه‌، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێتەوە";
+                        } else if (dayOfWeek === 5) {
+                            statusText.innerText = "ئەمڕۆ هەینی پشووه‌، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێتەوە";
+                        } else if (isWeekendBlocked) {
                             if (dayOfWeek === 6) {
                                 statusText.innerText = "لە ئێستادا سیستەم داخراوە، ئەمڕۆ کاتژمێر 6ی ئێوارە دەکرێتەوە";
                             } else {
