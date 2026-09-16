@@ -932,7 +932,6 @@
                         <hr style="border: 0; border-top: 1px dashed #ccc; margin: 12px 0;">
                         <p style="margin: 5px 0; font-size: 16px; text-align: center;"><strong>نۆرە:</strong> <span style="font-size: 28px; color: #dc3545; font-weight: bold;">${rank}</span></p>
                         <p style="margin: 5px 0; font-size: 15px; text-align: center;"><strong>کات:</strong> <span style="color: #28a745; font-weight: bold;">${time}</span></p>
-                        <p style="margin: 5px 0; font-size: 14px; text-align: center; color: #d9534f; font-weight: bold;">⚠️ دوای بەیانی ئامادەبە</p>
                         <p style="margin: 5px 0; font-size: 12px; text-align: center; color: gray;">بەروار: ${displayDate}</p>
                     </div>
                     <p style="margin: 15px 0 0 0; font-size: 13px; color: #666; font-weight: bold;">تکایە سکرین شۆتی ئەم پسوولەیە بگرە.</p>
@@ -983,6 +982,7 @@
                         } else if (isDailyBlocked) {
                             statusText.innerText = "لە ئێستادا سیستەم داخراوە، ئەمڕۆ کاتژمێر 6ی ئێوارە دەکرێتەوە";
                         } else if (count >= maxQuota) { 
+                            // لۆژیکی زیرەک: ئەگەر ئەمڕۆ چوارشەممە (3) بوو و پشک پر بوو، دەبێت بڵێت کاتژمێر 6ی ئێوارەی شەممە دەکرێتەوە
                             if (dayOfWeek === 3) {
                                 statusText.innerText = "پشکی سبەینێ تەواو بووە، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێتەوە";
                             } else if (iraqHour >= 18) {
@@ -1021,16 +1021,17 @@
 
                 target.setHours(18, 0, 0, 0);
 
-                if (day === 3 && hour >= 18) { 
+                // لۆژیکی ڕاستکردنەوەی کاتی تایمەر بۆ ڕۆژی چوارشەممە و پشووەکان
+                if (day === 3 && hour >= 18) { // چوارشەممە دوای 6ی ئێوارە (پشکی پێنجشەممە پر بووە یان تەواو بووە) -> تا شەممە ئێوارە دەمێنێتەوە
                     target.setDate(now.getDate() + 3);
                     target.setHours(18, 0, 0, 0);
-                } else if (day === 4) { 
+                } else if (day === 4) { // پێنجشەممە
                     target.setDate(now.getDate() + 2); 
                     target.setHours(18, 0, 0, 0);
-                } else if (day === 5) { 
+                } else if (day === 5) { // هەینی
                     target.setDate(now.getDate() + 1); 
                     target.setHours(18, 0, 0, 0);
-                } else if (day === 6 && hour >= 18) { 
+                } else if (day === 6 && hour >= 18) { // شەممە دوای 6ی ئێوارە
                     target.setDate(now.getDate() + 7); 
                     target.setHours(18, 0, 0, 0);
                 } else if (hour >= 18 || (day === 3 && hour >= 14)) { 
