@@ -19,7 +19,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        /* خوێندنەوەی فۆنتەکە ڕێک بەو ناوەی کە لە گیتھەب ئەپڵۆدت کردووە */
         @font-face {
             font-family: 'Rudaw';
             src: url('./rudawregular2.ttf') format('truetype');
@@ -982,7 +981,7 @@
                         } else if (isDailyBlocked) {
                             statusText.innerText = "لە ئێستادا سیستەم داخراوە، ئەمڕۆ کاتژمێر 6ی ئێوارە دەکرێتەوە";
                         } else if (count >= maxQuota) { 
-                            // لۆژیکی زیرەک بۆ ئەوەی بزانێت ئەگەر لە دوای کاتژمێر 12ی شەوی چوارشەممە بێت (واتە بەرەبەیانی پێنجشەممە)
+                            // لۆژیکی زیرەک بۆ کاتژمێر 12ی شەوی دوای چوارشەممە (بەرەبەیانی پێنجشەممە)
                             if (dayOfWeek === 3 || (dayOfWeek === 4 && iraqHour < 18)) {
                                 statusText.innerText = "پشکی ئەمڕۆ تەواو بووە، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێتەوە";
                             } else if (iraqHour >= 18) {
@@ -1023,6 +1022,9 @@
 
                 if ((day === 3 && hour >= 18) || (day === 4 && hour < 18)) { 
                     target.setDate(now.getDate() + (day === 4 ? (hour < 6 ? 2 : 1) : 3));
+                    target.setHours(18, 0, 0, 0);
+                } else if (day === 4) { 
+                    target.setDate(now.getDate() + 2); 
                     target.setHours(18, 0, 0, 0);
                 } else if (day === 5) { 
                     target.setDate(now.getDate() + 1); 
