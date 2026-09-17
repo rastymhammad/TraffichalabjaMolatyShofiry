@@ -9,24 +9,24 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+    // هێنانی داتا لە ئینتەرنێتەوە، ئەگەر کێشە هەبوو با بگەڕێتەوە بۆ کەیش (بێ ئەوەی تێکستی سادە بنێرێت کە سایتەکە تێکبدات)
     event.respondWith(
         fetch(event.request).catch(() => {
-            return new Response('تكایه‌ موبایله‌كه‌ت كۆنێكتی ئه‌نته‌رنێت بكه‌.');
+            return caches.match(event.request);
         })
     );
 });
 
-// === کۆدی وەرگرتنی نۆتیفیکەیشن لە پاشبنەما (پێشنیاری نوێ) ===
+// === کۆدی وەرگرتنی نۆتیفیکەیشن لە پاشبنەما ===
 self.addEventListener('push', function(event) {
-    // دەقی نامەکە وەردەگرێت ئەگەر هەبێت، ئەگەر نەبێت دەقێکی ئامادەکراو دادەنێت
     let messageText = event.data ? event.data.text() : 'سیستەمی نۆرەگرتنی هاتووچۆ ئێستا کراوەیە!';
     
     let options = {
         body: messageText,
-        icon: 'icon-192.png',  // ئایکۆنی لۆگۆکەت کە لە فایلەکانتدا هەیە
+        icon: 'icon-192.png',
         badge: 'icon-192.png',
         dir: 'rtl',
-        vibrate: [200, 100, 200, 100, 200] // لەرینەوەی مۆبایل
+        vibrate: [200, 100, 200, 100, 200]
     };
     
     event.waitUntil(
@@ -41,12 +41,13 @@ self.addEventListener('notificationclick', function(event) {
         clients.matchAll({ type: 'window' }).then(windowClients => {
             for (var i = 0; i < windowClients.length; i++) {
                 var client = windowClients[i];
-                if (client.url === '/' && 'focus' in client) {
+                if ('focus' in client) {
                     return client.focus();
                 }
             }
             if (clients.openWindow) {
-                return clients.openWindow('/');
+                // ڕێڕەوی دروست بۆ کردنەوەی سایتەکە لە گیتهەب
+                return clients.openWindow('./');
             }
         })
     );
