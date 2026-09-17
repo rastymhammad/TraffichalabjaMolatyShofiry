@@ -372,15 +372,14 @@
                 </div>
 
                 <div id="quotaAdminBlock" style="background: rgba(40, 167, 69, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(40, 167, 69, 0.2);" class="no-print">
-                    <h3 style="margin-top: 0; font-size: 14px; color: #28a745;">گۆڕینی ژمارەی پشکی ڕۆژانە</h3>
+                    <h3 style="margin-top: 0; font-size: 14px; color: #28a745;">گۆڕینی ژمارەی پشکی ڕۆژانە <span id="currentQuotaDisplay" style="background: #28a745; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px; margin-right: 5px;">(پشکی ئێستا: ...)</span></h3>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-users"></i>
-                        <input type="number" id="adminQuotaInput" placeholder="ژمارەی پشک (نموونە: 50)" min="1">
+                        <input type="number" id="adminQuotaInput" placeholder="ژمارەی پشک (نموونە: 30)" min="1">
                     </div>
                     <button class="action-btn" style="background: #28a745; padding: 10px;" onclick="updateDailyQuota()">گۆڕینی پشک</button>
                 </div>
 
-                <!-- سیستەمی لیستی ڕەش (Blacklist) -->
                 <div id="blacklistAdminBlock" style="background: rgba(220, 53, 69, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(220, 53, 69, 0.2);" class="no-print">
                     <h3 style="margin-top: 0; font-size: 14px; color: #dc3545;"><i class="fa-solid fa-ban"></i> لیستی ڕەش (Blacklist)</h3>
                     <div class="input-wrapper">
@@ -426,7 +425,6 @@
                     </div>
                 </div>
 
-                <!-- بەشی نۆتیفیکەیشن (Push Notification) -->
                 <div id="pushAdminBlock" style="background: rgba(142, 68, 173, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(142, 68, 173, 0.2);" class="no-print">
                     <h3 style="margin-top: 0; font-size: 14px; color: #8e44ad;"><i class="fa-solid fa-bell"></i> ناردنی نۆتیفیکەیشن (Push)</h3>
                     <div class="input-wrapper">
@@ -539,7 +537,7 @@
         </div>
     </div>
 
-    <div id="installAppContainer" style="display: none; text-align: center; margin-bottom: 15px;" class="no-print">
+    <div id="installAppContainer" style="display: block; text-align: center; margin-bottom: 15px;" class="no-print">
         <button id="installAppBtn" class="action-btn" style="background: #28a745; width: auto; padding: 10px 25px; border-radius: 25px; box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);">
             <i class="fa-solid fa-download"></i> دابەزاندنی ئەپڵیکەیشن (Install)
         </button>
@@ -1196,7 +1194,6 @@
                             document.getElementById('pushAdminBlock').style.display = 'block';
                         }
 
-                        // هێنانی پشکی ئێستا و نیشاندانی لە تەنیشت ناونیشانەکەی
                         fetch(`${baseUrl}/api/users/count`)
                             .then(r => r.json())
                             .then(data => {
@@ -1273,7 +1270,6 @@
             } catch (error) { Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە یان سێرڤەر خەوتووە', 'error'); }
         }
 
-        // --- سیستەمی لیستی ڕەش (Blacklist Functions) ---
         async function addToBlacklist() {
             let phone = document.getElementById("blacklistPhoneInput").value.trim();
             let days = document.getElementById("blacklistDuration").value;
@@ -1337,15 +1333,25 @@
         }
 
         // --- ناردنی نۆتیفیکەیشن ---
-        function sendPushNotification() {
+        async function sendPushNotification() {
             let msg = document.getElementById("adminPushInput").value.trim();
             if(!msg) return Swal.fire('ئاگاداری', 'تکایە نامەکەت بنووسە', 'warning');
-            Swal.fire({
-                title: 'ئاگاداری',
-                text: 'بۆ ناردنی نۆتیفیکەیشنی ڕاستەقینە بۆ مۆبایلەکان، پێویستە خزمەتگوزاری WebPush یان OneSignal لە باکێندەکەت (C#) جێگیر بکرێت چونکە پێویستی بە دابەزاندنی پەیکەیجی تایبەت هەیە لە سێرڤەر. ڕووکارەکەیمان بۆ ئامادە کردوویت بۆ داهاتوو!',
-                icon: 'info',
-                confirmButtonText: 'باشە تێگەیشتم'
-            });
+            
+            Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
+            try {
+                let response = await fetch(`${baseUrl}/api/admin/send-notification`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", "Admin-Password": window.adminPwd },
+                    body: JSON.stringify({ message: msg })
+                });
+                let result = await response.json().catch(() => ({}));
+                if(response.ok) {
+                    Swal.fire('سەرکەوتوو', result.message || 'نۆتیفیکەیشنەکە نێردرا!', 'success');
+                    document.getElementById("adminPushInput").value = "";
+                } else {
+                    Swal.fire('هەڵە', result.message || 'کێشەیەک ڕوویدا یان پاسوۆرد هەڵەیە!', 'error');
+                }
+            } catch (error) { Swal.fire('کێشە', 'کێشەی هێڵ هەیە', 'error'); }
         }
 
         async function toggleSystemStatus() {
@@ -1644,7 +1650,6 @@
         // لۆژیکی سەرەکی بۆ دوگمەی داونلۆدکردن
         installAppBtn.addEventListener('click', async () => {
             if (deferredPrompt) {
-                // ئەگەر برۆسەرەکە ڕێگەی دا
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
                 if (outcome === 'accepted') {
@@ -1652,7 +1657,6 @@
                 }
                 deferredPrompt = null;
             } else {
-                // ئەگەر لە ئایفۆن بێت یان پێشتر دابەزیبێت، ڕێنماییەک پیشان بدە
                 Swal.fire({
                     title: 'دابەزاندنی ئەپڵیکەیشن',
                     text: 'بۆ دابەزاندنی ئەپەکە بۆ سەر شاشەی مۆبایلەکەت، لە منوی برۆسەرەکەتەوە (سێ خاڵەکەی سەرەوە یان خوارەوە) هەڵبژاردەی "Add to Home Screen" یان "Install app" دابگرە.',
@@ -1668,10 +1672,44 @@
             Swal.fire('پیرۆزە!', 'ئەپەکە بە سەرکەوتوویی دابەزییە سەر مۆبایلەکەت.', 'success');
         });
 
+        // یارمەتیدەر بۆ گۆڕینی کلیلی VAPID بۆ فۆرماتی Uint8Array
+        function urlBase64ToUint8Array(base64String) {
+            const padding = '='.repeat((4 - base64String.length % 4) % 4);
+            const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
+            const rawData = window.atob(base64);
+            const outputArray = new Uint8Array(rawData.length);
+            for (let i = 0; i < rawData.length; ++i) {
+                outputArray[i] = rawData.charCodeAt(i);
+            }
+            return outputArray;
+        }
+
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('Service Worker تۆمارکرا بە سەرکەوتوویی', reg))
+                    .then(async (reg) => {
+                        console.log('Service Worker تۆمارکرا بە سەرکەوتوویی', reg);
+                        
+                        // بەشی پرسیارکردن و وەرگرتنی ڕێگەپێدانی نۆتیفیکەیشن و ناردنی بۆ باکێند
+                        try {
+                            const permission = await Notification.requestPermission();
+                            if (permission === 'granted') {
+                                const publicVapidKey = 'BEl62iUYgUivxIkv69yViEuiBIa-Ib9-SkvMeAtA3LFgDzkrxZJjSgSnfckjBJuB-5INm7eKfluxkOTIygB1Tkg';
+                                const subscription = await reg.pushManager.subscribe({
+                                    userVisibleOnly: true,
+                                    applicationServerKey: urlBase64ToUint8Array(publicVapidKey)
+                                });
+                                
+                                await fetch(`${baseUrl}/api/notifications/subscribe`, {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify(subscription)
+                                });
+                            }
+                        } catch (e) {
+                            console.log('کێشە لە کاراکردنی نۆتیفیکەیشن', e);
+                        }
+                    })
                     .catch(err => console.log('کێشە لە تۆمارکردنی Service Worker', err));
             });
         }
