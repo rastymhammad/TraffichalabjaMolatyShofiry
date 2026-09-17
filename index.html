@@ -371,7 +371,7 @@
                     </div>
                 </div>
 
-                <!-- خانەی گۆڕینی پشک لەگەڵ پیشاندانی ژمارەی پشکی ئێستا لە تەنیشت ناونیشانەکەی -->
+                <!-- بەشی گۆڕینی پشک لەگەڵ پیشاندانی ژمارەی پشک لە تەنیشت ناونیشانەکەی -->
                 <div id="quotaAdminBlock" style="background: rgba(40, 167, 69, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(40, 167, 69, 0.2);" class="no-print">
                     <h3 style="margin-top: 0; font-size: 14px; color: #28a745;">گۆڕینی ژمارەی پشکی ڕۆژانە <span id="currentQuotaDisplay" style="background: #28a745; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px; margin-right: 5px;">(پشکی ئێستا: ...)</span></h3>
                     <div class="input-wrapper">
@@ -966,7 +966,7 @@
                     const dateInIraq = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Baghdad"}));
                     const iraqHour = dateInIraq.getHours(); const dayOfWeek = dateInIraq.getDay(); 
                     
-                    // لۆژیکی ڕاستی ڕۆژەکان: ڕۆژی 4 پێنجشەممەیە، ڕۆژی 5 هەینییە، ڕۆژی 6 شەممەیە
+                    // مەرجی دروستی ڕۆژەکان: 4 پێنجشەممەیە، 5 هەینییە، 6 شەممەیە
                     let isThursdayAfterTwo = (dayOfWeek === 4 && iraqHour >= 14);
                     let isFriday = (dayOfWeek === 5);
                     let isSaturdayBeforeEvening = (dayOfWeek === 6 && iraqHour < 18);
@@ -1027,10 +1027,10 @@
 
                 target.setHours(18, 0, 0, 0);
 
-                if ((day === 3 && hour >= 18) || (day === 4 && hour < 14)) { 
-                    target.setDate(now.getDate() + (day === 4 ? 2 : 3));
+                if ((day === 3 && hour >= 18) || (day === 4 && hour < 18)) { 
+                    target.setDate(now.getDate() + (day === 4 ? (hour < 6 ? 2 : 1) : 3));
                     target.setHours(18, 0, 0, 0);
-                } else if (day === 4 && hour >= 14) { 
+                } else if (day === 4) { 
                     target.setDate(now.getDate() + 2); 
                     target.setHours(18, 0, 0, 0);
                 } else if (day === 5) { 
@@ -1164,7 +1164,7 @@
                             document.getElementById('toggleStatusBtn').style.display = 'inline-block';
                         }
 
-                        // هێنانی ژمارەی پشکی ئێستا و نیشاندانی لە تەنیشت ناونیشانەکەی
+                        // هێنانی پشکی ئێستا و نیشاندانی لە تەنیشت ناونیشانەکەی
                         fetch(`${baseUrl}/api/users/count`)
                             .then(r => r.json())
                             .then(data => {
@@ -1178,7 +1178,7 @@
                         loadAdminStats();
                         loadNoticeText();
                     } else {
-                        Swal.fire('هەڵە', 'پاسوۆردەکە هەڵەیە بەپێی سێرڤەرەکە!', 'error');
+                        Swal.fire('هەڵە', 'پاسوۆردەکە هەڵەیە یان دەسەڵاتت نییە!', 'error');
                     }
                 } catch(e) { 
                     Swal.fire('کێشە', 'سێرڤەرەکە خەوتووە یان کێشەی هێڵ هەیە، تکایە دووبارە تاقیبکەرەوە!', 'error'); 
@@ -1235,7 +1235,6 @@
                 let result = await response.json().catch(() => ({}));
                 if(response.ok) {
                     Swal.fire('سەرکەوتوو', result.message, 'success');
-                    // نوێکردنەوەی ژمارەکە لە تەنیشت نووسینەکە ڕاستەوخۆ دوای گۆڕین
                     document.getElementById('currentQuotaDisplay').textContent = `(پشکی ئێستا: ${newQuota})`;
                     checkQuotaAndTimer(); document.getElementById("adminQuotaInput").value = "";
                 } else Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان دەسەڵاتت نییە!', 'error');
@@ -1513,7 +1512,7 @@
 
         window.onload = function() {
             calculateFine(true);
-            loadNoticeText();
+            loadNoticeTest();
             const urlParams = new URLSearchParams(window.location.search);
             const verifyToken = urlParams.get('verify');
             if (verifyToken) {
