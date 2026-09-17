@@ -1,7 +1,8 @@
 {
   "name": "به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هه‌ڵه‌بجه‌",
   "short_name": "Halabja Traffic",
-  "start_url": "./index.html",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#f0f8ff",
   "theme_color": "#0056b3",
