@@ -372,10 +372,10 @@
                 </div>
 
                 <div id="quotaAdminBlock" style="background: rgba(40, 167, 69, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(40, 167, 69, 0.2);" class="no-print">
-                    <h3 style="margin-top: 0; font-size: 14px; color: #28a745;">گۆڕینی ژمارەی پشکی ڕۆژانە <span id="currentQuotaDisplay" style="background: #28a745; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px; margin-right: 5px;">(پشکی ئێستا: ...)</span></h3>
+                    <h3 style="margin-top: 0; font-size: 14px; color: #28a745;">گۆڕینی ژمارەی پشکی ڕۆژانە</h3>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-users"></i>
-                        <input type="number" id="adminQuotaInput" placeholder="ژمارەی پشک (نموونە: 30)" min="1">
+                        <input type="number" id="adminQuotaInput" placeholder="ژمارەی پشک (نموونە: 50)" min="1">
                     </div>
                     <button class="action-btn" style="background: #28a745; padding: 10px;" onclick="updateDailyQuota()">گۆڕینی پشک</button>
                 </div>
@@ -509,13 +509,6 @@
         </div>
     </div>
 
-    <!-- دوگمەی دابەزاندنی ئەپڵیکەیشن (بە شێوەی هەمیشەیی جێگیرکراو لە شوێنی دیاریکراودا) -->
-    <div id="installAppContainer" style="display: block; text-align: center; margin-bottom: 15px;" class="no-print">
-        <button id="installAppBtn" class="action-btn" style="background: #28a745; width: auto; padding: 10px 25px; border-radius: 25px; box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);">
-            <i class="fa-solid fa-download"></i> دابەزاندنی ئەپڵیکەیشن (Install)
-        </button>
-    </div>
-
     <div class="modal-overlay" id="picker-modal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h3 id="modal-title">دیاریکردنی ژمارە</h3>
@@ -527,6 +520,12 @@
         <h2 style="color: #0056b3; margin-top: 10px;"><i class="fa-solid fa-shield-check"></i> دڵنیابوونەوەی پسوولە</h2>
         <div id="verifyResult" style="padding: 15px; font-size: 15px; font-weight: bold; margin-top: 12px; border-radius: 8px; background: #e9ecef;">چاوەڕێ بکە...</div>
         <button class="action-btn" onclick="window.location.href=window.location.origin + window.location.pathname" style="background: #0056b3; margin-top: 15px;">گەڕانەوە بۆ سەرەتا</button>
+    </div>
+
+    <div id="installAppContainer" style="display: none; text-align: center; margin-bottom: 15px;" class="no-print">
+        <button id="installAppBtn" class="action-btn" style="background: #28a745; width: auto; padding: 10px 25px; border-radius: 25px; box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);">
+            <i class="fa-solid fa-download"></i> دابەزاندنی ئەپڵیکەیشن (Install)
+        </button>
     </div>
 
     <div class="rating-container no-print" id="ratingSystem">
@@ -966,10 +965,11 @@
                     const dateInIraq = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Baghdad"}));
                     const iraqHour = dateInIraq.getHours(); const dayOfWeek = dateInIraq.getDay(); 
                     
-                    let isThursdayAfterTwo = (dayOfWeek === 4 && iraqHour >= 14);
+                    // لۆژیکی ڕاستکردنەوەی پشوو: (ڕۆژی 4 کە پێنجشەممەیە لە دوای سەعات 2ی پاشنیوەڕۆ، وە ڕۆژی 5 کە هەینییە)
+                    let isThursdayAfternoon = (dayOfWeek === 4 && iraqHour >= 14);
                     let isFriday = (dayOfWeek === 5);
                     let isSaturdayBeforeEvening = (dayOfWeek === 6 && iraqHour < 18);
-                    let isWeekendBlocked = isThursdayAfterTwo || isFriday || isSaturdayBeforeEvening;
+                    let isWeekendBlocked = isThursdayAfternoon || isFriday || isSaturdayBeforeEvening;
                     
                     let isDailyBlocked = (iraqHour >= 14 && iraqHour < 18);
                     
@@ -977,18 +977,20 @@
                         badge.className = "status-badge status-closed";
                         dot.className = "dot dot-red";
                         
-                        if (isFriday) {
-                            statusText.innerText = "ئەمڕۆ هەینی پشووه‌، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێتەوە";
-                        } else if (dayOfWeek === 4 && iraqHour >= 14) {
-                            statusText.innerText = "ئەمڕۆ پێنجشەممەیە و دەوام تەواو بووە، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێتەوە";
-                        } else if (dayOfWeek === 6 && iraqHour < 18) {
-                            statusText.innerText = "لە ئێستادا پشووی شەممەیە، کاتژمێر 6ی ئێوارە دەکرێتەوە";
-                        } else if (isWeekendBlocked) {
-                            statusText.innerText = "لە ئێستادا سیستەم داخراوە، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێتەوە"; 
+                        if (isWeekendBlocked) {
+                            if (dayOfWeek === 5) {
+                                statusText.innerText = "ئەمڕۆ هەینی پشووه‌، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێتەوە";
+                            } else if (dayOfWeek === 4 && iraqHour < 18) {
+                                statusText.innerText = "ئەمڕۆ پێنجشەممەیە و سیستەم داخراوە، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێتەوە";
+                            } else if (dayOfWeek === 6) {
+                                statusText.innerText = "لە ئێستادا سیستەم داخراوە، ئەمڕۆ کاتژمێر 6ی ئێوارە دەکرێتەوە";
+                            } else {
+                                statusText.innerText = "لە ئێستادا سیستەم داخراوە، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێتەوە"; 
+                            }
                         } else if (isDailyBlocked) {
                             statusText.innerText = "لە ئێستادا سیستەم داخراوە، ئەمڕۆ کاتژمێر 6ی ئێوارە دەکرێتەوە";
                         } else if (count >= maxQuota) { 
-                            if (dayOfWeek === 3 || (dayOfWeek === 4 && iraqHour < 14)) {
+                            if (dayOfWeek === 3 || (dayOfWeek === 4 && iraqHour < 18)) {
                                 statusText.innerText = "پشکی ئەمڕۆ تەواو بووە، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێتەوە";
                             } else if (iraqHour >= 18) {
                                 statusText.innerText = "پشکی سبەینێ تەواو بووە، کاتژمێر 6ی سبەی ئێوارە دەکرێتەوە";
@@ -1163,21 +1165,12 @@
                             document.getElementById('toggleStatusBtn').style.display = 'inline-block';
                         }
 
-                        // هێنانی پشکی ئێستا و نیشاندانی لە تەنیشت ناونیشانەکەی
-                        fetch(`${baseUrl}/api/users/count`)
-                            .then(r => r.json())
-                            .then(data => {
-                                if (data && data.maxQuota) {
-                                    document.getElementById('currentQuotaDisplay').textContent = `(پشکی ئێستا: ${data.maxQuota})`;
-                                }
-                            }).catch(() => {});
-
                         document.getElementById("adminSection").style.display = "block";
                         document.getElementById("adminSection").scrollIntoView({ behavior: 'smooth' });
                         loadAdminStats();
                         loadNoticeText();
                     } else {
-                        Swal.fire('هەڵە', 'پاسوۆردەکە هەڵەیە یان دەسەڵاتت نییە!', 'error');
+                        Swal.fire('هەڵە', 'پاسوۆردەکە هەڵەیە بەپێی سێرڤەرەکە!', 'error');
                     }
                 } catch(e) { 
                     Swal.fire('کێشە', 'سێرڤەرەکە خەوتووە یان کێشەی هێڵ هەیە، تکایە دووبارە تاقیبکەرەوە!', 'error'); 
@@ -1234,7 +1227,6 @@
                 let result = await response.json().catch(() => ({}));
                 if(response.ok) {
                     Swal.fire('سەرکەوتوو', result.message, 'success');
-                    document.getElementById('currentQuotaDisplay').textContent = `(پشکی ئێستا: ${newQuota})`;
                     checkQuotaAndTimer(); document.getElementById("adminQuotaInput").value = "";
                 } else Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان دەسەڵاتت نییە!', 'error');
             } catch (error) { Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە یان سێرڤەر خەوتووە', 'error'); }
@@ -1534,21 +1526,16 @@
         });
 
         installAppBtn.addEventListener('click', async () => {
+            installAppContainer.style.display = 'none';
             if (deferredPrompt) {
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
                 if (outcome === 'accepted') {
                     console.log('User accepted the install prompt');
+                } else {
+                    installAppContainer.style.display = 'block';
                 }
                 deferredPrompt = null;
-            } else {
-                Swal.fire({
-                    title: 'دابەزاندنی ئەپڵیکەیشن',
-                    text: 'بۆ دابەزاندنی ئەپەکە بۆ سەر هۆم سکرین، لە منوی برۆسەرەکەتەوە (سێ خاڵەکەی سەرەوە) هەڵبژاردەی "Add to Home Screen" یان "Install app" دابگرە.',
-                    icon: 'info',
-                    confirmButtonText: 'باشە',
-                    confirmButtonColor: '#28a745'
-                });
             }
         });
 
