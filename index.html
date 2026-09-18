@@ -1183,7 +1183,7 @@
                             document.getElementById('noticeAdminBlock').style.display = 'none';
                             document.getElementById('preRegAdminBlock').style.display = 'none';
                             document.getElementById('toggleStatusBtn').style.display = 'none';
-                            document.getElementById('blacklistAdminBlock').style.display = 'none';
+                            document.getElementById('blacklistAdminBlock').style.display = 'none'; 
                             document.getElementById('pushAdminBlock').style.display = 'none';
                         } else {
                             document.getElementById('quotaAdminBlock').style.display = 'block';
@@ -1270,28 +1270,41 @@
             } catch (error) { Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە یان سێرڤەر خەوتووە', 'error'); }
         }
 
+        // چارەسەرکراوی بەشی لیستی ڕەش
         async function addToBlacklist() {
-            let phone = document.getElementById("blacklistPhoneInput").value.trim();
+            let phoneInput = document.getElementById("blacklistPhoneInput").value;
+            let phone = toEnglishDigits(phoneInput.trim()); // چارەسەری کیبۆردی کوردی و عەرەبی
             let days = document.getElementById("blacklistDuration").value;
+            
             if (!phone || phone.length !== 11 || (!phone.startsWith("077") && !phone.startsWith("075") && !phone.startsWith("078"))) {
                 return Swal.fire('ئاگاداری', 'تکایە ژمارە مۆبایلێکی دروست بنووسە', 'warning');
             }
 
             Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
             try {
-                let response = await fetch(`${baseUrl}/api/admin/blacklist`, {
+                // ناردنی داتاکان بە هەردوو شێوازی Query و Body بۆ ئەوەی سێرڤەرەکە لە هەر کوێیەک بۆی بگەڕێت بیدۆزێتەوە
+                let response = await fetch(`${baseUrl}/api/admin/blacklist?phone=${phone}&days=${parseInt(days)}`, {
                     method: "POST",
-                    headers: { "Content-Type": "application/json", "Admin-Password": window.adminPwd },
+                    headers: { 
+                        "Content-Type": "application/json", 
+                        "Admin-Password": window.adminPwd 
+                    },
                     body: JSON.stringify({ phone: phone, days: parseInt(days) })
                 });
                 let result = await response.json().catch(() => ({}));
+                
                 if(response.ok) {
-                    Swal.fire('سەرکەوتوو', result.message, 'success');
+                    Swal.fire('سەرکەوتوو', result.message || 'ژمارەکە خرایە لیستی ڕەشەوە', 'success');
                     document.getElementById("blacklistPhoneInput").value = "";
                 } else {
-                    Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان دەسەڵاتت نییە!', 'error');
+                    // ئەگەر 500 بوو مانای وایە پێشتر بلۆک کراوە نەک کێشەی پاسوۆرد بێت
+                    let errMsg = result.message || (response.status === 500 ? 'کێشە لە سێرڤەر هەیە، ڕەنگە ئەم ژمارەیە پێشتر بلۆک کرابێت' : 'هەڵەیەک ڕوویدا لە سێرڤەرەوە!');
+                    if(response.status === 401 || response.status === 403) errMsg = 'پاسوۆرد هەڵەیە یان دەسەڵاتت نییە!';
+                    Swal.fire('هەڵە', errMsg, 'error');
                 }
-            } catch (error) { Swal.fire('کێشە', 'کێشەی هێڵ هەیە', 'error'); }
+            } catch (error) { 
+                Swal.fire('کێشە', 'کێشەی هێڵ هەیە یان سێرڤەرەکە کار ناکات', 'error'); 
+            }
         }
 
         async function viewBlacklist() {
@@ -1310,7 +1323,7 @@
                     html += '</table></div>';
                     Swal.fire({ title: 'لیستی ڕەش', html: html, showCloseButton: true, showConfirmButton: false });
                 } else {
-                    Swal.fire('هەڵە', 'نەتوانرا لیستەکە بهێنرێت', 'error');
+                    Swal.fire('هەڵە', 'نەتوانرا لیستەکە بهێنرێت یان دەسەڵاتت نییە', 'error');
                 }
             } catch(e) { Swal.fire('کێشە', 'کێشەی هێڵ هەیە', 'error'); }
         }
@@ -1326,13 +1339,12 @@
                     let res = await fetch(`${baseUrl}/api/admin/blacklist/${phone}`, { method: "DELETE", headers: { "Admin-Password": window.adminPwd } });
                     let data = await res.json().catch(() => ({}));
                     if(res.ok) {
-                        Swal.fire('سەرکەوتوو', data.message, 'success');
-                    } else Swal.fire('هەڵە', 'کێشەیەک ڕوویدا', 'error');
+                        Swal.fire('سەرکەوتوو', data.message || 'ژمارەکە لابرا', 'success');
+                    } else Swal.fire('هەڵە', data.message || 'کێشەیەک ڕوویدا', 'error');
                 } catch(e) { Swal.fire('کێشە', 'کێشەی هێڵ هەیە', 'error'); }
             }
         }
 
-        // --- ناردنی نۆتیفیکەیشن ---
         async function sendPushNotification() {
             let msg = document.getElementById("adminPushInput").value.trim();
             if(!msg) return Swal.fire('ئاگاداری', 'تکایە نامەکەت بنووسە', 'warning');
@@ -1650,13 +1662,11 @@
         const installAppContainer = document.getElementById('installAppContainer');
         const installAppBtn = document.getElementById('installAppBtn');
 
-        // کاتێک بڕۆسەرەکە ئامادەیە بۆ داونلۆدکردن
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
         });
 
-        // لۆژیکی سەرەکی بۆ دوگمەی داونلۆدکردن
         installAppBtn.addEventListener('click', async () => {
             if (deferredPrompt) {
                 deferredPrompt.prompt();
@@ -1681,7 +1691,6 @@
             Swal.fire('پیرۆزە!', 'ئەپەکە بە سەرکەوتوویی دابەزییە سەر مۆبایلەکەت.', 'success');
         });
 
-        // یارمەتیدەر بۆ گۆڕینی کلیلی VAPID بۆ فۆرماتی Uint8Array
         function urlBase64ToUint8Array(base64String) {
             const padding = '='.repeat((4 - base64String.length % 4) % 4);
             const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
@@ -1699,7 +1708,6 @@
                     .then(async (reg) => {
                         console.log('Service Worker تۆمارکرا بە سەرکەوتوویی', reg);
                         
-                        // بەشی پرسیارکردن و وەرگرتنی ڕێگەپێدانی نۆتیفیکەیشن و ناردنی بۆ باکێند
                         try {
                             const permission = await Notification.requestPermission();
                             if (permission === 'granted') {
