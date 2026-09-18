@@ -13,7 +13,7 @@
     <meta name="apple-mobile-web-app-title" content="به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە">
     <link rel="apple-touch-icon" href="icon-192.png">
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -1270,10 +1270,9 @@
             } catch (error) { Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە یان سێرڤەر خەوتووە', 'error'); }
         }
 
-        // چارەسەرکراوی بەشی لیستی ڕەش
         async function addToBlacklist() {
             let phoneInput = document.getElementById("blacklistPhoneInput").value;
-            let phone = toEnglishDigits(phoneInput.trim()); // چارەسەری کیبۆردی کوردی و عەرەبی
+            let phone = toEnglishDigits(phoneInput.trim()); 
             let days = document.getElementById("blacklistDuration").value;
             
             if (!phone || phone.length !== 11 || (!phone.startsWith("077") && !phone.startsWith("075") && !phone.startsWith("078"))) {
@@ -1282,8 +1281,8 @@
 
             Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
             try {
-                // ناردنی داتاکان تەنها بە شێوازی Body وەک ئەوەی سێرڤەرەکە چاوەڕێی دەکات
-                let response = await fetch(`${baseUrl}/api/admin/blacklist`, {
+                // ناردنی زانیارییەکان بە هەردوو شێوازەکە (لینک و بۆدی) بۆ ئەوەی لەگەڵ سیشارپەکە بگونجێت
+                let response = await fetch(`${baseUrl}/api/admin/blacklist?phone=${phone}&days=${parseInt(days)}`, {
                     method: "POST",
                     headers: { 
                         "Content-Type": "application/json", 
@@ -1291,16 +1290,23 @@
                     },
                     body: JSON.stringify({ phone: phone, days: parseInt(days) })
                 });
-                let result = await response.json().catch(() => ({}));
                 
-                if(response.ok) {
-                    Swal.fire('سەرکەوتوو', result.message || 'ژمارەکە خرایە لیستی ڕەشەوە', 'success');
-                    document.getElementById("blacklistPhoneInput").value = "";
-                } else {
-                    // ئەگەر 500 بوو مانای وایە پێشتر بلۆک کراوە نەک کێشەی پاسوۆرد بێت
-                    let errMsg = result.message || (response.status === 500 ? 'کێشە لە سێرڤەر هەیە، ڕەنگە ئەم ژمارەیە پێشتر بلۆک کرابێت' : 'هەڵەیەک ڕوویدا لە سێرڤەرەوە!');
-                    if(response.status === 401 || response.status === 403) errMsg = 'پاسوۆرد هەڵەیە یان دەسەڵاتت نییە!';
-                    Swal.fire('هەڵە', errMsg, 'error');
+                // وەرگرتنی وەڵامەکە بە تێکستی سادە بۆ بینینی ئیرۆرە ڕاستەقینەکەی باکێند
+                let text = await response.text(); 
+                
+                try {
+                    let result = JSON.parse(text);
+                    if(response.ok) {
+                        Swal.fire('سەرکەوتوو', result.message || 'ژمارەکە خرایە لیستی ڕەشەوە', 'success');
+                        document.getElementById("blacklistPhoneInput").value = "";
+                    } else {
+                        let errMsg = result.message || 'هەڵەیەک ڕوویدا لە سێرڤەرەوە!';
+                        if(response.status === 500) errMsg = 'سێرڤەرەکە کراش دەکات! ڕەنگە ژمارەکە پێشتر بلۆک کرابێت.';
+                        Swal.fire('هەڵە', errMsg, 'error');
+                    }
+                } catch(e) {
+                    // ئەگەر سێرڤەرەکە کراش بکات و HTML ئیرۆر بنێرێت
+                    Swal.fire('ئیرۆری ناوخۆیی سێرڤەر (500)', 'تکایە سەیری ئەم ئیرۆرە بکە:\n\n' + text.substring(0, 150), 'error');
                 }
             } catch (error) { 
                 Swal.fire('کێشە', 'کێشەی هێڵ هەیە یان سێرڤەرەکە کار ناکات', 'error'); 
