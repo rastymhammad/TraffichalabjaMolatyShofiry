@@ -1,18 +1,34 @@
-const CACHE_NAME = 'halabja-traffic-v1';
+const CACHE_NAME = 'halabja-traffic-v2';
 
 self.addEventListener('install', (event) => {
     self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
+    // ئەم کۆدە زۆر گرنگە: هەموو کەیش و هەڵە کۆنەکانی پێشوو (وەک v1) لە مۆبایلی هاووڵاتیان دەسڕێتەوە
+    event.waitUntil(
+        caches.keys().then((cacheNames) => {
+            return Promise.all(
+                cacheNames.map((cacheName) => {
+                    if (cacheName !== CACHE_NAME) {
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        })
+    );
     event.waitUntil(clients.claim());
 });
 
 self.addEventListener('fetch', (event) => {
-    // هێنانی داتا لە ئینتەرنێتەوە، ئەگەر کێشە هەبوو با بگەڕێتەوە بۆ کەیش (بێ ئەوەی تێکستی سادە بنێرێت کە سایتەکە تێکبدات)
     event.respondWith(
-        fetch(event.request).catch(() => {
-            return caches.match(event.request);
+        fetch(event.request).catch(async (error) => {
+            const cachedResponse = await caches.match(event.request);
+            if (cachedResponse) {
+                return cachedResponse;
+            }
+            // ئەگەر ئینتەرنێت نەبوو، ڕێگە دەدات بڕۆسەرەکە ئێرۆری ئاسایی خۆی بدات نەک لەسەر لۆگۆکە گیر بخوات
+            throw error; 
         })
     );
 });
@@ -46,8 +62,8 @@ self.addEventListener('notificationclick', function(event) {
                 }
             }
             if (clients.openWindow) {
-                // ڕێڕەوی دروست بۆ کردنەوەی سایتەکە لە گیتهەب
-                return clients.openWindow('./');
+                // ڕێڕەوی دروست بۆ کردنەوەی سایتەکە
+                return clients.openWindow('index.html');
             }
         })
     );
