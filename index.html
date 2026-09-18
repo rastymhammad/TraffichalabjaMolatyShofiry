@@ -142,7 +142,7 @@
         body.dark-mode .header-title { border-bottom-color: #4da3ff; }
         .header-title h1 { color: var(--header-text); font-size: 17px; margin: 0; font-weight: bold; text-align: center; }
         .header-title h1 a { color: inherit; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; }
-        .theme-toggle-btn { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); background: transparent; border: none; font-size: 22px; cursor: pointer; z-index: 10; }
+        .theme-toggle-btn { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); background: transparent; border: none; font-size: 22px; cursor: pointer; padding: 0; margin: 0; transition: transform 0.2s; z-index: 10; }
         .visitor-counter { text-align: center; font-size: 12px; color: var(--label-color); margin-bottom: 8px; font-weight: bold; }
         .visitor-counter b { color: var(--text-main); }
         .notice-slider-box { background: var(--bg-container); border: 2px solid #0056b3; border-radius: 12px; padding: 12px 15px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,86,179,0.08); text-align: center; width: 100%; overflow: hidden; position: relative; }
@@ -156,33 +156,33 @@
         .portal-cards { display: flex; flex-direction: column; gap: 12px; width: 100%; align-items: center; }
         .portal-card { position: relative; background: var(--header-bg); border: 2px solid var(--border-container); border-radius: 12px; padding: 20px 15px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; width: 100%; max-width: 380px; margin: 0 auto; min-height: 95px; }
         .portal-card:hover { transform: translateY(-4px); border-color: #0056b3; box-shadow: 0 8px 20px rgba(0,86,179,0.15); }
-        body.dark-mode .portal-card:hover { border-color: #4da3ff; box-shadow: 0 8px 20px rgba(77,163,255,0.15); }
         .portal-card i { position: absolute; right: 20px; font-size: 32px; color: #0056b3; }
         body.dark-mode .portal-card i { color: #4da3ff; }
         .portal-card-content { text-align: center; width: 100%; padding: 0 35px; }
         .portal-card-content h3 { margin: 0 0 6px 0; font-size: 15px; color: var(--text-main); font-weight: bold; }
         .portal-card-content p { margin: 0; font-size: 11px; color: var(--label-color); }
         .back-btn { background: #007bff; color: white; border: none; padding: 12px 15px; border-radius: 10px; font-family: 'Rudaw', Tahoma, sans-serif; font-size: 13.5px; font-weight: bold; cursor: pointer; margin-bottom: 15px; width: 100%; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2); display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .status-badge { display: inline-flex; align-items: center; gap: 8px; margin: 0 auto 12px auto; padding: 6px 14px; font-size: 12px; font-weight: bold; border-radius: 20px; }
+        .status-badge { display: inline-flex; align-items: center; gap: 8px; margin: 0 auto 12px auto; padding: 6px 14px; font-size: 12px; font-weight: bold; border-radius: 20px; width: fit-content; text-align: center; }
         .status-open { background: #d4edda; color: #155724; }
         .status-closed { background: #f8d7da; color: #721c24; }
-        .dot { height: 10px; width: 10px; border-radius: 50%; display: inline-block; }
+        .dot { height: 10px; width: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
         .dot-green { background-color: #28a745; box-shadow: 0 0 8px #28a745; }
         .dot-red { background-color: #dc3545; box-shadow: 0 0 8px #dc3545; }
         .container { background: var(--bg-container); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: 0 auto 20px auto; border: 1px solid var(--border-container); width: 100%; }
         h2 { color: var(--header-text); margin-top: 0; margin-bottom: 15px; font-size: 16px; }
         .input-wrapper { position: relative; width: 100%; margin: 8px 0; }
         .input-wrapper i { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--header-text); font-size: 16px; }
-        .input-wrapper input { width: 100%; padding: 10px 35px 10px 10px; box-sizing: border-box; border: 2px solid var(--input-border); border-radius: 6px; font-size: 14px; font-family: 'Rudaw', Tahoma, Arial, sans-serif; outline: none; background: var(--input-bg); color: var(--input-text); }
+        .input-wrapper input { width: 100%; padding: 10px 35px 10px 10px; box-sizing: border-box; border: 2px solid var(--input-border); border-radius: 6px; font-size: 14px; font-family: 'Rudaw', Tahoma, Arial, sans-serif; outline: none; transition: 0.3s; background: var(--input-bg); color: var(--input-text); user-select: text; }
+        .input-wrapper input:disabled { background-color: #e9ecef; cursor: not-allowed; opacity: 0.7; }
         .input-wrapper input.valid-input { border-color: #28a745 !important; }
         .input-wrapper input.invalid-input { border-color: #f5c6cb !important; }
-        button.action-btn { background: #28a745; color: white; border: none; padding: 12px 20px; cursor: pointer; border-radius: 6px; font-size: 15px; font-weight: bold; width: 100%; margin-top: 8px; font-family: 'Rudaw', Tahoma, sans-serif; }
-        button.action-btn:disabled { background: #cccccc !important; cursor: not-allowed; }
+        button.action-btn { background: #28a745; color: white; border: none; padding: 12px 20px; cursor: pointer; border-radius: 6px; font-size: 15px; font-weight: bold; width: 100%; margin-top: 8px; font-family: 'Rudaw', Tahoma, sans-serif; transition: 0.3s; }
+        button.action-btn:disabled { background: #cccccc !important; color: #666666 !important; cursor: not-allowed !important; }
         .search-btn { background: #007bff; }
         .timer-box { background: rgba(220, 53, 69, 0.08); border: 1px dashed #dc3545; padding: 8px 10px; border-radius: 8px; font-size: 13px; color: #d9534f; margin-top: 12px; font-weight: bold; display: none; text-align: center; }
-        .table-responsive { width: 100%; overflow-x: auto; margin-top: 15px; }
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 15px; }
         #usersTable { width: 100%; border-collapse: collapse; text-align: center; font-size: 11px; }
-        #usersTable th, #usersTable td { padding: 8px; border: 1px solid var(--border-container); color: var(--text-main); }
+        #usersTable th, #usersTable td { white-space: nowrap; padding: 8px; border: 1px solid var(--border-container); color: var(--text-main); }
         #usersTable th { background: #0056b3; color: white; }
         .dashboard-cards { display: flex; gap: 6px; margin-bottom: 12px; justify-content: space-between; }
         .dash-card { background: var(--bg-container); border: 1px solid var(--border-container); border-radius: 6px; padding: 8px 4px; flex: 1; text-align: center; }
@@ -209,11 +209,16 @@
         .date-box { flex: 1; text-align: center; background: var(--bg-container); border: 1px solid var(--toggle-border); border-radius: 8px; padding: 6px 2px; cursor: pointer; }
         .date-box label { display: block; font-size: 11px; color: var(--label-color); margin-bottom: 2px; font-weight: bold; pointer-events: none;}
         .date-custom-input { width: 100%; padding: 0; border: none; background: transparent; text-align: center; font-size: 16px; font-weight: bold; color: var(--input-text); pointer-events: none; }
-        .results { background: var(--results-bg); border-radius: 10px; padding: 12px; border: 2px solid var(--dynamic-status-color); margin-bottom: 12px; text-align: right; }
+        .results { background: var(--results-bg); border-radius: 10px; padding: 12px; border: 2px solid var(--dynamic-status-color); margin-bottom: 12px; position: relative; text-align: right; }
         .result-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed var(--results-border); font-size: 13px; color: var(--text-row); }
         .total-row { font-size: 16px; font-weight: bold; color: var(--total-color); }
         .fine-row { color: var(--fine-color); font-weight: bold; }
         .fee-row { color: var(--fee-color); font-weight: bold; }
+        .gauge-container { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%); width: 200px; height: 100px; text-align: center; display: none; opacity: 0.25; pointer-events: none; }
+        .gauge { position: relative; width: 200px; height: 100px; overflow: hidden; background: var(--slider-bg); border-top-left-radius: 100px; border-top-right-radius: 100px; }
+        .gauge-fill { position: absolute; top: 100%; left: 0; width: inherit; height: 100%; background: #48bb78; transform-origin: center top; transition: transform 0.8s; border-bottom-left-radius: 100px; border-bottom-right-radius: 100px; }
+        .gauge-cover { position: absolute; top: 20px; left: 20px; width: 160px; height: 80px; background: var(--results-bg); border-top-left-radius: 80px; border-top-right-radius: 80px; }
+        .needle { position: absolute; bottom: 0; left: 50%; width: 4px; height: 80px; background: var(--input-text); transform-origin: bottom center; transition: transform 0.8s; border-radius: 4px; z-index: 2; }
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-overlay); justify-content: center; align-items: center; z-index: 1000; }
         .modal-content { background: var(--modal-bg); padding: 15px; border-radius: 12px; width: 90%; max-width: 350px; text-align: center; }
         .number-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; max-height: 75vh; overflow-y: auto; padding: 5px; }
@@ -222,12 +227,19 @@
         footer { background-color: var(--header-bg); color: var(--text-main); text-align: center; padding: 15px; margin-top: 25px; border-radius: 12px 12px 0 0; font-size: 12px; border-top: 1px solid var(--border-container); width: 100%; max-width: 400px; }
         .dev-name { color: #0056b3; font-weight: bold; margin-top: 5px; }
         body.dark-mode .dev-name { color: #4da3ff; }
+        .social-icons { margin-top: 10px; }
+        .social-icons a { color: #0056b3; font-size: 24px; margin: 0 10px; text-decoration: none; display: inline-block; transition: all 0.3s ease; }
         .no-print { display: block; }
+        @media print { 
+            body * { visibility: hidden; } 
+            .table-responsive, .table-responsive * { visibility: visible; }
+            .no-print { display: none !important; } 
+        }
         .rating-container { background: var(--bg-container); border: 1px solid var(--border-container); border-radius: 12px; padding: 15px; margin: 20px auto 5px auto; width: 100%; max-width: 400px; text-align: center; }
         .stars { display: flex; justify-content: center; gap: 8px; direction: ltr; margin-bottom: 10px; cursor: pointer; }
-        .stars i { font-size: 26px; color: #cbd5e1; }
+        .stars i { font-size: 26px; color: #cbd5e1; transition: color 0.2s; }
         .stars i.active { color: #ffc107; }
-        .feedback-input { width: 100%; padding: 10px; border: 2px solid var(--input-border); border-radius: 6px; background: var(--input-bg); color: var(--input-text); display: none; margin-bottom: 12px; }
+        .feedback-input { width: 100%; padding: 10px; border: 2px solid var(--input-border); border-radius: 6px; display: none; margin-bottom: 12px; }
         .submit-rating-btn { background: #0056b3; color: white; border: none; padding: 10px 15px; border-radius: 6px; display: none; width: 100%; cursor: pointer; }
         .rating-thanks { display: none; color: #28a745; font-size: 13.5px; font-weight: bold; margin-top: 10px; }
         .admin-feedbacks-container { display: none; margin-top: 15px; text-align: right; background: var(--info-bg); padding: 12px; border-radius: 8px; }
@@ -299,6 +311,9 @@
                         <div class="dash-card"><h4>هاووڵاتیان</h4><h3 id="statUser" style="color: #28a745;">0</h3></div>
                         <div class="dash-card"><h4> ئەدمین</h4><h3 id="statAdmin" style="color: #dc3545;">0</h3></div>
                     </div>
+                    <div style="background: var(--bg-container); padding: 6px; border-radius: 8px; border: 1px solid var(--border-container);">
+                        <div class="chart-container"><canvas id="myChart"></canvas></div>
+                    </div>
                 </div>
                 <div id="quotaAdminBlock" style="background: rgba(40, 167, 69, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px;" class="no-print">
                     <h3 style="margin-top: 0; font-size: 14px; color: #28a745;">گۆڕینی ژمارەی پشکی ڕۆژانە <span id="currentQuotaDisplay" style="background: #28a745; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px;">(...)</span></h3>
@@ -354,11 +369,11 @@
 
         <div id="fineSection" style="display: none;">
             <button class="back-btn" onclick="openSection('portal')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە بۆ سەرەتا</button>
-            <div class="fine-container">
+            <div class="fine-container" id="fine-container-box">
                 <div class="visitor-counter">👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b></div>
                 <div class="toggle-container">
                     <span id="fine-status-text" style="font-weight: bold; color: #48bb78; font-size: 13px;">✓ داشکاندنی غەرامە (٢٠٪) چالاکە</span>
-                    <label class="switch"><input type="checkbox" id="university-toggle" checked onchange="calculateFine()"><span class="slider"></span></label>
+                    <label class="switch"><input type="checkbox" id="university-toggle" checked onchange="vibrate(); calculateFine()"><span class="slider"></span></label>
                 </div>
                 <div class="checklist-box">
                     <div class="checklist-title">📄 پێداویستییەکان:</div>
@@ -376,6 +391,7 @@
                     </div>
                 </div>
                 <div class="results" id="results-box">
+                    <div class="gauge-container" id="speed-gauge"><div class="gauge"><div class="gauge-fill" id="gauge-fill"></div><div class="gauge-cover"></div><div class="needle" id="gauge-needle"></div></div></div>
                     <div class="result-row fee-row"><span>🔵 رسومات:</span><span id="fee-price">60,000 دینار</span></div>
                     <div class="result-row fine-row"><span>🔴 غرامە:</span><span id="fine-price">0 دینار</span></div>
                     <div class="result-row total-row"><span>💰 کۆی گشتی:</span><span id="total-price">0 دینار</span></div>
@@ -392,6 +408,32 @@
     </div>
 
     <div class="modal-overlay" id="picker-modal" onclick="closeModal(event)"><div class="modal-content" onclick="event.stopPropagation()"><h3 id="modal-title">دیاریکردنی ژمارە</h3><div class="number-grid" id="modal-grid"></div></div></div>
+    
+    <div class="container" id="verifySection" style="display: none; max-width: 400px; margin: 50px auto; border: 3px solid #0056b3;">
+        <h2 style="color: #0056b3; margin-top: 10px;"><i class="fa-solid fa-shield-check"></i> دڵنیابوونەوەی پسوولە</h2>
+        <div id="verifyResult" style="padding: 15px; font-size: 15px; font-weight: bold; margin-top: 12px; background: #e9ecef;">چاوەڕێ بکە...</div>
+        <button class="action-btn" onclick="window.location.href=window.location.origin + window.location.pathname" style="background: #0056b3; margin-top: 15px;">گەڕانەوە بۆ سەرەتا</button>
+    </div>
+
+    <div class="rating-container no-print" id="ratingSystem">
+        <div class="rating-title">هەڵسەنگاندنت بۆ سیستەمەکە چۆنە؟</div>
+        <div class="stars" id="starContainer">
+            <i class="fa-solid fa-star" data-value="1"></i><i class="fa-solid fa-star" data-value="2"></i>
+            <i class="fa-solid fa-star" data-value="3"></i><i class="fa-solid fa-star" data-value="4"></i><i class="fa-solid fa-star" data-value="5"></i>
+        </div>
+        <textarea id="feedbackText" class="feedback-input" rows="2" placeholder="تێبینییەکانت لێرە بنووسە..."></textarea>
+        <button id="submitRatingBtn" class="submit-rating-btn" onclick="submitRating()">ناردنی هەڵسەنگاندن</button>
+        <div id="ratingThanks" class="rating-thanks"><i class="fa-solid fa-circle-check"></i> زۆر سوپاس!</div>
+    </div>
+
+    <footer>
+        <p style="margin: 0 0 5px 0;">هەموو مافێکی پارێزراوە بۆ بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە &copy; 2026</p>
+        <p class="dev-name" style="margin: 0;">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووچۆ ( ڕاستی محمد شێخ حیدر )</p>
+        <div class="social-icons no-print">
+            <a href="https://facebook.com/share/19ChSYyAyM?mibextid=wwXIfr" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://wa.me/9647501116212" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+    </footer>
 
     <script>
         document.addEventListener('contextmenu', event => event.preventDefault());
@@ -402,20 +444,7 @@
 
         const baseUrl = "https://rastymhammad-001-site1.itempurl.com";
         const apiUrl = `${baseUrl}/api/users`;
-        let adminClickCount = 0;
-
-        let currentTheme = localStorage.getItem("theme");
-        if (!currentTheme) currentTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? "dark" : "light";
-        if (currentTheme === "dark") { document.body.classList.add("dark-mode"); document.getElementById("themeToggleBtn").innerText = "☀️"; }
-
-        function toggleTheme() {
-            document.body.classList.toggle("dark-mode");
-            if (document.body.classList.contains("dark-mode")) {
-                document.getElementById("themeToggleBtn").innerText = "☀️"; localStorage.setItem("theme", "dark");
-            } else {
-                document.getElementById("themeToggleBtn").innerText = "🌙"; localStorage.setItem("theme", "light");
-            }
-        }
+        let adminClickCount = 0; let timerInterval = null; let globalSystemIsActive = true; let statChart = null; let globalUsersData = [];
 
         async function loadNoticeText() {
             try {
@@ -425,7 +454,13 @@
                     let text = data.notice || "";
                     let wrapper = document.getElementById('noticeScrollWrapper');
                     if(wrapper) {
-                        wrapper.innerHTML = `<marquee direction="right" scrollamount="2" scrolldelay="90">${text}</marquee>`;
+                        if (text.includes('\n') || text.length > 100) {
+                            wrapper.className = "notice-scroll-container vertical";
+                            wrapper.innerHTML = `<marquee direction="up" scrollamount="1.5" scrolldelay="90">${text.replace(/\n/g, '<br>')}</marquee>`;
+                        } else {
+                            wrapper.className = "notice-scroll-container horizontal";
+                            wrapper.innerHTML = `<marquee direction="right" scrollamount="2" scrolldelay="90">${text}</marquee>`;
+                        }
                     }
                     let adminInput = document.getElementById('adminNoticeInput');
                     if(adminInput) adminInput.value = text;
@@ -452,16 +487,26 @@
             document.getElementById('queueSection').style.display = 'none';
             document.getElementById('fineSection').style.display = 'none';
             if(section === 'portal') { document.getElementById('portalSection').style.display = 'block'; loadNoticeText(); }
-            else if(section === 'queue') { document.getElementById('queueSection').style.display = 'block'; checkSavedTicket(); }
+            else if(section === 'queue') { document.getElementById('queueSection').style.display = 'block'; checkQuotaAndTimer(); checkSavedTicket(); }
             else if(section === 'fine') document.getElementById('fineSection').style.display = 'block';
         }
+
+        let currentTheme = localStorage.getItem("theme") || "light";
+        if (currentTheme === "dark") { document.body.classList.add("dark-mode"); document.getElementById("themeToggleBtn").innerText = "☀️"; }
+        function toggleTheme() {
+            document.body.classList.toggle("dark-mode");
+            if (document.body.classList.contains("dark-mode")) { document.getElementById("themeToggleBtn").innerText = "☀️"; localStorage.setItem("theme", "dark"); }
+            else { document.getElementById("themeToggleBtn").innerText = "🌙"; localStorage.setItem("theme", "light"); }
+        }
+        function vibrate(ms = 15) { if (navigator.vibrate) navigator.vibrate(ms); }
 
         function updateVisitorCounter() {
             const elements = document.querySelectorAll('.visitor-count-text');
             if (elements.length === 0) return;
+            const BASE_COUNT = 9000;
             fetch(`https://abacus.jasoncameron.dev/hit/traffic-halabja-app/2026-08-05`).then(res => res.json()).then(data => {
-                elements.forEach(el => el.textContent = (9000 + (data.value || 0)).toLocaleString());
-            }).catch(() => {});
+                elements.forEach(el => el.textContent = (BASE_COUNT + (data.value || 0)).toLocaleString());
+            }).catch(() => { elements.forEach(el => el.textContent = BASE_COUNT.toLocaleString()); });
         }
         updateVisitorCounter();
 
@@ -487,6 +532,7 @@
             for (let i = 0; i < count; i++) {
                 let val = start + i;
                 let item = document.createElement('div'); item.className = 'grid-item';
+                if ((type === 'day' && val === selectedDay) || (type === 'month' && val === selectedMonth) || (type === 'year' && val === selectedYear)) item.classList.add('selected-item');
                 item.textContent = val;
                 item.onclick = function() {
                     if(type === 'day') selectedDay = val; else if(type === 'month') selectedMonth = val; else selectedYear = val;
@@ -551,12 +597,23 @@
             } catch(e) {}
         }
 
+        async function searchUser() {
+            let phone = document.getElementById("searchInput").value.trim();
+            if(!phone) return;
+            try {
+                let res = await fetch(`${apiUrl}/search/${encodeURIComponent(phone)}`);
+                let result = await res.json();
+                if(res.ok) { Swal.fire('دۆزرایەوە', result.message, 'success'); }
+                else { Swal.fire('نەدۆزرایەوە', result.message || 'هیچ تۆمارێک نییە', 'error'); }
+            } catch(e) {}
+        }
+
         function handleAdminClick() {
             if (++adminClickCount >= 5) { adminClickCount = 0; showAdminPanel(); }
         }
 
         async function showAdminPanel() {
-            const { value: pwd } = await Swal.fire({ title: 'تایبه‌ت به‌ ئه‌دمین', input: 'password', showCancelButton: true, confirmButtonText: 'چوونەژوورەوە' });
+            const { value: pwd } = await Swal.fire({ title: 'تایبه‌ت به‌ ئه‌دمین', input: 'password', showCancelButton: true });
             if (!pwd) return;
             let normPwd = toEnglishDigits(pwd);
             try {
@@ -599,6 +656,7 @@
             } catch(e) {}
         }
 
+        // چالاککردنی Service Worker و وەرگرتنی نۆتیفیکەیشن بە کلیلە ڕاستەقینەکان
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
