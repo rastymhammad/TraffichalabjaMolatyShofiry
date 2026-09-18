@@ -1344,14 +1344,23 @@
                     headers: { "Content-Type": "application/json", "Admin-Password": window.adminPwd },
                     body: JSON.stringify({ message: msg })
                 });
-                let result = await response.json().catch(() => ({}));
-                if(response.ok) {
-                    Swal.fire('سەرکەوتوو', result.message || 'نۆتیفیکەیشنەکە نێردرا!', 'success');
-                    document.getElementById("adminPushInput").value = "";
-                } else {
-                    Swal.fire('هەڵە', result.message || 'کێشەیەک ڕوویدا یان پاسوۆرد هەڵەیە!', 'error');
+                
+                let text = await response.text(); 
+                try {
+                    let result = JSON.parse(text);
+                    if(response.ok) {
+                        Swal.fire('سەرکەوتوو', result.message || 'نۆتیفیکەیشنەکە نێردرا!', 'success');
+                        document.getElementById("adminPushInput").value = "";
+                    } else {
+                        Swal.fire('هەڵەی سێرڤەر', result.message || result.detail || text || 'کێشەیەک ڕوویدا!', 'error');
+                    }
+                } catch(e) {
+                    console.log("Error text from server:", text);
+                    Swal.fire('ئیرۆری ناوخۆیی سێرڤەر', text.substring(0, 200) + '...', 'error');
                 }
-            } catch (error) { Swal.fire('کێشە', 'کێشەی هێڵ هەیە', 'error'); }
+            } catch (error) { 
+                Swal.fire('هەڵەی ڕاستەقینەی هێڵ', error.message, 'error'); 
+            }
         }
 
         async function toggleSystemStatus() {
