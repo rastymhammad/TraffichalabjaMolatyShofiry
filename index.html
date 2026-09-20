@@ -431,6 +431,17 @@
                     </div>
                 </div>
 
+                <div id="gpsAdminBlock" style="display: none; background: rgba(253, 126, 20, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(253, 126, 20, 0.2);" class="no-print">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3 style="margin: 0; font-size: 14px; color: #fd7e14;"><i class="fa-solid fa-location-dot"></i> نۆرەگرتن بەپێی شوێن (GPS)</h3>
+                        <label class="switch">
+                            <input type="checkbox" id="gpsToggleBtn" onchange="toggleGpsStatus()">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <p style="margin: 5px 0 0 0; font-size: 11px; color: var(--label-color);">ئەگەر هەڵبکرێت، تەنها دانیشتووانی (هەڵەبجە، سیروان، خورماڵ، بیارە، تەوێڵە) دەتوانن نۆرە بگرن.</p>
+                </div>
+
                 <div style="display: flex; gap: 8px; margin-bottom: 10px;" class="no-print">
                     <button class="action-btn search-btn" onclick="loadTodayUsers()" style="flex: 1; margin-top: 0; padding: 10px;">نیشاندانی لیستی ئەمڕۆ</button>
                     <button class="action-btn" style="background: #20c997; color: white; width: auto; margin-top: 0; padding: 10px 15px;" onclick="loadTodayUsers()" title="نوێکردنەوەی خشتەکە">🔄</button>
@@ -603,6 +614,26 @@
         let globalSystemIsActive = true; 
         let statChart = null;
         let globalUsersData = [];
+
+        let isGpsRequired = false; 
+        const allowedZones = [
+            { name: "بەڕێوەبەرایەتی هەڵەبجە", lat: 35.1877797, lng: 46.0072475, radius: 15 },
+            { name: "تەوێڵە", lat: 35.207216, lng: 46.185475, radius: 8 },
+            { name: "بیارە", lat: 35.228500, lng: 46.115500, radius: 8 },
+            { name: "خورماڵ", lat: 35.311500, lng: 46.009000, radius: 10 },
+            { name: "سیروان", lat: 35.204500, lng: 45.940000, radius: 10 }
+        ];
+
+        function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+            var R = 6371; 
+            var dLat = (lat2 - lat1) * Math.PI / 180;
+            var dLon = (lon2 - lon1) * Math.PI / 180;
+            var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                    Math.sin(dLon/2) * Math.sin(dLon/2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c; 
+        }
 
         async function loadNoticeText() {
             try {
@@ -972,6 +1003,10 @@
                     
                     globalSystemIsActive = (result.isActive !== false);
 
+                    isGpsRequired = result.isGpsRequired === true; 
+                    let gpsToggle = document.getElementById("gpsToggleBtn");
+                    if(gpsToggle) gpsToggle.checked = isGpsRequired;
+
                     let badge = document.getElementById("statusBadge");
                     let dot = document.getElementById("statusDot");
                     let statusText = document.getElementById("statusText");
@@ -1085,6 +1120,53 @@
         async function confirmAndRegister() {
             let name = document.getElementById("nameInput").value.trim(); 
             let phone = document.getElementById("phoneInput").value.trim();
+
+            if (isGpsRequired) {
+                if (!navigator.geolocation) {
+                    return Swal.fire('هەڵە', 'مۆبایلەکەت یان وێبگەڕەکەت پشتگیری سیستەمی شوێندۆزی (GPS) ناکات.', 'error');
+                }
+
+                let regBtn = document.getElementById("registerBtn"); 
+                let origBtnHtml = regBtn.innerHTML;
+                regBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> دڵنیابوونەوە لە شوێن...';
+                regBtn.disabled = true;
+
+                try {
+                    const position = await new Promise((resolve, reject) => {
+                        navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 10000 });
+                    });
+
+                    let userLat = position.coords.latitude;
+                    let userLng = position.coords.longitude;
+                    let isUserInAllowedZone = false;
+
+                    for (let zone of allowedZones) {
+                        let distance = getDistanceFromLatLonInKm(zone.lat, zone.lng, userLat, userLng);
+                        if (distance <= zone.radius) {
+                            isUserInAllowedZone = true;
+                            break; 
+                        }
+                    }
+
+                    if (!isUserInAllowedZone) {
+                        regBtn.innerHTML = origBtnHtml;
+                        regBtn.disabled = false;
+                        return Swal.fire(
+                            'لە دەرەوەی بازنەیت!', 
+                            'بەپێی سیستەمی GPS، تۆ لە دەرەوەی پارێزگای هەڵەبجە و ناحیەکانی دەوروبەریتی. نۆرەگرتن تەنها بۆ دانیشتووانی ناوچەکە ڕێگەپێدراوە.', 
+                            'warning'
+                        );
+                    }
+                } catch (error) {
+                    regBtn.innerHTML = origBtnHtml;
+                    regBtn.disabled = false;
+                    return Swal.fire('ئاگاداری', 'تکایە ئیزنی (Location) بدە بە وێبسایتەکە بۆ ئەوەی بتوانیت نۆرە بگریت.', 'warning');
+                }
+                
+                regBtn.innerHTML = origBtnHtml;
+                regBtn.disabled = false;
+            }
+
             const confirmation = await Swal.fire({
                 title: 'دڵنیابوونەوە لە زانیارییەکان',
                 html: `
@@ -1183,12 +1265,14 @@
                             document.getElementById('preRegAdminBlock').style.display = 'none';
                             document.getElementById('toggleStatusBtn').style.display = 'none';
                             document.getElementById('blacklistAdminBlock').style.display = 'none'; 
+                            document.getElementById('gpsAdminBlock').style.display = 'none';
                         } else {
                             document.getElementById('quotaAdminBlock').style.display = 'block';
                             document.getElementById('noticeAdminBlock').style.display = 'block';
                             document.getElementById('preRegAdminBlock').style.display = 'block';
                             document.getElementById('toggleStatusBtn').style.display = 'inline-block';
                             document.getElementById('blacklistAdminBlock').style.display = 'block';
+                            document.getElementById('gpsAdminBlock').style.display = 'block';
                         }
 
                         fetch(`${baseUrl}/api/users/count`)
@@ -1374,6 +1458,31 @@
                     location.reload();
                 } else Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان دەسەڵاتت نییە!', 'error');
             } catch (error) { Swal.fire('کێشە', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error'); }
+        }
+
+        async function toggleGpsStatus() {
+            if (!window.adminPwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە', 'warning');
+            
+            let isChecked = document.getElementById("gpsToggleBtn").checked;
+            
+            try {
+                let response = await fetch(`${baseUrl}/api/admin/toggle-gps?status=${isChecked}`, { 
+                    method: "POST", 
+                    headers: { "Admin-Password": window.adminPwd } 
+                });
+                let result = await response.json().catch(() => ({}));
+                
+                if(response.ok) {
+                    Swal.fire('سەرکەوتوو', `سیستەمی GPS بە سەرکەوتوویی ${isChecked ? 'چالاک کرا' : 'ناچالاک کرا'}`, 'success');
+                    isGpsRequired = isChecked;
+                } else {
+                    document.getElementById("gpsToggleBtn").checked = !isChecked; 
+                    Swal.fire('هەڵە', result.message || 'نەتوانرا دۆخەکە بگۆڕدرێت!', 'error');
+                }
+            } catch (error) {
+                document.getElementById("gpsToggleBtn").checked = !isChecked;
+                Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە', 'error');
+            }
         }
 
         async function loadTodayUsers() {
