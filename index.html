@@ -17,6 +17,10 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- زیادکردنی کتێبخانەکانی فایەربەیس -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 
     <style>
         @font-face {
@@ -136,34 +140,41 @@
 
         body { font-family: 'Rudaw', Tahoma, Arial, sans-serif; background-color: var(--bg-body); color: var(--text-main); padding: 15px 10px 0 10px; margin: 0; text-align: center; transition: background-color 0.4s, color 0.4s; display: flex; flex-direction: column; align-items: center; min-height: 100vh; user-select: none; }
         .main-content { flex: 1; width: 100%; max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
-        #portalSection, #queueSection, #fineSection { width: 100%; }
+        #portalSection, #queueSection, #fineSection, #quizSection { width: 100%; }
         #queueSection #adminSection { max-width: 700px; width: 100%; margin: 0 auto; }
-        .header-title { position: relative; background: var(--header-bg); padding: 15px 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin: 10px auto 15px auto; border-bottom: 4px solid #0056b3; transition: 0.3s; width: 100%; display: flex; align-items: center; justify-content: center; }
+        .header-title { position: relative; background: var(--header-bg); padding: 12px 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin: 5px auto 12px auto; border-bottom: 4px solid #0056b3; transition: 0.3s; width: 100%; display: flex; align-items: center; justify-content: center; }
         body.dark-mode .header-title { border-bottom-color: #4da3ff; }
-        .header-title h1 { color: var(--header-text); font-size: 17px; margin: 0; font-weight: bold; text-align: center; }
+        .header-title h1 { color: var(--header-text); font-size: 16px; margin: 0; font-weight: bold; text-align: center; }
         .header-title h1 a { color: inherit; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; }
         .header-title h1 a:hover { opacity: 0.8; }
-        .theme-toggle-btn { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); background: transparent; border: none; font-size: 22px; cursor: pointer; padding: 0; margin: 0; transition: transform 0.2s; z-index: 10; }
+        .theme-toggle-btn { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); background: transparent; border: none; font-size: 20px; cursor: pointer; padding: 0; margin: 0; transition: transform 0.2s; z-index: 10; }
         .theme-toggle-btn:hover { transform: translateY(-50%) scale(1.1); }
         .visitor-counter { text-align: center; font-size: 12px; color: var(--label-color); margin-bottom: 8px; font-weight: bold; }
         .visitor-counter b { color: var(--text-main); }
-        .notice-slider-box { background: var(--bg-container); border: 2px solid #0056b3; border-radius: 12px; padding: 12px 15px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,86,179,0.08); text-align: center; width: 100%; overflow: hidden; position: relative; }
+        
+        /* چاکسازی بەرزی بۆکسی ئاگادارییەکان */
+        .notice-slider-box { background: var(--bg-container); border: 2px solid #0056b3; border-radius: 12px; padding: 10px 15px; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,86,179,0.08); text-align: center; width: 100%; overflow: hidden; position: relative; }
         body.dark-mode .notice-slider-box { border-color: #4da3ff; }
-        .notice-header-row { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: bold; color: #0056b3; margin-bottom: 8px; border-bottom: 1px dashed var(--border-container); padding-bottom: 6px; }
+        .notice-header-row { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: bold; color: #0056b3; margin-bottom: 6px; border-bottom: 1px dashed var(--border-container); padding-bottom: 4px; }
         body.dark-mode .notice-header-row { color: #4da3ff; }
-        .notice-scroll-container.horizontal { width: 100%; height: 30px; display: flex; align-items: center; }
+        .notice-scroll-container.horizontal { width: 100%; height: 25px; display: flex; align-items: center; }
         .notice-scroll-container.horizontal marquee { font-size: 12px; color: var(--text-main); font-weight: bold; width: 100%; text-align: center; }
-        .notice-scroll-container.vertical { width: 100%; height: 110px; overflow: hidden; position: relative; text-align: center; }
-        .notice-scroll-container.vertical marquee { font-size: 12px; color: var(--text-main); line-height: 1.8; white-space: pre-line; text-align: center; width: 100%; height: 100%; }
-        .portal-cards { display: flex; flex-direction: column; gap: 12px; width: 100%; align-items: center; }
-        .portal-card { position: relative; background: var(--header-bg); border: 2px solid var(--border-container); border-radius: 12px; padding: 20px 15px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; width: 100%; max-width: 380px; margin: 0 auto; min-height: 95px; }
+        /* کەمکردنەوەی بەرزی خلیسکانەی ستوونی */
+        .notice-scroll-container.vertical { width: 100%; height: 75px; overflow: hidden; position: relative; text-align: center; }
+        .notice-scroll-container.vertical marquee { font-size: 12px; color: var(--text-main); line-height: 1.6; white-space: pre-line; text-align: center; width: 100%; height: 100%; }
+        
+        .portal-cards { display: flex; flex-direction: column; gap: 10px; width: 100%; align-items: center; }
+        
+        /* چاکسازی بەرزی و پادینگی کاردەکان */
+        .portal-card { position: relative; background: var(--header-bg); border: 2px solid var(--border-container); border-radius: 12px; padding: 12px 15px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; width: 100%; max-width: 380px; margin: 0 auto; min-height: 75px; }
         .portal-card:hover { transform: translateY(-4px); border-color: #0056b3; box-shadow: 0 8px 20px rgba(0,86,179,0.15); }
         body.dark-mode .portal-card:hover { border-color: #4da3ff; box-shadow: 0 8px 20px rgba(77,163,255,0.15); }
-        .portal-card i { position: absolute; right: 20px; font-size: 32px; color: #0056b3; }
+        .portal-card i { position: absolute; right: 20px; font-size: 30px; color: #0056b3; }
         body.dark-mode .portal-card i { color: #4da3ff; }
         .portal-card-content { text-align: center; width: 100%; padding: 0 35px; }
-        .portal-card-content h3 { margin: 0 0 6px 0; font-size: 15px; color: var(--text-main); font-weight: bold; }
+        .portal-card-content h3 { margin: 0 0 4px 0; font-size: 14px; color: var(--text-main); font-weight: bold; }
         .portal-card-content p { margin: 0; font-size: 11px; color: var(--label-color); }
+        
         .back-btn { background: #007bff; color: white; border: none; padding: 12px 15px; border-radius: 10px; font-family: 'Rudaw', Tahoma, sans-serif; font-size: 13.5px; font-weight: bold; cursor: pointer; margin-bottom: 15px; width: 100%; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2); display: flex; align-items: center; justify-content: center; gap: 8px; }
         .back-btn:hover { background: #0056b3; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0, 86, 179, 0.3); }
         .status-badge { display: inline-flex; align-items: center; gap: 8px; margin: 0 auto 12px auto; padding: 6px 14px; font-size: 12px; font-weight: bold; border-radius: 20px; width: fit-content; text-align: center; }
@@ -269,6 +280,19 @@
         body.dark-mode .submit-rating-btn { background: #4da3ff; color: #121212; }
         .rating-thanks { display: none; color: #28a745; font-size: 13.5px; font-weight: bold; margin-top: 10px; }
         .admin-feedbacks-container { display: none; margin-top: 15px; text-align: right; background: var(--info-bg); padding: 12px; border-radius: 8px; border: 1px solid var(--border-container); }
+
+        /* ستايلی تایبەت بە بەشی تاقیکردنەوەی هاتووچۆ */
+        .quiz-container { background: var(--bg-container); border: 2px solid var(--border-container); border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: right; margin-bottom: 20px; }
+        body.dark-mode .quiz-container { border-color: #334155; }
+        .quiz-header { font-size: 15px; font-weight: bold; color: var(--header-text); text-align: center; margin-bottom: 15px; border-bottom: 1px dashed var(--border-container); padding-bottom: 10px; }
+        .quiz-question-text { font-size: 14px; font-weight: bold; color: var(--text-main); margin-bottom: 15px; line-height: 1.6; }
+        .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+        .quiz-btn { background: var(--input-bg); color: var(--input-text); border: 2px solid var(--input-border); border-radius: 8px; padding: 12px; font-family: 'Rudaw', Tahoma, sans-serif; font-size: 13px; font-weight: bold; cursor: pointer; text-align: right; transition: 0.2s; }
+        .quiz-btn:hover { border-color: #0056b3; background: var(--info-bg); }
+        body.dark-mode .quiz-btn:hover { border-color: #4da3ff; }
+        .quiz-btn.correct { background: #d4edda !important; border-color: #28a745 !important; color: #155724 !important; }
+        .quiz-btn.wrong { background: #f8d7da !important; border-color: #dc3545 !important; color: #721c24 !important; }
+        .quiz-progress { font-size: 12px; color: var(--label-color); text-align: center; margin-top: 15px; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -311,6 +335,34 @@
                         <h3>هەژمارکردنی غەرامە</h3>
                         <p>بزانە مۆڵەتەکەت چەند غەرامەی هەیە</p>
                     </div>
+                </div>
+                <!-- بەشی نوێی تاقیکردنەوەی هاتووچۆ -->
+                <div class="portal-card" onclick="openSection('quiz')">
+                    <i class="fa-solid fa-traffic-light"></i>
+                    <div class="portal-card-content">
+                        <h3>تاقیکردنەوەی هێماکانی هاتووچۆ</h3>
+                        <p>خۆت تاقی بکەرەوە لە ڕێنماییە نوێیەکان</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- بەشی یارییەکە کە شاردراوەتەوە تا کاتی کرتەکردن -->
+        <div id="quizSection" style="display: none;">
+            <button class="back-btn" onclick="openSection('portal')"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە بۆ سەرەتا</button>
+            <div class="quiz-container">
+                <div class="quiz-header" id="quizHeaderTitle">تاقیکردنەوەی هاتووچۆ 🚦</div>
+                <div id="quizPlayArea">
+                    <div class="quiz-question-text" id="quizQText">چاوەڕێ بکە...</div>
+                    <div class="quiz-options" id="quizOptionsDiv"></div>
+                    <div class="quiz-progress" id="quizProgressText">پرسیاری 0 لە 10</div>
+                </div>
+                <div id="quizResultArea" style="display: none; text-align: center;">
+                    <i class="fa-solid fa-award" style="font-size: 50px; color: #ffc107; margin-bottom: 15px;"></i>
+                    <h3 style="color: var(--text-main); margin-bottom: 10px;">ئەنجامەکەت</h3>
+                    <p id="quizScoreText" style="font-size: 18px; font-weight: bold; color: #28a745; margin-bottom: 20px;">0 / 10</p>
+                    <p id="quizFeedbackText" style="font-size: 14px; color: var(--text-main); margin-bottom: 20px; line-height: 1.6;"></p>
+                    <button class="action-btn" onclick="initQuiz()"><i class="fa-solid fa-rotate-right"></i> دووبارەکردنەوە</button>
                 </div>
             </div>
         </div>
@@ -693,6 +745,7 @@
             document.getElementById('portalSection').style.display = 'none';
             document.getElementById('queueSection').style.display = 'none';
             document.getElementById('fineSection').style.display = 'none';
+            document.getElementById('quizSection').style.display = 'none';
 
             if(section === 'portal') {
                 document.getElementById('portalSection').style.display = 'block';
@@ -702,7 +755,13 @@
                 document.getElementById('queueSection').style.display = 'block';
                 checkQuotaAndTimer(); checkSavedTicket();
             }
-            else if(section === 'fine') document.getElementById('fineSection').style.display = 'block';
+            else if(section === 'fine') {
+                document.getElementById('fineSection').style.display = 'block';
+            }
+            else if(section === 'quiz') {
+                document.getElementById('quizSection').style.display = 'block';
+                initQuiz();
+            }
         }
 
         let currentTheme = localStorage.getItem("theme");
@@ -1117,6 +1176,37 @@
             }, 1000);
         }
 
+        // دروستکردنی پەنجەمۆری ئەلیکترۆنی بۆ مۆبایلەکە (Device Fingerprint)
+        async function getDeviceFingerprint() {
+            return new Promise((resolve) => {
+                try {
+                    let canvas = document.createElement('canvas');
+                    let ctx = canvas.getContext('2d');
+                    ctx.textBaseline = "top";
+                    ctx.font = "14px 'Arial'";
+                    ctx.fillStyle = "#f60";
+                    ctx.fillRect(125, 1, 62, 20);
+                    ctx.fillStyle = "#069";
+                    ctx.fillText("HalabjaTraffic_" + navigator.userAgent.length, 2, 15);
+                    ctx.fillStyle = "rgba(102, 204, 0, 0.7)";
+                    ctx.fillText("HalabjaTraffic", 4, 17);
+                    
+                    let dataUrl = canvas.toDataURL();
+                    let hash = 0;
+                    for (let i = 0; i < dataUrl.length; i++) {
+                        let char = dataUrl.charCodeAt(i);
+                        hash = ((hash << 5) - hash) + char;
+                        hash = hash & hash;
+                    }
+                    
+                    let screenInfo = screen.width + "x" + screen.height + "_" + navigator.hardwareConcurrency;
+                    resolve(hash.toString() + "_" + screenInfo);
+                } catch (e) {
+                    resolve("unknown_device_" + Math.random());
+                }
+            });
+        }
+
         async function confirmAndRegister() {
             let name = document.getElementById("nameInput").value.trim(); 
             let phone = document.getElementById("phoneInput").value.trim();
@@ -1193,8 +1283,18 @@
                 document.getElementById("nameInput").value = finalName; document.getElementById("phoneInput").value = finalPhone;
                 let regBtn = document.getElementById("registerBtn"); let orig = regBtn.innerHTML;
                 regBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; regBtn.disabled = true;
+                
                 try {
-                    let response = await fetch(apiUrl, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name: finalName, phone: finalPhone }) });
+                    let deviceFp = await getDeviceFingerprint();
+                    let response = await fetch(apiUrl, { 
+                        method: "POST", 
+                        headers: { 
+                            "Content-Type": "application/json",
+                            "X-Device-Id": deviceFp 
+                        }, 
+                        body: JSON.stringify({ name: finalName, phone: finalPhone }) 
+                    });
+                    
                     let result = await response.json().catch(() => ({}));
                     if(response.ok && result.ticket) {
                         let todayDateStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
@@ -1773,6 +1873,120 @@
             installAppContainer.style.display = 'none';
             Swal.fire('پیرۆزە!', 'ئەپەکە بە سەرکەوتوویی دابەزییە سەر مۆبایلەکەت.', 'success');
         });
+
+        // ----------------- یاری زانیارییەکانی هاتووچۆ -----------------
+        const allTrafficQuestions = [
+            { q: "هێڵی بەردەوام (موتەسিল) چی دەگەیەنێت؟", options: ["پەڕینەوە و پێشپەڕین قەدەغەیە", "بۆ جوانی کێشراوە", "خێرایی دیاری دەکات", "ڕێگەپێدراوە بۆ پێشپەڕین"], answer: 0 },
+            { q: "کامێرای خاڵ بۆ خاڵ (پۆینت تو پۆینت) چۆن کار دەکات؟", options: ["تێکڕای خێرایی نێوان دوو کامێرا هەژمار دەکات", "تەنها لە شەو کار دەکات", "تەنها خێرایی یەک خاڵ دەپێوێت", "وێنەی سەرنشین دەگرێت"], answer: 0 },
+            { q: "هێمای سێگۆشەی سوور بە گشتی مانای چییە؟", options: ["ئاگادارکردنەوە و مەترسی", "فەرمانکردن", "ڕێگەپێدان", "زانیاری"], answer: 0 },
+            { q: "هێمای بازنەی سوور مانای چییە؟", options: ["قەدەغەکردن یان ڕێگریکردن", "شوێنی حەسانەوە", "ئاگادارکردنەوە", "ناچارکردن"], answer: 0 },
+            { q: "هێمای بازنەی شین مانای چییە؟", options: ["ناچارکردن یان فەرمانکردن", "قەدەغەکردن", "مەترسی", "تەنها بۆ جوانی"], answer: 0 },
+            { q: "ئەگەر لە ترافیک لایت گلۆپی زەرد پێبوو چی دەکەیت؟", options: ["ئامادە دەبم بۆ وەستان پێش هێڵی پەڕینەوە", "خێرایی زیاد دەکەم", "لای چەپ دەگرم", "هۆڕن لێدەدەم"], answer: 0 },
+            { q: "لە چوارڕیانێک کە هیچ هێمایەکی تێدا نییە، مافی پێشینە بۆ کێیە؟", options: ["بۆ ئەو ئۆتۆمبێلەی لە لای ڕاستەوە دێت", "بۆ ئەو ئۆتۆمبێلەی خێرایە", "بۆ بارهەڵگر", "بۆ ئەو ئۆتۆمبێلەی لە لای چەپەوە دێت"], answer: 0 },
+            { q: "بەکارهێنانی مۆبایل لە کاتی شۆفێریدا؟", options: ["بە هەموو شێوەیەک قەدەغەیە", "ڕێگەپێدراوە تەنها بۆ نامە", "لە کاتی قەرەباڵغی دەبێت", "تەنها بۆ دەنگ دەبێت"], answer: 0 },
+            { q: "لە کاتی بارانباریندا، دەبێت مەودای سەلامەتی نێوان تۆ و ئۆتۆمبێلی پێشەوەت چۆن بێت؟", options: ["دەبێت زیاتر بێت و دوری زیاتر جێبهێڵیت", "وەک خۆی بێت", "دەبێت کەمتر بێت", "پێویست بە جێهێشتنی مەودا ناکات"], answer: 0 },
+            { q: "کێبڵی ڕاکێشان لە نێوان دوو ئۆتۆمبێل دەبێت چەند بێت؟", options: ["٣ بۆ ٥ مەتر", "١٠ مەتر", "١ مەتر", "٨ مەتر"], answer: 0 },
+            { q: "هێمای (P) کە هێڵێکی سووری بەسەردا هاتبێت بە مانای چییە؟", options: ["وەستان قەدەغەیە", "پارکینگ ڕێگەپێدراوە", "شوێنی پەڕینەوەی پیادە", "ڕێگای خێرا"], answer: 0 },
+            { q: "لە کاتی نزیکبوونەوە لە قوتابخانە یان نەخۆشخانە؟", options: ["خێرایی زۆر کەم دەکرێتەوە و هۆڕن لێدان قەدەغەیە", "ئاساییە هۆڕن لێبدەیت", "دەبێت خێرایی زیاد بکەیت", "لایت لێدان قەدەغەیە"], answer: 0 },
+            { q: "هێڵی زەردی کەناری شەقام مانای چییە؟", options: ["وەستانی کاتی و هەمیشەیی قەدەغەیە", "ڕێگەپێدراوە بۆ چاوەڕوانی", "شوێنی پاسە", "تەنها بۆ بارهەڵگرە"], answer: 0 },
+            { q: "ئەگەر ئۆتۆمبێلی فریاکەوتن (ئەمبوڵانس) لە دواتەوە بوو؟", options: ["ڕێڕەوی بۆ چۆڵ دەکەم بەرەو لای ڕاست", "خێرایی زیاد دەکەم و لە پێشی دەڕۆم", "هەر لە شوێنی خۆم دەمێنمەوە", "هۆڕنی بۆ لێدەدەم"], answer: 0 },
+            { q: "خێرایی ڕێگەپێدراو لەناو بازاڕ و سەنتەری شارەکاندا بەبێ بوونی تابلۆ چەندە؟", options: ["٤٠ بۆ ٥٠ کم/کاتژمێر", "٨٠ کم/کاتژمێر", "١٠٠ کم/کاتژمێر", "بێ سنوورە"], answer: 0 },
+            { q: "پێشپەڕین (تەجاووزکردن) بەپێی یاسا لە کام لایە دەکرێت؟", options: ["تەنها لە لای چەپەوە", "لە لای ڕاستەوە", "لە هەردوو لاوە ڕێگەپێدراوە", "لە شانی ڕێگاکەوە"], answer: 0 },
+            { q: "لێدانی هۆڕن لە ناوەندی شار بە شێوەیەکی گشتی؟", options: ["قەدەغەیە تەنها بۆ حاڵەتی مەترسی و زۆر پێویست نەبێت", "بۆ سڵاوکردن ئاساییە", "ڕێگەپێدراوە لە هەموو کاتێکدا", "تەنها لە شەواندا دەبێت"], answer: 0 },
+            { q: "ئایا سەرنشینی تەنیشت شۆفێر پێویستە قایشی سەلامەتی ببەستێت؟", options: ["بەڵێ، پێویستە وەک شۆفێرەکە", "نەخێر تەنها بۆ شۆفێرە", "لە ناو شار پێویست ناکات", "بە ئارەزوومەندانەیە"], answer: 0 },
+            { q: "ئەگەر لە ناو بازنە (فەلەکە) بوویت، مافی پێشینە بۆ کێیە؟", options: ["بۆ ئەو کەسەی لە ناو بازنەکەدایە", "بۆ ئەو کەسەی دێتە ناو بازنەکە", "بۆ ئۆتۆمبێلی گەورەتر", "بۆ ئەو کەسەی خێرایە"], answer: 0 },
+            { q: "چوونە ناو یەکتربڕ (چوارڕیان) کاتێک قەرەباڵغیە و ڕێگاکە گیراوە؟", options: ["قەدەغەیە بچیتە ناوی تا ڕێگاکە چۆڵ نەبێت تەنانەت ئەگەر گلۆپ سەوزیش بێت", "ئاساییە ئەگەر گلۆپ سەوز بێت", "دەتوانیت بچیتە ناوی ئەگەر هۆڕن لێبدەیت", "دەبێت بە خێرایی لای ڕاست بگریت"], answer: 0 }
+        ];
+
+        let selectedQuestions = [];
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+
+        function shuffleArray(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        function initQuiz() {
+            let shuffled = shuffleArray([...allTrafficQuestions]);
+            selectedQuestions = shuffled.slice(0, 10); // هەڵبژاردنی تەنها 10 پرسیار بە هەڕەمەکی
+            
+            // شاردنەوەی ڕیزبەندییەکان و هێنانە پێشەوەی هەر هەڵبژاردەیەک بۆ ئەوەی وەڵامی ڕاست هەمیشە یەکەم نەبێت
+            selectedQuestions = selectedQuestions.map(q => {
+                let optionsWithIndex = q.options.map((opt, i) => ({text: opt, isCorrect: i === q.answer}));
+                let shuffledOptions = shuffleArray(optionsWithIndex);
+                let newCorrectIndex = shuffledOptions.findIndex(o => o.isCorrect);
+                return { q: q.q, options: shuffledOptions.map(o => o.text), answer: newCorrectIndex };
+            });
+
+            currentQuizIndex = 0;
+            quizScore = 0;
+            document.getElementById("quizResultArea").style.display = "none";
+            document.getElementById("quizPlayArea").style.display = "block";
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (currentQuizIndex >= selectedQuestions.length) {
+                showQuizResults();
+                return;
+            }
+            
+            document.getElementById("quizProgressText").innerText = `پرسیاری ${currentQuizIndex + 1} لە 10`;
+            
+            let qData = selectedQuestions[currentQuizIndex];
+            document.getElementById("quizQText").innerText = qData.q;
+            
+            let optionsHtml = "";
+            qData.options.forEach((opt, idx) => {
+                optionsHtml += `<button class="quiz-btn" onclick="checkQuizAnswer(${idx}, this)">${opt}</button>`;
+            });
+            document.getElementById("quizOptionsDiv").innerHTML = optionsHtml;
+        }
+
+        function checkQuizAnswer(selectedIndex, btnElement) {
+            let correctIndex = selectedQuestions[currentQuizIndex].answer;
+            let allBtns = document.getElementById("quizOptionsDiv").getElementsByTagName("button");
+            
+            for(let i=0; i<allBtns.length; i++) {
+                allBtns[i].style.pointerEvents = "none";
+            }
+
+            if (selectedIndex === correctIndex) {
+                btnElement.classList.add("correct");
+                quizScore++;
+                vibrate(20);
+            } else {
+                btnElement.classList.add("wrong");
+                allBtns[correctIndex].classList.add("correct");
+                vibrate([20, 50, 20]);
+            }
+
+            setTimeout(() => {
+                currentQuizIndex++;
+                loadQuestion();
+            }, 1500);
+        }
+
+        function showQuizResults() {
+            document.getElementById("quizPlayArea").style.display = "none";
+            document.getElementById("quizResultArea").style.display = "block";
+            
+            document.getElementById("quizScoreText").innerText = `${quizScore} / 10`;
+            
+            let message = "";
+            if(quizScore === 10) message = "ئافەرین! تۆ شۆفێرێکی زۆر نموونەییت 🏆";
+            else if(quizScore >= 7) message = "زۆر باشە! زانیارییەکانت باشن 👍";
+            else if(quizScore >= 5) message = "مامناوەندە، پێویستە زیاتر ئاگاداری ڕێنماییەکان بیت 🤔";
+            else message = "پێویستە زیاتر هێماکانی هاتووچۆ بخوێنیتەوە 😅";
+            
+            document.getElementById("quizFeedbackText").innerText = message;
+        }
     </script>
 </body>
 </html>
