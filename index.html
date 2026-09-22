@@ -535,7 +535,7 @@
     <!-- شاشەی پێشوازی (Splash Screen) -->
     <div id="splash-screen" class="splash-screen no-print">
         <div class="splash-logo">
-            <img src="icon-192.png" alt="Logo">
+            <img src="icon-192.png.png" alt="Logo">
         </div>
         <h2 class="splash-text">به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هه‌ڵه‌بجه‌</h2>
         <div class="splash-loader"></div>
@@ -1032,8 +1032,10 @@
         function navTo(section) {
             vibrate(10);
             
-            // --- سەرەتای کۆدی پشکنینی ئینتەرنێت ---
-            // ئەگەر ئینتەرنێت نەبوو، وە بەکارهێنەر ویستی بچێتە پەڕەی 'queue' یان 'portal' کە پێویستیان بە ئینتەرنێتە
+            // سەرەتا پەڕەکە بکەرەوە با بەکارهێنەر بیبینێت
+            openSection(section);
+            
+            // پاشان ئەگەر ئینتەرنێت نەبوو، ئاگادارکردنەوەکەی پێ بدە
             if (!navigator.onLine && (section === 'queue' || section === 'portal')) {
                  Swal.fire({
                     icon: 'warning',
@@ -1042,12 +1044,7 @@
                     confirmButtonText: 'باشە',
                     confirmButtonColor: '#dc3545'
                 });
-                return; // ڕێگە مەدە بڕواتە ئەو پەڕەیە
             }
-            // پەڕەی 'fine' یان هەر شتێکی تر ڕێگەپێدراوە ئەگەر ئینتەرنێتیش نەبێت
-            // --- کۆتایی کۆدی پشکنینی ئینتەرنێت ---
-
-            openSection(section);
         }
 
         function openSection(section) {
