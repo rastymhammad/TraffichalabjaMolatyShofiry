@@ -1031,6 +1031,22 @@
 
         function navTo(section) {
             vibrate(10);
+            
+            // --- سەرەتای کۆدی پشکنینی ئینتەرنێت ---
+            // ئەگەر ئینتەرنێت نەبوو، وە بەکارهێنەر ویستی بچێتە پەڕەی 'queue' یان 'portal' کە پێویستیان بە ئینتەرنێتە
+            if (!navigator.onLine && (section === 'queue' || section === 'portal')) {
+                 Swal.fire({
+                    icon: 'warning',
+                    title: 'هێڵی ئینتەرنێتت پچڕاوە!',
+                    text: 'تکایە دڵنیابە لەوەی مۆبایلەکەت ئینتەرنێتی هەیە بۆ ئەوەی بتوانیت نۆرە بگریت.',
+                    confirmButtonText: 'باشە',
+                    confirmButtonColor: '#dc3545'
+                });
+                return; // ڕێگە مەدە بڕواتە ئەو پەڕەیە
+            }
+            // پەڕەی 'fine' یان هەر شتێکی تر ڕێگەپێدراوە ئەگەر ئینتەرنێتیش نەبێت
+            // --- کۆتایی کۆدی پشکنینی ئینتەرنێت ---
+
             openSection(section);
         }
 
@@ -1501,6 +1517,12 @@
         }
 
         async function confirmAndRegister() {
+            // --- سەرەتای پشکنین ---
+            if (!navigator.onLine) {
+                 return Swal.fire('کێشەی هێڵ', 'مۆبایلەکەت هێڵی ئینتەرنێتی نییە، تکایە ئینتەرنێت بکەرەوە!', 'error');
+            }
+            // --- کۆتایی پشکنین ---
+
             let name = document.getElementById("nameInput").value.trim(); 
             let phone = document.getElementById("phoneInput").value.trim();
 
@@ -1602,6 +1624,12 @@
         }
 
         async function searchUser() {
+            // --- سەرەتای پشکنین ---
+            if (!navigator.onLine) {
+                 return Swal.fire('کێشەی هێڵ', 'مۆبایلەکەت هێڵی ئینتەرنێتی نییە!', 'error');
+            }
+            // --- کۆتایی پشکنین ---
+
             let searchPhone = document.getElementById("searchInput").value.trim();
             if(searchPhone === "") return;
             try {
