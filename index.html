@@ -11,7 +11,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە">
-    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png.png">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -977,31 +977,52 @@
         }
 
         async function loadNoticeText() {
+            let wrapper = document.getElementById('noticeScrollWrapper');
+            let noticeElement = document.getElementById('noticeTextContainer');
+            
+            // سەرەتا، ئەگەر پێشتر ئاگادارییەکی خەزنکراو هەبێت لە مۆبایلەکەیدا، ئەوە پیشان دەدەین
+            let savedNotice = localStorage.getItem("saved_notice_text");
+            if (savedNotice && wrapper && noticeElement) {
+                applyNoticeToUI(savedNotice, wrapper);
+            }
+
             try {
+                // ئێستا هەوڵدەدەین لە سێرڤەرەوە نوێترین ئاگاداری بهێنین
                 let res = await fetch(`${baseUrl}/api/notice`);
                 if(res.ok) {
                     let data = await res.json();
                     let text = data.notice || "";
-                    let wrapper = document.getElementById('noticeScrollWrapper');
+                    
+                    // ئاگادارییە نوێیەکە سەیڤ دەکەین بۆ کاتی بێ ئینتەرنێتی
+                    localStorage.setItem("saved_notice_text", text);
                     
                     if(wrapper) {
-                        let marqueeEvents = `onmouseover="if(!this.clickPaused) this.stop();" onmouseout="if(!this.clickPaused) this.start();" onclick="this.clickPaused = !this.clickPaused; if(this.clickPaused) this.stop(); else this.start();"`;
-                        
-                        if (text.includes('\n') || text.length > 100) {
-                            wrapper.className = "notice-scroll-container vertical";
-                            wrapper.innerHTML = `<marquee direction="up" scrollamount="1.5" scrolldelay="90" ${marqueeEvents} style="width:100%; height:100%; text-align: center;">${text.replace(/\n/g, '<br>')}</marquee>`;
-                        } else {
-                            wrapper.className = "notice-scroll-container horizontal";
-                            wrapper.innerHTML = `<marquee direction="right" scrollamount="2" scrolldelay="90" ${marqueeEvents} style="width:100%; text-align: center;">${text}</marquee>`;
-                        }
+                        applyNoticeToUI(text, wrapper);
                     }
 
                     let adminInput = document.getElementById('adminNoticeInput');
                     if(adminInput) adminInput.value = text;
                 }
-            } catch(e) {}
+            } catch(e) {
+                // ئەگەر ئینتەرنێت نەبوو، و هیچ شتێکی خەزنکراویشمان نەبوو
+                if (!savedNotice && noticeElement) {
+                    noticeElement.innerText = "بەهۆی نەبوونی هێڵی ئینتەرنێتەوە ناتوانرێت تێبینییەکان بهێنرێت.";
+                }
+            }
         }
-        loadNoticeText();
+
+        // ئەمە فانکشنێکی یارمەتیدەرە بۆ ئەوەی کۆدەکەمان دووبارە نەبێتەوە
+        function applyNoticeToUI(text, wrapper) {
+            let marqueeEvents = `onmouseover="if(!this.clickPaused) this.stop();" onmouseout="if(!this.clickPaused) this.start();" onclick="this.clickPaused = !this.clickPaused; if(this.clickPaused) this.stop(); else this.start();"`;
+            
+            if (text.includes('\n') || text.length > 100) {
+                wrapper.className = "notice-scroll-container vertical";
+                wrapper.innerHTML = `<marquee direction="up" scrollamount="1.5" scrolldelay="90" ${marqueeEvents} style="width:100%; height:100%; text-align: center;">${text.replace(/\n/g, '<br>')}</marquee>`;
+            } else {
+                wrapper.className = "notice-scroll-container horizontal";
+                wrapper.innerHTML = `<marquee direction="right" scrollamount="2" scrolldelay="90" ${marqueeEvents} style="width:100%; text-align: center;">${text}</marquee>`;
+            }
+        }
 
         async function updateNoticeText() {
             let newText = document.getElementById('adminNoticeInput').value;
@@ -1032,8 +1053,11 @@
         function navTo(section) {
             vibrate(10);
             
-            // ئەگەر ئینتەرنێت نەبوو وە بەکارهێنەر کلیکی لە بەشی 'نۆرەگرتن' کرد
-            if (!navigator.onLine && section === 'queue') {
+            // سەرەتا پەڕەکە بکەرەوە با بەکارهێنەر بیبینێت
+            openSection(section);
+            
+            // پاشان ئەگەر ئینتەرنێت نەبوو، ئاگادارکردنەوەکەی پێ بدە
+            if (!navigator.onLine && (section === 'queue' || section === 'portal')) {
                  Swal.fire({
                     icon: 'warning',
                     title: 'هێڵی ئینتەرنێتت پچڕاوە!',
@@ -1041,10 +1065,7 @@
                     confirmButtonText: 'باشە',
                     confirmButtonColor: '#dc3545'
                 });
-                return; // لێرەدا دەوەستێت و ناچێتە پەڕەی نۆرەگرتن، شاشەکەش سپی نابێت
             }
-
-            openSection(section);
         }
 
         function openSection(section) {
