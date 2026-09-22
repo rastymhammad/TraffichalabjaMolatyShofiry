@@ -249,7 +249,7 @@
         .grid-item { padding: 8px; min-height: 38px; display: flex; align-items: center; justify-content: center; background: var(--grid-bg); border-radius: 6px; font-weight: bold; color: var(--input-text); cursor: pointer; font-size: 13px;}
         .grid-item.selected-item { background: #3182ce !important; color: white !important; }
         footer { background-color: var(--header-bg); color: var(--text-main); text-align: center; padding: 15px; margin-top: 25px; border-radius: 12px 12px 0 0; font-size: 12px; border-top: 1px solid var(--border-container); width: 100%; max-width: 400px; }
-        .dev-name { color: #0056b3; font-weight: bold; margin-top: 5px; }
+        .dev-name { color: #0056b3; font-weight: bold; margin-top: 5px; cursor: pointer; }
         body.dark-mode .dev-name { color: #4da3ff; }
         .social-icons { margin-top: 10px; }
         .social-icons a { color: #0056b3; font-size: 24px; margin: 0 10px; text-decoration: none; display: inline-block; transition: all 0.3s ease; }
@@ -1353,6 +1353,9 @@
                         window.adminRole = resData.role; 
                         Swal.close();
                         window.adminPwd = normalizedPwd; 
+
+                        // کردنەوەی بەشی نۆرەگرتن ڕاستەوخۆ بۆ بینینی ئەدمین
+                        openSection('queue');
 
                         if (window.adminRole === 'admin') {
                             document.getElementById('quotaAdminBlock').style.display = 'none';
