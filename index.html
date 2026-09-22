@@ -535,7 +535,7 @@
     <!-- شاشەی پێشوازی (Splash Screen) -->
     <div id="splash-screen" class="splash-screen no-print">
         <div class="splash-logo">
-            <img src="icon-192.png">
+            <img src="icon-192.png.">
         </div>
         <h2 class="splash-text">به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هه‌ڵه‌بجه‌</h2>
         <div class="splash-loader"></div>
@@ -1032,11 +1032,8 @@
         function navTo(section) {
             vibrate(10);
             
-            // سەرەتا پەڕەکە بکەرەوە با بەکارهێنەر بیبینێت
-            openSection(section);
-            
-            // پاشان ئەگەر ئینتەرنێت نەبوو، ئاگادارکردنەوەکەی پێ بدە
-            if (!navigator.onLine && (section === 'queue' || section === 'portal')) {
+            // ئەگەر ئینتەرنێت نەبوو وە بەکارهێنەر کلیکی لە بەشی 'نۆرەگرتن' کرد
+            if (!navigator.onLine && section === 'queue') {
                  Swal.fire({
                     icon: 'warning',
                     title: 'هێڵی ئینتەرنێتت پچڕاوە!',
@@ -1044,7 +1041,10 @@
                     confirmButtonText: 'باشە',
                     confirmButtonColor: '#dc3545'
                 });
+                return; // لێرەدا دەوەستێت و ناچێتە پەڕەی نۆرەگرتن، شاشەکەش سپی نابێت
             }
+
+            openSection(section);
         }
 
         function openSection(section) {
