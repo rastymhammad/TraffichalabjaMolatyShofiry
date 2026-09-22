@@ -36,9 +36,12 @@
             --text-main: #333;
             --border-container: #e2e8f0;
             --header-bg: white;
+            --header-text: #0056b3;
             --input-bg: white;
             --input-border: #f5c6cb;
             --input-text: #333;
+            --badge-bg: linear-gradient(135deg, #1a365d, #2a4365);
+            --badge-text: white;
             --toggle-bg: #f7fafc;
             --toggle-border: #e2e8f0;
             --slider-bg: #e2e8f0;
@@ -118,8 +121,9 @@
         #ptr-indicator { width: 100%; height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: bold; color: var(--active-color); transition: height 0.2s ease-out; }
         
         .main-content { flex: 1; width: 100%; max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+        #portalSection, #queueSection, #fineSection, #quizSection { width: 100%; }
         
-        .top-info-row { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 0 10px; margin-bottom: 12px; }
+        .top-info-row { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 0 10px; margin-bottom: 12px; margin-top: 10px;}
         .visitor-counter { font-size: 12px; color: var(--label-color); font-weight: bold; }
         .visitor-counter b { color: var(--text-main); }
         
@@ -180,7 +184,7 @@
         .timer-box { background: rgba(220, 53, 69, 0.08); border: 1px dashed #dc3545; padding: 8px 10px; border-radius: 8px; font-size: 13px; color: #d9534f; margin-top: 12px; font-weight: bold; display: none; text-align: center; }
         .timer-box span { font-size: 12px; color: #dc3545; display: inline-block; margin-left: 5px; }
         
-        .table-responsive { width: 100%; overflow-x: auto; margin-top: 15px; }
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 15px; }
         #usersTable { width: 100%; border-collapse: collapse; text-align: center; font-size: 11px; }
         #usersTable th, #usersTable td { white-space: nowrap; padding: 8px; border: 1px solid var(--border-container); color: var(--text-main); }
         #usersTable th { background: var(--active-color); color: white; transition: background 0.3s; }
@@ -272,6 +276,7 @@
         .quiz-btn.wrong { background: #f8d7da !important; border-color: #dc3545 !important; color: #721c24 !important; }
         .quiz-progress { font-size: 12px; color: var(--label-color); text-align: center; margin-top: 15px; font-weight: bold; }
 
+        /* مینیوی خوارەوە (Bottom Navigation) */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; display: flex; justify-content: space-around; padding: 10px 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--border-container); box-shadow: 0 -4px 15px rgba(0,0,0,0.05); z-index: 1000; padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
         body.dark-mode .bottom-nav { background: rgba(30, 30, 30, 0.85); box-shadow: 0 -4px 15px rgba(0,0,0,0.2); border-top-color: #334155; }
         .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--label-color); cursor: pointer; transition: all 0.3s ease; flex: 1; -webkit-tap-highlight-color: transparent; }
@@ -280,6 +285,7 @@
         .nav-item.active { color: var(--active-color); }
         .nav-item.active i { transform: translateY(-3px) scale(1.15); }
 
+        /* بانەری دابەزاندنی ئەپڵیکەیشن */
         .install-banner { position: fixed; top: 0; left: 0; width: 100%; background: var(--active-color); color: white; display: flex; align-items: center; justify-content: space-between; padding: 12px 15px; z-index: 10001; box-shadow: 0 4px 15px rgba(0,0,0,0.2); animation: slideDown 0.5s ease; transition: background 0.3s; }
         @keyframes slideDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
         .install-banner-content { display: flex; align-items: center; gap: 10px; text-align: right; }
@@ -289,17 +295,7 @@
         .install-banner-btns { display: flex; align-items: center; gap: 10px; }
         .install-btn { background: white; color: var(--active-color); border: none; padding: 6px 12px; border-radius: 20px; font-weight: bold; font-family: 'Rudaw', Tahoma; font-size: 11px; cursor: pointer; }
         .install-close { background: transparent; color: white; border: none; font-size: 18px; cursor: pointer; }
-
-        #onboardingOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-body); z-index: 10000; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; }
-        .ob-slide { display: none; animation: slideFade 0.5s ease; flex-direction: column; align-items: center; justify-content: center; width: 100%; max-width: 350px; }
-        .ob-slide.active { display: flex; }
-        .ob-icon { font-size: 70px; color: var(--active-color); margin-bottom: 20px; background: var(--info-bg); width: 130px; height: 130px; line-height: 130px; border-radius: 50%; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .ob-slide h2 { color: var(--text-main); font-size: 20px; margin-bottom: 10px; }
-        .ob-slide p { color: var(--label-color); font-size: 14px; line-height: 1.6; margin-bottom: 30px; }
-        .ob-dots { display: flex; gap: 8px; margin-bottom: 30px; }
-        .ob-dot { width: 10px; height: 10px; background: #ccc; border-radius: 50%; transition: 0.3s; }
-        .ob-dot.active { background: var(--active-color); width: 25px; border-radius: 10px; }
-        .ob-next-btn { background: var(--active-color); color: white; border: none; width: 100%; padding: 14px; border-radius: 10px; font-size: 15px; font-weight: bold; font-family: 'Rudaw', Tahoma; cursor: pointer; max-width: 300px; transition: 0.3s; }
+        
     </style>
 </head>
 <body>
@@ -318,36 +314,12 @@
         </div>
     </div>
 
-    <div id="onboardingOverlay">
-        <div class="ob-slide active" id="ob1">
-            <i class="fa-solid fa-id-card ob-icon"></i>
-            <h2>بەخێربێیت بۆ سیستەمەکەمان</h2>
-            <p>لێرەوە دەتوانیت بە ئاسانترین شێوە و لە ماڵەکەی خۆتەوە نۆرە بگریت بۆ سەردانیکردنی هاتووچۆی هەڵەبجە.</p>
-        </div>
-        <div class="ob-slide" id="ob2">
-            <i class="fa-solid fa-calculator ob-icon"></i>
-            <h2>هەژمارکردنی غەرامە</h2>
-            <p>بەبێ بوونی ئینتەرنێتیش دەتوانیت بڕی غەرامەی بەسەرچوونی مۆڵەتەکەت بژمێریت لە هەر کاتێکدا بێت.</p>
-        </div>
-        <div class="ob-slide" id="ob3">
-            <i class="fa-solid fa-traffic-light ob-icon"></i>
-            <h2>تاقیکردنەوەی شۆفێری</h2>
-            <p>زانیارییەکانت تاقی بکەرەوە بە یارییەکی سەرنجڕاکێش و ئاستی شارەزاییت لە ڕێنماییەکان بزانە.</p>
-        </div>
-        <div class="ob-dots">
-            <span class="ob-dot active" id="dot1"></span>
-            <span class="ob-dot" id="dot2"></span>
-            <span class="ob-dot" id="dot3"></span>
-        </div>
-        <button class="ob-next-btn" id="obNextBtn" onclick="nextOnboarding()">دواتر</button>
-    </div>
-
     <div id="ptr-indicator" class="no-print">
         <i class="fa-solid fa-arrow-down" id="ptr-icon"></i>
         <span id="ptr-text">ڕابکێشە بۆ نوێکردنەوە...</span>
     </div>
 
-    <div class="main-content" id="mainWrapper" style="display: none;">
+    <div class="main-content" id="mainWrapper">
         
         <div class="top-info-row no-print">
             <div class="theme-colors">
@@ -406,10 +378,127 @@
                     </div>
                 </div>
             </div>
+
+            <!-- بەشی ئەدمین لێرە پیشان دەدرێت -->
+            <div class="container printable-area" id="adminSection" style="display: none; margin-top: 20px;">
+                <h2>بەشی ئەدمین - کۆنتڕۆڵی سیستەم</h2>
+
+                <div class="no-print" style="margin-bottom: 15px;">
+                    <h3 style="text-align: right; margin-bottom: 6px; font-size: 13px; color: var(--active-color);">ئاماری ئەمڕۆ</h3>
+                    <div class="dashboard-cards">
+                        <div class="dash-card"><h4>کۆی گشتی</h4><h3 id="statTotal">0</h3></div>
+                        <div class="dash-card"><h4>هاووڵاتیان</h4><h3 id="statUser" style="color: #28a745;">0</h3></div>
+                        <div class="dash-card"><h4> ئەدمین</h4><h3 id="statAdmin" style="color: #dc3545;">0</h3></div>
+                    </div>
+                    <div style="background: var(--bg-container); padding: 6px; border-radius: 8px; border: 1px solid var(--border-container);">
+                        <div class="chart-container"><canvas id="myChart"></canvas></div>
+                    </div>
+                </div>
+
+                <div id="quotaAdminBlock" style="background: rgba(40, 167, 69, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(40, 167, 69, 0.2);" class="no-print">
+                    <h3 style="margin-top: 0; font-size: 14px; color: #28a745;">گۆڕینی ژمارەی پشکی ڕۆژانە <span id="currentQuotaDisplay" style="background: #28a745; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px; margin-right: 5px;">(پشکی ئێستا: ...)</span></h3>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-users"></i>
+                        <input type="number" id="adminQuotaInput" placeholder=" " min="1">
+                        <label>ژمارەی پشک (نموونە: 30)</label>
+                    </div>
+                    <button class="action-btn" style="background: #28a745; padding: 10px;" onclick="updateDailyQuota()">گۆڕینی پشک</button>
+                </div>
+
+                <div id="blacklistAdminBlock" style="background: rgba(220, 53, 69, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(220, 53, 69, 0.2);" class="no-print">
+                    <h3 style="margin-top: 0; font-size: 14px; color: #dc3545;"><i class="fa-solid fa-ban"></i> لیستی ڕەش (Blacklist)</h3>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-phone-slash"></i>
+                        <input type="tel" id="blacklistPhoneInput" placeholder=" " maxlength="11" onkeypress="return onlyEnglishNumbers(event)">
+                        <label>ژمارەی مۆبایل بۆ بلۆککردن...</label>
+                    </div>
+                    <div class="input-wrapper" style="margin-top: 8px;">
+                        <select id="blacklistDuration">
+                            <option value="7">بۆ ماوەی ٧ ڕۆژ</option>
+                            <option value="30">بۆ ماوەی ١ مانگ</option>
+                            <option value="365">بۆ ماوەی ١ ساڵ</option>
+                            <option value="3650">بۆ هەمیشە (١٠ ساڵ)</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; gap: 8px; margin-top: 8px;">
+                        <button class="action-btn" style="background: #dc3545; padding: 10px; flex: 1; margin-top: 0;" onclick="addToBlacklist()">بلۆککردن</button>
+                        <button class="action-btn" style="background: #6c757d; padding: 10px; flex: 1; margin-top: 0;" onclick="viewBlacklist()">لیستی بلۆککراوەکان</button>
+                    </div>
+                </div>
+
+                <div id="noticeAdminBlock" style="background: rgba(23, 162, 184, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(23, 162, 184, 0.2);" class="no-print">
+                    <h3 style="margin-top: 0; font-size: 14px; color: #17a2b8;">گۆڕینی تێبینی و پێداویستییەکان (سلاید)</h3>
+                    <div class="input-wrapper" style="margin-bottom: 0;">
+                        <textarea id="adminNoticeInput" rows="5" placeholder="دەقی ئاگاداری و پێداویستییەکان لێرە بنووسە..."></textarea>
+                    </div>
+                    <button class="action-btn" style="background: #17a2b8; padding: 10px;" onclick="updateNoticeText()">پاشەکەوتکردنی تێبینی</button>
+                </div>
+
+                <div id="preRegAdminBlock" style="background: rgba(0, 86, 179, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(0, 86, 179, 0.2);" class="no-print">
+                    <h3 style="margin-top: 0; font-size: 14px; color: var(--active-color);">ده‌سه‌ڵاتی ئه‌دمین</h3>
+                    <button id="openPreRegBtn" class="action-btn" style="background: var(--active-color); padding: 10px;" onclick="showPreRegForm()">کردنەوەی بەشی تۆمارکردن</button>
+                    
+                    <div id="preRegForm" style="display: none; margin-top: 10px;">
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-user-shield"></i>
+                            <input type="text" id="adminNameInput" placeholder=" " oninput="validateAdminFormInputs()">
+                            <label>ناوی سیانی بنووسە...</label>
+                        </div>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-phone"></i>
+                            <input type="tel" id="adminPhoneInput" placeholder=" " maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false" oninput="validateAdminFormInputs()">
+                            <label>ژمارەی تەلەفۆن (07700000000)...</label>
+                        </div>
+                        <button id="adminRegBtn" class="action-btn" style="background: #28a745; padding: 10px;" onclick="adminRegisterUser()" disabled>تۆمارکردنی پێشوەختە</button>
+                    </div>
+                </div>
+
+                <div id="gpsAdminBlock" style="display: none; background: rgba(253, 126, 20, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(253, 126, 20, 0.2);" class="no-print">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3 style="margin: 0; font-size: 14px; color: #fd7e14;"><i class="fa-solid fa-location-dot"></i> نۆرەگرتن بەپێی شوێن (GPS)</h3>
+                        <label class="switch">
+                            <input type="checkbox" id="gpsToggleBtn" onchange="toggleGpsStatus()">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <p style="margin: 5px 0 0 0; font-size: 11px; color: var(--label-color);">ئەگەر هەڵبکرێت، تەنها دانیشتووانی ناوچەکە دەتوانن نۆرە بگرن.</p>
+                </div>
+
+                <div style="display: flex; gap: 8px; margin-bottom: 10px;" class="no-print">
+                    <button class="action-btn search-btn" onclick="loadTodayUsers()" style="flex: 1; margin-top: 0; padding: 10px;">نیشاندانی لیستی ئەمڕۆ</button>
+                    <button class="action-btn" style="background: #20c997; color: white; width: auto; margin-top: 0; padding: 10px 15px;" onclick="loadTodayUsers()" title="نوێکردنەوەی خشتەکە">🔄</button>
+                </div>
+                
+                <button class="action-btn no-print" style="background: #17a2b8; padding: 10px;" onclick="downloadExcel()">داونلۆدکردنی ئێکسڵ (Excel/CSV)</button>
+                <button id="toggleStatusBtn" class="action-btn no-print" style="background: #ffc107; color: black; padding: 10px;" onclick="toggleSystemStatus()"> ڕاگرتن / کردنەوەی سایت </button>
+                <button class="action-btn no-print" style="background: #8e44ad; color: white; padding: 10px;" onclick="loadFeedbacks()"> بینینی فیدباکەکان </button>
+                <button class="action-btn no-print" style="background: #6c757d; padding: 10px;" onclick="window.print()">چاپکردنی لیست (Print)</button>
+                <button class="action-btn no-print" style="background: #dc3545; margin-top: 5px; padding: 10px;" onclick="hideAdminPanel()">داخستنی بەشی ئەدمین</button>
+                
+                <div class="table-responsive">
+                    <table id="usersTable" style="display: none;">
+                        <thead>
+                            <tr>
+                                <th>ژمارە</th>
+                                <th>ناو</th>
+                                <th>تەلەفۆن</th>
+                                <th>کاتی تۆمارکردن</th>
+                                <th class="no-print">کردار</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody"></tbody>
+                    </table>
+                </div>
+
+                <div id="feedbacksContainer" class="admin-feedbacks-container no-print">
+                    <h3 style="color: #8e44ad; font-size: 14px; margin-bottom: 10px;">فیدباک و هەڵسەنگاندنەکان:</h3>
+                    <div id="feedbacksList"></div>
+                </div>
+            </div>
         </div>
 
         <!-- بەشی نۆرەگرتن -->
-        <div id="queueSection" class="page-section" style="display: none;">
+        <div id="queueSection" class="page-section">
             <div id="statusBadge" class="status-badge status-open no-print">
                 <span id="statusDot" class="dot dot-green"></span>
                 <span id="statusText">دۆخی سیستەم: کراوەیە بۆ تۆمارکردن</span>
@@ -455,12 +544,12 @@
         </div>
 
         <!-- بەشی غەرامە -->
-        <div id="fineSection" class="page-section" style="display: none;">
+        <div id="fineSection" class="page-section">
             <div class="fine-container" id="fine-container-box">
                 <div class="toggle-container">
                     <span id="fine-status-text" style="font-weight: bold; color: #48bb78; font-size: 13px;">✓ داشکاندنی غەرامە (٢٠٪) چالاکە</span>
                     <label class="switch">
-                        <input type="checkbox" id="university-toggle" checked onchange="vibrate(); calculateFine()">
+                        <input type="checkbox" id="university-toggle" checked onchange="calculateFine()">
                         <span class="slider"></span>
                     </label>
                 </div>
@@ -514,7 +603,7 @@
         </div>
 
         <!-- بەشی تاقیکردنەوە -->
-        <div id="quizSection" class="page-section" style="display: none;">
+        <div id="quizSection" class="page-section">
             <div class="quiz-container">
                 <div class="quiz-header" id="quizHeaderTitle">تاقیکردنەوەی هاتووچۆ 🚦</div>
                 <div id="quizPlayArea">
@@ -532,122 +621,6 @@
             </div>
         </div>
 
-        <!-- بەشی ئەدمین (پارێزراو) -->
-        <div class="container printable-area" id="adminSection" style="display: none; margin-top: 20px;">
-            <h2>بەشی ئەدمین - کۆنتڕۆڵی سیستەم</h2>
-
-            <div class="no-print" style="margin-bottom: 15px;">
-                <h3 style="text-align: right; margin-bottom: 6px; font-size: 13px; color: var(--active-color);">ئاماری ئەمڕۆ</h3>
-                <div class="dashboard-cards">
-                    <div class="dash-card"><h4>کۆی گشتی</h4><h3 id="statTotal">0</h3></div>
-                    <div class="dash-card"><h4>هاووڵاتیان</h4><h3 id="statUser" style="color: #28a745;">0</h3></div>
-                    <div class="dash-card"><h4> ئەدمین</h4><h3 id="statAdmin" style="color: #dc3545;">0</h3></div>
-                </div>
-                <div style="background: var(--bg-container); padding: 6px; border-radius: 8px; border: 1px solid var(--border-container);">
-                    <div class="chart-container"><canvas id="myChart"></canvas></div>
-                </div>
-            </div>
-
-            <div id="quotaAdminBlock" style="background: rgba(40, 167, 69, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(40, 167, 69, 0.2);" class="no-print">
-                <h3 style="margin-top: 0; font-size: 14px; color: #28a745;">گۆڕینی ژمارەی پشکی ڕۆژانە <span id="currentQuotaDisplay" style="background: #28a745; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px; margin-right: 5px;">(پشکی ئێستا: ...)</span></h3>
-                <div class="input-wrapper">
-                    <i class="fa-solid fa-users"></i>
-                    <input type="number" id="adminQuotaInput" placeholder=" " min="1">
-                    <label>ژمارەی پشک (نموونە: 30)</label>
-                </div>
-                <button class="action-btn" style="background: #28a745; padding: 10px;" onclick="updateDailyQuota()">گۆڕینی پشک</button>
-            </div>
-
-            <div id="blacklistAdminBlock" style="background: rgba(220, 53, 69, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(220, 53, 69, 0.2);" class="no-print">
-                <h3 style="margin-top: 0; font-size: 14px; color: #dc3545;"><i class="fa-solid fa-ban"></i> لیستی ڕەش (Blacklist)</h3>
-                <div class="input-wrapper">
-                    <i class="fa-solid fa-phone-slash"></i>
-                    <input type="tel" id="blacklistPhoneInput" placeholder=" " maxlength="11" onkeypress="return onlyEnglishNumbers(event)">
-                    <label>ژمارەی مۆبایل بۆ بلۆککردن...</label>
-                </div>
-                <div class="input-wrapper" style="margin-top: 8px;">
-                    <select id="blacklistDuration">
-                        <option value="7">بۆ ماوەی ٧ ڕۆژ</option>
-                        <option value="30">بۆ ماوەی ١ مانگ</option>
-                        <option value="365">بۆ ماوەی ١ ساڵ</option>
-                        <option value="3650">بۆ هەمیشە (١٠ ساڵ)</option>
-                    </select>
-                </div>
-                <div style="display: flex; gap: 8px; margin-top: 8px;">
-                    <button class="action-btn" style="background: #dc3545; padding: 10px; flex: 1; margin-top: 0;" onclick="addToBlacklist()">بلۆککردن</button>
-                    <button class="action-btn" style="background: #6c757d; padding: 10px; flex: 1; margin-top: 0;" onclick="viewBlacklist()">لیستی بلۆککراوەکان</button>
-                </div>
-            </div>
-
-            <div id="noticeAdminBlock" style="background: rgba(23, 162, 184, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(23, 162, 184, 0.2);" class="no-print">
-                <h3 style="margin-top: 0; font-size: 14px; color: #17a2b8;">گۆڕینی تێبینی و پێداویستییەکان</h3>
-                <div class="input-wrapper" style="margin-bottom: 0;">
-                    <textarea id="adminNoticeInput" rows="5" placeholder="دەقی ئاگاداری و پێداویستییەکان لێرە بنووسە..."></textarea>
-                </div>
-                <button class="action-btn" style="background: #17a2b8; padding: 10px;" onclick="updateNoticeText()">پاشەکەوتکردنی تێبینی</button>
-            </div>
-
-            <div id="preRegAdminBlock" style="background: rgba(0, 86, 179, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(0, 86, 179, 0.2);" class="no-print">
-                <h3 style="margin-top: 0; font-size: 14px; color: var(--active-color);">ده‌سه‌ڵاتی ئه‌دمین</h3>
-                <button id="openPreRegBtn" class="action-btn" style="background: var(--active-color); padding: 10px;" onclick="showPreRegForm()">کردنەوەی بەشی تۆمارکردن</button>
-                
-                <div id="preRegForm" style="display: none; margin-top: 10px;">
-                    <div class="input-wrapper">
-                        <i class="fa-solid fa-user-shield"></i>
-                        <input type="text" id="adminNameInput" placeholder=" " oninput="validateAdminFormInputs()">
-                        <label>ناوی سیانی بنووسە...</label>
-                    </div>
-                    <div class="input-wrapper">
-                        <i class="fa-solid fa-phone"></i>
-                        <input type="tel" id="adminPhoneInput" placeholder=" " maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false" oninput="validateAdminFormInputs()">
-                        <label>ژمارەی تەلەفۆن (07700000000)</label>
-                    </div>
-                    <button id="adminRegBtn" class="action-btn" style="background: #28a745; padding: 10px;" onclick="adminRegisterUser()" disabled>تۆمارکردنی پێشوەختە</button>
-                </div>
-            </div>
-
-            <div id="gpsAdminBlock" style="display: none; background: rgba(253, 126, 20, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(253, 126, 20, 0.2);" class="no-print">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h3 style="margin: 0; font-size: 14px; color: #fd7e14;"><i class="fa-solid fa-location-dot"></i> نۆرەگرتن بەپێی شوێن (GPS)</h3>
-                    <label class="switch">
-                        <input type="checkbox" id="gpsToggleBtn" onchange="toggleGpsStatus()">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-                <p style="margin: 5px 0 0 0; font-size: 11px; color: var(--label-color);">ئەگەر هەڵبکرێت، تەنها دانیشتووانی ناوچەکە دەتوانن نۆرە بگرن.</p>
-            </div>
-
-            <div style="display: flex; gap: 8px; margin-bottom: 10px;" class="no-print">
-                <button class="action-btn search-btn" onclick="loadTodayUsers()" style="flex: 1; margin-top: 0; padding: 10px;">نیشاندانی لیستی ئەمڕۆ</button>
-                <button class="action-btn" style="background: #20c997; color: white; width: auto; margin-top: 0; padding: 10px 15px;" onclick="loadTodayUsers()" title="نوێکردنەوەی خشتەکە">🔄</button>
-            </div>
-            
-            <button class="action-btn no-print" style="background: #17a2b8; padding: 10px;" onclick="downloadExcel()">داونلۆدکردنی ئێکسڵ (Excel/CSV)</button>
-            <button id="toggleStatusBtn" class="action-btn no-print" style="background: #ffc107; color: black; padding: 10px;" onclick="toggleSystemStatus()"> ڕاگرتن / کردنەوەی سایت </button>
-            <button class="action-btn no-print" style="background: #8e44ad; color: white; padding: 10px;" onclick="loadFeedbacks()"> بینینی فیدباکەکان </button>
-            <button class="action-btn no-print" style="background: #6c757d; padding: 10px;" onclick="window.print()">چاپکردنی لیست (Print)</button>
-            <button class="action-btn no-print" style="background: #dc3545; margin-top: 5px; padding: 10px;" onclick="hideAdminPanel()">داخستنی بەشی ئەدمین</button>
-            
-            <div class="table-responsive">
-                <table id="usersTable" style="display: none;">
-                    <thead>
-                        <tr>
-                            <th>ژمارە</th>
-                            <th>ناو</th>
-                            <th>تەلەفۆن</th>
-                            <th>کاتی تۆمارکردن</th>
-                            <th class="no-print">کردار</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody"></tbody>
-                </table>
-            </div>
-
-            <div id="feedbacksContainer" class="admin-feedbacks-container no-print">
-                <h3 style="color: #8e44ad; font-size: 14px; margin-bottom: 10px;">فیدباک و هەڵسەنگاندنەکان:</h3>
-                <div id="feedbacksList"></div>
-            </div>
-        </div>
     </div>
 
     <!-- مۆداڵی ڕۆژژمێر -->
@@ -680,9 +653,9 @@
         <div id="ratingThanks" class="rating-thanks"><i class="fa-solid fa-circle-check"></i> زۆر سوپاس بۆ هەڵسەنگاندنەکەت!</div>
     </div>
 
-    <footer id="footerArea" style="display: none;">
+    <footer id="footerArea">
         <p style="margin: 0 0 5px 0;">هەموو مافێکی پارێزراوە بۆ بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە &copy; 2026</p>
-        <p class="dev-name" style="margin: 0;">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووچۆ <span onclick="handleAdminClick()" style="cursor: pointer; user-select: none;">( ڕاستی محمد شێخ حیدر )</span></p>
+        <p class="dev-name" style="margin: 0;" onclick="handleAdminClick()">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووچۆ ( ڕاستی محمد شێخ حیدر )</p>
         <div class="social-icons no-print">
             <a href="https://facebook.com/share/19ChSYyAyM?mibextid=wwXIfr" target="_blank" title="فەیسبووکی گەشەپێدەر">
                 <i class="fa-brands fa-facebook"></i>
@@ -694,7 +667,7 @@
     </footer>
 
     <!-- مینیوی خوارەوە (Bottom Navigation) -->
-    <nav class="bottom-nav no-print" id="bottomNav" style="display: none;">
+    <nav class="bottom-nav no-print" id="bottomNav">
         <div class="nav-item active" onclick="navTo('portal')" id="nav-portal">
             <i class="fa-solid fa-house"></i>
             <span>سەرەتا</span>
@@ -714,76 +687,8 @@
     </nav>
 
     <script>
-        // پرسیارەکانی تاقیکردنەوە
-        const allTrafficQuestions = [
-            { q: "هێڵی بەردەوام (موتەسিল) چی دەگەیەنێت؟", options: ["پەڕینەوە و پێشپەڕین قەدەغەیە", "بۆ جوانی کێشراوە", "خێرایی دیاری دەکات", "ڕێگەپێدراوە بۆ پێشپەڕین"], answer: 0 },
-            { q: "کامێرای خاڵ بۆ خاڵ (پۆینت تو پۆینت) چۆن کار دەکات؟", options: ["تێکڕای خێرایی نێوان دوو کامێرا هەژمار دەکات", "تەنها لە شەو کار دەکات", "تەنها خێرایی یەک خاڵ دەپێوێت", "وێنەی سەرنشین دەگرێت"], answer: 0 },
-            { q: "هێمای سێگۆشەی سوور بە گشتی مانای چییە؟", options: ["ئاگادارکردنەوە و مەترسی", "فەرمانکردن", "ڕێگەپێدان", "زانیاری"], answer: 0 },
-            { q: "هێمای بازنەی سوور مانای چییە؟", options: ["قەدەغەکردن یان ڕێگریکردن", "شوێنی حەسانەوە", "ئاگادارکردنەوە", "ناچارکردن"], answer: 0 },
-            { q: "هێمای بازنەی شین مانای چییە؟", options: ["ناچارکردن یان فەرمانکردن", "قەدەغەکردن", "مەترسی", "تەنها بۆ جوانی"], answer: 0 },
-            { q: "ئەگەر لە ترافیک لایت گلۆپی زەرد پێبوو چی دەکەیت؟", options: ["ئامادە دەبم بۆ وەستان پێش هێڵی پەڕینەوە", "خێرایی زیاد دەکەم", "لای چەپ دەگرم", "هۆڕن لێدەدەم"], answer: 0 },
-            { q: "لە چوارڕیانێک کە هیچ هێمایەکی تێدا نییە، مافی پێشینە بۆ کێیە؟", options: ["بۆ ئەو ئۆتۆمبێلەی لە لای ڕاستەوە دێت", "بۆ ئەو ئۆتۆمبێلەی خێرایە", "بۆ بارهەڵگر", "بۆ ئەو ئۆتۆمبێلەی لە لای چەپەوە دێت"], answer: 0 },
-            { q: "بەکارهێنانی مۆبایل لە کاتی شۆفێریدا؟", options: ["بە هەموو شێوەیەک قەدەغەیە", "ڕێگەپێدراوە تەنها بۆ نامە", "لە کاتی قەرەباڵغی دەبێت", "تەنها بۆ دەنگ دەبێت"], answer: 0 },
-            { q: "لە کاتی بارانباریندا، دەبێت مەودای سەلامەتی نێوان تۆ و ئۆتۆمبێلی پێشەوەت چۆن بێت؟", options: ["دەبێت زیاتر بێت و دوری زیاتر جێبهێڵیت", "وەک خۆی بێت", "دەبێت کەمتر بێت", "پێویست بە جێهێشتنی مەودا ناکات"], answer: 0 },
-            { q: "کێبڵی ڕاکێشان لە نێوان دوو ئۆتۆمبێل دەبێت چەند بێت؟", options: ["٣ بۆ ٥ مەتر", "١٠ مەتر", "١ مەتر", "٨ مەتر"], answer: 0 },
-            { q: "هێمای (P) کە هێڵێکی سووری بەسەردا هاتبێت بە مانای چییە؟", options: ["وەستان قەدەغەیە", "پارکینگ ڕێگەپێدراوە", "شوێنی پەڕینەوەی پیادە", "ڕێگای خێرا"], answer: 0 },
-            { q: "لە کاتی نزیکبوونەوە لە قوتابخانە یان نەخۆشخانە؟", options: ["خێرایی زۆر کەم دەکرێتەوە و هۆڕن لێدان قەدەغەیە", "ئاساییە هۆڕن لێبدەیت", "دەبێت خێرایی زیاد بکەیت", "لایت لێدان قەدەغەیە"], answer: 0 },
-            { q: "هێڵی زەردی کەناری شەقام مانای چییە؟", options: ["وەستانی کاتی و هەمیشەیی قەدەغەیە", "ڕێگەپێدراوە بۆ چاوەڕوانی", "شوێنی پاسە", "تەنها بۆ بارهەڵگرە"], answer: 0 },
-            { q: "ئەگەر ئۆتۆمبێلی فریاکەوتن (ئەمبوڵانس) لە دواتەوە بوو؟", options: ["ڕێڕەوی بۆ چۆڵ دەکەم بەرەو لای ڕاست", "خێرایی زیاد دەکەم و لە پێشی دەڕۆم", "هەر لە شوێنی خۆم دەمێنمەوە", "هۆڕنی بۆ لێدەدەم"], answer: 0 },
-            { q: "خێرایی ڕێگەپێدراو لەناو بازاڕ و سەنتەری شارەکاندا بەبێ بوونی تابلۆ چەندە؟", options: ["٤٠ بۆ ٥٠ کم/کاتژمێر", "٨٠ کم/کاتژمێر", "١٠٠ کم/کاتژمێر", "بێ سنوورە"], answer: 0 },
-            { q: "پێشپەڕین (تەجاووزکردن) بەپێی یاسا لە کام لایە دەکرێت؟", options: ["تەنها لە لای چەپەوە", "لە لای ڕاستەوە", "لە هەردوو لاوە ڕێگەپێدراوە", "لە شانی ڕێگاکەوە"], answer: 0 },
-            { q: "لێدانی هۆڕن لە ناوەندی شار بە شێوەیەکی گشتی؟", options: ["قەدەغەیە تەنها بۆ حاڵەتی مەترسی نەبێت", "بۆ سڵاوکردن ئاساییە", "ڕێگەپێدراوە لە هەموو کاتێکدا", "تەنها لە شەواندا دەبێت"], answer: 0 },
-            { q: "ئایا سەرنشینی تەنیشت شۆفێر پێویستە قایشی سەلامەتی ببەستێت؟", options: ["بەڵێ، پێویستە وەک شۆفێرەکە", "نەخێر تەنها بۆ شۆفێرە", "لە ناو شار پێویست ناکات", "بە ئارەزوومەندانەیە"], answer: 0 },
-            { q: "ئەگەر لە ناو بازنە (فەلەکە) بوویت، مافی پێشینە بۆ کێیە؟", options: ["بۆ ئەو کەسەی لە ناو بازنەکەدایە", "بۆ ئەو کەسەی دێتە ناو بازنەکە", "بۆ ئۆتۆمبێلی گەورەتر", "بۆ ئەو کەسەی خێرایە"], answer: 0 },
-            { q: "چوونە ناو یەکتربڕ کاتێک قەرەباڵغیە و ڕێگاکە گیراوە؟", options: ["قەدەغەیە بچیتە ناوی تەنانەت ئەگەر گلۆپ سەوزیش بێت", "ئاساییە ئەگەر گلۆپ سەوز بێت", "دەتوانیت بچیتە ناوی و هۆڕن لێبدەیت", "دەبێت بە خێرایی لای ڕاست بگریت"], answer: 0 },
-            { q: "هێمای (خێرایی ٦٠) لەناو بازنەیەکی سووردا بە مانای چییە؟", options: ["زۆرترین خێرایی ڕێگەپێدراو ٦٠ یە", "کەمترین خێرایی ٦٠ یە", "خێرایی پێشنیارکراو ٦٠ یە", "ئاساییە لە ٦٠ زیاتر بڕۆیت"], answer: 0 },
-            { q: "لە شەقامی دوو ئاراستە (دوو ساید)، دەبێت لە کام لای شەقامەکە شۆفێری بکەیت؟", options: ["لای ڕاست", "لای چەپ", "ناوەڕاستی شەقام", "هەرلایەک ئارەزوو بکەیت"], answer: 0 },
-            { q: "هێمای سێگۆشە کە سەری بەرەو خوارەوەیە (لەسەر ڕێگا دەبینرێت) مانای چییە؟", options: ["بەخشینی مافی پێشینە (ڕێگە بدە بەوانی تر)", "مەترسی لە پێشە", "قف (بوەستە)", "ڕێگای سەرەکی"], answer: 0 },
-            { q: "منداڵی خوار تەمەن ١٠ ساڵ دەبێت لە کوێ دابنیشێت لەناو ئۆتۆمبێل؟", options: ["لە کوشنی پشتەوە بە بەستنی قایش", "لە باوەشی سەرنشینی پێشەوە", "لە کوشنی پێشەوە", "لە تەنیشت شۆفێر"], answer: 0 },
-            { q: "لە کاتی تەمومژێکی چڕدا پێویستە چ ڕووناکییەک بەکاربهێنیت؟", options: ["ڕووناکی نزم (لۆک) یان لایتی تەمومژ", "ڕووناکی بەرز (فول لایت)", "فلاشەر (چوار ئیشارەت)", "هیچ لایتێک پێویست ناکات"], answer: 0 },
-            { q: "تابلۆی (قف / وەستان) شێوەکەی چۆنە؟", options: ["هەشتلای سوورە", "سێگۆشەیە", "لاکێشەیەکی شینە", "بازنەیەکی زەردە"], answer: 0 },
-            { q: "کاتێک پۆلیسی هاتووچۆ لە چوارڕیانێکدایە و ڕووخساری یان پشتی لە تۆیە، واتای چییە؟", options: ["دەبێت بوەستیت پێش هێڵی پەڕینەوە", "دەتوانیت بڕۆیت", "خێرایی کەم بکەرەوە", "ئامادەبە بۆ ڕۆیشتن"], answer: 0 },
-            { q: "ئاستی کحولی ڕێگەپێدراو لە کاتی شۆفێری لە هەرێمی کوردستان چەندە؟", options: ["سفر (هیچ بڕێک ڕێگەپێدراو نییە)", "ڕێژەیەکی زۆر کەم", "یەک پەرداخ", "بەپێی کێشی لەش دەگۆڕێت"], answer: 0 },
-            { q: "هێمای (ڕێگای بنبەست) لە کام جۆری تابلۆکاندایە؟", options: ["تابلۆی زانیاری (لاکێشەی شین یان سەوز)", "تابلۆی ئاگادارکردنەوە", "تابلۆی قەدەغەکردن", "تابلۆی فەرمانکردن"], answer: 0 },
-            { q: "لە شەقامە خێراکاندا، لای چەپ (لێنی خێرا) بۆ چی بەکاردێت؟", options: ["تەنها بۆ پێشپەڕین (تەجاووزکردن)", "بۆ ڕۆیشتنی ئاسایی", "بۆ وەستان لە کاتی پێویست", "بۆ بارهەڵگرەکان"], answer: 0 },
-            { q: "کاتێک تایەی ئۆتۆمبێلەکەت دەتەقێت لە کاتی خێراییدا، دەبێت چی بکەیت؟", options: ["ستێرنەکە قایم بگرە و هێدی هێدی خێرایی کەم بکەرەوە", "بە خێرایی برێک بکە", "ستێرنەکە بەردە", "یەکەمجار بزوێنەر بکوژێنەوە"], answer: 0 },
-            { q: "گڵۆپی سەوزی فلاشدار (پێ و کوژ) لە ترافیک لایت بە مانای چی دێت؟", options: ["کاتەکەی بەرەو تەواوبوون دەچێت و دەبێتە زەرد", "ڕاستەوخۆ دەبێتە سوور", "کاتت زۆر ماوە بۆ پەڕینەوە", "وێستگەی پشکنین هەیە"], answer: 0 },
-            { q: "ئایا گۆڕینی لێن (ڕێڕەو) لەناو تونێلەکاندا ڕێگەپێدراوە؟", options: ["نەخێر، بە هەموو شێوەیەک قەدەغەیە", "بەڵێ ئاساییە ئەگەر ئیشارەت بدەیت", "تەنها بە ڕۆژ دەبێت", "تەنها بۆ ئۆتۆمبێلی بچووک دەبێت"], answer: 0 },
-            { q: "لە چوارڕیانێک کە کارەبای ترافیک لایت بڕابوو یان ئیشی نەدەکرد چی دەکەیت؟", options: ["وەک چوارڕیانی بێ هێما مامەڵە دەکەم و ماف بۆ ڕاستە", "بە خێرایی دەپەڕمەوە تا قەرەباڵغ نەبێت", "لە ناوەڕاستدا دەوەستم", "تەنها لە لای چەپەوە دەڕۆم"], answer: 0 },
-            { q: "کەی دەتوانیت فلاشەر (چوار ئیشارەت) بەکاربهێنیت؟", options: ["تەنها لە کاتی مەترسی لەناکاو یان پەککەوتنی ئۆتۆمبێل", "بۆ ڕاگرتن لە شوێنی قەدەغە", "بۆ پێشپەڕین", "لە کاتی بارانبارینی ئاسایی"], answer: 0 },
-            { q: "شۆفێریکردن کاتێک زۆر هەست بە خەواڵوویی دەکەیت مەترسییەکەی وەک چییە؟", options: ["وەک شۆفێریکردنە لەژێر کاریگەری کحول", "مەترسی نییە ئەگەر خێرایی کەم بکەیتەوە", "تەنها بۆ بارهەڵگرەکان مەترسیدارە", "پێویست بە خەمی زۆر ناکات"], answer: 0 },
-            { q: "مەبەست لە هێمای (قف)ی سەر شەقام پێش چوارڕیان چییە؟", options: ["وەستانی تەواوەتی تا دڵنیابوون لە چۆڵبوونی ڕێگاکە", "تەنها کەمکردنەوەی خێرایی", "ئامادەبوون بۆ ڕۆیشتن", "بەردەوام بوون بەبێ وەستان"], answer: 0 },
-            { q: "تابلۆیەکی سێگۆشە کە وێنەی ئاسکێکی تێدایە مانای چییە؟", options: ["ئاگاداربە مەترسی پەڕینەوەی ئاژەڵی کێوی هەیە", "باخچەی ئاژەڵان لە نزیکە", "شوێنی ڕاوکردن", "قەدەغەی هاتنی ئاژەڵ"], answer: 0 },
-            { q: "چ شتێک زۆرترین هۆکارە بۆ ڕووداوە کوشندەکانی هاتووچۆ؟", options: ["تیژڕەوی و پابەندنەبوون بە یاساکان", "خراپی کەشوهەوا", "جۆری ئۆتۆمبێلەکان", "کێشەی بزوێنەر"], answer: 0 },
-            { q: "ئایا لێخوڕینی ماتۆڕسکیل پێویستی بە مۆڵەتی شۆفێری هەیە؟", options: ["بەڵێ، پێویستی بە مۆڵەتی تایبەت بە خۆی هەیە", "نەخێر پێویست ناکات", "تەنها بۆ سەروو ٣٠ ساڵ پێویستە", "تەنها بۆ گەشتکردن پێویستە"], answer: 0 },
-            { q: "لە کاتی پەڕینەوەی پیادەکان لەسەر هێڵی زێبراکرۆس مافی کێیە؟", options: ["مافی پێشینە بۆ پیادەکەیە و شۆفێر دەبێت بوەستێت", "شۆفێر مافی پێشینەی هەیە", "هەرکەسیان خێراتر بوو", "شۆفێر دەبێت هۆڕن لێبدات تا پیادەکە بوەستێت"], answer: 0 },
-            { q: "تابلۆی شین کە تیایدا تیری سپی هەیە بەرەو پێشەوە مانای چییە؟", options: ["دەبێت بەردەوام بیت بەو ئاراستەیە (فەرمانکردنە)", "ئەگەر ویستت بڕۆ", "مەترسی لە پێشە", "ڕێگای خێرا دەست پێدەکات"], answer: 0 },
-            { q: "بینینی ڕووناکی سور و شین (فلاشەری پۆلیس یان ئەمبوڵانس) لە ئاوێنەوە؟", options: ["دەبێت بە خێرایی و سەلامەتی ڕێڕەوی بۆ چۆڵ بکەیت", "ئاساییە گرنگی پێمەدە", "خێرایی زیاد بکە و لە پێشی بمێنەوە", "هەر لەو لێنەدا بمێنەوە و خێرایی کەم بکەرەوە"], answer: 0 },
-            { q: "ئایا دەتوانیت ئۆتۆمبێلەکەت پارک بکەیت لەبەردەم دەریچەی ئاوپڕژێنی ئاگرکوژێنەوە؟", options: ["نەخێر بە هەموو شێوەیەک قەدەغەیە", "بەڵێ ئەگەر بۆ کاتێکی کورت بێت", "لە شەواندا دەکرێت", "ئەگەر چوار ئیشارەت پێبکەیت دەبێت"], answer: 0 },
-            { q: "ئەگەر بە بەردەوامی فشاری هەوای تایەکان کەمتر بێت لە ئاستی پێویست چی ڕوودەدات؟", options: ["تایەکان زووتر دەخوڕێن و بەنزین زیاتر سەرف دەبێت", "ئۆتۆمبێلەکە خێراتر دەبێت", "هیچ کێشەیەک دروست ناکات", "برێک بەهێزتر دەبێت"], answer: 0 },
-            { q: "کەی شۆفێر بۆی هەیە لەسەر شانی ڕێگا (لای ڕاستی دەرەوەی هێڵەکە) شۆفێری بکات؟", options: ["تەنها لە حاڵەتی لەناکاو و پەککەوتندا", "کاتێک شەقامەکە قەرەباڵغە", "بۆ پێشپەڕینی ئۆتۆمبێلی خاو", "بۆ ئەوەی خێراتر بگاتە جێگا"], answer: 0 },
-            { q: "خێرایی پێشنیارکراو (بازنەی شین کە ژمارەی تێدایە) واتای چییە؟", options: ["باشترە بەو خێراییە بڕۆیت بۆ سەلامەتیت", "ناچارکراویت لەو خێراییە کەمتر نەڕۆیت", "زۆرترین خێرایی ڕێگەپێدراوە", "قەدەغەکردنی ئەو خێراییەیە"], answer: 0 },
-            { q: "ئەگەر بزوێنەری ئۆتۆمبێلەکەت کوژایەوە لە کاتی شۆفێریدا، چی زەحمەت دەبێت؟", options: ["سوڕاندنی ستێرن و برێكکردن زەحمەت دەبێت", "هیچ گۆڕانکارییەک ڕوونادات", "ئۆتۆمبێلەکە خێراتر دەبێت", "تایەکان دەتەقن"], answer: 0 },
-            { q: "پێش دەستپێکردنی گەشتێکی دوور، پشکنینی کام لەمانە زۆر پێویستە؟", options: ["ئاو، ڕۆن، تایەکان و برێک", "ڕادیۆ و گۆرانی", "پاکی کوشنەکان", "لێدانی پۆلیش بۆ بۆیەکە"], answer: 0 },
-            { q: "هێمای (ڕێگای خلیسکان) چۆنە؟", options: ["سێگۆشەیەکە وێنەی ئۆتۆمبێلێکی تێدایە کە خلیسکاوە", "بازنەیەکی سوورە", "لاکێشەیەکی سەوزە", "تابلۆیەکی زەردی خاڵییە"], answer: 0 },
-            { q: "پێش ئەوەی دەرگای ئۆتۆمبێلەکەت بکەیتەوە لە قەراغی شەقام، پێویستە چی بکەیت؟", options: ["سەیری ئاوێنەکە بکەم نەوەک ئۆتۆمبێل یان پایسکیل بێت", "یەکسەر دەرگاکە بکەمەوە", "تەنها سەیرێکی پێشەوە بکەم", "هۆڕن لێبدەم پاشان بیکەمەوە"], answer: 0 },
-            { q: "لە ڕێگایەکی دوو ئاراستەدا کاتێک ئۆتۆمبێلێکی بەرامبەر فول لایتی لێداویت، دەبێت چی بکەیت؟", options: ["سەیری لای ڕاستی شەقامەکە (خەتی سپی قەراغەکە) بکەم تا تێپەڕ دەبێت", "منیش فول لایتی لێبدەمەوە", "چاوەکانم دابخەم و برێک بکەم", "لە ناوەڕاستی شەقامەکە بوەستم"], answer: 0 },
-            { q: "ماوەی سەلامەتی چییە بەپێی یاسای دوو چرکە؟", options: ["هێشتنەوەی دووری ٢ چرکە لە نێوان خۆت و ئۆتۆمبێلی پێشەوەت", "دەبێت هەر ٢ چرکە جارێک سەیری ئاوێنە بکەیت", "واتە ٢ چرکە پێش لادان ئیشارەت بدە", "لێدانی برێک بۆ ٢ چرکە"], answer: 0 },
-            { q: "چ شتێک دەبێتە هۆی کەمبوونەوەی توانای بینینت لە کاتی شۆفێری؟", options: ["شۆفێری کردن بە ماندوێتی و خەواڵوویی", "کردنەوەی ڕادیۆ", "قسەکردن لەگەڵ سەرنشین بە دەنگی نزم", "لێخوڕین بە خێرایی کەم"], answer: 0 },
-            { q: "بەپێی یاسا، نابێت چەند مەتر نزیک ببیتەوە لە ئۆتۆمبێلی ئاگرکوژێنەوە کە لە ئەرکدایە؟", options: ["٥٠ مەتر", "١٠ مەتر", "٥ مەتر", "هیچ مەودایەک دیاری نەکراوە"], answer: 0 },
-            { q: "کەی ڕێگەپێدراوە ئۆتۆمبێلەکەت لەسەر پیادەڕەو (شۆستە) پارک بکەیت؟", options: ["لە هیچ کاتێکدا ڕێگەپێدراو نییە", "ئەگەر شەقامەکە زۆر قەرەباڵغ بێت", "بۆ ماوەی کەمتر لە ٥ خولەک", "تەنها لە شەواندا"], answer: 0 },
-            { q: "هێمای هێڵی پیادە (زێبراکرۆس) لەسەر شەقام کامەیە؟", options: ["هێڵە سپییە پانەکان کە بە شێوەی درێژی کێشراون", "هێڵێکی زەردی بەردەوام", "هێڵێکی سووری پچڕ پچڕ", "دوو هێڵی سپی بەردەوام"], answer: 0 },
-            { q: "لەکاتی ڕووداوێکی هاتووچۆ (صدمە) و بوونی بریندار، یەکەم هەنگاو چییە؟", options: ["ئاگادارکردنەوەی پۆلیس و ئەمبوڵانس و پاراستنی شوێنەکە", "بەجێهێشتنی شوێنەکە بە خێرایی", "جوڵاندنی بریندارەکان بەبێ شارەزایی", "گواستنەوەی ئۆتۆمبێلەکان پێش هاتنی پۆلیس"], answer: 0 },
-            { q: "بەرزبوونەوەی پلەی گەرمای بزوێنەر (حەماوە) مانای چییە؟", options: ["پێویستە دەستبەجێ لە شوێنێکی سەلامەت بوەستیت و بزوێنەر بکوژێنیتەوە", "ئاساییە و دەتوانیت بەردەوام بیت", "پێویستە خێرایی زیاد بکەیت تا هەوای بەرکەوێت", "مانای وایە بەنزینی کەم ماوە"], answer: 0 },
-            { q: "هێمای بازنەی سپی کە چوارچێوەیەکی سووری هەیە مانای چییە؟", options: ["قەدەغەیە تێپەڕین بەو ڕێگایەدا بۆ هەموو جۆرە ئۆتۆمبێلێک", "ڕێگەپێدراوە بۆ هەموو ئۆتۆمبێلێک", "تەنها بۆ بارهەڵگر قەدەغەیە", "ڕێگایەکی خێرایە"], answer: 0 }
-        ];
-
-        document.addEventListener('contextmenu', event => event.preventDefault());
-        document.addEventListener('keydown', event => {
-            if (event.keyCode === 123 || (event.ctrlKey && event.shiftKey && (event.keyCode === 73 || event.keyCode === 67 || event.keyCode === 74)) || (event.ctrlKey && event.keyCode === 85)) {
-                event.preventDefault();
-            }
-        });
+        // دڵنیابوون لە شاردنەوەی سەرەکی تا ئەوکاتەی بار دەکرێت
+        document.getElementById('mainWrapper').style.display = 'flex';
 
         // ----------------- گۆڕینی ڕەنگی ئەپەکە (Themes) -----------------
         function changeThemeColor(primary, darkPrimary) {
@@ -800,7 +705,7 @@
             document.documentElement.style.setProperty('--theme-color-dark', savedDark);
         }
 
-        // کۆنترۆڵکردنی پەڕەکان بێ کێشە
+        // کۆنترۆڵکردنی پەڕەکان بێ کێشە و خێرا
         function navTo(section) {
             vibrate(10);
             
@@ -877,6 +782,14 @@
             });
         });
 
+        const allowedZones = [
+            { name: "بەڕێوەبەرایەتی هەڵەبجە", lat: 35.1877797, lng: 46.0072475, radius: 15 },
+            { name: "تەوێڵە", lat: 35.207216, lng: 46.185475, radius: 8 },
+            { name: "بیارە", lat: 35.228500, lng: 46.115500, radius: 8 },
+            { name: "خورماڵ", lat: 35.311500, lng: 46.009000, radius: 10 },
+            { name: "سیروان", lat: 35.204500, lng: 45.940000, radius: 10 }
+        ];
+
         function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
             var R = 6371; 
             var dLat = (lat2 - lat1) * Math.PI / 180;
@@ -941,7 +854,9 @@
                 } else {
                     Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان دەسەڵاتت نییە!', 'error');
                 }
-            } catch(e) { Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە', 'error'); }
+            } catch(e) {
+                Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە', 'error');
+            }
         }
 
         function updateVisitorCounter() {
@@ -971,6 +886,10 @@
         let selectedYear = today.getFullYear();
         let currentValues = { total: 0, fine: 0, duration: 0 };
         let userSetDate = false;
+
+        document.getElementById('day-btn').textContent = selectedDay;
+        document.getElementById('month-btn').textContent = selectedMonth;
+        document.getElementById('year-btn').textContent = selectedYear;
 
         function resetToToday() {
             vibrate();
@@ -1533,12 +1452,14 @@
                             document.getElementById('preRegAdminBlock').style.display = 'none';
                             document.getElementById('toggleStatusBtn').style.display = 'none';
                             document.getElementById('blacklistAdminBlock').style.display = 'none'; 
+                            document.getElementById('gpsAdminBlock').style.display = 'none';
                         } else {
                             document.getElementById('quotaAdminBlock').style.display = 'block';
                             document.getElementById('noticeAdminBlock').style.display = 'block';
                             document.getElementById('preRegAdminBlock').style.display = 'block';
                             document.getElementById('toggleStatusBtn').style.display = 'inline-block';
                             document.getElementById('blacklistAdminBlock').style.display = 'block';
+                            document.getElementById('gpsAdminBlock').style.display = 'block';
                         }
 
                         fetch(`${baseUrl}/api/users/count`)
@@ -2008,18 +1929,13 @@
             if (urlParams.get('verify')) { hasSeenOb = "true"; }
             
             if (!hasSeenOb) {
-                document.getElementById('mainWrapper').style.display = 'none';
+                document.querySelectorAll('.page-section').forEach(el => el.style.display = 'none');
                 document.getElementById('bottomNav').style.display = 'none';
-                document.getElementById('footerArea').style.display = 'none';
                 document.getElementById('onboardingOverlay').style.display = 'flex';
-                document.getElementById('themeToggleBtn').style.display = 'none';
             } else {
-                document.getElementById('mainWrapper').style.display = 'flex';
-                document.getElementById('bottomNav').style.display = 'flex';
-                document.getElementById('footerArea').style.display = 'block';
-                document.getElementById('themeToggleBtn').style.display = 'block';
                 setSmartGreeting();
                 calculateFine(true);
+                navTo('portal');
             }
         }
 
@@ -2038,10 +1954,7 @@
             } else {
                 localStorage.setItem('has_seen_onboarding', 'true');
                 document.getElementById('onboardingOverlay').style.display = 'none';
-                document.getElementById('mainWrapper').style.display = 'flex';
                 document.getElementById('bottomNav').style.display = 'flex';
-                document.getElementById('footerArea').style.display = 'block';
-                document.getElementById('themeToggleBtn').style.display = 'block';
                 setSmartGreeting();
                 calculateFine(true);
                 navTo('portal');
@@ -2053,21 +1966,17 @@
         }
 
         window.onload = function() {
-            checkOnboarding();
             const urlParams = new URLSearchParams(window.location.search);
             const verifyToken = urlParams.get('verify');
             if (verifyToken) {
-                document.getElementById('mainWrapper').style.display = 'none';
+                document.querySelectorAll('.page-section').forEach(el => el.style.display = 'none');
                 document.getElementById('bottomNav').style.display = 'none';
                 document.getElementById('verifySection').style.display = 'block';
                 fetch(`${apiUrl}/verify-qr?token=${encodeURIComponent(verifyToken)}`).then(res => res.json()).then(data => {
                     document.getElementById('verifyResult').innerHTML = data.isValid ? `<span style="color:#28a745;">✓ ${data.message}</span>` : `<span style="color:#dc3545;">✕ ${data.message}</span>`;
                 }).catch(err => { document.getElementById('verifyResult').innerHTML = "کێشە هەیە!"; });
             } else {
-                let hasSeenOb = localStorage.getItem('has_seen_onboarding');
-                if (hasSeenOb) {
-                    navTo('portal');
-                }
+                checkOnboarding();
             }
         };
 
