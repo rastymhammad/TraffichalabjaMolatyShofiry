@@ -88,7 +88,7 @@
             --active-color: var(--theme-color-dark);
         }
 
-        body { font-family: 'Rudaw', Tahoma, Arial, sans-serif; background-color: var(--bg-body); color: var(--text-main); padding: 0 10px 80px 10px; margin: 0; text-align: center; transition: background-color 0.4s, color 0.4s; display: flex; flex-direction: column; align-items: center; min-height: 100vh; user-select: none; }
+        body { font-family: 'Rudaw', Tahoma, Arial, sans-serif; background-color: var(--bg-body); color: var(--text-main); padding: 0 10px 80px 10px; margin: 0; text-align: center; transition: background-color 0.4s, color 0.4s; display: flex; flex-direction: column; align-items: center; min-height: 100vh; user-select: none; overflow-x: hidden; }
         
         * { box-sizing: border-box; }
 
@@ -108,7 +108,6 @@
             0% { opacity: 0; transform: translateX(20px); }
             100% { opacity: 1; transform: translateX(0); }
         }
-        .page-section { display: none; animation: slideFade 0.35s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; }
 
         .skeleton { background: linear-gradient(90deg, var(--bg-container) 25%, var(--info-bg) 50%, var(--bg-container) 75%); background-size: 200% 100%; animation: skeletonLoading 1.5s infinite; border-radius: 6px; height: 20px; width: 100%; margin: 5px 0; }
         @keyframes skeletonLoading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
@@ -121,22 +120,26 @@
         #ptr-indicator { width: 100%; height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: bold; color: var(--active-color); transition: height 0.2s ease-out; }
         
         .main-content { flex: 1; width: 100%; max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
-        #portalSection, #queueSection, #fineSection, #quizSection { width: 100%; }
+        #portalSection, #queueSection, #fineSection, #quizSection { width: 100%; animation: slideFade 0.35s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        #queueSection #adminSection { max-width: 700px; width: 100%; margin: 0 auto; }
         
         .header-title { position: relative; background: var(--header-bg); padding: 15px 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin: 5px auto 12px auto; border-bottom: 4px solid var(--active-color); transition: 0.3s; width: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; }
         .header-title h1 { color: var(--active-color); font-size: 16px; margin: 0; font-weight: bold; text-align: center; }
         .header-title h1 a { color: inherit; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; }
         
-        .theme-colors { position: absolute; left: 45px; top: 50%; transform: translateY(-50%); display: flex; gap: 6px; }
-        .color-dot { width: 14px; height: 14px; border-radius: 50%; cursor: pointer; border: 2px solid var(--bg-body); transition: transform 0.2s; }
-        .color-dot:active { transform: scale(0.8); }
-        
-        .theme-toggle-btn { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); background: transparent; border: none; font-size: 20px; cursor: pointer; padding: 0; margin: 0; transition: transform 0.2s; z-index: 10; color: var(--active-color); }
+        .theme-toggle-btn { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); background: transparent; border: none; font-size: 20px; cursor: pointer; padding: 0; margin: 0; transition: transform 0.2s; z-index: 10; color: var(--active-color); }
+        .theme-toggle-btn:hover { transform: translateY(-50%) scale(1.1); }
         
         #smartGreeting { font-size: 12px; font-weight: bold; color: var(--label-color); margin-top: 5px; animation: fadeInUp 1s ease-out; }
         
-        .visitor-counter { text-align: center; font-size: 12px; color: var(--label-color); margin-bottom: 8px; font-weight: bold; }
+        .top-info-row { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 0 10px; margin-bottom: 12px; }
+        .visitor-counter { font-size: 12px; color: var(--label-color); font-weight: bold; }
         .visitor-counter b { color: var(--text-main); }
+        
+        .theme-colors { display: flex; gap: 6px; align-items: center; background: var(--header-bg); padding: 4px 8px; border-radius: 20px; border: 1px solid var(--border-container); box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .theme-colors span.color-label { font-size: 10px; color: var(--label-color); font-weight: bold; margin-left: 4px; }
+        .color-dot { width: 14px; height: 14px; border-radius: 50%; cursor: pointer; border: 2px solid var(--bg-body); transition: transform 0.2s; }
+        .color-dot:active { transform: scale(0.8); }
         
         .notice-slider-box { background: var(--bg-container); border: 2px solid var(--active-color); border-radius: 12px; padding: 10px 15px; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center; width: 100%; overflow: hidden; position: relative; transition: border-color 0.3s; }
         .notice-header-row { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: bold; color: var(--active-color); margin-bottom: 6px; border-bottom: 1px dashed var(--border-container); padding-bottom: 4px; transition: color 0.3s; }
@@ -276,7 +279,7 @@
 
         /* مینیوی خوارەوە (Bottom Navigation) */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; display: flex; justify-content: space-around; padding: 10px 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--border-container); box-shadow: 0 -4px 15px rgba(0,0,0,0.05); z-index: 1000; padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
-        body.dark-mode .bottom-nav { background: rgba(30, 30, 30, 0.85); box-shadow: 0 -4px 15px rgba(0,0,0,0.2); }
+        body.dark-mode .bottom-nav { background: rgba(30, 30, 30, 0.85); box-shadow: 0 -4px 15px rgba(0,0,0,0.2); border-top-color: #334155; }
         .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--label-color); cursor: pointer; transition: all 0.3s ease; flex: 1; -webkit-tap-highlight-color: transparent; }
         .nav-item i { font-size: 22px; margin-bottom: 5px; transition: transform 0.2s; }
         .nav-item span { font-size: 11px; font-weight: bold; }
@@ -310,6 +313,7 @@
 </head>
 <body>
 
+    <!-- بانەری دابەزاندنی ئەپڵیکەیشن -->
     <div id="installAppContainer" class="install-banner no-print" style="display: none;">
         <div class="install-banner-content">
             <img src="icon-192.png" alt="Logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1043/1043306.png'">
@@ -324,6 +328,7 @@
         </div>
     </div>
 
+    <!-- شاشەی پێشوازی (Onboarding) -->
     <div id="onboardingOverlay">
         <div class="ob-slide active" id="ob1">
             <i class="fa-solid fa-id-card ob-icon"></i>
@@ -348,19 +353,28 @@
         <button class="ob-next-btn" id="obNextBtn" onclick="nextOnboarding()">دواتر</button>
     </div>
 
+    <!-- ڕاکێشان بۆ خوارەوە (Pull-to-Refresh) -->
     <div id="ptr-indicator" class="no-print">
         <i class="fa-solid fa-arrow-down" id="ptr-icon"></i>
         <span id="ptr-text">ڕابکێشە بۆ نوێکردنەوە...</span>
     </div>
 
     <div class="main-content" id="mainWrapper" style="display: none;">
-        <div class="header-title no-print">
-            <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="گۆڕینی ڕەنگ">🌙</button>
+        
+        <div class="top-info-row no-print">
             <div class="theme-colors">
+                <span class="color-label">ڕەنگ:</span>
                 <span class="color-dot" style="background:#0056b3;" onclick="changeThemeColor('#0056b3', '#4da3ff')"></span>
                 <span class="color-dot" style="background:#28a745;" onclick="changeThemeColor('#28a745', '#48bb78')"></span>
                 <span class="color-dot" style="background:#fd7e14;" onclick="changeThemeColor('#fd7e14', '#ffb84d')"></span>
             </div>
+            <div class="visitor-counter">
+                👁️ بەکارهێنەر: <b class="visitor-count-text">...</b>
+            </div>
+        </div>
+
+        <div class="header-title no-print">
+            <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="گۆڕینی ڕەنگ">🌙</button>
             <h1>
                 <a href="https://maps.app.goo.gl/iV7Ly21Rkx7ikreFA" target="_blank" title="کردنەوەی ناونیشان لە گوگڵ ماپ">
                     <i class="fa-solid fa-location-dot" style="font-size: 15px; color: #dc3545;"></i> به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە
@@ -369,11 +383,8 @@
             <div id="smartGreeting">بەیانیت باش ☀️</div>
         </div>
 
+        <!-- بەشی سەرەتا -->
         <div id="portalSection" class="page-section">
-            <div class="visitor-counter no-print">
-                👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
-            </div>
-            
             <div class="notice-slider-box no-print">
                 <div class="notice-header-row">
                     <span>ئاگاداری و پێداویستییەکان:</span>
@@ -408,7 +419,7 @@
                 </div>
             </div>
 
-            <!-- بەشی ئەدمین لێرە پیشان دەدرێت لە پەڕەی سەرەتا بەبێ ئەوەی بچێتە نۆرەگرتن -->
+            <!-- بەشی ئەدمین لێرە پیشان دەدرێت -->
             <div class="container printable-area" id="adminSection" style="display: none; margin-top: 20px;">
                 <h2>بەشی ئەدمین - کۆنتڕۆڵی سیستەم</h2>
 
@@ -529,6 +540,7 @@
             <!-- کۆتایی بەشی ئەدمین -->
         </div>
 
+        <!-- بەشی تاقیکردنەوە -->
         <div id="quizSection" class="page-section" style="display: none;">
             <div class="quiz-container">
                 <div class="quiz-header" id="quizHeaderTitle">تاقیکردنەوەی هاتووچۆ 🚦</div>
@@ -547,11 +559,8 @@
             </div>
         </div>
 
+        <!-- بەشی نۆرەگرتن -->
         <div id="queueSection" class="page-section" style="display: none;">
-            <div class="visitor-counter no-print">
-                👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
-            </div>
-
             <div id="statusBadge" class="status-badge status-open no-print">
                 <span id="statusDot" class="dot dot-green"></span>
                 <span id="statusText">دۆخی سیستەم: کراوەیە بۆ تۆمارکردن</span>
@@ -596,12 +605,9 @@
             </div>
         </div>
 
+        <!-- بەشی غەرامە -->
         <div id="fineSection" class="page-section" style="display: none;">
             <div class="fine-container" id="fine-container-box">
-                <div class="visitor-counter">
-                    👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
-                </div>
-
                 <div class="toggle-container">
                     <span id="fine-status-text" style="font-weight: bold; color: #48bb78; font-size: 13px;">✓ داشکاندنی غەرامە (٢٠٪) چالاکە</span>
                     <label class="switch">
@@ -659,6 +665,7 @@
         </div>
     </div>
 
+    <!-- مۆداڵی ژمارەکان -->
     <div class="modal-overlay" id="picker-modal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h3 id="modal-title">دیاریکردنی ژمارە</h3>
@@ -702,7 +709,7 @@
         </div>
     </footer>
 
-    <!-- مینیوی خوارەوە -->
+    <!-- مینیوی خوارەوە (Bottom Navigation) -->
     <nav class="bottom-nav no-print" id="bottomNav" style="display: none;">
         <div class="nav-item active" onclick="navTo('portal')" id="nav-portal">
             <i class="fa-solid fa-house"></i>
@@ -770,6 +777,7 @@
             } catch(e) { console.log(e); }
         }
 
+        // بۆ مۆبایلەکان پێویستە یەکەم جار تاچ بکرێت بۆ کارپێکردنی دەنگ
         document.body.addEventListener('touchstart', function() { playSound(''); }, { once:true });
         document.body.addEventListener('click', function() { playSound(''); }, { once:true });
 
@@ -864,15 +872,6 @@
         let statChart = null;
         let globalUsersData = [];
 
-        let isGpsRequired = false; 
-        const allowedZones = [
-            { name: "بەڕێوەبەرایەتی هەڵەبجە", lat: 35.1877797, lng: 46.0072475, radius: 15 },
-            { name: "تەوێڵە", lat: 35.207216, lng: 46.185475, radius: 8 },
-            { name: "بیارە", lat: 35.228500, lng: 46.115500, radius: 8 },
-            { name: "خورماڵ", lat: 35.311500, lng: 46.009000, radius: 10 },
-            { name: "سیروان", lat: 35.204500, lng: 45.940000, radius: 10 }
-        ];
-
         function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
             var R = 6371; 
             var dLat = (lat2 - lat1) * Math.PI / 180;
@@ -948,6 +947,7 @@
             }
         }
 
+        // کۆنترۆڵکردنی مینیوی خوارەوە بە ئەنیمەیشن و دەنگ
         function navTo(section) {
             playSound('tick');
             vibrate(10);
@@ -1278,10 +1278,6 @@
                     
                     globalSystemIsActive = (result.isActive !== false);
 
-                    isGpsRequired = result.isGpsRequired === true; 
-                    let gpsToggle = document.getElementById("gpsToggleBtn");
-                    if(gpsToggle) gpsToggle.checked = isGpsRequired;
-
                     let badge = document.getElementById("statusBadge");
                     let dot = document.getElementById("statusDot");
                     let statusText = document.getElementById("statusText");
@@ -1427,55 +1423,6 @@
             let name = document.getElementById("nameInput").value.trim(); 
             let phone = document.getElementById("phoneInput").value.trim();
 
-            if (isGpsRequired) {
-                if (!navigator.geolocation) {
-                    playSound('error');
-                    return Swal.fire('هەڵە', 'مۆبایلەکەت یان وێبگەڕەکەت پشتگیری سیستەمی شوێندۆزی (GPS) ناکات.', 'error');
-                }
-
-                let regBtn = document.getElementById("registerBtn"); 
-                let origBtnHtml = regBtn.innerHTML;
-                regBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> دڵنیابوونەوە لە شوێن...';
-                regBtn.disabled = true;
-
-                try {
-                    const position = await new Promise((resolve, reject) => {
-                        navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 10000 });
-                    });
-
-                    let userLat = position.coords.latitude;
-                    let userLng = position.coords.longitude;
-                    let isUserInAllowedZone = false;
-
-                    for (let zone of allowedZones) {
-                        let distance = getDistanceFromLatLonInKm(zone.lat, zone.lng, userLat, userLng);
-                        if (distance <= zone.radius) {
-                            isUserInAllowedZone = true;
-                            break; 
-                        }
-                    }
-
-                    if (!isUserInAllowedZone) {
-                        regBtn.innerHTML = origBtnHtml;
-                        regBtn.disabled = false;
-                        playSound('error');
-                        return Swal.fire(
-                            'لە دەرەوەی بازنەیت!', 
-                            'بەپێی سیستەمی GPS، تۆ لە دەرەوەی پارێزگای هەڵەبجە و ناحیەکانی دەوروبەریتی. نۆرەگرتن تەنها بۆ دانیشتووانی ناوچەکە ڕێگەپێدراوە.', 
-                            'warning'
-                        );
-                    }
-                } catch (error) {
-                    regBtn.innerHTML = origBtnHtml;
-                    regBtn.disabled = false;
-                    playSound('error');
-                    return Swal.fire('ئاگاداری', 'تکایە ئیزنی (Location) بدە بە وێبسایتەکە بۆ ئەوەی بتوانیت نۆرە بگریت.', 'warning');
-                }
-                
-                regBtn.innerHTML = origBtnHtml;
-                regBtn.disabled = false;
-            }
-
             const confirmation = await Swal.fire({
                 title: 'دڵنیابوونەوە لە زانیارییەکان',
                 html: `
@@ -1593,7 +1540,7 @@
                         Swal.close();
                         window.adminPwd = normalizedPwd; 
 
-                        openSection('portal');
+                        navTo('portal');
 
                         if (window.adminRole === 'admin') {
                             document.getElementById('quotaAdminBlock').style.display = 'none';
@@ -1601,14 +1548,12 @@
                             document.getElementById('preRegAdminBlock').style.display = 'none';
                             document.getElementById('toggleStatusBtn').style.display = 'none';
                             document.getElementById('blacklistAdminBlock').style.display = 'none'; 
-                            document.getElementById('gpsAdminBlock').style.display = 'none';
                         } else {
                             document.getElementById('quotaAdminBlock').style.display = 'block';
                             document.getElementById('noticeAdminBlock').style.display = 'block';
                             document.getElementById('preRegAdminBlock').style.display = 'block';
                             document.getElementById('toggleStatusBtn').style.display = 'inline-block';
                             document.getElementById('blacklistAdminBlock').style.display = 'block';
-                            document.getElementById('gpsAdminBlock').style.display = 'block';
                         }
 
                         fetch(`${baseUrl}/api/users/count`)
@@ -1811,35 +1756,6 @@
                     location.reload();
                 } else { playSound('error'); Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان دەسەڵاتت نییە!', 'error'); }
             } catch (error) { playSound('error'); Swal.fire('کێشە', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error'); }
-        }
-
-        async function toggleGpsStatus() {
-            playSound('tick');
-            if (!window.adminPwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە', 'warning');
-            
-            let isChecked = document.getElementById("gpsToggleBtn").checked;
-            
-            try {
-                let response = await fetch(`${baseUrl}/api/admin/toggle-gps?status=${isChecked}`, { 
-                    method: "POST", 
-                    headers: { "Admin-Password": window.adminPwd } 
-                });
-                let result = await response.json().catch(() => ({}));
-                
-                if(response.ok) {
-                    playSound('success');
-                    Swal.fire('سەرکەوتوو', `سیستەمی GPS بە سەرکەوتوویی ${isChecked ? 'چالاک کرا' : 'ناچالاک کرا'}`, 'success');
-                    isGpsRequired = isChecked;
-                } else {
-                    document.getElementById("gpsToggleBtn").checked = !isChecked; 
-                    playSound('error');
-                    Swal.fire('هەڵە', result.message || 'نەتوانرا دۆخەکە بگۆڕدرێت!', 'error');
-                }
-            } catch (error) {
-                document.getElementById("gpsToggleBtn").checked = !isChecked;
-                playSound('error');
-                Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە', 'error');
-            }
         }
 
         async function loadTodayUsers() {
