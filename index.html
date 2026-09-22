@@ -147,7 +147,32 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(77,163,255,0.2) !important;
         }
         * { box-sizing: border-box; }
+/* ==========================================
+           چاکسازی ڕەنگی مینیوی خوارەوە بۆ ڕووناکی و تاریکی
+           ========================================== */
+        
+        /* لە دۆخی ڕووناکی (Light Mode): ئایکۆن و نووسینەکان با ڕەش بن */
+        #nav-portal i, #nav-queue i, #nav-fine i, .nav-item span { 
+            color: #333333 !important; 
+            filter: none !important; 
+        }
 
+        /* لە دۆخی تاریکی (Dark Mode): ئایکۆن و نووسینەکان با سپی بن */
+        body.dark-mode #nav-portal i, 
+        body.dark-mode #nav-queue i, 
+        body.dark-mode #nav-fine i, 
+        body.dark-mode .nav-item span { 
+            color: #ffffff !important; 
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5)) !important; 
+        }
+
+        /* کاتێک ئایکۆنێک چالاکە (Active) با ڕەنگەکەی شین بێت بۆ ئەوەی دیار بێت کە لەو پەڕەیەیت */
+        .nav-item.active i, .nav-item.active span {
+            color: #0056b3 !important;
+        }
+        body.dark-mode .nav-item.active i, body.dark-mode .nav-item.active span {
+            color: #4da3ff !important;
+        }
         :root {
             --bg-body: #f0f8ff;
             --bg-container: white;
