@@ -527,10 +527,6 @@
                     <div id="feedbacksList"></div>
                 </div>
             </div>
-            
-            <div style="text-align: center; margin-bottom: 15px;" class="no-print">
-                <button onclick="handleAdminClick()" style="background: none; color: var(--label-color); border: none; font-size: 11px; cursor: pointer;">ئەدمین</button>
-            </div>
         </div>
 
         <div id="fineSection" style="display: none;">
@@ -634,7 +630,7 @@
 
     <footer>
         <p style="margin: 0 0 5px 0;">هەموو مافێکی پارێزراوە بۆ بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە &copy; 2026</p>
-        <p class="dev-name" style="margin: 0;">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووچۆ ( ڕاستی محمد شێخ حیدر )</p>
+        <p class="dev-name" style="margin: 0;">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووچۆ <span onclick="handleAdminClick()" style="user-select: none;">( ڕاستی محمد شێخ حیدر )</span></p>
         
         <div class="social-icons no-print">
             <a href="https://facebook.com/share/19ChSYyAyM?mibextid=wwXIfr" target="_blank" title="فەیسبووکی گەشەپێدەر">
@@ -1953,9 +1949,8 @@
 
         function initQuiz() {
             let shuffled = shuffleArray([...allTrafficQuestions]);
-            selectedQuestions = shuffled.slice(0, 10); // هەڵبژاردنی تەنها 10 پرسیار بە هەڕەمەکی
+            selectedQuestions = shuffled.slice(0, 10); 
             
-            // شاردنەوەی ڕیزبەندییەکان و هێنانە پێشەوەی هەر هەڵبژاردەیەک بۆ ئەوەی وەڵامی ڕاست هەمیشە یەکەم نەبێت
             selectedQuestions = selectedQuestions.map(q => {
                 let optionsWithIndex = q.options.map((opt, i) => ({text: opt, isCorrect: i === q.answer}));
                 let shuffledOptions = shuffleArray(optionsWithIndex);
