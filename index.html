@@ -296,6 +296,8 @@
         .stars i:hover { transform: scale(1.1); }
         .stars i.active { color: #ffc107; text-shadow: 0 0 8px rgba(255, 193, 7, 0.4); }
         .admin-feedbacks-container { display: none; margin-top: 15px; text-align: right; background: var(--info-bg); padding: 12px; border-radius: 8px; border: 1px solid var(--border-container); }
+        
+        .rating-thanks { display: none; margin-top: 10px; color: #28a745; font-weight: bold; }
 
         /* مینیوی خوارەوە (Bottom Navigation) */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; display: flex; justify-content: space-around; padding: 10px 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--border-container); box-shadow: 0 -4px 15px rgba(0,0,0,0.05); z-index: 1000; padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
@@ -618,8 +620,8 @@
         <div class="input-wrapper" style="margin-bottom: 0;">
             <textarea id="feedbackText" rows="2" placeholder="تێبینییەکانت لێرە بنووسە (ئارەزوومەندانە)..." style="display:none;"></textarea>
         </div>
-        <button id="submitRatingBtn" class="submit-rating-btn" onclick="submitRating()">ناردنی هەڵسەنگاندن</button>
-        <div id="ratingThanks" class="rating-thanks"><i class="fa-solid fa-circle-check"></i> زۆر سوپاس بۆ هەڵسەنگاندنەکەت!</div>
+        <button id="submitRatingBtn" class="action-btn" onclick="submitRating()" style="display: none; margin-top: 10px;">ناردنی هەڵسەنگاندن</button>
+        <div id="ratingThanks" class="rating-thanks" style="display: none; margin-top: 10px; color: #28a745; font-weight: bold;"><i class="fa-solid fa-circle-check"></i> زۆر سوپاس بۆ هەڵسەنگاندنەکەت!</div>
     </div>
 
     <footer>
@@ -793,24 +795,20 @@
             }
         }
 
-        // کۆنترۆڵکردنی مینیوی خوارەوە بە ئەنیمەیشن
         function navTo(section) {
             vibrate(10);
             openSection(section);
         }
 
         function openSection(section) {
-            // شاردنەوەی هەموویان
             document.querySelectorAll('.page-section').forEach(el => {
                 el.style.display = 'none';
             });
 
-            // گۆڕینی ڕەنگی دوگمەی مینیوی خوارەوە
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             let activeNav = document.getElementById('nav-' + section);
             if(activeNav) activeNav.classList.add('active');
 
-            // کردنەوەی بەشەکە بە ئەنیمەیشنەوە
             let targetSection = document.getElementById(section + 'Section');
             if(targetSection) {
                 targetSection.style.display = 'block';
