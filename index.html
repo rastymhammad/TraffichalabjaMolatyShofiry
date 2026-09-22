@@ -40,8 +40,6 @@
             --input-bg: white;
             --input-border: #f5c6cb;
             --input-text: #333;
-            --badge-bg: linear-gradient(135deg, #1a365d, #2a4365);
-            --badge-text: white;
             --toggle-bg: #f7fafc;
             --toggle-border: #e2e8f0;
             --slider-bg: #e2e8f0;
@@ -123,22 +121,19 @@
         .main-content { flex: 1; width: 100%; max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
         #portalSection, #queueSection, #fineSection, #quizSection { width: 100%; }
         
-        .top-info-row { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 0 10px; margin-bottom: 12px; margin-top: 10px;}
+        .header-title { position: relative; background: var(--header-bg); padding: 15px 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin: 5px auto 10px auto; border-bottom: 4px solid var(--active-color); transition: 0.3s; width: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+        .header-title h1 { color: var(--active-color); font-size: 16px; margin: 0; font-weight: bold; text-align: center; }
+        .header-title h1 a { color: inherit; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .theme-toggle-btn { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); background: transparent; border: none; font-size: 20px; cursor: pointer; padding: 0; margin: 0; transition: transform 0.2s; z-index: 10; color: var(--active-color); }
+        #smartGreeting { font-size: 12px; font-weight: bold; color: var(--label-color); margin-top: 5px; }
+
+        .top-info-row { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 0 10px; margin-bottom: 15px; margin-top: 0; }
         .visitor-counter { font-size: 12px; color: var(--label-color); font-weight: bold; }
         .visitor-counter b { color: var(--text-main); }
-        
         .theme-colors { display: flex; gap: 6px; align-items: center; background: var(--header-bg); padding: 4px 8px; border-radius: 20px; border: 1px solid var(--border-container); box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
         .theme-colors span.color-label { font-size: 10px; color: var(--label-color); font-weight: bold; margin-left: 4px; }
         .color-dot { width: 14px; height: 14px; border-radius: 50%; cursor: pointer; border: 2px solid var(--bg-body); transition: transform 0.2s; }
         .color-dot:active { transform: scale(0.8); }
-
-        .header-title { position: relative; background: var(--header-bg); padding: 15px 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin: 5px auto 12px auto; border-bottom: 4px solid var(--active-color); transition: 0.3s; width: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; }
-        .header-title h1 { color: var(--active-color); font-size: 16px; margin: 0; font-weight: bold; text-align: center; }
-        .header-title h1 a { color: inherit; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; }
-        
-        .theme-toggle-btn { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); background: transparent; border: none; font-size: 20px; cursor: pointer; padding: 0; margin: 0; transition: transform 0.2s; z-index: 10; color: var(--active-color); }
-        
-        #smartGreeting { font-size: 12px; font-weight: bold; color: var(--label-color); margin-top: 5px; }
         
         .notice-slider-box { background: var(--bg-container); border: 2px solid var(--active-color); border-radius: 12px; padding: 10px 15px; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center; width: 100%; overflow: hidden; position: relative; transition: border-color 0.3s; }
         .notice-header-row { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: bold; color: var(--active-color); margin-bottom: 6px; border-bottom: 1px dashed var(--border-container); padding-bottom: 4px; transition: color 0.3s; }
@@ -295,11 +290,24 @@
         .install-banner-btns { display: flex; align-items: center; gap: 10px; }
         .install-btn { background: white; color: var(--active-color); border: none; padding: 6px 12px; border-radius: 20px; font-weight: bold; font-family: 'Rudaw', Tahoma; font-size: 11px; cursor: pointer; }
         .install-close { background: transparent; color: white; border: none; font-size: 18px; cursor: pointer; }
+
+        /* شاشەی پێشوازی (Onboarding) */
+        #onboardingOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-body); z-index: 10000; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; }
+        .ob-slide { display: none; animation: slideFade 0.5s ease; flex-direction: column; align-items: center; justify-content: center; width: 100%; max-width: 350px; }
+        .ob-slide.active { display: flex; }
+        .ob-icon { font-size: 70px; color: var(--active-color); margin-bottom: 20px; background: var(--info-bg); width: 130px; height: 130px; line-height: 130px; border-radius: 50%; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        .ob-slide h2 { color: var(--text-main); font-size: 20px; margin-bottom: 10px; }
+        .ob-slide p { color: var(--label-color); font-size: 14px; line-height: 1.6; margin-bottom: 30px; }
+        .ob-dots { display: flex; gap: 8px; margin-bottom: 30px; }
+        .ob-dot { width: 10px; height: 10px; background: #ccc; border-radius: 50%; transition: 0.3s; }
+        .ob-dot.active { background: var(--active-color); width: 25px; border-radius: 10px; }
+        .ob-next-btn { background: var(--active-color); color: white; border: none; width: 100%; padding: 14px; border-radius: 10px; font-size: 15px; font-weight: bold; font-family: 'Rudaw', Tahoma; cursor: pointer; max-width: 300px; transition: 0.3s; }
         
     </style>
 </head>
 <body>
 
+    <!-- بانەری دابەزاندنی ئەپڵیکەیشن -->
     <div id="installAppContainer" class="install-banner no-print" style="display: none;">
         <div class="install-banner-content">
             <img src="icon-192.png" alt="Logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1043/1043306.png'">
@@ -314,25 +322,39 @@
         </div>
     </div>
 
+    <!-- شاشەی پێشوازی (Onboarding) -->
+    <div id="onboardingOverlay">
+        <div class="ob-slide active" id="ob1">
+            <i class="fa-solid fa-id-card ob-icon"></i>
+            <h2>بەخێربێیت بۆ سیستەمەکەمان</h2>
+            <p>لێرەوە دەتوانیت بە ئاسانترین شێوە و لە ماڵەکەی خۆتەوە نۆرە بگریت بۆ سەردانیکردنی هاتووچۆی هەڵەبجە.</p>
+        </div>
+        <div class="ob-slide" id="ob2">
+            <i class="fa-solid fa-calculator ob-icon"></i>
+            <h2>هەژمارکردنی غەرامە</h2>
+            <p>بەبێ بوونی ئینتەرنێتیش دەتوانیت بڕی غەرامەی بەسەرچوونی مۆڵەتەکەت بژمێریت لە هەر کاتێکدا بێت.</p>
+        </div>
+        <div class="ob-slide" id="ob3">
+            <i class="fa-solid fa-traffic-light ob-icon"></i>
+            <h2>تاقیکردنەوەی شۆفێری</h2>
+            <p>زانیارییەکانت تاقی بکەرەوە بە یارییەکی سەرنجڕاکێش و ئاستی شارەزاییت لە ڕێنماییەکان بزانە.</p>
+        </div>
+        <div class="ob-dots">
+            <span class="ob-dot active" id="dot1"></span>
+            <span class="ob-dot" id="dot2"></span>
+            <span class="ob-dot" id="dot3"></span>
+        </div>
+        <button class="ob-next-btn" id="obNextBtn" onclick="nextOnboarding()">دواتر</button>
+    </div>
+
+    <!-- ڕاکێشان بۆ خوارەوە (Pull-to-Refresh) -->
     <div id="ptr-indicator" class="no-print">
         <i class="fa-solid fa-arrow-down" id="ptr-icon"></i>
         <span id="ptr-text">ڕابکێشە بۆ نوێکردنەوە...</span>
     </div>
 
-    <div class="main-content" id="mainWrapper">
+    <div class="main-content" id="mainWrapper" style="display: none;">
         
-        <div class="top-info-row no-print">
-            <div class="theme-colors">
-                <span class="color-label">ڕەنگ:</span>
-                <span class="color-dot" style="background:#0056b3;" onclick="changeThemeColor('#0056b3', '#4da3ff')"></span>
-                <span class="color-dot" style="background:#28a745;" onclick="changeThemeColor('#28a745', '#48bb78')"></span>
-                <span class="color-dot" style="background:#fd7e14;" onclick="changeThemeColor('#fd7e14', '#ffb84d')"></span>
-            </div>
-            <div class="visitor-counter">
-                👁️ بەکارهێنەر: <b class="visitor-count-text">...</b>
-            </div>
-        </div>
-
         <div class="header-title no-print">
             <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="گۆڕینی ڕەنگ">🌙</button>
             <h1>
@@ -341,6 +363,18 @@
                 </a>
             </h1>
             <div id="smartGreeting">بەیانیت باش ☀️</div>
+        </div>
+        
+        <div class="top-info-row no-print">
+            <div class="theme-colors">
+                <span class="color-label">ڕەنگ:</span>
+                <span class="color-dot" style="background:#fd7e14;" onclick="changeThemeColor('#fd7e14', '#ffb84d')"></span>
+                <span class="color-dot" style="background:#28a745;" onclick="changeThemeColor('#28a745', '#48bb78')"></span>
+                <span class="color-dot" style="background:#0056b3;" onclick="changeThemeColor('#0056b3', '#4da3ff')"></span>
+            </div>
+            <div class="visitor-counter">
+                👁️ بەکارهێنەر: <b class="visitor-count-text">...</b>
+            </div>
         </div>
 
         <!-- بەشی سەرەتا (Portal) -->
@@ -379,7 +413,7 @@
                 </div>
             </div>
 
-            <!-- بەشی ئەدمین لێرە پیشان دەدرێت -->
+            <!-- بەشی ئەدمین -->
             <div class="container printable-area" id="adminSection" style="display: none; margin-top: 20px;">
                 <h2>بەشی ئەدمین - کۆنتڕۆڵی سیستەم</h2>
 
@@ -427,7 +461,7 @@
                 </div>
 
                 <div id="noticeAdminBlock" style="background: rgba(23, 162, 184, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(23, 162, 184, 0.2);" class="no-print">
-                    <h3 style="margin-top: 0; font-size: 14px; color: #17a2b8;">گۆڕینی تێبینی و پێداویستییەکان (سلاید)</h3>
+                    <h3 style="margin-top: 0; font-size: 14px; color: #17a2b8;">گۆڕینی تێبینی و پێداویستییەکان</h3>
                     <div class="input-wrapper" style="margin-bottom: 0;">
                         <textarea id="adminNoticeInput" rows="5" placeholder="دەقی ئاگاداری و پێداویستییەکان لێرە بنووسە..."></textarea>
                     </div>
@@ -498,7 +532,7 @@
         </div>
 
         <!-- بەشی نۆرەگرتن -->
-        <div id="queueSection" class="page-section">
+        <div id="queueSection" class="page-section" style="display: none;">
             <div id="statusBadge" class="status-badge status-open no-print">
                 <span id="statusDot" class="dot dot-green"></span>
                 <span id="statusText">دۆخی سیستەم: کراوەیە بۆ تۆمارکردن</span>
@@ -544,7 +578,7 @@
         </div>
 
         <!-- بەشی غەرامە -->
-        <div id="fineSection" class="page-section">
+        <div id="fineSection" class="page-section" style="display: none;">
             <div class="fine-container" id="fine-container-box">
                 <div class="toggle-container">
                     <span id="fine-status-text" style="font-weight: bold; color: #48bb78; font-size: 13px;">✓ داشکاندنی غەرامە (٢٠٪) چالاکە</span>
@@ -603,7 +637,7 @@
         </div>
 
         <!-- بەشی تاقیکردنەوە -->
-        <div id="quizSection" class="page-section">
+        <div id="quizSection" class="page-section" style="display: none;">
             <div class="quiz-container">
                 <div class="quiz-header" id="quizHeaderTitle">تاقیکردنەوەی هاتووچۆ 🚦</div>
                 <div id="quizPlayArea">
@@ -653,9 +687,9 @@
         <div id="ratingThanks" class="rating-thanks"><i class="fa-solid fa-circle-check"></i> زۆر سوپاس بۆ هەڵسەنگاندنەکەت!</div>
     </div>
 
-    <footer id="footerArea">
+    <footer id="footerArea" style="display: none;">
         <p style="margin: 0 0 5px 0;">هەموو مافێکی پارێزراوە بۆ بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە &copy; 2026</p>
-        <p class="dev-name" style="margin: 0;" onclick="handleAdminClick()">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووچۆ ( ڕاستی محمد شێخ حیدر )</p>
+        <p class="dev-name" style="margin: 0;">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووچۆ <span onclick="handleAdminClick()" style="cursor: pointer; user-select: none;">( ڕاستی محمد شێخ حیدر )</span></p>
         <div class="social-icons no-print">
             <a href="https://facebook.com/share/19ChSYyAyM?mibextid=wwXIfr" target="_blank" title="فەیسبووکی گەشەپێدەر">
                 <i class="fa-brands fa-facebook"></i>
@@ -667,7 +701,7 @@
     </footer>
 
     <!-- مینیوی خوارەوە (Bottom Navigation) -->
-    <nav class="bottom-nav no-print" id="bottomNav">
+    <nav class="bottom-nav no-print" id="bottomNav" style="display: none;">
         <div class="nav-item active" onclick="navTo('portal')" id="nav-portal">
             <i class="fa-solid fa-house"></i>
             <span>سەرەتا</span>
@@ -690,7 +724,6 @@
         // دڵنیابوون لە شاردنەوەی سەرەکی تا ئەوکاتەی بار دەکرێت
         document.getElementById('mainWrapper').style.display = 'flex';
 
-        // ----------------- گۆڕینی ڕەنگی ئەپەکە (Themes) -----------------
         function changeThemeColor(primary, darkPrimary) {
             document.documentElement.style.setProperty('--theme-color', primary);
             document.documentElement.style.setProperty('--theme-color-dark', darkPrimary);
@@ -705,27 +738,22 @@
             document.documentElement.style.setProperty('--theme-color-dark', savedDark);
         }
 
-        // کۆنترۆڵکردنی پەڕەکان بێ کێشە و خێرا
         function navTo(section) {
             vibrate(10);
             
-            // هەموو بەشەکان دەشارینەوە
             document.querySelectorAll('.page-section').forEach(el => {
                 el.style.display = 'none';
             });
 
-            // ڕەنگی دوگمەکانی خوارەوە دەگۆڕین
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             let activeNav = document.getElementById('nav-' + section);
             if(activeNav) activeNav.classList.add('active');
 
-            // بەشە داواکراوەکە پیشان دەدەین
             let targetSection = document.getElementById(section + 'Section');
             if(targetSection) {
                 targetSection.style.display = 'block';
             }
 
-            // فەنکشنە تایبەتەکان بانگ دەکەین
             if(section === 'portal') {
                 loadNoticeText();
             }
@@ -753,7 +781,9 @@
             }
         }
 
-        function vibrate(ms = 15) { if (navigator.vibrate) navigator.vibrate(ms); }
+        function vibrate(ms = 15) { 
+            try { if (navigator.vibrate) navigator.vibrate(ms); } catch(e) {} 
+        }
 
         function toEnglishDigits(str) {
             if (!str) return str;
@@ -769,7 +799,6 @@
         let globalUsersData = [];
         let isGpsRequired = false; 
 
-        // ----------------- ئاگادارکردنەوەی ئۆفلاین بوون -----------------
         window.addEventListener('offline', () => {
             Swal.fire({
                 title: 'تۆ ئۆفلاینی!',
@@ -801,7 +830,6 @@
             return R * c; 
         }
 
-        // سڵاوکردنی زیرەک (Smart Greeting)
         function setSmartGreeting() {
             let hr = new Date().getHours();
             let el = document.getElementById('smartGreeting');
@@ -886,10 +914,6 @@
         let selectedYear = today.getFullYear();
         let currentValues = { total: 0, fine: 0, duration: 0 };
         let userSetDate = false;
-
-        document.getElementById('day-btn').textContent = selectedDay;
-        document.getElementById('month-btn').textContent = selectedMonth;
-        document.getElementById('year-btn').textContent = selectedYear;
 
         function resetToToday() {
             vibrate();
@@ -1278,7 +1302,8 @@
                         hash = hash & hash;
                     }
                     
-                    let screenInfo = screen.width + "x" + screen.height + "_" + navigator.hardwareConcurrency;
+                    let screenInfo = screen.width + "x" + screen.height;
+                    try { if (navigator.hardwareConcurrency) screenInfo += "_" + navigator.hardwareConcurrency; } catch(e){}
                     resolve(hash.toString() + "_" + screenInfo);
                 } catch (e) {
                     resolve("unknown_device_" + Math.random());
@@ -1923,6 +1948,7 @@
             }
         }
 
+        // کۆنترۆڵکردنی پەڕەی پێشوازی (Onboarding)
         function checkOnboarding() {
             let hasSeenOb = localStorage.getItem('has_seen_onboarding');
             const urlParams = new URLSearchParams(window.location.search);
@@ -2083,16 +2109,6 @@
         let selectedQuestions = [];
         let currentQuizIndex = 0;
         let quizScore = 0;
-
-        function shuffleArray(array) {
-            let currentIndex = array.length, randomIndex;
-            while (currentIndex != 0) {
-                randomIndex = Math.floor(Math.random() * currentIndex);
-                currentIndex--;
-                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
-            }
-            return array;
-        }
 
         function initQuiz() {
             let shuffled = shuffleArray([...allTrafficQuestions]);
