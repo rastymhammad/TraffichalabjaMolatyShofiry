@@ -57,18 +57,18 @@
         }
         button.action-btn:not(:disabled) { animation: softGlow 3s infinite; }
 
-        /* ئەنیمەیشنی نوێی خلیسکانی پەڕەکان (Page Slide Transitions) */
+        /* ئەنیمەیشنی نوێی خلیسکانی پەڕەکان */
         @keyframes slideFade {
             0% { opacity: 0; transform: translateX(25px); }
             100% { opacity: 1; transform: translateX(0); }
         }
         .page-section { display: none; animation: slideFade 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; }
 
-        /* شاشەی بارکردنی مۆدێرن (Skeleton Loading) */
+        /* شاشەی بارکردنی مۆدێرن */
         .skeleton { background: linear-gradient(90deg, var(--bg-container) 25%, var(--info-bg) 50%, var(--bg-container) 75%); background-size: 200% 100%; animation: skeletonLoading 1.5s infinite; border-radius: 6px; height: 20px; width: 100%; margin: 5px 0; }
         @keyframes skeletonLoading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-        /* شوشەیی کردنی پەیامەکانی SweetAlert (Glassmorphism) */
+        /* شوشەیی کردنی پەیامەکانی SweetAlert */
         .swal2-popup { border-radius: 20px !important; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); background: rgba(255, 255, 255, 0.85) !important; box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important; border: 1px solid rgba(255,255,255,0.6) !important; font-family: 'Rudaw', Tahoma, sans-serif !important; }
         body.dark-mode .swal2-popup { background: rgba(30, 30, 30, 0.85) !important; border-color: rgba(255,255,255,0.1) !important; color: #e0e0e0 !important; }
         body.dark-mode .swal2-title, body.dark-mode .swal2-html-container { color: #e0e0e0 !important; }
@@ -144,14 +144,11 @@
         }
 
         @media all and (display-mode: standalone) {
-            #installAppContainer {
-                display: none !important;
-            }
+            #installAppContainer { display: none !important; }
         }
 
         body { font-family: 'Rudaw', Tahoma, Arial, sans-serif; background-color: var(--bg-body); color: var(--text-main); padding: 0 10px 80px 10px; margin: 0; text-align: center; transition: background-color 0.4s, color 0.4s; display: flex; flex-direction: column; align-items: center; min-height: 100vh; user-select: none; }
         
-        /* شریتی ڕاکێشان بۆ خوارەوە (Pull-to-Refresh) */
         #ptr-indicator { width: 100%; height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: bold; color: var(--header-text); transition: height 0.2s ease-out; }
         
         .main-content { flex: 1; width: 100%; max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
@@ -162,9 +159,8 @@
         body.dark-mode .header-title { border-bottom-color: #4da3ff; }
         .header-title h1 { color: var(--header-text); font-size: 16px; margin: 0; font-weight: bold; text-align: center; }
         .header-title h1 a { color: inherit; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; }
-        .header-title h1 a:hover { opacity: 0.8; }
         .theme-toggle-btn { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); background: transparent; border: none; font-size: 20px; cursor: pointer; padding: 0; margin: 0; transition: transform 0.2s; z-index: 10; }
-        .theme-toggle-btn:hover { transform: translateY(-50%) scale(1.1); }
+        
         .visitor-counter { text-align: center; font-size: 12px; color: var(--label-color); margin-bottom: 8px; font-weight: bold; }
         .visitor-counter b { color: var(--text-main); }
         
@@ -178,7 +174,6 @@
         .notice-scroll-container.vertical marquee { font-size: 12px; color: var(--text-main); line-height: 1.6; white-space: pre-line; text-align: center; width: 100%; height: 100%; }
         
         .portal-cards { display: flex; flex-direction: column; gap: 10px; width: 100%; align-items: center; }
-        
         .portal-card { position: relative; background: var(--header-bg); border: 2px solid var(--border-container); border-radius: 12px; padding: 12px 15px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; width: 100%; max-width: 380px; margin: 0 auto; min-height: 75px; }
         .portal-card:hover { transform: translateY(-4px); border-color: #0056b3; box-shadow: 0 8px 20px rgba(0,86,179,0.15); }
         body.dark-mode .portal-card:hover { border-color: #4da3ff; box-shadow: 0 8px 20px rgba(77,163,255,0.15); }
@@ -197,19 +192,15 @@
         .container { background: var(--bg-container); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: 0 auto 20px auto; border: 1px solid var(--border-container); width: 100%; }
         h2 { color: var(--header-text); margin-top: 0; margin-bottom: 15px; font-size: 16px; }
 
-        /* دیزاینی نوێی فۆڕمی سەرئاوکەوتوو (Floating Labels) */
         .input-wrapper { position: relative; width: 100%; margin: 12px 0; }
         .input-wrapper i { position: absolute; right: 12px; top: 15px; color: var(--header-text); font-size: 16px; z-index: 2; }
         .input-wrapper input { width: 100%; padding: 20px 35px 8px 10px; box-sizing: border-box; border: 2px solid var(--input-border); border-radius: 6px; font-size: 14px; font-family: 'Rudaw', Tahoma, Arial, sans-serif; outline: none; transition: 0.3s ease all; background: var(--input-bg); color: var(--input-text); user-select: text; }
         .input-wrapper label { position: absolute; right: 35px; top: 14px; font-size: 13px; color: var(--label-color); transition: 0.3s ease all; pointer-events: none; z-index: 1; }
         .input-wrapper input:focus ~ label, .input-wrapper input:not(:placeholder-shown) ~ label { top: 4px; font-size: 10px; color: #0056b3; font-weight: bold; }
         body.dark-mode .input-wrapper input:focus ~ label, body.dark-mode .input-wrapper input:not(:placeholder-shown) ~ label { color: #4da3ff; }
-        
         .input-wrapper input:disabled { background-color: #e9ecef; cursor: not-allowed; opacity: 0.7; }
         .input-wrapper input.valid-input { border-color: #28a745 !important; box-shadow: 0 0 5px rgba(40, 167, 69, 0.3); }
         .input-wrapper input.invalid-input { border-color: #f5c6cb !important; box-shadow: 0 0 5px rgba(245, 198, 203, 0.5); }
-        
-        /* بۆ خانەکانی تر کە ڕەنگە پێویستی بەم ستایلە نەبێت وەک خۆیان دەمێننەوە */
         .input-wrapper select, .input-wrapper textarea { width: 100%; padding: 10px; border: 2px solid var(--input-border); border-radius: 6px; font-family: 'Rudaw', Tahoma, sans-serif; background: var(--input-bg); color: var(--input-text); outline: none; }
         
         button.action-btn { background: #28a745; color: white; border: none; padding: 12px 20px; cursor: pointer; border-radius: 6px; font-size: 15px; font-weight: bold; width: 100%; margin-top: 8px; font-family: 'Rudaw', Tahoma, sans-serif; transition: 0.3s; }
@@ -219,17 +210,19 @@
         .search-btn:hover { background: #0056b3; }
         .timer-box { background: rgba(220, 53, 69, 0.08); border: 1px dashed #dc3545; padding: 8px 10px; border-radius: 8px; font-size: 13px; color: #d9534f; margin-top: 12px; font-weight: bold; display: none; text-align: center; }
         .timer-box span { font-size: 12px; color: #dc3545; display: inline-block; margin-left: 5px; }
+        
         .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 15px; }
         #usersTable { width: 100%; border-collapse: collapse; text-align: center; font-size: 11px; }
         #usersTable th, #usersTable td { white-space: nowrap; padding: 8px; border: 1px solid var(--border-container); color: var(--text-main); }
         #usersTable th { background: #0056b3; color: white; }
         body.dark-mode #usersTable th, body.dark-mode #usersTable td { border-color: #444; }
+        
         .dashboard-cards { display: flex; gap: 6px; margin-bottom: 12px; justify-content: space-between; }
         .dash-card { background: var(--bg-container); border: 1px solid var(--border-container); border-radius: 6px; padding: 8px 4px; flex: 1; text-align: center; }
         .dash-card h4 { margin: 0 0 2px 0; font-size: 10px; color: var(--label-color); }
         .dash-card h3 { margin: 0; font-size: 15px; color: #0056b3; }
         body.dark-mode .dash-card h3 { color: #4da3ff; }
-        .chart-container { max-width: 160px; margin: 0 auto; }
+        
         .fine-container { background: var(--bg-container); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 18px; border: 2px solid var(--border-container); text-align: center; width: 100%; }
         .toggle-container { display: flex; justify-content: space-between; align-items: center; background: var(--toggle-bg); padding: 10px; border-radius: 10px; margin-bottom: 12px; border: 1px solid var(--toggle-border); }
         .switch { position: relative; display: inline-block; width: 50px; height: 28px; }
@@ -238,10 +231,12 @@
         .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: #48bb78; }
         input:checked + .slider:before { transform: translateX(22px); }
+        
         .checklist-box { background: var(--toggle-bg); border: 1px solid var(--toggle-border); border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; text-align: right; }
         .checklist-title { font-size: 12px; font-weight: bold; color: var(--text-main); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
         .checklist-items { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 11px; color: var(--label-color); }
         .check-item { display: flex; align-items: center; gap: 5px; }
+        
         .date-section { background: var(--date-bg); border: 1px solid var(--date-border); border-radius: 12px; padding: 12px; margin-bottom: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
         .date-title-wrap { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .date-title { color: var(--date-title); font-weight: bold; font-size: 13px; }
@@ -252,17 +247,14 @@
         body.dark-mode .date-box:hover { border-color: #4da3ff; }
         .date-box label { display: block; font-size: 11px; color: var(--label-color); margin-bottom: 2px; font-weight: bold; pointer-events: none;}
         .date-custom-input { width: 100%; padding: 0; border: none; background: transparent; text-align: center; font-size: 16px; font-weight: bold; color: var(--input-text); pointer-events: none; }
+        
         .results { background: var(--results-bg); border-radius: 10px; padding: 12px; border: 2px solid var(--dynamic-status-color); margin-bottom: 12px; position: relative; overflow: hidden; z-index: 1; text-align: right; }
         .result-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed var(--results-border); font-size: 13px; color: var(--text-row); position: relative; z-index: 2; }
         .result-row:last-child { border-bottom: none; }
         .total-row { font-size: 16px; font-weight: bold; color: var(--total-color); }
         .fine-row { color: var(--fine-color); font-weight: bold; }
         .fee-row { color: var(--fee-color); font-weight: bold; }
-        .gauge-container { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%); width: 200px; height: 100px; text-align: center; display: none; opacity: 0.25; pointer-events: none; z-index: 0; }
-        .gauge { position: relative; width: 200px; height: 100px; overflow: hidden; background: var(--slider-bg); border-top-left-radius: 100px; border-top-right-radius: 100px; }
-        .gauge-fill { position: absolute; top: 100%; left: 0; width: inherit; height: 100%; background: #48bb78; transform-origin: center top; transition: transform 0.8s ease-out, background 0.8s; border-bottom-left-radius: 100px; border-bottom-right-radius: 100px; }
-        .gauge-cover { position: absolute; top: 20px; left: 20px; width: 160px; height: 80px; background: var(--results-bg); border-top-left-radius: 80px; border-top-right-radius: 80px; }
-        .needle { position: absolute; bottom: 0; left: 50%; width: 4px; height: 80px; background: var(--input-text); transform-origin: bottom center; transform: translateX(-50%) rotate(-90deg); transition: transform 0.8s; border-radius: 4px; z-index: 2; }
+        
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-overlay); justify-content: center; align-items: center; z-index: 1000; }
         .modal-content { background: var(--modal-bg); padding: 15px; border-radius: 12px; width: 90%; max-width: 350px; text-align: center; }
         .modal-content h3 { margin-top: 0; margin-bottom: 12px; color: var(--modal-text); font-size: 14px; }
@@ -276,7 +268,7 @@
         .social-icons { margin-top: 10px; }
         .social-icons a { color: #0056b3; font-size: 24px; margin: 0 10px; text-decoration: none; display: inline-block; transition: all 0.3s ease; }
         .social-icons a:hover { transform: scale(1.1) translateY(-2px); }
-        body.dark-mode .social-icons a { color: #4da3ff; }
+        
         .no-print { display: block; }
         @media print { 
             body * { visibility: hidden; } 
@@ -295,12 +287,14 @@
         .stars i { font-size: 26px; color: #cbd5e1; transition: color 0.2s, transform 0.2s; }
         .stars i:hover { transform: scale(1.1); }
         .stars i.active { color: #ffc107; text-shadow: 0 0 8px rgba(255, 193, 7, 0.4); }
-        .admin-feedbacks-container { display: none; margin-top: 15px; text-align: right; background: var(--info-bg); padding: 12px; border-radius: 8px; border: 1px solid var(--border-container); }
 
         /* ستايلی تایبەت بە بەشی تاقیکردنەوەی هاتووچۆ */
         .quiz-container { background: var(--bg-container); border: 2px solid var(--border-container); border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: right; margin-bottom: 20px; }
         body.dark-mode .quiz-container { border-color: #334155; }
         .quiz-header { font-size: 15px; font-weight: bold; color: var(--header-text); text-align: center; margin-bottom: 15px; border-bottom: 1px dashed var(--border-container); padding-bottom: 10px; }
+        
+        .quiz-timer { font-size: 16px; font-weight: bold; color: #dc3545; margin-bottom: 15px; text-align: center; }
+        
         .quiz-question-text { font-size: 14px; font-weight: bold; color: var(--text-main); margin-bottom: 15px; line-height: 1.6; }
         .quiz-options { display: flex; flex-direction: column; gap: 10px; }
         .quiz-btn { background: var(--input-bg); color: var(--input-text); border: 2px solid var(--input-border); border-radius: 8px; padding: 12px; font-family: 'Rudaw', Tahoma, sans-serif; font-size: 13px; font-weight: bold; cursor: pointer; text-align: right; transition: 0.2s; }
@@ -367,7 +361,6 @@
                         <p>بزانە مۆڵەتەکەت چەند غەرامەی هەیە</p>
                     </div>
                 </div>
-                <!-- بەشی نوێی تاقیکردنەوەی هاتووچۆ -->
                 <div class="portal-card" onclick="navTo('quiz')">
                     <i class="fa-solid fa-traffic-light"></i>
                     <div class="portal-card-content">
@@ -378,20 +371,21 @@
             </div>
         </div>
 
-        <!-- بەشی یارییەکە کە شاردراوەتەوە تا کاتی کرتەکردن -->
         <div id="quizSection" class="page-section" style="display: none;">
             <div class="quiz-container">
                 <div class="quiz-header" id="quizHeaderTitle">تاقیکردنەوەی هاتووچۆ 🚦</div>
                 <div id="quizPlayArea">
+                    <div id="quizTimer" class="quiz-timer">⏳ کاتی ماوە: 60 چرکە</div>
+                    <img id="quizImage" src="" style="max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px; display: none; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-left: auto; margin-right: auto;">
                     <div class="quiz-question-text" id="quizQText">چاوەڕێ بکە...</div>
                     <div class="quiz-options" id="quizOptionsDiv"></div>
-                    <div class="quiz-progress" id="quizProgressText">پرسیاری 0 لە 20</div>
+                    <div class="quiz-progress" id="quizProgressText">پرسیاری 0 لە 25</div>
                 </div>
                 <div id="quizResultArea" style="display: none; text-align: center;">
                     <i class="fa-solid fa-award" style="font-size: 50px; color: #ffc107; margin-bottom: 15px;"></i>
                     <h3 style="color: var(--text-main); margin-bottom: 10px;">ئەنجامەکەت</h3>
-                    <p id="quizScoreText" style="font-size: 18px; font-weight: bold; color: #28a745; margin-bottom: 20px;">0 / 20</p>
-                    <p id="quizFeedbackText" style="font-size: 14px; color: var(--text-main); margin-bottom: 20px; line-height: 1.6;"></p>
+                    <p id="quizScoreText" style="font-size: 18px; font-weight: bold; margin-bottom: 20px;">0 / 25</p>
+                    <p id="quizFeedbackText" style="font-size: 14px; margin-bottom: 20px; line-height: 1.6;"></p>
                     <button class="action-btn" onclick="initQuiz()"><i class="fa-solid fa-rotate-right"></i> دووبارەکردنەوە</button>
                 </div>
             </div>
@@ -627,7 +621,6 @@
         </div>
     </div>
 
-    <!-- دوگمەی دابەزاندن کە سەرەتا شاراەوەیە و تەنها لە براوەردا دەردەکەوێت -->
     <div id="installAppContainer" style="display: none; text-align: center; margin-bottom: 15px;" class="no-print">
         <button id="installAppBtn" class="action-btn" style="background: #28a745; width: auto; padding: 10px 25px; border-radius: 25px; box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);">
             <i class="fa-solid fa-download"></i> دابەزاندنی ئەپڵیکەیشن (Install)
@@ -705,7 +698,6 @@
             }
         });
 
-        // ----------------- سیستەمی ڕاکێشان بۆ خوارەوە (Pull-to-Refresh) -----------------
         let pullStartY = 0;
         let pullMoveY = 0;
         let isPulling = false;
@@ -838,24 +830,20 @@
             }
         }
 
-        // کۆنترۆڵکردنی مینیوی خوارەوە بە ئەنیمەیشن
         function navTo(section) {
             vibrate(10);
             openSection(section);
         }
 
         function openSection(section) {
-            // شاردنەوەی هەموویان
             document.querySelectorAll('.page-section').forEach(el => {
                 el.style.display = 'none';
             });
 
-            // گۆڕینی ڕەنگی دوگمەی مینیوی خوارەوە
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             let activeNav = document.getElementById('nav-' + section);
             if(activeNav) activeNav.classList.add('active');
 
-            // کردنەوەی بەشەکە بە ئەنیمەیشنەوە
             let targetSection = document.getElementById(section + 'Section');
             if(targetSection) {
                 targetSection.style.display = 'block';
@@ -2157,12 +2145,22 @@
             { q: "لێچوونی سووتەمەنی دەبێتە هۆی دەرنەچوونی ئۆتۆمبێل لە پشکنینی ساڵانە؟", options: ["بەڵێ دەبێتە هۆی دەرنەچوون", "نەخێر ئەگەر کەم بێت", "گرنگ نییە"], answer: 0 },
             { q: "بارکردنی سەرنشین زیاتر لە ژمارەی دیاریکراو قەدەغەیە چونکە؟", options: ["دەبێتە هۆی ڕووداو و ڕێگری لە شۆفێر دەکات", "سەرنشینەکان بێزار دەکات", "ئۆتۆمبێل تێکدەدات"], answer: 0 },
             { q: "لێچوونی ڕۆنی برێک (ستۆپ) دەبێتە هۆی دەرنەچوون لە پشکنین؟", options: ["بەڵێ دەبێتە هۆی دەرنەچوون", "نەخێر نابێتە هۆکار", "گرنگ نییە"], answer: 0 },
-            { q: "کارنەکردنی هاند برێک دەبێتە هۆی دەرنەچوون لە پشکنین؟", options: ["بەڵێ دەبێتە هۆی دەرنەچوون", "نەخێر", "تەنها نمرە دادەبەزێنێت"], answer: 0 }
+            { q: "کارنەکردنی هاند برێک دەبێتە هۆی دەرنەچوون لە پشکنین؟", options: ["بەڵێ دەبێتە هۆی دەرنەچوون", "نەخێر", "تەنها نمرە دادەبەزێنێت"], answer: 0 },
+            
+            // نموونەی پرسیاری وێنەیی
+            // بۆ دانانی وێنە، تەنها وێنەکە بخە ناو فۆڵدەری images و ناوی وێنەکە بنووسە لێرە لەبری image.jpg
+            { q: "ئەم هێمایە چی دەگەیەنێت؟", image: "images/q1.jpg", options: ["مەترسی تاشە بەرد", "پەڕینەوەی پیادە", "ئاگادارکردنەوە لە ئاژەڵ"], answer: 0 },
+            { q: "ئەم هێمایە چی دەگەیەنێت؟", image: "images/q2.jpg", options: ["وەستان قەدەغەیە", "سووڕانەوە بۆ ڕاست قەدەغەیە", "چوونە ژوورەوە قەدەغەیە"], answer: 2 },
+            { q: "ئەم هێمایە چی دەگەیەنێت؟", image: "images/q3.jpg", options: ["ڕێگای خێرا", "کۆتایی ڕێگای خێرا", "ڕێگای داخراو"], answer: 0 },
+            { q: "لە کاتی بینینی ئەم هێمایە دەبێت چی بکەیت؟", image: "images/q4.jpg", options: ["خێرایی کەم بکەیتەوە لەبەر بوونی تاسە", "خێرایی زیاد بکەیت", "بوەستیت بە تەواوی"], answer: 0 },
+            { q: "لەم وێنەیەدا مافی پێشینە بۆ کێیە؟", image: "images/q5.jpg", options: ["ئۆتۆمبێلی سپی", "ئۆتۆمبێلی سوور چونکە ڕاست دەڕوات", "هیچ کامیان"], answer: 1 }
         ];
 
         let selectedQuestions = [];
         let currentQuizIndex = 0;
         let quizScore = 0;
+        let questionTimerInterval;
+        let timeRemaining = 60;
 
         function shuffleArray(array) {
             let currentIndex = array.length, randomIndex;
@@ -2176,14 +2174,14 @@
 
         function initQuiz() {
             let shuffled = shuffleArray([...allTrafficQuestions]);
-            // گۆڕینی ژمارەی پرسیارەکان بۆ ٢٠
-            selectedQuestions = shuffled.slice(0, 20); 
+            // گۆڕینی ژمارەی پرسیارەکان بۆ ٢٥
+            selectedQuestions = shuffled.slice(0, 25); 
             
             selectedQuestions = selectedQuestions.map(q => {
                 let optionsWithIndex = q.options.map((opt, i) => ({text: opt, isCorrect: i === q.answer}));
                 let shuffledOptions = shuffleArray(optionsWithIndex);
                 let newCorrectIndex = shuffledOptions.findIndex(o => o.isCorrect);
-                return { q: q.q, options: shuffledOptions.map(o => o.text), answer: newCorrectIndex };
+                return { q: q.q, image: q.image, options: shuffledOptions.map(o => o.text), answer: newCorrectIndex };
             });
 
             currentQuizIndex = 0;
@@ -2193,26 +2191,71 @@
             loadQuestion();
         }
 
+        function startTimer() {
+            timeRemaining = 60;
+            document.getElementById("quizTimer").innerText = `⏳ کاتی ماوە: ${timeRemaining} چرکە`;
+            clearInterval(questionTimerInterval);
+            
+            questionTimerInterval = setInterval(() => {
+                timeRemaining--;
+                document.getElementById("quizTimer").innerText = `⏳ کاتی ماوە: ${timeRemaining} چرکە`;
+                
+                if(timeRemaining <= 0) {
+                    clearInterval(questionTimerInterval);
+                    handleTimeout();
+                }
+            }, 1000);
+        }
+
+        function handleTimeout() {
+            let correctIndex = selectedQuestions[currentQuizIndex].answer;
+            let allBtns = document.getElementById("quizOptionsDiv").getElementsByTagName("button");
+            
+            for(let i=0; i<allBtns.length; i++) {
+                allBtns[i].style.pointerEvents = "none";
+            }
+            
+            allBtns[correctIndex].classList.add("correct");
+            vibrate([20, 50, 20]); // لە کاتی تەواوبوونی کاتەکە لەرەلەرێکی هەڵە دەکات
+            
+            setTimeout(() => {
+                currentQuizIndex++;
+                loadQuestion();
+            }, 1500);
+        }
+
         function loadQuestion() {
             if (currentQuizIndex >= selectedQuestions.length) {
                 showQuizResults();
                 return;
             }
             
-            // گۆڕینی ژمارەی پیشاندانی پرسیارەکان بۆ ٢٠
-            document.getElementById("quizProgressText").innerText = `پرسیاری ${currentQuizIndex + 1} لە 20`;
+            document.getElementById("quizProgressText").innerText = `پرسیاری ${currentQuizIndex + 1} لە 25`;
             
             let qData = selectedQuestions[currentQuizIndex];
             document.getElementById("quizQText").innerText = qData.q;
+            
+            // نیشاندانی وێنە ئەگەر پرسیارەکە وێنەی هەبوو
+            let imgEl = document.getElementById("quizImage");
+            if(qData.image) {
+                imgEl.src = qData.image;
+                imgEl.style.display = "block";
+            } else {
+                imgEl.style.display = "none";
+            }
             
             let optionsHtml = "";
             qData.options.forEach((opt, idx) => {
                 optionsHtml += `<button class="quiz-btn" onclick="checkQuizAnswer(${idx}, this)">${opt}</button>`;
             });
             document.getElementById("quizOptionsDiv").innerHTML = optionsHtml;
+            
+            startTimer(); // دەستپێکردنی کاتژمێرەکە
         }
 
         function checkQuizAnswer(selectedIndex, btnElement) {
+            clearInterval(questionTimerInterval); // وەستاندنی کاتژمێرەکە
+            
             let correctIndex = selectedQuestions[currentQuizIndex].answer;
             let allBtns = document.getElementById("quizOptionsDiv").getElementsByTagName("button");
             
@@ -2237,17 +2280,21 @@
         }
 
         function showQuizResults() {
+            clearInterval(questionTimerInterval);
             document.getElementById("quizPlayArea").style.display = "none";
             document.getElementById("quizResultArea").style.display = "block";
             
-            // گۆڕینی خاڵی کۆتایی بۆ سەر ٢٠
-            document.getElementById("quizScoreText").innerText = `${quizScore} / 20`;
+            document.getElementById("quizScoreText").innerText = `${quizScore} / 25`;
             
             let message = "";
-            if(quizScore === 20) message = "ئافەرین! تۆ شۆفێرێکی زۆر نموونەییت 🏆";
-            else if(quizScore >= 15) message = "زۆر باشە! زانیارییەکانت باشن 👍";
-            else if(quizScore >= 10) message = "مامناوەندە، پێویستە زیاتر ئاگاداری ڕێنماییەکان بیت 🤔";
-            else message = "پێویستە زیاتر هێماکانی هاتووچۆ بخوێنیتەوە 😅";
+            // مەرجی دەرچوون بۆ 20 لە 25 
+            if(quizScore >= 20) {
+                message = "پیرۆزە! تۆ سەرکەوتوو بوویت 🏆🎉";
+                document.getElementById("quizScoreText").style.color = "#28a745";
+            } else {
+                message = "دەرنەچوویت، تکایە زیاتر هەوڵ بدە ❌";
+                document.getElementById("quizScoreText").style.color = "#dc3545";
+            }
             
             document.getElementById("quizFeedbackText").innerText = message;
         }
