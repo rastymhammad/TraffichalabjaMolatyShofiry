@@ -17,10 +17,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <!-- زیادکردنی کتێبخانەکانی فایەربەیس -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 
     <style>
         @font-face {
@@ -57,28 +53,20 @@
         }
         button.action-btn:not(:disabled) { animation: softGlow 3s infinite; }
 
-        /* ئەنیمەیشنی نوێی خلیسکانی پەڕەکان (Page Slide Transitions) */
         @keyframes slideFade {
             0% { opacity: 0; transform: translateX(25px); }
             100% { opacity: 1; transform: translateX(0); }
         }
         .page-section { display: none; animation: slideFade 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; }
 
-        /* شاشەی بارکردنی مۆدێرن (Skeleton Loading) */
         .skeleton { background: linear-gradient(90deg, var(--bg-container) 25%, var(--info-bg) 50%, var(--bg-container) 75%); background-size: 200% 100%; animation: skeletonLoading 1.5s infinite; border-radius: 6px; height: 20px; width: 100%; margin: 5px 0; }
         @keyframes skeletonLoading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-        /* شوشەیی کردنی پەیامەکانی SweetAlert (Glassmorphism) */
         .swal2-popup { border-radius: 20px !important; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); background: rgba(255, 255, 255, 0.85) !important; box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important; border: 1px solid rgba(255,255,255,0.6) !important; font-family: 'Rudaw', Tahoma, sans-serif !important; }
         body.dark-mode .swal2-popup { background: rgba(30, 30, 30, 0.85) !important; border-color: rgba(255,255,255,0.1) !important; color: #e0e0e0 !important; }
         body.dark-mode .swal2-title, body.dark-mode .swal2-html-container { color: #e0e0e0 !important; }
         body.dark-mode .swal2-input, body.dark-mode .swal2-textarea { background: #2c2c2c !important; color: #fff !important; border-color: #444 !important; }
 
-        /* ==========================================
-           پێشنیارە نوێیەکانی دیزاین (UI/UX Upgrades)
-           ========================================== */
-
-        /* 1. پاشبنەمای مۆدێرن (خاوەن کێشکردنێکی جوان) */
         body {
             background: linear-gradient(135deg, #f0f8ff 0%, #e6f2ff 100%);
             background-attachment: fixed;
@@ -87,7 +75,6 @@
             background: linear-gradient(135deg, #121212 0%, #1a1a2e 100%);
         }
 
-        /* 2. سەردێڕی شوشەیی چەسپاو (Sticky Glass Header) */
         .header-title {
             position: sticky;
             top: 10px;
@@ -104,7 +91,6 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.3) !important;
         }
 
-        /* 3. مینیوی خوارەوەی سەرئاوکەوتوو (Floating Bottom Nav) */
         .bottom-nav {
             bottom: 15px !important;
             width: 92% !important;
@@ -118,7 +104,6 @@
             border-color: rgba(255,255,255,0.1) !important;
         }
 
-        /* 4. نەرمکردنی دیزاینی کارتەکان (Soft Neumorphism) */
         .portal-card {
             border: none !important;
             box-shadow: 0 8px 20px rgba(0,0,0,0.04), inset 0 0 0 1.5px rgba(0,86,179,0.1) !important;
@@ -131,7 +116,6 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.2), inset 0 0 0 1px rgba(77,163,255,0.1) !important;
         }
 
-        /* 5. کاریگەری زیندوو بۆ دوگمەکان (Ripple & Active Scale) */
         button.action-btn, .start-quiz-btn, .portal-card, .date-box, .nav-item {
             transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.3s ease !important;
         }
@@ -139,7 +123,6 @@
             transform: scale(0.96) !important;
         }
         
-        /* جوانکاری بۆ بۆکسی تێبینییەکان */
         .notice-slider-box {
             border: none !important;
             box-shadow: 0 5px 15px rgba(0,86,179,0.08), inset 0 0 0 1.5px rgba(0,86,179,0.2) !important;
@@ -224,7 +207,6 @@
 
         body { font-family: 'Rudaw', Tahoma, Arial, sans-serif; background-color: var(--bg-body); color: var(--text-main); padding: 0 10px 80px 10px; margin: 0; text-align: center; transition: background-color 0.4s, color 0.4s; display: flex; flex-direction: column; align-items: center; min-height: 100vh; user-select: none; }
         
-        /* شریتی ڕاکێشان بۆ خوارەوە (Pull-to-Refresh) */
         #ptr-indicator { width: 100%; height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: bold; color: var(--header-text); transition: height 0.2s ease-out; }
         
         .main-content { flex: 1; width: 100%; max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
@@ -256,7 +238,6 @@
         .portal-card:hover { transform: translateY(-4px); border-color: #0056b3; box-shadow: 0 8px 20px rgba(0,86,179,0.15); }
         body.dark-mode .portal-card:hover { border-color: #4da3ff; box-shadow: 0 8px 20px rgba(77,163,255,0.15); }
         
-        /* گۆڕینی ڕەنگی ئایکۆنەکانی ناوەڕاست بۆ ڕەنگی جەرگی */
         .portal-card i { position: absolute; right: 20px; font-size: 30px; color: #8b0000; }
         body.dark-mode .portal-card i { color: #d93838; } 
 
@@ -273,7 +254,6 @@
         .container { background: var(--bg-container); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: 0 auto 20px auto; border: 1px solid var(--border-container); width: 100%; }
         h2 { color: var(--header-text); margin-top: 0; margin-bottom: 15px; font-size: 16px; }
 
-        /* دیزاینی نوێی فۆڕمی سەرئاوکەوتوو (Floating Labels) */
         .input-wrapper { position: relative; width: 100%; margin: 12px 0; }
         .input-wrapper i { position: absolute; right: 12px; top: 15px; color: var(--header-text); font-size: 16px; z-index: 2; }
         .input-wrapper input { width: 100%; padding: 20px 35px 8px 10px; box-sizing: border-box; border: 2px solid var(--input-border); border-radius: 6px; font-size: 14px; font-family: 'Rudaw', Tahoma, Arial, sans-serif; outline: none; transition: 0.3s ease all; background: var(--input-bg); color: var(--input-text); user-select: text; }
@@ -285,7 +265,6 @@
         .input-wrapper input.valid-input { border-color: #28a745 !important; box-shadow: 0 0 5px rgba(40, 167, 69, 0.3); }
         .input-wrapper input.invalid-input { border-color: #f5c6cb !important; box-shadow: 0 0 5px rgba(245, 198, 203, 0.5); }
         
-        /* بۆ خانەکانی تر کە ڕەنگە پێویستی بەم ستایلە نەبێت وەک خۆیان دەمێننەوە */
         .input-wrapper select, .input-wrapper textarea { width: 100%; padding: 10px; border: 2px solid var(--input-border); border-radius: 6px; font-family: 'Rudaw', Tahoma, sans-serif; background: var(--input-bg); color: var(--input-text); outline: none; }
         
         button.action-btn { background: #28a745; color: white; border: none; padding: 12px 20px; cursor: pointer; border-radius: 6px; font-size: 15px; font-weight: bold; width: 100%; margin-top: 8px; font-family: 'Rudaw', Tahoma, sans-serif; transition: 0.3s; }
@@ -375,24 +354,17 @@
         
         .rating-thanks { display: none; margin-top: 10px; color: #28a745; font-weight: bold; }
 
-        /* مینیوی خوارەوە (Bottom Navigation) */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; display: flex; justify-content: space-around; padding: 10px 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--border-container); box-shadow: 0 -4px 15px rgba(0,0,0,0.05); z-index: 1000; padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
         body.dark-mode .bottom-nav { background: rgba(30, 30, 30, 0.85); box-shadow: 0 -4px 15px rgba(0,0,0,0.2); }
         .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--label-color); cursor: pointer; transition: all 0.3s ease; flex: 1; -webkit-tap-highlight-color: transparent; }
         .nav-item i { font-size: 22px; margin-bottom: 5px; transition: transform 0.2s; }
         .nav-item span { font-size: 11px; font-weight: bold; }
 
-        /* ==========================================
-           چاکسازی ڕەنگی مینیوی خوارەوە بۆ ڕووناکی و تاریکی
-           ========================================== */
-        
-        /* لە دۆخی ڕووناکی (Light Mode): ئایکۆن و نووسینەکان با ڕەش بن */
         #nav-portal i, #nav-queue i, #nav-fine i, .nav-item span { 
             color: #333333 !important; 
             filter: none !important; 
         }
 
-        /* لە دۆخی تاریکی (Dark Mode): ئایکۆن و نووسینەکان با سپی بن */
         body.dark-mode #nav-portal i, 
         body.dark-mode #nav-queue i, 
         body.dark-mode #nav-fine i, 
@@ -401,7 +373,6 @@
             filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5)) !important; 
         }
 
-        /* کاتێک ئایکۆنێک چالاکە (Active) با ڕەنگەکەی شین بێت بۆ ئەوەی دیار بێت کە لەو پەڕەیەیت */
         .nav-item.active i, .nav-item.active span {
             color: #0056b3 !important;
         }
@@ -409,11 +380,6 @@
             color: #4da3ff !important;
         }
 
-        /* ==========================================
-           پێشنیارە نوێیەکان (Splash, Gradient Text, 3D Cards, Custom Scrollbar)
-           ========================================== */
-
-        /* 1. شاشەی پێشوازی (Splash Screen) */
         .splash-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -469,12 +435,10 @@
             50% { width: 40%; }
             100% { left: 100%; width: 30%; }
         }
-        /* ئەم کلاسە بەکاردێت بۆ ونکردنی شاشەکە پاش ماوەیەک */
         .splash-hidden {
             opacity: 0; visibility: hidden;
         }
 
-        /* 2. سەردێڕی درەوشاوە (Animated Gradient Text) */
         .header-title h1 a {
             background: linear-gradient(45deg, #0056b3, #00aaff, #0056b3);
             background-size: 200% auto;
@@ -492,13 +456,11 @@
             to { background-position: 200% center; }
         }
 
-        /* 3. دیزاینی سێ دووری بۆ کارتەکان (3D Hover Effect) */
         .portal-card {
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease !important;
             transform-style: preserve-3d;
         }
         .portal-card:hover {
-            /* کەمێک بەرز دەبێتەوە و لار دەبێتەوە بۆ پێشەوە تا هەستی 3D ببەخشێت */
             transform: translateY(-8px) scale(1.03) perspective(1000px) rotateX(4deg) rotateY(-2deg) !important;
             box-shadow: -5px 15px 25px rgba(0,86,179,0.15), inset 0 0 0 1.5px rgba(0,86,179,0.3) !important;
         }
@@ -506,9 +468,8 @@
             box-shadow: -5px 15px 25px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(77,163,255,0.3) !important;
         }
 
-        /* 4. جوانکاری سکڕۆڵبار (Custom Scrollbar) */
         ::-webkit-scrollbar {
-            width: 7px; /* باریکتر لە ستاندارد بۆ ئەوەی مۆدێرن بێت */
+            width: 7px; 
         }
         ::-webkit-scrollbar-track {
             background: var(--bg-body); 
@@ -532,10 +493,9 @@
     </style>
 </head>
 <body>
-    <!-- شاشەی پێشوازی (Splash Screen) -->
     <div id="splash-screen" class="splash-screen no-print">
         <div class="splash-logo">
-            <img src="icon-192.png">
+            <img src="icon-192.png.png" alt="Logo">
         </div>
         <h2 class="splash-text">به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هه‌ڵه‌بجه‌</h2>
         <div class="splash-loader"></div>
@@ -1011,7 +971,6 @@
             }
         }
 
-        // ئەمە فانکشنێکی یارمەتیدەرە بۆ ئەوەی کۆدەکەمان دووبارە نەبێتەوە
         function applyNoticeToUI(text, wrapper) {
             let marqueeEvents = `onmouseover="if(!this.clickPaused) this.stop();" onmouseout="if(!this.clickPaused) this.start();" onclick="this.clickPaused = !this.clickPaused; if(this.clickPaused) this.stop(); else this.start();"`;
             
@@ -1065,7 +1024,7 @@
                 return; // لێرەدا دەوەستێت و ناچێتە پەڕەی نۆرەگرتن
             }
 
-            // ئەگەر ئینتەرنێت هەبوو، یان پەڕەیەکی تر بوو، ئەوا پەڕەکە دەکاتەوە
+            // ئەگەر ئینتەرنێت هەبوو، یان پەڕەیەکی تر بوو (وەک سەرەتا یان غەرامە)، ئەوا پەڕەکە دەکاتەوە بێ کێشە
             openSection(section);
         }
 
@@ -1536,11 +1495,9 @@
         }
 
         async function confirmAndRegister() {
-            // --- سەرەتای پشکنین ---
             if (!navigator.onLine) {
                  return Swal.fire('کێشەی هێڵ', 'مۆبایلەکەت هێڵی ئینتەرنێتی نییە، تکایە ئینتەرنێت بکەرەوە!', 'error');
             }
-            // --- کۆتایی پشکنین ---
 
             let name = document.getElementById("nameInput").value.trim(); 
             let phone = document.getElementById("phoneInput").value.trim();
@@ -1643,11 +1600,9 @@
         }
 
         async function searchUser() {
-            // --- سەرەتای پشکنین ---
             if (!navigator.onLine) {
                  return Swal.fire('کێشەی هێڵ', 'مۆبایلەکەت هێڵی ئینتەرنێتی نییە!', 'error');
             }
-            // --- کۆتایی پشکنین ---
 
             let searchPhone = document.getElementById("searchInput").value.trim();
             if(searchPhone === "") return;
@@ -1699,7 +1654,6 @@
                         Swal.close();
                         window.adminPwd = normalizedPwd; 
 
-                        // کردنەوەی بەشی نۆرەگرتن ڕاستەوخۆ بۆ بینینی ئەدمین
                         navTo('queue');
 
                         if (window.adminRole === 'admin') {
@@ -2178,14 +2132,13 @@
             }
         }
 
-        // لادانی شاشەی پێشوازی (Splash Screen) پاش ماوەیەکی کورت لە کرانەوەی سایتەکە
         window.addEventListener('load', function() {
             setTimeout(function() {
                 let splash = document.getElementById('splash-screen');
                 if(splash) {
                     splash.classList.add('splash-hidden');
                 }
-            }, 3000); // 3 چرکە چاوەڕێ دەکات، پاشان شاشەکە لادەبات
+            }, 3000); 
 
             calculateFine(true);
             loadNoticeText();
