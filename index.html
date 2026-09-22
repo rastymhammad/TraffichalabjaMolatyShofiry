@@ -57,11 +57,22 @@
         }
         button.action-btn:not(:disabled) { animation: softGlow 3s infinite; }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* ئەنیمەیشنی نوێی خلیسکانی پەڕەکان (Page Slide Transitions) */
+        @keyframes slideFade {
+            0% { opacity: 0; transform: translateX(25px); }
+            100% { opacity: 1; transform: translateX(0); }
         }
-        .main-content > div { animation: fadeInUp 0.5s ease-out forwards; }
+        .page-section { display: none; animation: slideFade 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; }
+
+        /* شاشەی بارکردنی مۆدێرن (Skeleton Loading) */
+        .skeleton { background: linear-gradient(90deg, var(--bg-container) 25%, var(--info-bg) 50%, var(--bg-container) 75%); background-size: 200% 100%; animation: skeletonLoading 1.5s infinite; border-radius: 6px; height: 20px; width: 100%; margin: 5px 0; }
+        @keyframes skeletonLoading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        /* شوشەیی کردنی پەیامەکانی SweetAlert (Glassmorphism) */
+        .swal2-popup { border-radius: 20px !important; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); background: rgba(255, 255, 255, 0.85) !important; box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important; border: 1px solid rgba(255,255,255,0.6) !important; font-family: 'Rudaw', Tahoma, sans-serif !important; }
+        body.dark-mode .swal2-popup { background: rgba(30, 30, 30, 0.85) !important; border-color: rgba(255,255,255,0.1) !important; color: #e0e0e0 !important; }
+        body.dark-mode .swal2-title, body.dark-mode .swal2-html-container { color: #e0e0e0 !important; }
+        body.dark-mode .swal2-input, body.dark-mode .swal2-textarea { background: #2c2c2c !important; color: #fff !important; border-color: #444 !important; }
 
         * { box-sizing: border-box; }
 
@@ -138,10 +149,15 @@
             }
         }
 
-        body { font-family: 'Rudaw', Tahoma, Arial, sans-serif; background-color: var(--bg-body); color: var(--text-main); padding: 15px 10px 80px 10px; margin: 0; text-align: center; transition: background-color 0.4s, color 0.4s; display: flex; flex-direction: column; align-items: center; min-height: 100vh; user-select: none; }
+        body { font-family: 'Rudaw', Tahoma, Arial, sans-serif; background-color: var(--bg-body); color: var(--text-main); padding: 0 10px 80px 10px; margin: 0; text-align: center; transition: background-color 0.4s, color 0.4s; display: flex; flex-direction: column; align-items: center; min-height: 100vh; user-select: none; }
+        
+        /* شریتی ڕاکێشان بۆ خوارەوە (Pull-to-Refresh) */
+        #ptr-indicator { width: 100%; height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: bold; color: var(--header-text); transition: height 0.2s ease-out; }
+        
         .main-content { flex: 1; width: 100%; max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
         #portalSection, #queueSection, #fineSection, #quizSection { width: 100%; }
         #queueSection #adminSection { max-width: 700px; width: 100%; margin: 0 auto; }
+        
         .header-title { position: relative; background: var(--header-bg); padding: 12px 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin: 5px auto 12px auto; border-bottom: 4px solid #0056b3; transition: 0.3s; width: 100%; display: flex; align-items: center; justify-content: center; }
         body.dark-mode .header-title { border-bottom-color: #4da3ff; }
         .header-title h1 { color: var(--header-text); font-size: 16px; margin: 0; font-weight: bold; text-align: center; }
@@ -180,12 +196,22 @@
         .dot-red { background-color: #dc3545; box-shadow: 0 0 8px #dc3545; }
         .container { background: var(--bg-container); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: 0 auto 20px auto; border: 1px solid var(--border-container); width: 100%; }
         h2 { color: var(--header-text); margin-top: 0; margin-bottom: 15px; font-size: 16px; }
-        .input-wrapper { position: relative; width: 100%; margin: 8px 0; }
-        .input-wrapper i { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--header-text); font-size: 16px; }
-        .input-wrapper input { width: 100%; padding: 10px 35px 10px 10px; box-sizing: border-box; border: 2px solid var(--input-border); border-radius: 6px; font-size: 14px; font-family: 'Rudaw', Tahoma, Arial, sans-serif; outline: none; transition: 0.3s; background: var(--input-bg); color: var(--input-text); user-select: text; }
+
+        /* دیزاینی نوێی فۆڕمی سەرئاوکەوتوو (Floating Labels) */
+        .input-wrapper { position: relative; width: 100%; margin: 12px 0; }
+        .input-wrapper i { position: absolute; right: 12px; top: 15px; color: var(--header-text); font-size: 16px; z-index: 2; }
+        .input-wrapper input { width: 100%; padding: 20px 35px 8px 10px; box-sizing: border-box; border: 2px solid var(--input-border); border-radius: 6px; font-size: 14px; font-family: 'Rudaw', Tahoma, Arial, sans-serif; outline: none; transition: 0.3s ease all; background: var(--input-bg); color: var(--input-text); user-select: text; }
+        .input-wrapper label { position: absolute; right: 35px; top: 14px; font-size: 13px; color: var(--label-color); transition: 0.3s ease all; pointer-events: none; z-index: 1; }
+        .input-wrapper input:focus ~ label, .input-wrapper input:not(:placeholder-shown) ~ label { top: 4px; font-size: 10px; color: #0056b3; font-weight: bold; }
+        body.dark-mode .input-wrapper input:focus ~ label, body.dark-mode .input-wrapper input:not(:placeholder-shown) ~ label { color: #4da3ff; }
+        
         .input-wrapper input:disabled { background-color: #e9ecef; cursor: not-allowed; opacity: 0.7; }
         .input-wrapper input.valid-input { border-color: #28a745 !important; box-shadow: 0 0 5px rgba(40, 167, 69, 0.3); }
         .input-wrapper input.invalid-input { border-color: #f5c6cb !important; box-shadow: 0 0 5px rgba(245, 198, 203, 0.5); }
+        
+        /* بۆ خانەکانی تر کە ڕەنگە پێویستی بەم ستایلە نەبێت وەک خۆیان دەمێننەوە */
+        .input-wrapper select, .input-wrapper textarea { width: 100%; padding: 10px; border: 2px solid var(--input-border); border-radius: 6px; font-family: 'Rudaw', Tahoma, sans-serif; background: var(--input-bg); color: var(--input-text); outline: none; }
+        
         button.action-btn { background: #28a745; color: white; border: none; padding: 12px 20px; cursor: pointer; border-radius: 6px; font-size: 15px; font-weight: bold; width: 100%; margin-top: 8px; font-family: 'Rudaw', Tahoma, sans-serif; transition: 0.3s; }
         button.action-btn:disabled { background: #cccccc !important; color: #666666 !important; cursor: not-allowed !important; box-shadow: none !important; }
         button.action-btn:hover:not(:disabled) { background: #218838; }
@@ -243,6 +269,7 @@
         .number-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; max-height: 75vh; overflow-y: auto; padding: 5px; }
         .grid-item { padding: 8px; min-height: 38px; display: flex; align-items: center; justify-content: center; background: var(--grid-bg); border-radius: 6px; font-weight: bold; color: var(--input-text); cursor: pointer; font-size: 13px;}
         .grid-item.selected-item { background: #3182ce !important; color: white !important; }
+        
         footer { background-color: var(--header-bg); color: var(--text-main); text-align: center; padding: 15px; margin-top: 25px; border-radius: 12px 12px 0 0; font-size: 12px; border-top: 1px solid var(--border-container); width: 100%; max-width: 400px; margin-bottom: 20px; }
         .dev-name { color: #0056b3; font-weight: bold; margin-top: 5px; cursor: pointer; }
         body.dark-mode .dev-name { color: #4da3ff; }
@@ -268,12 +295,6 @@
         .stars i { font-size: 26px; color: #cbd5e1; transition: color 0.2s, transform 0.2s; }
         .stars i:hover { transform: scale(1.1); }
         .stars i.active { color: #ffc107; text-shadow: 0 0 8px rgba(255, 193, 7, 0.4); }
-        .feedback-input { width: 100%; padding: 10px; border: 2px solid var(--input-border); border-radius: 6px; font-size: 12px; font-family: 'Rudaw', Tahoma, Arial, sans-serif; background: var(--input-bg); color: var(--input-text); resize: none; margin-bottom: 12px; display: none; outline: none; transition: 0.3s; }
-        .feedback-input:focus { border-color: #0056b3; }
-        .submit-rating-btn { background: #0056b3; color: white; border: none; padding: 10px 15px; border-radius: 6px; font-family: 'Rudaw', Tahoma, sans-serif; font-size: 13px; font-weight: bold; cursor: pointer; display: none; width: 100%; transition: 0.3s; }
-        .submit-rating-btn:hover { background: #004494; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 86, 179, 0.2); }
-        body.dark-mode .submit-rating-btn { background: #4da3ff; color: #121212; }
-        .rating-thanks { display: none; color: #28a745; font-size: 13.5px; font-weight: bold; margin-top: 10px; }
         .admin-feedbacks-container { display: none; margin-top: 15px; text-align: right; background: var(--info-bg); padding: 12px; border-radius: 8px; border: 1px solid var(--border-container); }
 
         /* ستايلی تایبەت بە بەشی تاقیکردنەوەی هاتووچۆ */
@@ -290,8 +311,8 @@
         .quiz-progress { font-size: 12px; color: var(--label-color); text-align: center; margin-top: 15px; font-weight: bold; }
 
         /* مینیوی خوارەوە (Bottom Navigation) */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; display: flex; justify-content: space-around; padding: 10px 0; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1px solid var(--border-container); box-shadow: 0 -4px 15px rgba(0,0,0,0.05); z-index: 1000; padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
-        body.dark-mode .bottom-nav { background: rgba(30, 30, 30, 0.9); box-shadow: 0 -4px 15px rgba(0,0,0,0.2); }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; display: flex; justify-content: space-around; padding: 10px 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--border-container); box-shadow: 0 -4px 15px rgba(0,0,0,0.05); z-index: 1000; padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
+        body.dark-mode .bottom-nav { background: rgba(30, 30, 30, 0.85); box-shadow: 0 -4px 15px rgba(0,0,0,0.2); }
         .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--label-color); cursor: pointer; transition: all 0.3s ease; flex: 1; -webkit-tap-highlight-color: transparent; }
         .nav-item i { font-size: 22px; margin-bottom: 5px; transition: transform 0.2s; }
         .nav-item span { font-size: 11px; font-weight: bold; }
@@ -301,6 +322,11 @@
     </style>
 </head>
 <body>
+    <div id="ptr-indicator" class="no-print">
+        <i class="fa-solid fa-arrow-down" id="ptr-icon"></i>
+        <span id="ptr-text">ڕابکێشە بۆ نوێکردنەوە...</span>
+    </div>
+
     <div class="main-content" id="mainWrapper">
         <div class="header-title no-print">
             <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="گۆڕینی ڕەنگ">🌙</button>
@@ -311,7 +337,7 @@
             </h1>
         </div>
 
-        <div id="portalSection">
+        <div id="portalSection" class="page-section">
             <div class="visitor-counter no-print">
                 👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
             </div>
@@ -353,7 +379,7 @@
         </div>
 
         <!-- بەشی یارییەکە کە شاردراوەتەوە تا کاتی کرتەکردن -->
-        <div id="quizSection" style="display: none;">
+        <div id="quizSection" class="page-section" style="display: none;">
             <div class="quiz-container">
                 <div class="quiz-header" id="quizHeaderTitle">تاقیکردنەوەی هاتووچۆ 🚦</div>
                 <div id="quizPlayArea">
@@ -371,7 +397,7 @@
             </div>
         </div>
 
-        <div id="queueSection" style="display: none;">
+        <div id="queueSection" class="page-section" style="display: none;">
             <div class="visitor-counter no-print">
                 👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
             </div>
@@ -394,11 +420,13 @@
                 <div id="registrationInputs">
                     <div class="input-wrapper">
                         <i class="fa-solid fa-user"></i>
-                        <input type="text" id="nameInput" placeholder="ناوی سیانی بنووسە..." oninput="validateFormInputs()">
+                        <input type="text" id="nameInput" placeholder=" " oninput="validateFormInputs()">
+                        <label>ناوی سیانی بنووسە...</label>
                     </div>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-phone"></i>
-                        <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false" oninput="validateFormInputs()">
+                        <input type="tel" id="phoneInput" placeholder=" " maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false" oninput="validateFormInputs()">
+                        <label>ژمارەی تەلەفۆن (07700000000)</label>
                     </div>
                     <button id="registerBtn" class="action-btn" onclick="confirmAndRegister()" disabled style="background: #cccccc; cursor: not-allowed;">تۆمارکردن</button>
                 </div>
@@ -411,7 +439,8 @@
                 <h2>دڵنیابوونەوە لە ناوت</h2>
                 <div class="input-wrapper">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="tel" id="searchInput" placeholder="ژمارەی تەلەفۆنەکەت بنووسە..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)">
+                    <input type="tel" id="searchInput" placeholder=" " maxlength="11" onkeypress="return onlyEnglishNumbers(event)">
+                    <label>ژمارەی تەلەفۆنەکەت بنووسە...</label>
                 </div>
                 <button class="action-btn search-btn" onclick="searchUser()">گەڕان</button>
             </div>
@@ -435,7 +464,8 @@
                     <h3 style="margin-top: 0; font-size: 14px; color: #28a745;">گۆڕینی ژمارەی پشکی ڕۆژانە <span id="currentQuotaDisplay" style="background: #28a745; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px; margin-right: 5px;">(پشکی ئێستا: ...)</span></h3>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-users"></i>
-                        <input type="number" id="adminQuotaInput" placeholder="ژمارەی پشک (نموونە: 30)" min="1">
+                        <input type="number" id="adminQuotaInput" placeholder=" " min="1">
+                        <label>ژمارەی پشک (نموونە: 30)</label>
                     </div>
                     <button class="action-btn" style="background: #28a745; padding: 10px;" onclick="updateDailyQuota()">گۆڕینی پشک</button>
                 </div>
@@ -444,10 +474,11 @@
                     <h3 style="margin-top: 0; font-size: 14px; color: #dc3545;"><i class="fa-solid fa-ban"></i> لیستی ڕەش (Blacklist)</h3>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-phone-slash"></i>
-                        <input type="tel" id="blacklistPhoneInput" placeholder="ژمارەی مۆبایل بۆ بلۆککردن..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)">
+                        <input type="tel" id="blacklistPhoneInput" placeholder=" " maxlength="11" onkeypress="return onlyEnglishNumbers(event)">
+                        <label>ژمارەی مۆبایل بۆ بلۆککردن...</label>
                     </div>
                     <div class="input-wrapper" style="margin-top: 8px;">
-                        <select id="blacklistDuration" style="width: 100%; padding: 10px; border: 2px solid var(--input-border); border-radius: 6px; font-family: 'Rudaw', Tahoma, sans-serif; background: var(--input-bg); color: var(--input-text);">
+                        <select id="blacklistDuration">
                             <option value="7">بۆ ماوەی ٧ ڕۆژ</option>
                             <option value="30">بۆ ماوەی ١ مانگ</option>
                             <option value="365">بۆ ماوەی ١ ساڵ</option>
@@ -462,8 +493,8 @@
 
                 <div id="noticeAdminBlock" style="background: rgba(23, 162, 184, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(23, 162, 184, 0.2);" class="no-print">
                     <h3 style="margin-top: 0; font-size: 14px; color: #17a2b8;">گۆڕینی تێبینی و پێداویستییەکان (سلاید)</h3>
-                    <div class="input-wrapper">
-                        <textarea id="adminNoticeInput" rows="5" placeholder="دەقی ئاگاداری و پێداویستییەکان لێرە بنووسە..." style="width: 100%; padding: 10px; border: 2px solid var(--input-border); border-radius: 6px; font-family: 'Rudaw', Tahoma, sans-serif; background: var(--input-bg); color: var(--input-text); resize: vertical;"></textarea>
+                    <div class="input-wrapper" style="margin-bottom: 0;">
+                        <textarea id="adminNoticeInput" rows="5" placeholder="دەقی ئاگاداری و پێداویستییەکان لێرە بنووسە..."></textarea>
                     </div>
                     <button class="action-btn" style="background: #17a2b8; padding: 10px;" onclick="updateNoticeText()">پاشەکەوتکردنی تێبینی</button>
                 </div>
@@ -475,11 +506,13 @@
                     <div id="preRegForm" style="display: none; margin-top: 10px;">
                         <div class="input-wrapper">
                             <i class="fa-solid fa-user-shield"></i>
-                            <input type="text" id="adminNameInput" placeholder="ناوی سیانی بنووسە..." oninput="validateAdminFormInputs()">
+                            <input type="text" id="adminNameInput" placeholder=" " oninput="validateAdminFormInputs()">
+                            <label>ناوی سیانی بنووسە...</label>
                         </div>
                         <div class="input-wrapper">
                             <i class="fa-solid fa-phone"></i>
-                            <input type="tel" id="adminPhoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false" oninput="validateAdminFormInputs()">
+                            <input type="tel" id="adminPhoneInput" placeholder=" " maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false" oninput="validateAdminFormInputs()">
+                            <label>ژمارەی تەلەفۆن (07700000000)...</label>
                         </div>
                         <button id="adminRegBtn" class="action-btn" style="background: #28a745; padding: 10px;" onclick="adminRegisterUser()" disabled>تۆمارکردنی پێشوەختە</button>
                     </div>
@@ -531,7 +564,7 @@
             </div>
         </div>
 
-        <div id="fineSection" style="display: none;">
+        <div id="fineSection" class="page-section" style="display: none;">
             <div class="fine-container" id="fine-container-box">
                 <div class="visitor-counter">
                     👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
@@ -623,7 +656,9 @@
             <i class="fa-solid fa-star" data-value="4"></i>
             <i class="fa-solid fa-star" data-value="5"></i>
         </div>
-        <textarea id="feedbackText" class="feedback-input" rows="2" placeholder="تێبینییەکانت لێرە بنووسە (ئارەزوومەندانە)..."></textarea>
+        <div class="input-wrapper" style="margin-bottom: 0;">
+            <textarea id="feedbackText" rows="2" placeholder="تێبینییەکانت لێرە بنووسە (ئارەزوومەندانە)..." style="display:none;"></textarea>
+        </div>
         <button id="submitRatingBtn" class="submit-rating-btn" onclick="submitRating()">ناردنی هەڵسەنگاندن</button>
         <div id="ratingThanks" class="rating-thanks"><i class="fa-solid fa-circle-check"></i> زۆر سوپاس بۆ هەڵسەنگاندنەکەت!</div>
     </div>
@@ -668,6 +703,53 @@
             if (event.keyCode === 123 || (event.ctrlKey && event.shiftKey && (event.keyCode === 73 || event.keyCode === 67 || event.keyCode === 74)) || (event.ctrlKey && event.keyCode === 85)) {
                 event.preventDefault();
             }
+        });
+
+        // ----------------- سیستەمی ڕاکێشان بۆ خوارەوە (Pull-to-Refresh) -----------------
+        let pullStartY = 0;
+        let pullMoveY = 0;
+        let isPulling = false;
+        const ptrIndicator = document.getElementById('ptr-indicator');
+        const ptrIcon = document.getElementById('ptr-icon');
+        const ptrText = document.getElementById('ptr-text');
+
+        document.addEventListener('touchstart', e => {
+            if (window.scrollY === 0) {
+                pullStartY = e.touches[0].clientY;
+                isPulling = true;
+            }
+        }, {passive: true});
+
+        document.addEventListener('touchmove', e => {
+            if (!isPulling) return;
+            pullMoveY = e.touches[0].clientY;
+            let diff = pullMoveY - pullStartY;
+            if (diff > 0 && window.scrollY === 0) {
+                ptrIndicator.style.height = Math.min(diff * 0.4, 60) + 'px';
+                if (diff > 120) {
+                    ptrIcon.style.transform = 'rotate(180deg)';
+                    ptrText.innerText = "بەردە بۆ نوێکردنەوە...";
+                } else {
+                    ptrIcon.style.transform = 'rotate(0deg)';
+                    ptrText.innerText = "ڕابکێشە بۆ نوێکردنەوە...";
+                }
+            }
+        }, {passive: true});
+
+        document.addEventListener('touchend', e => {
+            if (!isPulling) return;
+            isPulling = false;
+            let diff = pullMoveY - pullStartY;
+            if (diff > 120 && window.scrollY === 0) {
+                ptrIndicator.style.height = '40px';
+                ptrIcon.className = 'fa-solid fa-spinner fa-spin';
+                ptrText.innerText = "نوێ دەکرێتەوە...";
+                setTimeout(() => location.reload(), 500);
+            } else {
+                ptrIndicator.style.height = '0px';
+            }
+            pullStartY = 0;
+            pullMoveY = 0;
         });
 
         function toEnglishDigits(str) {
@@ -756,44 +838,41 @@
             }
         }
 
-        // کۆنترۆڵکردنی مینیوی خوارەوە
+        // کۆنترۆڵکردنی مینیوی خوارەوە بە ئەنیمەیشن
         function navTo(section) {
             vibrate(10);
             openSection(section);
         }
 
         function openSection(section) {
-            document.getElementById('portalSection').style.display = 'none';
-            document.getElementById('queueSection').style.display = 'none';
-            document.getElementById('fineSection').style.display = 'none';
-            document.getElementById('quizSection').style.display = 'none';
+            // شاردنەوەی هەموویان
+            document.querySelectorAll('.page-section').forEach(el => {
+                el.style.display = 'none';
+            });
 
             // گۆڕینی ڕەنگی دوگمەی مینیوی خوارەوە
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             let activeNav = document.getElementById('nav-' + section);
             if(activeNav) activeNav.classList.add('active');
 
+            // کردنەوەی بەشەکە بە ئەنیمەیشنەوە
+            let targetSection = document.getElementById(section + 'Section');
+            if(targetSection) {
+                targetSection.style.display = 'block';
+            }
+
             if(section === 'portal') {
-                document.getElementById('portalSection').style.display = 'block';
                 loadNoticeText();
             }
             else if(section === 'queue') {
-                document.getElementById('queueSection').style.display = 'block';
                 checkQuotaAndTimer(); checkSavedTicket();
             }
-            else if(section === 'fine') {
-                document.getElementById('fineSection').style.display = 'block';
-            }
             else if(section === 'quiz') {
-                document.getElementById('quizSection').style.display = 'block';
                 initQuiz();
             }
             
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
-
-        // یەکەم جار کە سایتەکە دەکرێتەوە
-        navTo('portal');
 
         let currentTheme = localStorage.getItem("theme");
         if (!currentTheme) currentTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? "dark" : "light";
@@ -1623,11 +1702,18 @@
 
             if (!window.adminPwd) { return Swal.fire('ئاگاداری', 'تکایە سەرەتا لە بەشی ئەدمین چوونەژوورەوە بکە!', 'warning'); }
 
-            Swal.fire({ title: 'چاوەڕێ بکە...', html: '<b>خەریکی هێنانی داتاکانە لە سێرڤەرەوە...</b>', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
+            // نیشاندانی Skeleton لەناو خشتەکە لەکاتی هێنانی داتادا
+            table.style.display = "table";
+            tbody.innerHTML = `
+                <tr><td colspan='5'><div class='skeleton'></div></td></tr>
+                <tr><td colspan='5'><div class='skeleton'></div></td></tr>
+                <tr><td colspan='5'><div class='skeleton'></div></td></tr>
+            `;
 
             try {
                 let response = await fetch(`${apiUrl}/today-list`, { method: "GET", headers: { "Admin-Password": window.adminPwd } });
                 if (response.status === 429) {
+                    tbody.innerHTML = ""; table.style.display = "none";
                     return Swal.fire('سزادراویت!', 'بەهۆی زۆر تاقیکردنەوەی هەڵە، ئایپییەکەت سزادراوە. تکایە چاوەڕێ بکە.', 'error');
                 }
                 if (!response.ok) {
@@ -1665,10 +1751,11 @@
                         tbody.innerHTML += row;
                     });
                 }
-                table.style.display = "table"; 
                 loadAdminStats();
-                Swal.close();
-            } catch (error) { Swal.fire('کێشەی هێڵ', 'سێرڤەرەکە خەوتووە یان کێشەی هێڵ هەیە، تکایە دووبارە تاقیبکەرەوە!', 'error'); }
+            } catch (error) { 
+                tbody.innerHTML = ""; table.style.display = "none";
+                Swal.fire('کێشەی هێڵ', 'سێرڤەرەکە خەوتووە یان کێشەی هێڵ هەیە، تکایە دووبارە تاقیبکەرەوە!', 'error'); 
+            }
         }
 
         function validateAdminFormInputs() {
@@ -1818,14 +1905,21 @@
 
         async function loadFeedbacks() {
             if (!window.adminPwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە!', 'warning');
-            Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
+            
+            let listDiv = document.getElementById("feedbacksList");
+            listDiv.innerHTML = `
+                <div class='skeleton'></div>
+                <div class='skeleton'></div>
+                <div class='skeleton'></div>
+            `;
+            document.getElementById("feedbacksContainer").style.display = "block";
+            document.getElementById("usersTable").style.display = "none";
             
             try {
                 let response = await fetch(`${baseUrl}/api/admin/feedback`, { headers: { "Admin-Password": window.adminPwd } });
                 
                 if (response.ok) {
                     let feedbacks = await response.json();
-                    let listDiv = document.getElementById("feedbacksList");
                     listDiv.innerHTML = "";
                     
                     if (!feedbacks || feedbacks.length === 0) {
@@ -1844,14 +1938,12 @@
                             `;
                         });
                     }
-                    
-                    document.getElementById("feedbacksContainer").style.display = "block";
-                    document.getElementById("usersTable").style.display = "none";
-                    Swal.close();
                 } else {
+                    listDiv.innerHTML = "";
                     Swal.fire('هەڵە', 'دەسەڵاتت نییە یان کێشەیەک هەیە!', 'error');
                 }
             } catch (error) {
+                listDiv.innerHTML = "";
                 Swal.fire('کێشە', 'سێرڤەرەکە خەوتووە یان کێشەی هێڵ هەیە', 'error');
             }
         }
@@ -1867,7 +1959,9 @@
                 fetch(`${apiUrl}/verify-qr?token=${encodeURIComponent(verifyToken)}`).then(res => res.json()).then(data => {
                     document.getElementById('verifyResult').innerHTML = data.isValid ? `<span style="color:#28a745;">✓ ${data.message}</span>` : `<span style="color:#dc3545;">✕ ${data.message}</span>`;
                 }).catch(err => { document.getElementById('verifyResult').innerHTML = "کێشە هەیە!"; });
-            } else navTo('portal');
+            } else {
+                navTo('portal');
+            }
         };
 
         let deferredPrompt;
