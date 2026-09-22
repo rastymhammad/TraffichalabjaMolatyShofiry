@@ -67,6 +67,7 @@
             --text-main: #e0e0e0;
             --border-container: #334155;
             --header-bg: #1e1e1e;
+            --header-text: #4da3ff;
             --input-bg: #2c2c2c;
             --input-border: #444;
             --input-text: #fff;
@@ -120,21 +121,27 @@
         
         .main-content { flex: 1; width: 100%; max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
         #portalSection, #queueSection, #fineSection, #quizSection { width: 100%; }
+        #queueSection #adminSection { max-width: 700px; width: 100%; margin: 0 auto; }
         
-        .header-title { position: relative; background: var(--header-bg); padding: 15px 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin: 5px auto 10px auto; border-bottom: 4px solid var(--active-color); transition: 0.3s; width: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+        .header-title { position: relative; background: var(--header-bg); padding: 15px 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin: 10px auto 12px auto; border-bottom: 4px solid var(--active-color); transition: 0.3s; width: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; }
         .header-title h1 { color: var(--active-color); font-size: 16px; margin: 0; font-weight: bold; text-align: center; }
         .header-title h1 a { color: inherit; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; }
-        .theme-toggle-btn { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); background: transparent; border: none; font-size: 20px; cursor: pointer; padding: 0; margin: 0; transition: transform 0.2s; z-index: 10; color: var(--active-color); }
-        #smartGreeting { font-size: 12px; font-weight: bold; color: var(--label-color); margin-top: 5px; }
-
-        .top-info-row { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 0 10px; margin-bottom: 15px; margin-top: 0; }
-        .visitor-counter { font-size: 12px; color: var(--label-color); font-weight: bold; }
-        .visitor-counter b { color: var(--text-main); }
-        .theme-colors { display: flex; gap: 6px; align-items: center; background: var(--header-bg); padding: 4px 8px; border-radius: 20px; border: 1px solid var(--border-container); box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
-        .theme-colors span.color-label { font-size: 10px; color: var(--label-color); font-weight: bold; margin-left: 4px; }
-        .color-dot { width: 14px; height: 14px; border-radius: 50%; cursor: pointer; border: 2px solid var(--bg-body); transition: transform 0.2s; }
-        .color-dot:active { transform: scale(0.8); }
         
+        .theme-toggle-btn { position: absolute; left: 12px; top: 15px; background: transparent; border: none; font-size: 20px; cursor: pointer; padding: 0; margin: 0; transition: transform 0.2s; z-index: 10; color: var(--active-color); }
+        .theme-toggle-btn:hover { transform: scale(1.1); }
+        
+        #smartGreeting { font-size: 12px; font-weight: bold; color: var(--label-color); margin-top: 5px; }
+        
+        /* دیزاینی نوێی بەشی خوارەوەی سەردێڕ (بەکارهێنەر و ڕەنگەکان) */
+        .header-bottom-bar { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 15px; padding-top: 10px; border-top: 1px dashed var(--border-container); }
+        .visitor-counter { font-size: 12px; color: var(--label-color); font-weight: bold; margin: 0; }
+        .visitor-counter b { color: var(--text-main); }
+        
+        .theme-colors { display: flex; gap: 6px; align-items: center; background: transparent; padding: 0; border: none; box-shadow: none; }
+        .theme-colors span.color-label { font-size: 11px; color: var(--label-color); font-weight: bold; margin-left: 5px; }
+        .color-dot { width: 14px; height: 14px; border-radius: 50%; cursor: pointer; border: 2px solid var(--bg-body); transition: transform 0.2s; box-shadow: 0 0 3px rgba(0,0,0,0.2); }
+        .color-dot:active { transform: scale(0.8); }
+
         .notice-slider-box { background: var(--bg-container); border: 2px solid var(--active-color); border-radius: 12px; padding: 10px 15px; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center; width: 100%; overflow: hidden; position: relative; transition: border-color 0.3s; }
         .notice-header-row { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: bold; color: var(--active-color); margin-bottom: 6px; border-bottom: 1px dashed var(--border-container); padding-bottom: 4px; transition: color 0.3s; }
         .notice-scroll-container.horizontal { width: 100%; height: 25px; display: flex; align-items: center; }
@@ -179,7 +186,7 @@
         .timer-box { background: rgba(220, 53, 69, 0.08); border: 1px dashed #dc3545; padding: 8px 10px; border-radius: 8px; font-size: 13px; color: #d9534f; margin-top: 12px; font-weight: bold; display: none; text-align: center; }
         .timer-box span { font-size: 12px; color: #dc3545; display: inline-block; margin-left: 5px; }
         
-        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 15px; }
+        .table-responsive { width: 100%; overflow-x: auto; margin-top: 15px; }
         #usersTable { width: 100%; border-collapse: collapse; text-align: center; font-size: 11px; }
         #usersTable th, #usersTable td { white-space: nowrap; padding: 8px; border: 1px solid var(--border-container); color: var(--text-main); }
         #usersTable th { background: var(--active-color); color: white; transition: background 0.3s; }
@@ -307,7 +314,6 @@
 </head>
 <body>
 
-    <!-- بانەری دابەزاندنی ئەپڵیکەیشن -->
     <div id="installAppContainer" class="install-banner no-print" style="display: none;">
         <div class="install-banner-content">
             <img src="icon-192.png" alt="Logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1043/1043306.png'">
@@ -322,7 +328,6 @@
         </div>
     </div>
 
-    <!-- شاشەی پێشوازی (Onboarding) -->
     <div id="onboardingOverlay">
         <div class="ob-slide active" id="ob1">
             <i class="fa-solid fa-id-card ob-icon"></i>
@@ -347,7 +352,6 @@
         <button class="ob-next-btn" id="obNextBtn" onclick="nextOnboarding()">دواتر</button>
     </div>
 
-    <!-- ڕاکێشان بۆ خوارەوە (Pull-to-Refresh) -->
     <div id="ptr-indicator" class="no-print">
         <i class="fa-solid fa-arrow-down" id="ptr-icon"></i>
         <span id="ptr-text">ڕابکێشە بۆ نوێکردنەوە...</span>
@@ -363,17 +367,17 @@
                 </a>
             </h1>
             <div id="smartGreeting">بەیانیت باش ☀️</div>
-        </div>
-        
-        <div class="top-info-row no-print">
-            <div class="theme-colors">
-                <span class="color-label">ڕەنگ:</span>
-                <span class="color-dot" style="background:#fd7e14;" onclick="changeThemeColor('#fd7e14', '#ffb84d')"></span>
-                <span class="color-dot" style="background:#28a745;" onclick="changeThemeColor('#28a745', '#48bb78')"></span>
-                <span class="color-dot" style="background:#0056b3;" onclick="changeThemeColor('#0056b3', '#4da3ff')"></span>
-            </div>
-            <div class="visitor-counter">
-                👁️ بەکارهێنەر: <b class="visitor-count-text">...</b>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 12px; padding-top: 8px; border-top: 1px dashed var(--border-container);">
+                <div class="theme-colors" style="box-shadow: none; border: none; background: transparent; padding: 0;">
+                    <span class="color-label" style="margin-left: 8px;">ڕەنگ:</span>
+                    <span class="color-dot" style="background:#0056b3;" onclick="changeThemeColor('#0056b3', '#4da3ff')"></span>
+                    <span class="color-dot" style="background:#28a745;" onclick="changeThemeColor('#28a745', '#48bb78')"></span>
+                    <span class="color-dot" style="background:#fd7e14;" onclick="changeThemeColor('#fd7e14', '#ffb84d')"></span>
+                </div>
+                <div class="visitor-counter" style="margin-bottom: 0;">
+                    👁️ بەکارهێنەر: <b class="visitor-count-text">...</b>
+                </div>
             </div>
         </div>
 
@@ -583,7 +587,7 @@
                 <div class="toggle-container">
                     <span id="fine-status-text" style="font-weight: bold; color: #48bb78; font-size: 13px;">✓ داشکاندنی غەرامە (٢٠٪) چالاکە</span>
                     <label class="switch">
-                        <input type="checkbox" id="university-toggle" checked onchange="calculateFine()">
+                        <input type="checkbox" id="university-toggle" checked onchange="vibrate(); calculateFine()">
                         <span class="slider"></span>
                     </label>
                 </div>
@@ -654,7 +658,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <!-- مۆداڵی ڕۆژژمێر -->
@@ -721,8 +724,12 @@
     </nav>
 
     <script>
-        // دڵنیابوون لە شاردنەوەی سەرەکی تا ئەوکاتەی بار دەکرێت
-        document.getElementById('mainWrapper').style.display = 'flex';
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('keydown', event => {
+            if (event.keyCode === 123 || (event.ctrlKey && event.shiftKey && (event.keyCode === 73 || event.keyCode === 67 || event.keyCode === 74)) || (event.ctrlKey && event.keyCode === 85)) {
+                event.preventDefault();
+            }
+        });
 
         function changeThemeColor(primary, darkPrimary) {
             document.documentElement.style.setProperty('--theme-color', primary);
@@ -738,6 +745,7 @@
             document.documentElement.style.setProperty('--theme-color-dark', savedDark);
         }
 
+        // کۆنترۆڵکردنی پەڕەکان
         function navTo(section) {
             vibrate(10);
             
@@ -1302,8 +1310,7 @@
                         hash = hash & hash;
                     }
                     
-                    let screenInfo = screen.width + "x" + screen.height;
-                    try { if (navigator.hardwareConcurrency) screenInfo += "_" + navigator.hardwareConcurrency; } catch(e){}
+                    let screenInfo = screen.width + "x" + screen.height + "_" + navigator.hardwareConcurrency;
                     resolve(hash.toString() + "_" + screenInfo);
                 } catch (e) {
                     resolve("unknown_device_" + Math.random());
@@ -1957,8 +1964,13 @@
             if (!hasSeenOb) {
                 document.querySelectorAll('.page-section').forEach(el => el.style.display = 'none');
                 document.getElementById('bottomNav').style.display = 'none';
+                document.getElementById('footerArea').style.display = 'none';
                 document.getElementById('onboardingOverlay').style.display = 'flex';
+                document.getElementById('themeToggleBtn').style.display = 'none';
             } else {
+                document.getElementById('bottomNav').style.display = 'flex';
+                document.getElementById('footerArea').style.display = 'block';
+                document.getElementById('themeToggleBtn').style.display = 'block';
                 setSmartGreeting();
                 calculateFine(true);
                 navTo('portal');
@@ -1981,6 +1993,8 @@
                 localStorage.setItem('has_seen_onboarding', 'true');
                 document.getElementById('onboardingOverlay').style.display = 'none';
                 document.getElementById('bottomNav').style.display = 'flex';
+                document.getElementById('footerArea').style.display = 'block';
+                document.getElementById('themeToggleBtn').style.display = 'block';
                 setSmartGreeting();
                 calculateFine(true);
                 navTo('portal');
@@ -1997,6 +2011,7 @@
             if (verifyToken) {
                 document.querySelectorAll('.page-section').forEach(el => el.style.display = 'none');
                 document.getElementById('bottomNav').style.display = 'none';
+                document.getElementById('footerArea').style.display = 'none';
                 document.getElementById('verifySection').style.display = 'block';
                 fetch(`${apiUrl}/verify-qr?token=${encodeURIComponent(verifyToken)}`).then(res => res.json()).then(data => {
                     document.getElementById('verifyResult').innerHTML = data.isValid ? `<span style="color:#28a745;">✓ ${data.message}</span>` : `<span style="color:#dc3545;">✕ ${data.message}</span>`;
@@ -2043,6 +2058,7 @@
             Swal.fire('پیرۆزە!', 'ئەپەکە بە سەرکەوتوویی دابەزییە سەر مۆبایلەکەت.', 'success');
         });
 
+        // ----------------- یاری زانیارییەکانی هاتووچۆ -----------------
         const allTrafficQuestions = [
             { q: "هێڵی بەردەوام (موتەسিল) چی دەگەیەنێت؟", options: ["پەڕینەوە و پێشپەڕین قەدەغەیە", "بۆ جوانی کێشراوە", "خێرایی دیاری دەکات", "ڕێگەپێدراوە بۆ پێشپەڕین"], answer: 0 },
             { q: "کامێرای خاڵ بۆ خاڵ (پۆینت تو پۆینت) چۆن کار دەکات؟", options: ["تێکڕای خێرایی نێوان دوو کامێرا هەژمار دەکات", "تەنها لە شەو کار دەکات", "تەنها خێرایی یەک خاڵ دەپێوێت", "وێنەی سەرنشین دەگرێت"], answer: 0 },
@@ -2109,6 +2125,16 @@
         let selectedQuestions = [];
         let currentQuizIndex = 0;
         let quizScore = 0;
+
+        function shuffleArray(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
 
         function initQuiz() {
             let shuffled = shuffleArray([...allTrafficQuestions]);
