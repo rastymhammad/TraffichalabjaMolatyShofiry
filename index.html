@@ -36,9 +36,12 @@
             --text-main: #333;
             --border-container: #e2e8f0;
             --header-bg: white;
+            --header-text: #0056b3;
             --input-bg: white;
             --input-border: #f5c6cb;
             --input-text: #333;
+            --badge-bg: linear-gradient(135deg, #1a365d, #2a4365);
+            --badge-text: white;
             --toggle-bg: #f7fafc;
             --toggle-border: #e2e8f0;
             --slider-bg: #e2e8f0;
@@ -49,15 +52,16 @@
             --results-bg: #f7fafc;
             --results-border: #e2e8f0;
             --text-row: #4a5568;
+            --total-color: #2b6cb0;
+            --fine-color: #e53e3e;
+            --fee-color: #3182ce;
             --info-bg: #edf2f7;
+            --info-text: #718096;
             --modal-overlay: rgba(0, 0, 0, 0.4);
             --modal-bg: white;
             --modal-text: #2d3748;
             --grid-bg: #edf2f7;
-            
-            --theme-color: #0056b3;
-            --theme-color-dark: #4da3ff;
-            --active-color: var(--theme-color);
+            --dynamic-status-color: #48bb78;
         }
 
         body.dark-mode {
@@ -66,9 +70,12 @@
             --text-main: #e0e0e0;
             --border-container: #334155;
             --header-bg: #1e1e1e;
+            --header-text: #4da3ff;
             --input-bg: #2c2c2c;
             --input-border: #444;
             --input-text: #fff;
+            --badge-bg: linear-gradient(135deg, #0f172a, #1e293b);
+            --badge-text: #f8fafc;
             --toggle-bg: #1e293b;
             --toggle-border: #334155;
             --slider-bg: #475569;
@@ -79,122 +86,98 @@
             --results-bg: #0f172a;
             --results-border: #334155;
             --text-row: #94a3b8;
+            --total-color: #38bdf8;
+            --fine-color: #f87171;
+            --fee-color: #60a5fa;
             --info-bg: #0f172a;
+            --info-text: #94a3b8;
             --modal-overlay: rgba(15, 23, 42, 0.6);
             --modal-bg: #1e293b;
             --modal-text: #f8fafc;
             --grid-bg: #334155;
-            
-            --active-color: var(--theme-color-dark);
         }
 
-        body { font-family: 'Rudaw', Tahoma, Arial, sans-serif; background-color: var(--bg-body); color: var(--text-main); padding: 0 10px 80px 10px; margin: 0; text-align: center; transition: background-color 0.4s, color 0.4s; display: flex; flex-direction: column; align-items: center; min-height: 100vh; user-select: none; overflow-x: hidden; }
+        body { font-family: 'Rudaw', Tahoma, Arial, sans-serif; background-color: var(--bg-body); color: var(--text-main); padding: 15px 10px 80px 10px; margin: 0; text-align: center; transition: background-color 0.4s, color 0.4s; display: flex; flex-direction: column; align-items: center; min-height: 100vh; user-select: none; }
+        .main-content { flex: 1; width: 100%; max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+        #portalSection, #queueSection, #fineSection, #quizSection { width: 100%; }
+        #queueSection #adminSection { max-width: 700px; width: 100%; margin: 0 auto; }
         
         * { box-sizing: border-box; }
 
-        @keyframes pulseRotate {
-            0% { transform: scale(1) rotate(0deg); opacity: 0.8; }
-            50% { transform: scale(1.15) rotate(180deg); opacity: 1; filter: drop-shadow(0 0 5px rgba(220, 53, 69, 0.7)); }
-            100% { transform: scale(1) rotate(360deg); opacity: 0.8; }
-        }
-
+        @keyframes pulseRotate { 0% { transform: scale(1) rotate(0deg); opacity: 0.8; } 50% { transform: scale(1.15) rotate(180deg); opacity: 1; filter: drop-shadow(0 0 5px rgba(220, 53, 69, 0.7)); } 100% { transform: scale(1) rotate(360deg); opacity: 0.8; } }
         .fa-hourglass-half, #countdownTimer i { display: inline-block; animation: pulseRotate 2.5s infinite ease-in-out; }
+        
         @keyframes badgePulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(72, 187, 120, 0.4); } 70% { transform: scale(1.02); box-shadow: 0 0 0 8px rgba(72, 187, 120, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(72, 187, 120, 0); } }
         .status-badge { animation: badgePulse 2s infinite; }
+        
         @keyframes softGlow { 0% { box-shadow: 0 0 5px rgba(40, 167, 69, 0.4); } 50% { box-shadow: 0 0 18px rgba(40, 167, 69, 0.8); } 100% { box-shadow: 0 0 5px rgba(40, 167, 69, 0.4); } }
         button.action-btn:not(:disabled) { animation: softGlow 3s infinite; }
 
-        @keyframes slideFade {
-            0% { opacity: 0; transform: translateX(20px); }
-            100% { opacity: 1; transform: translateX(0); }
-        }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .animated-section { animation: slideIn 0.4s ease forwards; }
 
-        .skeleton { background: linear-gradient(90deg, var(--bg-container) 25%, var(--info-bg) 50%, var(--bg-container) 75%); background-size: 200% 100%; animation: skeletonLoading 1.5s infinite; border-radius: 6px; height: 20px; width: 100%; margin: 5px 0; }
-        @keyframes skeletonLoading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-
-        .swal2-popup { border-radius: 20px !important; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); background: rgba(255, 255, 255, 0.85) !important; box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important; border: 1px solid rgba(255,255,255,0.6) !important; font-family: 'Rudaw', Tahoma, sans-serif !important; }
-        body.dark-mode .swal2-popup { background: rgba(30, 30, 30, 0.85) !important; border-color: rgba(255,255,255,0.1) !important; color: #e0e0e0 !important; }
-        body.dark-mode .swal2-title, body.dark-mode .swal2-html-container { color: #e0e0e0 !important; }
-        body.dark-mode .swal2-input, body.dark-mode .swal2-textarea { background: #2c2c2c !important; color: #fff !important; border-color: #444 !important; }
-
-        #ptr-indicator { width: 100%; height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: bold; color: var(--active-color); transition: height 0.2s ease-out; }
-        
-        .main-content { flex: 1; width: 100%; max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
-        #portalSection, #queueSection, #fineSection, #quizSection { width: 100%; animation: slideFade 0.35s cubic-bezier(0.25, 0.8, 0.25, 1); }
-        #queueSection #adminSection { max-width: 700px; width: 100%; margin: 0 auto; }
-        
-        .header-title { position: relative; background: var(--header-bg); padding: 15px 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin: 5px auto 12px auto; border-bottom: 4px solid var(--active-color); transition: 0.3s; width: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; }
-        .header-title h1 { color: var(--active-color); font-size: 16px; margin: 0; font-weight: bold; text-align: center; }
+        .header-title { position: relative; background: var(--header-bg); padding: 15px 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin: 10px auto 15px auto; border-bottom: 4px solid #0056b3; transition: 0.3s; width: 100%; display: flex; align-items: center; justify-content: center; }
+        body.dark-mode .header-title { border-bottom-color: #4da3ff; }
+        .header-title h1 { color: var(--header-text); font-size: 17px; margin: 0; font-weight: bold; text-align: center; }
         .header-title h1 a { color: inherit; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .theme-toggle-btn { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); background: transparent; border: none; font-size: 22px; cursor: pointer; z-index: 10; }
         
-        .theme-toggle-btn { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); background: transparent; border: none; font-size: 20px; cursor: pointer; padding: 0; margin: 0; transition: transform 0.2s; z-index: 10; color: var(--active-color); }
-        .theme-toggle-btn:hover { transform: translateY(-50%) scale(1.1); }
-        
-        #smartGreeting { font-size: 12px; font-weight: bold; color: var(--label-color); margin-top: 5px; animation: fadeInUp 1s ease-out; }
-        
-        .top-info-row { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 0 10px; margin-bottom: 12px; }
-        .visitor-counter { font-size: 12px; color: var(--label-color); font-weight: bold; }
+        .visitor-counter { text-align: center; font-size: 12px; color: var(--label-color); margin-bottom: 8px; font-weight: bold; }
         .visitor-counter b { color: var(--text-main); }
         
-        .theme-colors { display: flex; gap: 6px; align-items: center; background: var(--header-bg); padding: 4px 8px; border-radius: 20px; border: 1px solid var(--border-container); box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
-        .theme-colors span.color-label { font-size: 10px; color: var(--label-color); font-weight: bold; margin-left: 4px; }
-        .color-dot { width: 14px; height: 14px; border-radius: 50%; cursor: pointer; border: 2px solid var(--bg-body); transition: transform 0.2s; }
-        .color-dot:active { transform: scale(0.8); }
-        
-        .notice-slider-box { background: var(--bg-container); border: 2px solid var(--active-color); border-radius: 12px; padding: 10px 15px; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center; width: 100%; overflow: hidden; position: relative; transition: border-color 0.3s; }
-        .notice-header-row { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: bold; color: var(--active-color); margin-bottom: 6px; border-bottom: 1px dashed var(--border-container); padding-bottom: 4px; transition: color 0.3s; }
-        .notice-scroll-container.horizontal { width: 100%; height: 25px; display: flex; align-items: center; }
+        .notice-slider-box { background: var(--bg-container); border: 2px solid #0056b3; border-radius: 12px; padding: 12px 15px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,86,179,0.08); text-align: center; width: 100%; overflow: hidden; position: relative; }
+        body.dark-mode .notice-slider-box { border-color: #4da3ff; }
+        .notice-header-row { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: bold; color: #0056b3; margin-bottom: 8px; border-bottom: 1px dashed var(--border-container); padding-bottom: 6px; }
+        body.dark-mode .notice-header-row { color: #4da3ff; }
+        .notice-scroll-container.horizontal { width: 100%; height: 30px; display: flex; align-items: center; }
         .notice-scroll-container.horizontal marquee { font-size: 12px; color: var(--text-main); font-weight: bold; width: 100%; text-align: center; }
-        .notice-scroll-container.vertical { width: 100%; height: 75px; overflow: hidden; position: relative; text-align: center; }
-        .notice-scroll-container.vertical marquee { font-size: 12px; color: var(--text-main); line-height: 1.6; white-space: pre-line; text-align: center; width: 100%; height: 100%; }
+        .notice-scroll-container.vertical { width: 100%; height: 110px; overflow: hidden; position: relative; text-align: center; }
+        .notice-scroll-container.vertical marquee { font-size: 12px; color: var(--text-main); line-height: 1.8; white-space: pre-line; text-align: center; width: 100%; height: 100%; }
         
-        .portal-cards { display: flex; flex-direction: column; gap: 10px; width: 100%; align-items: center; }
-        .portal-card { position: relative; background: var(--header-bg); border: 2px solid var(--border-container); border-radius: 12px; padding: 12px 15px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; width: 100%; max-width: 380px; margin: 0 auto; min-height: 75px; }
-        .portal-card:hover { transform: translateY(-4px); border-color: var(--active-color); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-        .portal-card i { position: absolute; right: 20px; font-size: 30px; color: var(--active-color); transition: color 0.3s; }
+        .portal-cards { display: flex; flex-direction: column; gap: 12px; width: 100%; align-items: center; }
+        .portal-card { position: relative; background: var(--header-bg); border: 2px solid var(--border-container); border-radius: 12px; padding: 20px 15px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; width: 100%; max-width: 380px; margin: 0 auto; min-height: 95px; }
+        .portal-card:hover { transform: translateY(-4px); border-color: #0056b3; box-shadow: 0 8px 20px rgba(0,86,179,0.15); }
+        body.dark-mode .portal-card:hover { border-color: #4da3ff; box-shadow: 0 8px 20px rgba(77,163,255,0.15); }
+        .portal-card i { position: absolute; right: 20px; font-size: 32px; color: #0056b3; }
+        body.dark-mode .portal-card i { color: #4da3ff; }
         .portal-card-content { text-align: center; width: 100%; padding: 0 35px; }
-        .portal-card-content h3 { margin: 0 0 4px 0; font-size: 14px; color: var(--text-main); font-weight: bold; }
+        .portal-card-content h3 { margin: 0 0 6px 0; font-size: 15px; color: var(--text-main); font-weight: bold; }
         .portal-card-content p { margin: 0; font-size: 11px; color: var(--label-color); }
         
-        .status-badge { display: inline-flex; align-items: center; gap: 8px; margin: 0 auto 12px auto; padding: 6px 14px; font-size: 12px; font-weight: bold; border-radius: 20px; width: fit-content; text-align: center; }
+        .status-badge { display: inline-flex; align-items: center; gap: 8px; margin: 0 auto 12px auto; padding: 6px 14px; font-size: 12px; font-weight: bold; border-radius: 20px; }
         .status-open { background: #d4edda; color: #155724; }
         .status-closed { background: #f8d7da; color: #721c24; }
-        .dot { height: 10px; width: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+        .dot { height: 10px; width: 10px; border-radius: 50%; display: inline-block; }
         .dot-green { background-color: #28a745; box-shadow: 0 0 8px #28a745; }
         .dot-red { background-color: #dc3545; box-shadow: 0 0 8px #dc3545; }
         
         .container { background: var(--bg-container); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: 0 auto 20px auto; border: 1px solid var(--border-container); width: 100%; }
-        h2 { color: var(--active-color); margin-top: 0; margin-bottom: 15px; font-size: 16px; transition: color 0.3s; }
-
-        .input-wrapper { position: relative; width: 100%; margin: 12px 0; }
-        .input-wrapper i { position: absolute; right: 12px; top: 15px; color: var(--active-color); font-size: 16px; z-index: 2; transition: color 0.3s; }
-        .input-wrapper input { width: 100%; padding: 20px 35px 8px 10px; box-sizing: border-box; border: 2px solid var(--input-border); border-radius: 6px; font-size: 14px; font-family: 'Rudaw', Tahoma, Arial, sans-serif; outline: none; transition: 0.3s ease all; background: var(--input-bg); color: var(--input-text); user-select: text; }
-        .input-wrapper label { position: absolute; right: 35px; top: 14px; font-size: 13px; color: var(--label-color); transition: 0.3s ease all; pointer-events: none; z-index: 1; }
-        .input-wrapper input:focus ~ label, .input-wrapper input:not(:placeholder-shown) ~ label { top: 4px; font-size: 10px; color: var(--active-color); font-weight: bold; }
+        h2 { color: var(--header-text); margin-top: 0; margin-bottom: 15px; font-size: 16px; }
         
-        .input-wrapper input:disabled { background-color: #e9ecef; cursor: not-allowed; opacity: 0.7; }
-        .input-wrapper input.valid-input { border-color: #28a745 !important; box-shadow: 0 0 5px rgba(40, 167, 69, 0.3); }
-        .input-wrapper input.invalid-input { border-color: #f5c6cb !important; box-shadow: 0 0 5px rgba(245, 198, 203, 0.5); }
+        .input-wrapper { position: relative; width: 100%; margin: 8px 0; }
+        .input-wrapper i { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--header-text); font-size: 16px; z-index: 2;}
+        .input-wrapper input { width: 100%; padding: 10px 35px 10px 10px; box-sizing: border-box; border: 2px solid var(--input-border); border-radius: 6px; font-size: 14px; font-family: 'Rudaw', Tahoma, Arial, sans-serif; outline: none; background: var(--input-bg); color: var(--input-text); }
+        .input-wrapper input.valid-input { border-color: #28a745 !important; }
+        .input-wrapper input.invalid-input { border-color: #f5c6cb !important; }
+        
         .input-wrapper select, .input-wrapper textarea { width: 100%; padding: 10px; border: 2px solid var(--input-border); border-radius: 6px; font-family: 'Rudaw', Tahoma, sans-serif; background: var(--input-bg); color: var(--input-text); outline: none; }
         
-        button.action-btn { background: #28a745; color: white; border: none; padding: 12px 20px; cursor: pointer; border-radius: 6px; font-size: 15px; font-weight: bold; width: 100%; margin-top: 8px; font-family: 'Rudaw', Tahoma, sans-serif; transition: 0.3s; }
-        button.action-btn:disabled { background: #cccccc !important; color: #666666 !important; cursor: not-allowed !important; box-shadow: none !important; }
-        button.action-btn:hover:not(:disabled) { background: #218838; }
-        .search-btn { background: var(--active-color); transition: background 0.3s; }
-        
+        button.action-btn { background: #28a745; color: white; border: none; padding: 12px 20px; cursor: pointer; border-radius: 6px; font-size: 15px; font-weight: bold; width: 100%; margin-top: 8px; font-family: 'Rudaw', Tahoma, sans-serif; }
+        button.action-btn:disabled { background: #cccccc !important; cursor: not-allowed; }
+        .search-btn { background: #007bff; }
         .timer-box { background: rgba(220, 53, 69, 0.08); border: 1px dashed #dc3545; padding: 8px 10px; border-radius: 8px; font-size: 13px; color: #d9534f; margin-top: 12px; font-weight: bold; display: none; text-align: center; }
-        .timer-box span { font-size: 12px; color: #dc3545; display: inline-block; margin-left: 5px; }
         
-        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 15px; }
+        .table-responsive { width: 100%; overflow-x: auto; margin-top: 15px; }
         #usersTable { width: 100%; border-collapse: collapse; text-align: center; font-size: 11px; }
-        #usersTable th, #usersTable td { white-space: nowrap; padding: 8px; border: 1px solid var(--border-container); color: var(--text-main); }
-        #usersTable th { background: var(--active-color); color: white; transition: background 0.3s; }
+        #usersTable th, #usersTable td { padding: 8px; border: 1px solid var(--border-container); color: var(--text-main); }
+        #usersTable th { background: #0056b3; color: white; }
         body.dark-mode #usersTable th, body.dark-mode #usersTable td { border-color: #444; }
         
         .dashboard-cards { display: flex; gap: 6px; margin-bottom: 12px; justify-content: space-between; }
         .dash-card { background: var(--bg-container); border: 1px solid var(--border-container); border-radius: 6px; padding: 8px 4px; flex: 1; text-align: center; }
         .dash-card h4 { margin: 0 0 2px 0; font-size: 10px; color: var(--label-color); }
-        .dash-card h3 { margin: 0; font-size: 15px; color: var(--active-color); transition: color 0.3s; }
+        .dash-card h3 { margin: 0; font-size: 15px; color: #0056b3; }
+        body.dark-mode .dash-card h3 { color: #4da3ff; }
         .chart-container { max-width: 160px; margin: 0 auto; }
         
         .fine-container { background: var(--bg-container); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 18px; border: 2px solid var(--border-container); text-align: center; width: 100%; }
@@ -209,170 +192,60 @@
         .checklist-title { font-size: 12px; font-weight: bold; color: var(--text-main); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
         .checklist-items { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 11px; color: var(--label-color); }
         .check-item { display: flex; align-items: center; gap: 5px; }
-        .date-section { background: var(--date-bg); border: 1px solid var(--date-border); border-radius: 12px; padding: 12px; margin-bottom: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+        .date-section { background: var(--date-bg); border: 1px solid var(--date-border); border-radius: 12px; padding: 12px; margin-bottom: 12px; }
         .date-title-wrap { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .date-title { color: var(--date-title); font-weight: bold; font-size: 13px; }
         .btn-reset { background: transparent; border: 1px solid var(--date-border); color: var(--date-title); border-radius: 5px; padding: 2px 8px; font-size: 11px; font-weight: bold; cursor: pointer; }
         .date-inputs { display: flex; gap: 8px; justify-content: center; }
-        .date-box { flex: 1; text-align: center; background: var(--bg-container); border: 1px solid var(--toggle-border); border-radius: 8px; padding: 6px 2px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.02); transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; cursor: pointer; }
-        .date-box:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.06); border-color: var(--active-color); }
+        .date-box { flex: 1; text-align: center; background: var(--bg-container); border: 1px solid var(--toggle-border); border-radius: 8px; padding: 6px 2px; cursor: pointer; }
         .date-box label { display: block; font-size: 11px; color: var(--label-color); margin-bottom: 2px; font-weight: bold; pointer-events: none;}
         .date-custom-input { width: 100%; padding: 0; border: none; background: transparent; text-align: center; font-size: 16px; font-weight: bold; color: var(--input-text); pointer-events: none; }
-        .results { background: var(--results-bg); border-radius: 10px; padding: 12px; border: 2px solid var(--dynamic-status-color); margin-bottom: 12px; position: relative; overflow: hidden; z-index: 1; text-align: right; }
-        .result-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed var(--results-border); font-size: 13px; color: var(--text-row); position: relative; z-index: 2; }
-        .result-row:last-child { border-bottom: none; }
+        .results { background: var(--results-bg); border-radius: 10px; padding: 12px; border: 2px solid var(--dynamic-status-color); margin-bottom: 12px; text-align: right; }
+        .result-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed var(--results-border); font-size: 13px; color: var(--text-row); }
         .total-row { font-size: 16px; font-weight: bold; color: var(--total-color); }
         .fine-row { color: var(--fine-color); font-weight: bold; }
         .fee-row { color: var(--fee-color); font-weight: bold; }
-        .gauge-container { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%); width: 200px; height: 100px; text-align: center; display: none; opacity: 0.25; pointer-events: none; z-index: 0; }
-        .gauge { position: relative; width: 200px; height: 100px; overflow: hidden; background: var(--slider-bg); border-top-left-radius: 100px; border-top-right-radius: 100px; }
-        .gauge-fill { position: absolute; top: 100%; left: 0; width: inherit; height: 100%; background: #48bb78; transform-origin: center top; transition: transform 0.8s ease-out, background 0.8s; border-bottom-left-radius: 100px; border-bottom-right-radius: 100px; }
-        .gauge-cover { position: absolute; top: 20px; left: 20px; width: 160px; height: 80px; background: var(--results-bg); border-top-left-radius: 80px; border-top-right-radius: 80px; }
-        .needle { position: absolute; bottom: 0; left: 50%; width: 4px; height: 80px; background: var(--input-text); transform-origin: bottom center; transform: translateX(-50%) rotate(-90deg); transition: transform 0.8s; border-radius: 4px; z-index: 2; }
         
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-overlay); justify-content: center; align-items: center; z-index: 1000; }
         .modal-content { background: var(--modal-bg); padding: 15px; border-radius: 12px; width: 90%; max-width: 350px; text-align: center; }
-        .modal-content h3 { margin-top: 0; margin-bottom: 12px; color: var(--modal-text); font-size: 14px; }
         .number-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; max-height: 75vh; overflow-y: auto; padding: 5px; }
         .grid-item { padding: 8px; min-height: 38px; display: flex; align-items: center; justify-content: center; background: var(--grid-bg); border-radius: 6px; font-weight: bold; color: var(--input-text); cursor: pointer; font-size: 13px;}
-        .grid-item.selected-item { background: var(--active-color) !important; color: white !important; transition: background 0.3s; }
+        .grid-item.selected-item { background: #0056b3 !important; color: white !important; }
         
-        footer { background-color: var(--header-bg); color: var(--text-main); text-align: center; padding: 15px; margin-top: 25px; border-radius: 12px 12px 0 0; font-size: 12px; border-top: 1px solid var(--border-container); width: 100%; max-width: 400px; margin-bottom: 20px; }
-        .dev-name { color: var(--active-color); font-weight: bold; margin-top: 5px; cursor: pointer; transition: color 0.3s; }
+        footer { background-color: var(--header-bg); color: var(--text-main); text-align: center; padding: 15px; margin-top: 25px; border-radius: 12px 12px 0 0; font-size: 12px; border-top: 1px solid var(--border-container); width: 100%; max-width: 400px; margin-bottom: 15px;}
+        .dev-name { color: #0056b3; font-weight: bold; margin-top: 5px; cursor: pointer;}
+        body.dark-mode .dev-name { color: #4da3ff; }
         .social-icons { margin-top: 10px; }
-        .social-icons a { color: var(--active-color); font-size: 24px; margin: 0 10px; text-decoration: none; display: inline-block; transition: all 0.3s ease; }
-        .social-icons a:hover { transform: scale(1.1) translateY(-2px); }
-        
+        .social-icons a { color: #0056b3; font-size: 24px; margin: 0 10px; text-decoration: none; display: inline-block; }
+        body.dark-mode .social-icons a { color: #4da3ff; }
         .no-print { display: block; }
-        @media print { 
-            body * { visibility: hidden; } 
-            .table-responsive, .table-responsive * { visibility: visible; }
-            .table-responsive { position: absolute; right: 0; top: 0; width: 100%; overflow: visible; }
-            #usersTable { font-size: 14px !important; width: 100% !important; border-collapse: collapse !important; }
-            #usersTable th, #usersTable td { white-space: normal !important; color: #000 !important; border: 1px solid #000 !important; padding: 10px 8px !important; }
-            #usersTable th { background-color: #e6e6e6 !important; color: #000 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-            .no-print { display: none !important; } 
-        }
-
-        .rating-container { background: var(--bg-container); border: 1px solid var(--border-container); border-radius: 12px; padding: 15px; margin: 20px auto 5px auto; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: all 0.3s ease; }
-        body.dark-mode .rating-container { border-color: #334155; }
-        .rating-title { font-size: 14px; color: var(--header-text); font-weight: bold; margin-bottom: 12px; transition: color 0.3s; }
-        .stars { display: flex; justify-content: center; gap: 8px; direction: ltr; margin-bottom: 10px; cursor: pointer; }
-        .stars i { font-size: 26px; color: #cbd5e1; transition: color 0.2s, transform 0.2s; }
-        .stars i:hover { transform: scale(1.1); }
-        .stars i.active { color: #ffc107; text-shadow: 0 0 8px rgba(255, 193, 7, 0.4); }
-        .feedback-input { width: 100%; padding: 10px; border: 2px solid var(--input-border); border-radius: 6px; font-size: 12px; font-family: 'Rudaw', Tahoma, Arial, sans-serif; background: var(--input-bg); color: var(--input-text); resize: none; margin-bottom: 12px; display: none; outline: none; transition: 0.3s; }
-        .feedback-input:focus { border-color: var(--active-color); }
-        .submit-rating-btn { background: var(--active-color); color: white; border: none; padding: 10px 15px; border-radius: 6px; font-family: 'Rudaw', Tahoma, sans-serif; font-size: 13px; font-weight: bold; cursor: pointer; display: none; width: 100%; transition: 0.3s; }
-        .rating-thanks { display: none; color: #28a745; font-size: 13.5px; font-weight: bold; margin-top: 10px; }
-        .admin-feedbacks-container { display: none; margin-top: 15px; text-align: right; background: var(--info-bg); padding: 12px; border-radius: 8px; border: 1px solid var(--border-container); }
-
-        .quiz-container { background: var(--bg-container); border: 2px solid var(--active-color); border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: right; margin-bottom: 20px; transition: border-color 0.3s; }
-        .quiz-header { font-size: 15px; font-weight: bold; color: var(--active-color); text-align: center; margin-bottom: 15px; border-bottom: 1px dashed var(--border-container); padding-bottom: 10px; transition: color 0.3s; }
+        
+        .quiz-container { background: var(--bg-container); border: 2px solid #0056b3; border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: right; margin-bottom: 20px; }
+        body.dark-mode .quiz-container { border-color: #4da3ff; }
+        .quiz-header { font-size: 15px; font-weight: bold; color: #0056b3; text-align: center; margin-bottom: 15px; border-bottom: 1px dashed var(--border-container); padding-bottom: 10px; }
+        body.dark-mode .quiz-header { color: #4da3ff; }
         .quiz-question-text { font-size: 14px; font-weight: bold; color: var(--text-main); margin-bottom: 15px; line-height: 1.6; }
         .quiz-options { display: flex; flex-direction: column; gap: 10px; }
         .quiz-btn { background: var(--input-bg); color: var(--input-text); border: 2px solid var(--input-border); border-radius: 8px; padding: 12px; font-family: 'Rudaw', Tahoma, sans-serif; font-size: 13px; font-weight: bold; cursor: pointer; text-align: right; transition: 0.2s; }
-        .quiz-btn:hover { border-color: var(--active-color); background: var(--info-bg); }
+        .quiz-btn:hover { border-color: #0056b3; background: var(--info-bg); }
+        body.dark-mode .quiz-btn:hover { border-color: #4da3ff; }
         .quiz-btn.correct { background: #d4edda !important; border-color: #28a745 !important; color: #155724 !important; }
         .quiz-btn.wrong { background: #f8d7da !important; border-color: #dc3545 !important; color: #721c24 !important; }
         .quiz-progress { font-size: 12px; color: var(--label-color); text-align: center; margin-top: 15px; font-weight: bold; }
 
         /* مینیوی خوارەوە (Bottom Navigation) */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; display: flex; justify-content: space-around; padding: 10px 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--border-container); box-shadow: 0 -4px 15px rgba(0,0,0,0.05); z-index: 1000; padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
-        body.dark-mode .bottom-nav { background: rgba(30, 30, 30, 0.85); box-shadow: 0 -4px 15px rgba(0,0,0,0.2); border-top-color: #334155; }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; display: flex; justify-content: space-around; padding: 10px 0; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1px solid var(--border-container); box-shadow: 0 -4px 15px rgba(0,0,0,0.05); z-index: 1000; padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
+        body.dark-mode .bottom-nav { background: rgba(30, 30, 30, 0.9); box-shadow: 0 -4px 15px rgba(0,0,0,0.2); border-top-color: #334155; }
         .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--label-color); cursor: pointer; transition: all 0.3s ease; flex: 1; -webkit-tap-highlight-color: transparent; }
         .nav-item i { font-size: 22px; margin-bottom: 5px; transition: transform 0.2s; }
         .nav-item span { font-size: 11px; font-weight: bold; }
-        .nav-item.active { color: var(--active-color); }
+        .nav-item.active { color: #0056b3; }
+        body.dark-mode .nav-item.active { color: #4da3ff; }
         .nav-item.active i { transform: translateY(-3px) scale(1.15); }
-
-        /* بانەری دابەزاندنی ئەپڵیکەیشن */
-        .install-banner { position: fixed; top: 0; left: 0; width: 100%; background: var(--active-color); color: white; display: flex; align-items: center; justify-content: space-between; padding: 12px 15px; z-index: 10001; box-shadow: 0 4px 15px rgba(0,0,0,0.2); animation: slideDown 0.5s ease; transition: background 0.3s; }
-        @keyframes slideDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
-        .install-banner-content { display: flex; align-items: center; gap: 10px; text-align: right; }
-        .install-banner img { width: 35px; height: 35px; border-radius: 8px; }
-        .install-banner-text strong { display: block; font-size: 13px; margin-bottom: 2px; }
-        .install-banner-text span { font-size: 10px; opacity: 0.9; }
-        .install-banner-btns { display: flex; align-items: center; gap: 10px; }
-        .install-btn { background: white; color: var(--active-color); border: none; padding: 6px 12px; border-radius: 20px; font-weight: bold; font-family: 'Rudaw', Tahoma; font-size: 11px; cursor: pointer; }
-        .install-close { background: transparent; color: white; border: none; font-size: 18px; cursor: pointer; }
-
-        /* شاشەی پێشوازی (Onboarding) */
-        #onboardingOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-body); z-index: 10000; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; }
-        .ob-slide { display: none; animation: slideFade 0.5s ease; flex-direction: column; align-items: center; justify-content: center; width: 100%; max-width: 350px; }
-        .ob-slide.active { display: flex; }
-        .ob-icon { font-size: 70px; color: var(--active-color); margin-bottom: 20px; background: var(--info-bg); width: 130px; height: 130px; line-height: 130px; border-radius: 50%; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .ob-slide h2 { color: var(--text-main); font-size: 20px; margin-bottom: 10px; }
-        .ob-slide p { color: var(--label-color); font-size: 14px; line-height: 1.6; margin-bottom: 30px; }
-        .ob-dots { display: flex; gap: 8px; margin-bottom: 30px; }
-        .ob-dot { width: 10px; height: 10px; background: #ccc; border-radius: 50%; transition: 0.3s; }
-        .ob-dot.active { background: var(--active-color); width: 25px; border-radius: 10px; }
-        .ob-next-btn { background: var(--active-color); color: white; border: none; width: 100%; padding: 14px; border-radius: 10px; font-size: 15px; font-weight: bold; font-family: 'Rudaw', Tahoma; cursor: pointer; max-width: 300px; transition: 0.3s; }
-        
     </style>
 </head>
 <body>
-
-    <!-- بانەری دابەزاندنی ئەپڵیکەیشن -->
-    <div id="installAppContainer" class="install-banner no-print" style="display: none;">
-        <div class="install-banner-content">
-            <img src="icon-192.png" alt="Logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1043/1043306.png'">
-            <div class="install-banner-text">
-                <strong>هاتووچۆی هەڵەبجە</strong>
-                <span>بەخێرایی ئەپەکە دابەزێنە</span>
-            </div>
-        </div>
-        <div class="install-banner-btns">
-            <button id="installAppBtn" class="install-btn">دابەزاندن</button>
-            <button class="install-close" onclick="document.getElementById('installAppContainer').style.display='none'"><i class="fa-solid fa-times"></i></button>
-        </div>
-    </div>
-
-    <!-- شاشەی پێشوازی (Onboarding) -->
-    <div id="onboardingOverlay">
-        <div class="ob-slide active" id="ob1">
-            <i class="fa-solid fa-id-card ob-icon"></i>
-            <h2>بەخێربێیت بۆ سیستەمەکەمان</h2>
-            <p>لێرەوە دەتوانیت بە ئاسانترین شێوە و لە ماڵەکەی خۆتەوە نۆرە بگریت بۆ سەردانیکردنی هاتووچۆی هەڵەبجە.</p>
-        </div>
-        <div class="ob-slide" id="ob2">
-            <i class="fa-solid fa-calculator ob-icon"></i>
-            <h2>هەژمارکردنی غەرامە</h2>
-            <p>بەبێ بوونی ئینتەرنێتیش دەتوانیت بڕی غەرامەی بەسەرچوونی مۆڵەتەکەت بژمێریت لە هەر کاتێکدا بێت.</p>
-        </div>
-        <div class="ob-slide" id="ob3">
-            <i class="fa-solid fa-traffic-light ob-icon"></i>
-            <h2>تاقیکردنەوەی شۆفێری</h2>
-            <p>زانیارییەکانت تاقی بکەرەوە بە یارییەکی سەرنجڕاکێش و ئاستی شارەزاییت لە ڕێنماییەکان بزانە.</p>
-        </div>
-        <div class="ob-dots">
-            <span class="ob-dot active" id="dot1"></span>
-            <span class="ob-dot" id="dot2"></span>
-            <span class="ob-dot" id="dot3"></span>
-        </div>
-        <button class="ob-next-btn" id="obNextBtn" onclick="nextOnboarding()">دواتر</button>
-    </div>
-
-    <!-- ڕاکێشان بۆ خوارەوە (Pull-to-Refresh) -->
-    <div id="ptr-indicator" class="no-print">
-        <i class="fa-solid fa-arrow-down" id="ptr-icon"></i>
-        <span id="ptr-text">ڕابکێشە بۆ نوێکردنەوە...</span>
-    </div>
-
-    <div class="main-content" id="mainWrapper" style="display: none;">
-        
-        <div class="top-info-row no-print">
-            <div class="theme-colors">
-                <span class="color-label">ڕەنگ:</span>
-                <span class="color-dot" style="background:#0056b3;" onclick="changeThemeColor('#0056b3', '#4da3ff')"></span>
-                <span class="color-dot" style="background:#28a745;" onclick="changeThemeColor('#28a745', '#48bb78')"></span>
-                <span class="color-dot" style="background:#fd7e14;" onclick="changeThemeColor('#fd7e14', '#ffb84d')"></span>
-            </div>
-            <div class="visitor-counter">
-                👁️ بەکارهێنەر: <b class="visitor-count-text">...</b>
-            </div>
-        </div>
-
+    <div class="main-content" id="mainWrapper">
         <div class="header-title no-print">
             <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="گۆڕینی ڕەنگ">🌙</button>
             <h1>
@@ -380,11 +253,14 @@
                     <i class="fa-solid fa-location-dot" style="font-size: 15px; color: #dc3545;"></i> به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە
                 </a>
             </h1>
-            <div id="smartGreeting">بەیانیت باش ☀️</div>
         </div>
 
-        <!-- بەشی سەرەتا -->
-        <div id="portalSection" class="page-section">
+        <!-- بەشی سەرەکی (Portal) کە ئەدمینیشی تێدایە -->
+        <div id="portalSection" class="animated-section">
+            <div class="visitor-counter no-print">
+                👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
+            </div>
+            
             <div class="notice-slider-box no-print">
                 <div class="notice-header-row">
                     <span>ئاگاداری و پێداویستییەکان:</span>
@@ -419,12 +295,12 @@
                 </div>
             </div>
 
-            <!-- بەشی ئەدمین لێرە پیشان دەدرێت -->
+            <!-- بەشی ئەدمین کە ئێستا لەناو Portal دایە بۆ ئەوەی ڕاستەوخۆ بکرێتەوە -->
             <div class="container printable-area" id="adminSection" style="display: none; margin-top: 20px;">
                 <h2>بەشی ئەدمین - کۆنتڕۆڵی سیستەم</h2>
 
                 <div class="no-print" style="margin-bottom: 15px;">
-                    <h3 style="text-align: right; margin-bottom: 6px; font-size: 13px; color: var(--active-color);">ئاماری ئەمڕۆ</h3>
+                    <h3 style="text-align: right; margin-bottom: 6px; font-size: 13px; color: #0056b3;">ئاماری ئەمڕۆ</h3>
                     <div class="dashboard-cards">
                         <div class="dash-card"><h4>کۆی گشتی</h4><h3 id="statTotal">0</h3></div>
                         <div class="dash-card"><h4>هاووڵاتیان</h4><h3 id="statUser" style="color: #28a745;">0</h3></div>
@@ -439,8 +315,7 @@
                     <h3 style="margin-top: 0; font-size: 14px; color: #28a745;">گۆڕینی ژمارەی پشکی ڕۆژانە <span id="currentQuotaDisplay" style="background: #28a745; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px; margin-right: 5px;">(پشکی ئێستا: ...)</span></h3>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-users"></i>
-                        <input type="number" id="adminQuotaInput" placeholder=" " min="1">
-                        <label>ژمارەی پشک (نموونە: 30)</label>
+                        <input type="number" id="adminQuotaInput" placeholder="ژمارەی پشک (نموونە: 30)" min="1">
                     </div>
                     <button class="action-btn" style="background: #28a745; padding: 10px;" onclick="updateDailyQuota()">گۆڕینی پشک</button>
                 </div>
@@ -449,8 +324,7 @@
                     <h3 style="margin-top: 0; font-size: 14px; color: #dc3545;"><i class="fa-solid fa-ban"></i> لیستی ڕەش (Blacklist)</h3>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-phone-slash"></i>
-                        <input type="tel" id="blacklistPhoneInput" placeholder=" " maxlength="11" onkeypress="return onlyEnglishNumbers(event)">
-                        <label>ژمارەی مۆبایل بۆ بلۆککردن...</label>
+                        <input type="tel" id="blacklistPhoneInput" placeholder="ژمارەی مۆبایل بۆ بلۆککردن..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)">
                     </div>
                     <div class="input-wrapper" style="margin-top: 8px;">
                         <select id="blacklistDuration">
@@ -467,7 +341,7 @@
                 </div>
 
                 <div id="noticeAdminBlock" style="background: rgba(23, 162, 184, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(23, 162, 184, 0.2);" class="no-print">
-                    <h3 style="margin-top: 0; font-size: 14px; color: #17a2b8;">گۆڕینی تێبینی و پێداویستییەکان (سلاید)</h3>
+                    <h3 style="margin-top: 0; font-size: 14px; color: #17a2b8;">گۆڕینی تێبینی و پێداویستییەکان</h3>
                     <div class="input-wrapper" style="margin-bottom: 0;">
                         <textarea id="adminNoticeInput" rows="5" placeholder="دەقی ئاگاداری و پێداویستییەکان لێرە بنووسە..."></textarea>
                     </div>
@@ -475,19 +349,17 @@
                 </div>
 
                 <div id="preRegAdminBlock" style="background: rgba(0, 86, 179, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(0, 86, 179, 0.2);" class="no-print">
-                    <h3 style="margin-top: 0; font-size: 14px; color: var(--active-color);">ده‌سه‌ڵاتی ئه‌دمین</h3>
-                    <button id="openPreRegBtn" class="action-btn" style="background: var(--active-color); padding: 10px;" onclick="showPreRegForm()">کردنەوەی بەشی تۆمارکردن</button>
+                    <h3 style="margin-top: 0; font-size: 14px; color: #0056b3;">ده‌سه‌ڵاتی ئه‌دمین</h3>
+                    <button id="openPreRegBtn" class="action-btn" style="background: #17a2b8; padding: 10px;" onclick="showPreRegForm()">کردنەوەی بەشی تۆمارکردن</button>
                     
                     <div id="preRegForm" style="display: none; margin-top: 10px;">
                         <div class="input-wrapper">
                             <i class="fa-solid fa-user-shield"></i>
-                            <input type="text" id="adminNameInput" placeholder=" " oninput="validateAdminFormInputs()">
-                            <label>ناوی سیانی بنووسە...</label>
+                            <input type="text" id="adminNameInput" placeholder="ناوی سیانی بنووسە..." oninput="validateAdminFormInputs()">
                         </div>
                         <div class="input-wrapper">
                             <i class="fa-solid fa-phone"></i>
-                            <input type="tel" id="adminPhoneInput" placeholder=" " maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false" oninput="validateAdminFormInputs()">
-                            <label>ژمارەی تەلەفۆن (07700000000)...</label>
+                            <input type="tel" id="adminPhoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false" oninput="validateAdminFormInputs()">
                         </div>
                         <button id="adminRegBtn" class="action-btn" style="background: #28a745; padding: 10px;" onclick="adminRegisterUser()" disabled>تۆمارکردنی پێشوەختە</button>
                     </div>
@@ -501,7 +373,7 @@
                             <span class="slider"></span>
                         </label>
                     </div>
-                    <p style="margin: 5px 0 0 0; font-size: 11px; color: var(--label-color);">ئەگەر هەڵبکرێت، تەنها دانیشتووانی (هەڵەبجە، سیروان، خورماڵ، بیارە، تەوێڵە) دەتوانن نۆرە بگرن.</p>
+                    <p style="margin: 5px 0 0 0; font-size: 11px; color: var(--label-color);">ئەگەر هەڵبکرێت، تەنها دانیشتووانی ناوچەکە دەتوانن نۆرە بگرن.</p>
                 </div>
 
                 <div style="display: flex; gap: 8px; margin-bottom: 10px;" class="no-print">
@@ -510,9 +382,7 @@
                 </div>
                 
                 <button class="action-btn no-print" style="background: #17a2b8; padding: 10px;" onclick="downloadExcel()">داونلۆدکردنی ئێکسڵ (Excel/CSV)</button>
-                
                 <button id="toggleStatusBtn" class="action-btn no-print" style="background: #ffc107; color: black; padding: 10px;" onclick="toggleSystemStatus()"> ڕاگرتن / کردنەوەی سایت </button>
-                
                 <button class="action-btn no-print" style="background: #8e44ad; color: white; padding: 10px;" onclick="loadFeedbacks()"> بینینی فیدباکەکان </button>
                 <button class="action-btn no-print" style="background: #6c757d; padding: 10px;" onclick="window.print()">چاپکردنی لیست (Print)</button>
                 <button class="action-btn no-print" style="background: #dc3545; margin-top: 5px; padding: 10px;" onclick="hideAdminPanel()">داخستنی بەشی ئەدمین</button>
@@ -523,9 +393,9 @@
                             <tr>
                                 <th>ژمارە</th>
                                 <th>ناو</th>
-                                <th>ژمارەی تەلەفۆن</th>
+                                <th>تەلەفۆن</th>
                                 <th>کاتی تۆمارکردن</th>
-                                <th class="no-print">کردارەکان</th>
+                                <th class="no-print">کردار</th>
                             </tr>
                         </thead>
                         <tbody id="tableBody"></tbody>
@@ -537,30 +407,14 @@
                     <div id="feedbacksList"></div>
                 </div>
             </div>
-            <!-- کۆتایی بەشی ئەدمین -->
-        </div>
-
-        <!-- بەشی تاقیکردنەوە -->
-        <div id="quizSection" class="page-section" style="display: none;">
-            <div class="quiz-container">
-                <div class="quiz-header" id="quizHeaderTitle">تاقیکردنەوەی هاتووچۆ 🚦</div>
-                <div id="quizPlayArea">
-                    <div class="quiz-question-text" id="quizQText">چاوەڕێ بکە...</div>
-                    <div class="quiz-options" id="quizOptionsDiv"></div>
-                    <div class="quiz-progress" id="quizProgressText">پرسیاری 0 لە 10</div>
-                </div>
-                <div id="quizResultArea" style="display: none; text-align: center;">
-                    <i class="fa-solid fa-award" style="font-size: 50px; color: #ffc107; margin-bottom: 15px;"></i>
-                    <h3 style="color: var(--text-main); margin-bottom: 10px;">ئەنجامەکەت</h3>
-                    <p id="quizScoreText" style="font-size: 18px; font-weight: bold; color: #28a745; margin-bottom: 20px;">0 / 10</p>
-                    <p id="quizFeedbackText" style="font-size: 14px; color: var(--text-main); margin-bottom: 20px; line-height: 1.6;"></p>
-                    <button class="action-btn" onclick="initQuiz()"><i class="fa-solid fa-rotate-right"></i> دووبارەکردنەوە</button>
-                </div>
-            </div>
         </div>
 
         <!-- بەشی نۆرەگرتن -->
-        <div id="queueSection" class="page-section" style="display: none;">
+        <div id="queueSection" class="animated-section" style="display: none;">
+            <div class="visitor-counter no-print">
+                👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
+            </div>
+
             <div id="statusBadge" class="status-badge status-open no-print">
                 <span id="statusDot" class="dot dot-green"></span>
                 <span id="statusText">دۆخی سیستەم: کراوەیە بۆ تۆمارکردن</span>
@@ -579,13 +433,11 @@
                 <div id="registrationInputs">
                     <div class="input-wrapper">
                         <i class="fa-solid fa-user"></i>
-                        <input type="text" id="nameInput" placeholder=" " oninput="validateFormInputs()">
-                        <label>ناوی سیانی بنووسە...</label>
+                        <input type="text" id="nameInput" placeholder="ناوی سیانی بنووسە..." oninput="validateFormInputs()">
                     </div>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-phone"></i>
-                        <input type="tel" id="phoneInput" placeholder=" " maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false" oninput="validateFormInputs()">
-                        <label>ژمارەی تەلەفۆن (07700000000)</label>
+                        <input type="tel" id="phoneInput" placeholder="ژمارەی تەلەفۆن (07700000000)" maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false" oninput="validateFormInputs()">
                     </div>
                     <button id="registerBtn" class="action-btn" onclick="confirmAndRegister()" disabled style="background: #cccccc; cursor: not-allowed;">تۆمارکردن</button>
                 </div>
@@ -598,20 +450,19 @@
                 <h2>دڵنیابوونەوە لە ناوت</h2>
                 <div class="input-wrapper">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="tel" id="searchInput" placeholder=" " maxlength="11" onkeypress="return onlyEnglishNumbers(event)">
-                    <label>ژمارەی تەلەفۆنەکەت بنووسە...</label>
+                    <input type="tel" id="searchInput" placeholder="ژمارەی تەلەفۆنەکەت بنووسە..." maxlength="11" onkeypress="return onlyEnglishNumbers(event)">
                 </div>
                 <button class="action-btn search-btn" onclick="searchUser()">گەڕان</button>
             </div>
         </div>
 
         <!-- بەشی غەرامە -->
-        <div id="fineSection" class="page-section" style="display: none;">
+        <div id="fineSection" class="animated-section" style="display: none;">
             <div class="fine-container" id="fine-container-box">
                 <div class="toggle-container">
                     <span id="fine-status-text" style="font-weight: bold; color: #48bb78; font-size: 13px;">✓ داشکاندنی غەرامە (٢٠٪) چالاکە</span>
                     <label class="switch">
-                        <input type="checkbox" id="university-toggle" checked onchange="playSound('tick'); vibrate(); calculateFine()">
+                        <input type="checkbox" id="university-toggle" checked onchange="vibrate(); calculateFine()">
                         <span class="slider"></span>
                     </label>
                 </div>
@@ -663,6 +514,26 @@
                 </div>
             </div>
         </div>
+
+        <!-- بەشی تاقیکردنەوە -->
+        <div id="quizSection" class="animated-section" style="display: none;">
+            <div class="quiz-container">
+                <div class="quiz-header" id="quizHeaderTitle">تاقیکردنەوەی هاتووچۆ 🚦</div>
+                <div id="quizPlayArea">
+                    <div class="quiz-question-text" id="quizQText">چاوەڕێ بکە...</div>
+                    <div class="quiz-options" id="quizOptionsDiv"></div>
+                    <div class="quiz-progress" id="quizProgressText">پرسیاری 0 لە 10</div>
+                </div>
+                <div id="quizResultArea" style="display: none; text-align: center;">
+                    <i class="fa-solid fa-award" style="font-size: 50px; color: #ffc107; margin-bottom: 15px;"></i>
+                    <h3 style="color: var(--text-main); margin-bottom: 10px;">ئەنجامەکەت</h3>
+                    <p id="quizScoreText" style="font-size: 18px; font-weight: bold; color: #28a745; margin-bottom: 20px;">0 / 10</p>
+                    <p id="quizFeedbackText" style="font-size: 14px; color: var(--text-main); margin-bottom: 20px; line-height: 1.6;"></p>
+                    <button class="action-btn" onclick="initQuiz()"><i class="fa-solid fa-rotate-right"></i> دووبارەکردنەوە</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- مۆداڵی ژمارەکان -->
@@ -673,31 +544,22 @@
         </div>
     </div>
 
-    <div class="container" id="verifySection" style="display: none; max-width: 400px; margin: 50px auto; border: 3px solid var(--active-color);">
-        <h2 style="color: var(--active-color); margin-top: 10px;"><i class="fa-solid fa-shield-check"></i> دڵنیابوونەوەی پسوولە</h2>
+    <div class="container" id="verifySection" style="display: none; max-width: 400px; margin: 50px auto; border: 3px solid #0056b3;">
+        <h2 style="color: #0056b3; margin-top: 10px;"><i class="fa-solid fa-shield-check"></i> دڵنیابوونەوەی پسوولە</h2>
         <div id="verifyResult" style="padding: 15px; font-size: 15px; font-weight: bold; margin-top: 12px; border-radius: 8px; background: #e9ecef;">چاوەڕێ بکە...</div>
-        <button class="action-btn" onclick="window.location.href=window.location.origin + window.location.pathname" style="background: var(--active-color); margin-top: 15px;">گەڕانەوە بۆ سەرەتا</button>
+        <button class="action-btn" onclick="window.location.href=window.location.origin + window.location.pathname" style="background: #0056b3; margin-top: 15px;">گەڕانەوە بۆ سەرەتا</button>
     </div>
 
-    <div class="rating-container no-print" id="ratingSystem" style="display: none;">
-        <div class="rating-title">هەڵسەنگاندنت بۆ سیستەمەکە چۆنە؟</div>
-        <div class="stars" id="starContainer">
-            <i class="fa-solid fa-star" data-value="1"></i>
-            <i class="fa-solid fa-star" data-value="2"></i>
-            <i class="fa-solid fa-star" data-value="3"></i>
-            <i class="fa-solid fa-star" data-value="4"></i>
-            <i class="fa-solid fa-star" data-value="5"></i>
-        </div>
-        <div class="input-wrapper" style="margin-bottom: 0;">
-            <textarea id="feedbackText" rows="2" placeholder="تێبینییەکانت لێرە بنووسە (ئارەزوومەندانە)..." style="display:none;"></textarea>
-        </div>
-        <button id="submitRatingBtn" class="submit-rating-btn" onclick="submitRating()">ناردنی هەڵسەنگاندن</button>
-        <div id="ratingThanks" class="rating-thanks"><i class="fa-solid fa-circle-check"></i> زۆر سوپاس بۆ هەڵسەنگاندنەکەت!</div>
-    </div>
-
-    <footer id="footerArea" style="display: none;">
+    <footer>
         <p style="margin: 0 0 5px 0;">هەموو مافێکی پارێزراوە بۆ بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە &copy; 2026</p>
-        <p class="dev-name" style="margin: 0;">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووچۆ <span onclick="handleAdminClick()" style="user-select: none;">( ڕاستی محمد شێخ حیدر )</span></p>
+        <div style="display:flex; justify-content:center; align-items:center; gap:8px;">
+            <p class="dev-name" style="margin: 0; cursor: default;">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووچۆ <span onclick="handleAdminClick()" style="user-select: none; color: #0056b3; font-weight: bold; cursor: pointer;">( ڕاستی محمد شێخ حیدر )</span></p>
+            <div class="theme-colors no-print" style="display: flex; gap: 4px; padding: 2px 6px; border-radius: 12px; border: 1px solid #ccc;">
+                <span class="color-dot" style="background:#0056b3;" onclick="changeThemeColor('#0056b3', '#4da3ff')"></span>
+                <span class="color-dot" style="background:#28a745;" onclick="changeThemeColor('#28a745', '#48bb78')"></span>
+                <span class="color-dot" style="background:#fd7e14;" onclick="changeThemeColor('#fd7e14', '#ffb84d')"></span>
+            </div>
+        </div>
         
         <div class="social-icons no-print">
             <a href="https://facebook.com/share/19ChSYyAyM?mibextid=wwXIfr" target="_blank" title="فەیسبووکی گەشەپێدەر">
@@ -710,7 +572,7 @@
     </footer>
 
     <!-- مینیوی خوارەوە (Bottom Navigation) -->
-    <nav class="bottom-nav no-print" id="bottomNav" style="display: none;">
+    <nav class="bottom-nav no-print" id="bottomNav">
         <div class="nav-item active" onclick="navTo('portal')" id="nav-portal">
             <i class="fa-solid fa-house"></i>
             <span>سەرەتا</span>
@@ -737,53 +599,8 @@
             }
         });
 
-        // ----------------- سیستەمی دەنگی ئەلیکترۆنی (Sound Effects) -----------------
-        let audioCtx = null;
-        function playSound(type) {
-            try {
-                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-                if (!AudioContextClass) return; 
-                
-                if (!audioCtx) audioCtx = new AudioContextClass();
-                if (audioCtx.state === 'suspended') audioCtx.resume();
-                
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                
-                if(type === 'tick') {
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(600, audioCtx.currentTime);
-                    osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.1);
-                    gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-                    osc.start(); osc.stop(audioCtx.currentTime + 0.1);
-                } else if(type === 'success') {
-                    osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(400, audioCtx.currentTime);
-                    osc.frequency.setValueAtTime(600, audioCtx.currentTime + 0.1);
-                    gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                    gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.3);
-                    osc.start(); osc.stop(audioCtx.currentTime + 0.3);
-                } else if (type === 'error') {
-                    osc.type = 'sawtooth';
-                    osc.frequency.setValueAtTime(200, audioCtx.currentTime);
-                    osc.frequency.setValueAtTime(150, audioCtx.currentTime + 0.2);
-                    gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                    gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.3);
-                    osc.start(); osc.stop(audioCtx.currentTime + 0.3);
-                }
-            } catch(e) { console.log(e); }
-        }
-
-        // بۆ مۆبایلەکان پێویستە یەکەم جار تاچ بکرێت بۆ کارپێکردنی دەنگ
-        document.body.addEventListener('touchstart', function() { playSound(''); }, { once:true });
-        document.body.addEventListener('click', function() { playSound(''); }, { once:true });
-
         // ----------------- گۆڕینی ڕەنگی ئەپەکە (Themes) -----------------
         function changeThemeColor(primary, darkPrimary) {
-            playSound('tick');
             document.documentElement.style.setProperty('--theme-color', primary);
             document.documentElement.style.setProperty('--theme-color-dark', darkPrimary);
             localStorage.setItem('customThemePrimary', primary);
@@ -797,67 +614,56 @@
             document.documentElement.style.setProperty('--theme-color-dark', savedDark);
         }
 
-        // ----------------- سیستەمی ڕاکێشان بۆ خوارەوە (Pull-to-Refresh) -----------------
-        let pullStartY = 0;
-        let pullMoveY = 0;
-        let isPulling = false;
-        const ptrIndicator = document.getElementById('ptr-indicator');
-        const ptrIcon = document.getElementById('ptr-icon');
-        const ptrText = document.getElementById('ptr-text');
+        // کۆنترۆڵکردنی پەڕەکان بێ کێشە
+        function navTo(section) {
+            vibrate(10);
+            
+            // هەموو بەشەکان دەشارینەوە
+            document.getElementById('portalSection').style.display = 'none';
+            document.getElementById('queueSection').style.display = 'none';
+            document.getElementById('fineSection').style.display = 'none';
+            document.getElementById('quizSection').style.display = 'none';
 
-        document.addEventListener('touchstart', e => {
-            if (window.scrollY === 0) {
-                pullStartY = e.touches[0].clientY;
-                isPulling = true;
+            // ڕەنگی دوگمەکانی خوارەوە دەگۆڕین
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            let activeNav = document.getElementById('nav-' + section);
+            if(activeNav) activeNav.classList.add('active');
+
+            // بەشە داواکراوەکە پیشان دەدەین
+            let targetSection = document.getElementById(section + 'Section');
+            if(targetSection) {
+                targetSection.style.display = 'block';
             }
-        }, {passive: true});
 
-        document.addEventListener('touchmove', e => {
-            if (!isPulling) return;
-            pullMoveY = e.touches[0].clientY;
-            let diff = pullMoveY - pullStartY;
-            if (diff > 0 && window.scrollY === 0) {
-                ptrIndicator.style.height = Math.min(diff * 0.4, 60) + 'px';
-                if (diff > 120) {
-                    ptrIcon.style.transform = 'rotate(180deg)';
-                    ptrText.innerText = "بەردە بۆ نوێکردنەوە...";
-                } else {
-                    ptrIcon.style.transform = 'rotate(0deg)';
-                    ptrText.innerText = "ڕابکێشە بۆ نوێکردنەوە...";
-                }
+            // فەنکشنە تایبەتەکان بانگ دەکەین
+            if(section === 'portal') {
+                loadNoticeText();
             }
-        }, {passive: true});
+            else if(section === 'queue') {
+                checkQuotaAndTimer(); checkSavedTicket();
+            }
+            else if(section === 'quiz') {
+                initQuiz();
+            }
+            
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
 
-        document.addEventListener('touchend', e => {
-            if (!isPulling) return;
-            isPulling = false;
-            let diff = pullMoveY - pullStartY;
-            if (diff > 120 && window.scrollY === 0) {
-                ptrIndicator.style.height = '40px';
-                ptrIcon.className = 'fa-solid fa-spinner fa-spin';
-                ptrText.innerText = "نوێ دەکرێتەوە...";
-                playSound('tick');
-                setTimeout(() => location.reload(), 500);
+        let currentTheme = localStorage.getItem("theme");
+        if (!currentTheme) currentTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? "dark" : "light";
+        if (currentTheme === "dark") { document.body.classList.add("dark-mode"); document.getElementById("themeToggleBtn").innerText = "☀️"; }
+
+        function toggleTheme() {
+            vibrate();
+            document.body.classList.toggle("dark-mode");
+            if (document.body.classList.contains("dark-mode")) {
+                document.getElementById("themeToggleBtn").innerText = "☀️"; localStorage.setItem("theme", "dark");
             } else {
-                ptrIndicator.style.height = '0px';
+                document.getElementById("themeToggleBtn").innerText = "🌙"; localStorage.setItem("theme", "light");
             }
-            pullStartY = 0;
-            pullMoveY = 0;
-        });
+        }
 
-        // ----------------- ئاگادارکردنەوەی ئۆفلاین بوون -----------------
-        window.addEventListener('offline', () => {
-            playSound('error');
-            Swal.fire({
-                title: 'تۆ ئۆفلاینی!',
-                text: 'پەیوەندی ئینتەرنێت پچڕا، بەڵام دەتوانیت غەرامە هەژمار بکەیت و تاقیکردنەوە ئەنجام بدەیت.',
-                icon: 'info',
-                toast: true,
-                position: 'top',
-                showConfirmButton: false,
-                timer: 4000
-            });
-        });
+        function vibrate(ms = 15) { if (navigator.vibrate) navigator.vibrate(ms); }
 
         function toEnglishDigits(str) {
             if (!str) return str;
@@ -871,6 +677,28 @@
         let globalSystemIsActive = true; 
         let statChart = null;
         let globalUsersData = [];
+        let isGpsRequired = false; 
+
+        // ----------------- ئاگادارکردنەوەی ئۆفلاین بوون -----------------
+        window.addEventListener('offline', () => {
+            Swal.fire({
+                title: 'تۆ ئۆفلاینی!',
+                text: 'پەیوەندی ئینتەرنێت پچڕا، بەڵام دەتوانیت غەرامە هەژمار بکەیت و تاقیکردنەوە ئەنجام بدەیت.',
+                icon: 'info',
+                toast: true,
+                position: 'top',
+                showConfirmButton: false,
+                timer: 4000
+            });
+        });
+
+        const allowedZones = [
+            { name: "بەڕێوەبەرایەتی هەڵەبجە", lat: 35.1877797, lng: 46.0072475, radius: 15 },
+            { name: "تەوێڵە", lat: 35.207216, lng: 46.185475, radius: 8 },
+            { name: "بیارە", lat: 35.228500, lng: 46.115500, radius: 8 },
+            { name: "خورماڵ", lat: 35.311500, lng: 46.009000, radius: 10 },
+            { name: "سیروان", lat: 35.204500, lng: 45.940000, radius: 10 }
+        ];
 
         function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
             var R = 6371; 
@@ -881,15 +709,6 @@
                     Math.sin(dLon/2) * Math.sin(dLon/2);
             var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
             return R * c; 
-        }
-
-        // سڵاوکردنی زیرەک (Smart Greeting)
-        function setSmartGreeting() {
-            let hr = new Date().getHours();
-            let el = document.getElementById('smartGreeting');
-            if(hr < 12) el.innerHTML = "بەیانیت باش، لێرەوە کارەکانت ئاسان بکە ☀️";
-            else if(hr < 18) el.innerHTML = "نیوەڕۆت باش، لێرەوە کارەکانت ئاسان بکە 🌤️";
-            else el.innerHTML = "ئێوارەت باش، لێرەوە کارەکانت ئاسان بکە 🌙";
         }
 
         async function loadNoticeText() {
@@ -926,73 +745,18 @@
             try {
                 let response = await fetch(`${baseUrl}/api/admin/notice`, {
                     method: "PUT",
-                    headers: { 
-                        "Content-Type": "application/json", 
-                        "Admin-Password": window.adminPwd 
-                    },
+                    headers: { "Content-Type": "application/json", "Admin-Password": window.adminPwd },
                     body: JSON.stringify({ text: newText })
                 });
                 let result = await response.json().catch(() => ({}));
                 if(response.ok) {
-                    playSound('success');
                     Swal.fire('سەرکەوتوو', result.message || 'تێبینییەکان نوێکرانەوە!', 'success');
                     loadNoticeText();
                 } else {
-                    playSound('error');
                     Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان دەسەڵاتت نییە!', 'error');
                 }
             } catch(e) {
-                playSound('error');
                 Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە', 'error');
-            }
-        }
-
-        // کۆنترۆڵکردنی مینیوی خوارەوە بە ئەنیمەیشن و دەنگ
-        function navTo(section) {
-            playSound('tick');
-            vibrate(10);
-            openSection(section);
-        }
-
-        function openSection(section) {
-            document.querySelectorAll('.page-section').forEach(el => {
-                el.style.display = 'none';
-            });
-
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            let activeNav = document.getElementById('nav-' + section);
-            if(activeNav) activeNav.classList.add('active');
-
-            let targetSection = document.getElementById(section + 'Section');
-            if(targetSection) {
-                targetSection.style.display = 'block';
-            }
-
-            if(section === 'portal') {
-                loadNoticeText();
-            }
-            else if(section === 'queue') {
-                checkQuotaAndTimer(); checkSavedTicket();
-            }
-            else if(section === 'quiz') {
-                initQuiz();
-            }
-            
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        }
-
-        let currentTheme = localStorage.getItem("theme");
-        if (!currentTheme) currentTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? "dark" : "light";
-        if (currentTheme === "dark") { document.body.classList.add("dark-mode"); document.getElementById("themeToggleBtn").innerText = "☀️"; }
-
-        function toggleTheme() {
-            playSound('tick');
-            vibrate();
-            document.body.classList.toggle("dark-mode");
-            if (document.body.classList.contains("dark-mode")) {
-                document.getElementById("themeToggleBtn").innerText = "☀️"; localStorage.setItem("theme", "dark");
-            } else {
-                document.getElementById("themeToggleBtn").innerText = "🌙"; localStorage.setItem("theme", "light");
             }
         }
 
@@ -1024,8 +788,11 @@
         let currentValues = { total: 0, fine: 0, duration: 0 };
         let userSetDate = false;
 
+        document.getElementById('day-btn').textContent = selectedDay;
+        document.getElementById('month-btn').textContent = selectedMonth;
+        document.getElementById('year-btn').textContent = selectedYear;
+
         function resetToToday() {
-            playSound('tick');
             vibrate();
             const now = new Date();
             selectedDay = now.getDate(); selectedMonth = now.getMonth() + 1; selectedYear = now.getFullYear();
@@ -1036,7 +803,6 @@
         function getDaysInMonth(month, year) { return new Date(year, month, 0).getDate(); }
 
         function openModal(type) {
-            playSound('tick');
             const modal = document.getElementById('picker-modal');
             const title = document.getElementById('modal-title');
             const grid = document.getElementById('modal-grid');
@@ -1048,7 +814,7 @@
                     let item = document.createElement('div'); item.className = 'grid-item';
                     if (i === selectedDay) item.classList.add('selected-item');
                     item.textContent = i;
-                    item.onclick = function() { playSound('tick'); vibrate(); selectedDay = i; userSetDate = true; document.getElementById('day-btn').textContent = i; modal.style.display = 'none'; calculateFine(); };
+                    item.onclick = function() { vibrate(); selectedDay = i; userSetDate = true; document.getElementById('day-btn').textContent = i; modal.style.display = 'none'; calculateFine(); };
                     grid.appendChild(item);
                 }
             } else if (type === 'month') {
@@ -1058,7 +824,7 @@
                     if (i === selectedMonth) item.classList.add('selected-item');
                     item.textContent = i;
                     item.onclick = function() {
-                        playSound('tick'); vibrate(); selectedMonth = i; userSetDate = true; document.getElementById('month-btn').textContent = i;
+                        vibrate(); selectedMonth = i; userSetDate = true; document.getElementById('month-btn').textContent = i;
                         const maxDays = getDaysInMonth(i, selectedYear);
                         if (selectedDay > maxDays) { selectedDay = maxDays; document.getElementById('day-btn').textContent = maxDays; }
                         modal.style.display = 'none'; calculateFine();
@@ -1072,7 +838,7 @@
                     if (i === selectedYear) item.classList.add('selected-item');
                     item.textContent = i;
                     item.onclick = function() {
-                        playSound('tick'); vibrate(); selectedYear = i; userSetDate = true; document.getElementById('year-btn').textContent = i;
+                        vibrate(); selectedYear = i; userSetDate = true; document.getElementById('year-btn').textContent = i;
                         const maxDays = getDaysInMonth(selectedMonth, i);
                         if (selectedDay > maxDays) { selectedDay = maxDays; document.getElementById('day-btn').textContent = maxDays; }
                         modal.style.display = 'none'; calculateFine();
@@ -1237,7 +1003,6 @@
         }
 
         function showSavedTicket() {
-            playSound('tick');
             let saved = localStorage.getItem("my_daily_ticket");
             if(saved) {
                 let t = JSON.parse(saved);
@@ -1277,6 +1042,10 @@
                     let result = await response.json(); let count = result.count; let maxQuota = result.maxQuota || 40;
                     
                     globalSystemIsActive = (result.isActive !== false);
+
+                    isGpsRequired = result.isGpsRequired === true; 
+                    let gpsToggle = document.getElementById("gpsToggleBtn");
+                    if(gpsToggle) gpsToggle.checked = isGpsRequired;
 
                     let badge = document.getElementById("statusBadge");
                     let dot = document.getElementById("statusDot");
@@ -1419,9 +1188,54 @@
         }
 
         async function confirmAndRegister() {
-            playSound('tick');
             let name = document.getElementById("nameInput").value.trim(); 
             let phone = document.getElementById("phoneInput").value.trim();
+
+            if (isGpsRequired) {
+                if (!navigator.geolocation) {
+                    return Swal.fire('هەڵە', 'مۆبایلەکەت یان وێبگەڕەکەت پشتگیری سیستەمی شوێندۆزی (GPS) ناکات.', 'error');
+                }
+
+                let regBtn = document.getElementById("registerBtn"); 
+                let origBtnHtml = regBtn.innerHTML;
+                regBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> دڵنیابوونەوە لە شوێن...';
+                regBtn.disabled = true;
+
+                try {
+                    const position = await new Promise((resolve, reject) => {
+                        navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 10000 });
+                    });
+
+                    let userLat = position.coords.latitude;
+                    let userLng = position.coords.longitude;
+                    let isUserInAllowedZone = false;
+
+                    for (let zone of allowedZones) {
+                        let distance = getDistanceFromLatLonInKm(zone.lat, zone.lng, userLat, userLng);
+                        if (distance <= zone.radius) {
+                            isUserInAllowedZone = true;
+                            break; 
+                        }
+                    }
+
+                    if (!isUserInAllowedZone) {
+                        regBtn.innerHTML = origBtnHtml;
+                        regBtn.disabled = false;
+                        return Swal.fire(
+                            'لە دەرەوەی بازنەیت!', 
+                            'بەپێی سیستەمی GPS، تۆ لە دەرەوەی پارێزگای هەڵەبجە و ناحیەکانی دەوروبەریتی. نۆرەگرتن تەنها بۆ دانیشتووانی ناوچەکە ڕێگەپێدراوە.', 
+                            'warning'
+                        );
+                    }
+                } catch (error) {
+                    regBtn.innerHTML = origBtnHtml;
+                    regBtn.disabled = false;
+                    return Swal.fire('ئاگاداری', 'تکایە ئیزنی (Location) بدە بە وێبسایتەکە بۆ ئەوەی بتوانیت نۆرە بگریت.', 'warning');
+                }
+                
+                regBtn.innerHTML = origBtnHtml;
+                regBtn.disabled = false;
+            }
 
             const confirmation = await Swal.fire({
                 title: 'دڵنیابوونەوە لە زانیارییەکان',
@@ -1463,18 +1277,15 @@
                     
                     let result = await response.json().catch(() => ({}));
                     if(response.ok && result.ticket) {
-                        playSound('success');
                         let todayDateStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
                         let currentTimestamp = new Date().getTime(); 
                         localStorage.setItem("my_daily_ticket", JSON.stringify({ name: result.ticket.name, phone: result.ticket.phone, rank: result.ticket.rank, time: result.ticket.time, qrCode: result.ticket.qrCode, date: result.ticket.date, savedAt: todayDateStr, timestamp: currentTimestamp }));
                         checkSavedTicket();
                         Swal.fire({ html: generateTicketHTML(result.ticket.name, result.ticket.phone, result.ticket.rank, result.ticket.time, result.ticket.qrCode, result.ticket.date), confirmButtonText: 'باشە', confirmButtonColor: '#28a745' });
                     } else {
-                        playSound('error');
                         Swal.fire('هەڵە', result.message || 'کێشەیەک ڕوویدا', 'error');
                     }
                 } catch (e) { 
-                    playSound('error');
                     Swal.fire('کێشەی هێڵ', 'کێشە لە سێرڤەر هەیە', 'error'); 
                 }
                 finally { regBtn.innerHTML = orig; checkQuotaAndTimer(); }
@@ -1482,14 +1293,12 @@
         }
 
         async function searchUser() {
-            playSound('tick');
             let searchPhone = document.getElementById("searchInput").value.trim();
             if(searchPhone === "") return;
             try {
                 let response = await fetch(`${apiUrl}/search/${encodeURIComponent(searchPhone)}`);
                 let result = await response.json().catch(() => ({}));
                 if(response.ok) {
-                    playSound('success');
                     let todayDateStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
                     let searchQrToken = btoa(result.phone + "|" + todayDateStr.replace(/-/g, ''));
                     let oldTicket = JSON.parse(localStorage.getItem("my_daily_ticket") || "{}");
@@ -1498,7 +1307,6 @@
                     checkSavedTicket();
                     Swal.fire({ html: generateTicketHTML(result.name, result.phone, result.rank, result.timeMessage, searchQrToken, result.Date), confirmButtonText: 'باشە', confirmButtonColor: 'var(--active-color)' });
                 } else {
-                    playSound('error');
                     Swal.fire('نەدۆزرایەوە', result.message || 'ناو نەدۆزرایەوە!', 'error');
                 }
                 document.getElementById("searchInput").value = "";
@@ -1509,7 +1317,6 @@
             adminClickCount++;
             if (adminClickCount >= 5) {
                 adminClickCount = 0;
-                playSound('success');
                 showAdminPanel();
             }
         }
@@ -1529,18 +1336,14 @@
                     });
                     
                     if (response.status === 429) {
-                        playSound('error');
                         return Swal.fire('سزادراویت!', 'بەهۆی زۆر تاقیکردنەوەی هەڵە، ئایپییەکەت بۆ ١٥ خولەک سزادراوە. تکایە چاوەڕێ بکە.', 'error');
                     }
                     
                     if (response.ok) {
-                        playSound('success');
                         let resData = await response.json(); 
                         window.adminRole = resData.role; 
                         Swal.close();
                         window.adminPwd = normalizedPwd; 
-
-                        navTo('portal');
 
                         if (window.adminRole === 'admin') {
                             document.getElementById('quotaAdminBlock').style.display = 'none';
@@ -1548,12 +1351,14 @@
                             document.getElementById('preRegAdminBlock').style.display = 'none';
                             document.getElementById('toggleStatusBtn').style.display = 'none';
                             document.getElementById('blacklistAdminBlock').style.display = 'none'; 
+                            document.getElementById('gpsAdminBlock').style.display = 'none';
                         } else {
                             document.getElementById('quotaAdminBlock').style.display = 'block';
                             document.getElementById('noticeAdminBlock').style.display = 'block';
                             document.getElementById('preRegAdminBlock').style.display = 'block';
                             document.getElementById('toggleStatusBtn').style.display = 'inline-block';
                             document.getElementById('blacklistAdminBlock').style.display = 'block';
+                            document.getElementById('gpsAdminBlock').style.display = 'block';
                         }
 
                         fetch(`${baseUrl}/api/users/count`)
@@ -1572,18 +1377,15 @@
                         loadAdminStats();
                         loadNoticeText();
                     } else {
-                        playSound('error');
                         Swal.fire('هەڵە', 'پاسوۆردەکە هەڵەیە یان دەسەڵاتت نییە!', 'error');
                     }
                 } catch(e) { 
-                    playSound('error');
                     Swal.fire('کێشە', 'سێرڤەرەکە خەوتووە یان کێشەی هێڵ هەیە، تکایە دووبارە تاقیبکەرەوە!', 'error'); 
                 }
             }
         }
 
         function hideAdminPanel() {
-            playSound('tick');
             document.getElementById("adminSection").style.display = "none";
             document.getElementById("usersTable").style.display = "none"; 
             document.getElementById("tableBody").innerHTML = "";
@@ -1621,7 +1423,6 @@
         }
 
         async function updateDailyQuota() {
-            playSound('tick');
             let newQuota = document.getElementById("adminQuotaInput").value;
             if(!newQuota || newQuota < 1) return Swal.fire('ئاگاداری', 'تکایە ژمارەیەکی دروست بنووسە', 'warning');
             if (!window.adminPwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە', 'warning');
@@ -1633,16 +1434,14 @@
                 });
                 let result = await response.json().catch(() => ({}));
                 if(response.ok) {
-                    playSound('success');
                     Swal.fire('سەرکەوتوو', result.message, 'success');
                     document.getElementById('currentQuotaDisplay').textContent = `(پشکی ئێستا: ${newQuota})`;
                     checkQuotaAndTimer(); document.getElementById("adminQuotaInput").value = "";
-                } else { playSound('error'); Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان دەسەڵاتت نییە!', 'error'); }
-            } catch (error) { playSound('error'); Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە یان سێرڤەر خەوتووە', 'error'); }
+                } else { Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان دەسەڵاتت نییە!', 'error'); }
+            } catch (error) { Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە یان سێرڤەر خەوتووە', 'error'); }
         }
 
         async function addToBlacklist() {
-            playSound('tick');
             let phoneInput = document.getElementById("blacklistPhoneInput").value;
             let phone = toEnglishDigits(phoneInput.trim()); 
             let days = document.getElementById("blacklistDuration").value;
@@ -1664,27 +1463,22 @@
                 try {
                     let result = JSON.parse(text);
                     if(response.ok) {
-                        playSound('success');
                         Swal.fire('سەرکەوتوو', result.message || 'ژمارەکە خرایە لیستی ڕەشەوە', 'success');
                         document.getElementById("blacklistPhoneInput").value = "";
                     } else {
-                        playSound('error');
                         let errMsg = result.message || 'هەڵەیەک ڕوویدا لە سێرڤەرەوە!';
                         if(response.status === 500) errMsg = 'سێرڤەرەکە کراش دەکات! ڕەنگە ژمارەکە پێشتر بلۆک کرابێت.';
                         Swal.fire('هەڵە', errMsg, 'error');
                     }
                 } catch(e) {
-                    playSound('error');
                     Swal.fire('ئیرۆری ناوخۆیی سێرڤەر (500)', 'تکایە سەیری ئەم ئیرۆرە بکە:\n\n' + text.substring(0, 150), 'error');
                 }
             } catch (error) { 
-                playSound('error');
                 Swal.fire('کێشە', 'کێشەی هێڵ هەیە یان سێرڤەرەکە کار ناکات', 'error'); 
             }
         }
 
         async function viewBlacklist() {
-            playSound('tick');
             Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
             try {
                 let response = await fetch(`${baseUrl}/api/admin/blacklist`, { headers: { "Admin-Password": window.adminPwd } });
@@ -1700,14 +1494,12 @@
                     html += '</table></div>';
                     Swal.fire({ title: 'لیستی ڕەش', html: html, showCloseButton: true, showConfirmButton: false });
                 } else {
-                    playSound('error');
                     Swal.fire('هەڵە', 'نەتوانرا لیستەکە بهێنرێت یان دەسەڵاتت نییە', 'error');
                 }
-            } catch(e) { playSound('error'); Swal.fire('کێشە', 'کێشەی هێڵ هەیە', 'error'); }
+            } catch(e) { Swal.fire('کێشە', 'کێشەی هێڵ هەیە', 'error'); }
         }
 
         window.unblockPhone = async function(phone) {
-            playSound('tick');
             const confirm = await Swal.fire({
                 title: 'دڵنیایت؟', text: `ئایا دەتەوێت بلۆک لەسەر ژمارە ${phone} لاببەیت؟`, icon: 'warning',
                 showCancelButton: true, confirmButtonText: 'بەڵێ، لایببە', cancelButtonText: 'نەخێر'
@@ -1718,15 +1510,13 @@
                     let res = await fetch(`${baseUrl}/api/admin/blacklist/${phone}`, { method: "DELETE", headers: { "Admin-Password": window.adminPwd } });
                     let data = await res.json().catch(() => ({}));
                     if(res.ok) {
-                        playSound('success');
                         Swal.fire('سەرکەوتوو', data.message || 'ژمارەکە لابرا', 'success');
-                    } else { playSound('error'); Swal.fire('هەڵە', data.message || 'کێشەیەک ڕوویدا', 'error'); }
-                } catch(e) { playSound('error'); Swal.fire('کێشە', 'کێشەی هێڵ هەیە', 'error'); }
+                    } else { Swal.fire('هەڵە', data.message || 'کێشەیەک ڕوویدا', 'error'); }
+                } catch(e) { Swal.fire('کێشە', 'کێشەی هێڵ هەیە', 'error'); }
             }
         }
 
         async function toggleSystemStatus() {
-            playSound('tick');
             let customMsg = "";
             if (globalSystemIsActive) {
                 const { value: text } = await Swal.fire({
@@ -1751,20 +1541,42 @@
                 let response = await fetch(url, { method: "POST", headers: { "Admin-Password": window.adminPwd } });
                 let result = await response.json().catch(() => ({}));
                 if(response.ok) {
-                    playSound('success');
                     await Swal.fire('سەرکەوتوو', result.message || 'دۆخ گۆڕدرا!', 'success');
                     location.reload();
-                } else { playSound('error'); Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان دەسەڵاتت نییە!', 'error'); }
-            } catch (error) { playSound('error'); Swal.fire('کێشە', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error'); }
+                } else { Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان دەسەڵاتت نییە!', 'error'); }
+            } catch (error) { Swal.fire('کێشە', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error'); }
+        }
+
+        async function toggleGpsStatus() {
+            if (!window.adminPwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە', 'warning');
+            
+            let isChecked = document.getElementById("gpsToggleBtn").checked;
+            
+            try {
+                let response = await fetch(`${baseUrl}/api/admin/toggle-gps?status=${isChecked}`, { 
+                    method: "POST", 
+                    headers: { "Admin-Password": window.adminPwd } 
+                });
+                let result = await response.json().catch(() => ({}));
+                
+                if(response.ok) {
+                    Swal.fire('سەرکەوتوو', `سیستەمی GPS بە سەرکەوتوویی ${isChecked ? 'چالاک کرا' : 'ناچالاک کرا'}`, 'success');
+                    isGpsRequired = isChecked;
+                } else {
+                    document.getElementById("gpsToggleBtn").checked = !isChecked; 
+                    Swal.fire('هەڵە', result.message || 'نەتوانرا دۆخەکە بگۆڕدرێت!', 'error');
+                }
+            } catch (error) {
+                document.getElementById("gpsToggleBtn").checked = !isChecked;
+                Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە', 'error');
+            }
         }
 
         async function loadTodayUsers() {
-            playSound('tick');
             let table = document.getElementById("usersTable"); let tbody = document.getElementById("tableBody");
 
             if (!window.adminPwd) { return Swal.fire('ئاگاداری', 'تکایە سەرەتا لە بەشی ئەدمین چوونەژوورەوە بکە!', 'warning'); }
 
-            // نیشاندانی Skeleton Loading
             table.style.display = "table";
             tbody.innerHTML = `
                 <tr><td colspan='5'><div class='skeleton'></div></td></tr>
@@ -1776,12 +1588,10 @@
                 let response = await fetch(`${apiUrl}/today-list`, { method: "GET", headers: { "Admin-Password": window.adminPwd } });
                 if (response.status === 429) {
                     tbody.innerHTML = ""; table.style.display = "none";
-                    playSound('error');
                     return Swal.fire('سزادراویت!', 'بەهۆی زۆر تاقیکردنەوەی هەڵە، ئایپییەکەت سزادراوە. تکایە چاوەڕێ بکە.', 'error');
                 }
                 if (!response.ok) {
                     let errResult = await response.json().catch(() => ({}));
-                    playSound('error');
                     Swal.fire('هەڵە', errResult.message || 'پاسوۆردەکە هەڵەیە بەپێی سێرڤەر!', 'error');
                     tbody.innerHTML = ""; table.style.display = "none"; return;
                 }
@@ -1818,7 +1628,6 @@
                 loadAdminStats();
             } catch (error) { 
                 tbody.innerHTML = ""; table.style.display = "none";
-                playSound('error');
                 Swal.fire('کێشەی هێڵ', 'سێرڤەرەکە خەوتووە یان کێشەی هێڵ هەیە، تکایە دووبارە تاقیبکەرەوە!', 'error'); 
             }
         }
@@ -1837,13 +1646,11 @@
         }
 
         function showPreRegForm() {
-            playSound('tick');
             document.getElementById("openPreRegBtn").style.display = "none"; 
             document.getElementById("preRegForm").style.display = "block";
         }
 
         async function adminRegisterUser() {
-            playSound('tick');
             let name = document.getElementById("adminNameInput").value.trim(); let phone = document.getElementById("adminPhoneInput").value.trim();
             let regBtn = document.getElementById("adminRegBtn");
             if(name === "" || phone === "") return Swal.fire('ئاگاداری', 'تکایە ناو و ژمارەی تەلەفۆن پڕبکەرەوە!', 'warning');
@@ -1852,19 +1659,17 @@
             
             try {
                 let response = await fetch(apiUrl, { method: "POST", headers: { "Content-Type": "application/json", "Admin-Password": window.adminPwd }, body: JSON.stringify({ name: name, phone: phone }) });
-                if (response.status === 429) { playSound('error'); return Swal.fire('ئاگاداری', 'تکایە کەمێک چاوەڕێ بکە (Rate Limit)', 'warning'); }
+                if (response.status === 429) { return Swal.fire('ئاگاداری', 'تکایە کەمێک چاوەڕێ بکە (Rate Limit)', 'warning'); }
                 let result = await response.json().catch(() => ({}));
                 if(response.ok) {
-                    playSound('success');
                     Swal.fire('سەرکەوتوو بوو', result.message || 'ناو بە سەرکەوتوویی لەلایەن ئەدمنەوە تۆمارکرا!', 'success');
                     document.getElementById("adminNameInput").value = ""; document.getElementById("adminPhoneInput").value = ""; validateAdminFormInputs();
-                } else { playSound('error'); Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان کێشەیەک هەیە!', 'error'); }
-            } catch (error) { playSound('error'); Swal.fire('کێشەی هێڵ', 'کێشە لە پەیوەندیکردن هەیە یان سێرڤەرەکە خەوتووە!', 'error'); } 
+                } else { Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان کێشەیەک هەیە!', 'error'); }
+            } catch (error) { Swal.fire('کێشەی هێڵ', 'کێشە لە پەیوەندیکردن هەیە یان سێرڤەرەکە خەوتووە!', 'error'); } 
             finally { regBtn.innerHTML = originalText; regBtn.disabled = false; checkQuotaAndTimer(); }
         }
 
         async function editUser(id, currentName, currentPhone) {
-            playSound('tick');
             const { value: formValues } = await Swal.fire({
                 title: 'دەستکاریکردنی زانیاری', html: `<input id="swal-input-name" class="swal2-input" value="${currentName}" placeholder="ناوی سیانی"> <input id="swal-input-phone" class="swal2-input" value="${currentPhone}" placeholder="ژمارەی مۆبایل" dir="ltr">`,
                 focusConfirm: false, showCancelButton: true, confirmButtonText: 'پاشەکەوتکردن', cancelButtonText: 'داخستن',
@@ -1880,14 +1685,13 @@
                 try {
                     let response = await fetch(`${apiUrl}/${id}`, { method: "PUT", headers: { "Content-Type": "application/json", "Admin-Password": window.adminPwd }, body: JSON.stringify({ name: newName, phone: newPhone }) });
                     let resData = await response.json().catch(() => ({}));
-                    if (response.ok) { playSound('success'); Swal.fire('سەرکەوتوو بوو!', resData.message || 'زانیارییەکان گۆڕدران.', 'success'); loadTodayUsers(); }
-                    else { playSound('error'); Swal.fire('هەڵە!', resData.message || 'دەسەڵاتت نییە یان کێشەیەک هەیە!', 'error'); }
-                } catch (error) { playSound('error'); Swal.fire('کێشە', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error'); }
+                    if (response.ok) { Swal.fire('سەرکەوتوو بوو!', resData.message || 'زانیارییەکان گۆڕدران.', 'success'); loadTodayUsers(); }
+                    else { Swal.fire('هەڵە!', resData.message || 'دەسەڵاتت نییە یان کێشەیەک هەیە!', 'error'); }
+                } catch (error) { Swal.fire('کێشە', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error'); }
             }
         }
 
         async function deleteUser(id) {
-            playSound('tick');
             const confirmResult = await Swal.fire({
                 title: 'دڵنیایت؟', text: "ئایا بەڕاستی دەتەوێت ئەم ناوە بسڕیتەوە؟", icon: 'warning',
                 showCancelButton: true, confirmButtonColor: '#dc3545', cancelButtonColor: '#6c757d', confirmButtonText: 'بەڵێ، بسڕەوە', cancelButtonText: 'نەخێر پەشیمان بوومەوە'
@@ -1897,14 +1701,13 @@
                 try {
                     let response = await fetch(`${apiUrl}/${id}`, { method: "DELETE", headers: { "Admin-Password": window.adminPwd } });
                     let resData = await response.json().catch(() => ({}));
-                    if (response.ok) { playSound('success'); Swal.fire('سڕایەوە!', resData.message || 'ناوەکە بە سەرکەوتوویی سڕایەوە.', 'success'); loadTodayUsers(); checkQuotaAndTimer(); }
-                    else { playSound('error'); Swal.fire('هەڵە!', resData.message || 'دەسەڵاتت نییە یان کێشەیەک هەیە!', 'error'); }
-                } catch (error) { playSound('error'); Swal.fire('کێشە', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error'); }
+                    if (response.ok) { Swal.fire('سڕایەوە!', resData.message || 'ناوەکە بە سەرکەوتوویی سڕایەوە.', 'success'); loadTodayUsers(); checkQuotaAndTimer(); }
+                    else { Swal.fire('هەڵە!', resData.message || 'دەسەڵاتت نییە یان کێشەیەک هەیە!', 'error'); }
+                } catch (error) { Swal.fire('کێشە', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error'); }
             }
         }
 
         function downloadExcel() {
-            playSound('tick');
             if (globalUsersData.length === 0) return Swal.fire('ئاگاداری', "سەرەتا تکایە لە سەرەوە 'نیشاندانی لیستی ئەمڕۆ' دابگرە!", 'warning');
             let csvContent = "\uFEFFژمارە,ناو,ژمارەی تەلەفۆن,کاتی تۆمارکردن\n";
             globalUsersData.forEach(u => { csvContent += `${u.rank},"${u.name}","${u.phone}","${u.createdAt}"\n`; });
@@ -1926,7 +1729,6 @@
 
         ratingStars.forEach(star => {
             star.addEventListener('click', function() {
-                playSound('tick');
                 vibrate();
                 currentRating = parseInt(this.getAttribute('data-value'));
                 
@@ -1944,7 +1746,6 @@
         });
 
         async function submitRating() {
-            playSound('tick');
             if(currentRating === 0) return;
             let feedback = feedbackInput.value.trim();
             let originalText = submitRatingBtn.innerHTML;
@@ -1967,7 +1768,6 @@
             submitRatingBtn.style.display = 'none';
             document.querySelector('.rating-title').style.display = 'none';
             
-            playSound('success');
             ratingThanks.style.display = 'block';
             vibrate(30);
             
@@ -1978,7 +1778,6 @@
         }
 
         async function loadFeedbacks() {
-            playSound('tick');
             if (!window.adminPwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە!', 'warning');
             
             let listDiv = document.getElementById("feedbacksList");
@@ -2015,12 +1814,10 @@
                     }
                 } else {
                     listDiv.innerHTML = "";
-                    playSound('error');
                     Swal.fire('هەڵە', 'دەسەڵاتت نییە یان کێشەیەک هەیە!', 'error');
                 }
             } catch (error) {
                 listDiv.innerHTML = "";
-                playSound('error');
                 Swal.fire('کێشە', 'سێرڤەرەکە خەوتووە یان کێشەی هێڵ هەیە', 'error');
             }
         }
@@ -2034,14 +1831,10 @@
             if (!hasSeenOb) {
                 document.getElementById('mainWrapper').style.display = 'none';
                 document.getElementById('bottomNav').style.display = 'none';
-                document.getElementById('footerArea').style.display = 'none';
                 document.getElementById('onboardingOverlay').style.display = 'flex';
-                document.getElementById('themeToggleBtn').style.display = 'none';
             } else {
                 document.getElementById('mainWrapper').style.display = 'flex';
                 document.getElementById('bottomNav').style.display = 'flex';
-                document.getElementById('footerArea').style.display = 'block';
-                document.getElementById('themeToggleBtn').style.display = 'block';
                 setSmartGreeting();
                 calculateFine(true);
             }
@@ -2049,7 +1842,6 @@
 
         let obStep = 1;
         function nextOnboarding() {
-            playSound('tick');
             if (obStep < 3) {
                 document.getElementById(`ob${obStep}`).classList.remove('active');
                 document.getElementById(`dot${obStep}`).classList.remove('active');
@@ -2065,11 +1857,9 @@
                 document.getElementById('onboardingOverlay').style.display = 'none';
                 document.getElementById('mainWrapper').style.display = 'flex';
                 document.getElementById('bottomNav').style.display = 'flex';
-                document.getElementById('footerArea').style.display = 'block';
-                document.getElementById('themeToggleBtn').style.display = 'block';
                 setSmartGreeting();
                 calculateFine(true);
-                openSection('portal');
+                navTo('portal');
                 
                 // پیشاندانی بانەری دابەزاندنی ئەپڵیکەیشن پاش پێشوازی
                 if (!window.matchMedia('(display-mode: standalone)').matches) {
@@ -2110,7 +1900,6 @@
         });
 
         installAppBtn.addEventListener('click', async () => {
-            playSound('tick');
             if (deferredPrompt) {
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
@@ -2132,7 +1921,6 @@
         window.addEventListener('appinstalled', () => {
             console.log('PWA was installed');
             installAppContainer.style.display = 'none';
-            playSound('success');
             Swal.fire('پیرۆزە!', 'ئەپەکە بە سەرکەوتوویی دابەزییە سەر مۆبایلەکەت.', 'success');
         });
 
@@ -2204,18 +1992,7 @@
         let currentQuizIndex = 0;
         let quizScore = 0;
 
-        function shuffleArray(array) {
-            let currentIndex = array.length, randomIndex;
-            while (currentIndex != 0) {
-                randomIndex = Math.floor(Math.random() * currentIndex);
-                currentIndex--;
-                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
-            }
-            return array;
-        }
-
         function initQuiz() {
-            playSound('tick');
             let shuffled = shuffleArray([...allTrafficQuestions]);
             selectedQuestions = shuffled.slice(0, 10); 
             
@@ -2262,12 +2039,10 @@
             if (selectedIndex === correctIndex) {
                 btnElement.classList.add("correct");
                 quizScore++;
-                playSound('success');
                 vibrate(20);
             } else {
                 btnElement.classList.add("wrong");
                 allBtns[correctIndex].classList.add("correct");
-                playSound('error');
                 vibrate([20, 50, 20]);
             }
 
@@ -2278,7 +2053,6 @@
         }
 
         function showQuizResults() {
-            playSound('success');
             document.getElementById("quizPlayArea").style.display = "none";
             document.getElementById("quizResultArea").style.display = "block";
             
