@@ -57,18 +57,18 @@
         }
         button.action-btn:not(:disabled) { animation: softGlow 3s infinite; }
 
-        /* ئەنیمەیشنی نوێی خلیسکانی پەڕەکان */
+        /* ئەنیمەیشنی نوێی خلیسکانی پەڕەکان (Page Slide Transitions) */
         @keyframes slideFade {
             0% { opacity: 0; transform: translateX(25px); }
             100% { opacity: 1; transform: translateX(0); }
         }
         .page-section { display: none; animation: slideFade 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; }
 
-        /* شاشەی بارکردنی مۆدێرن */
+        /* شاشەی بارکردنی مۆدێرن (Skeleton Loading) */
         .skeleton { background: linear-gradient(90deg, var(--bg-container) 25%, var(--info-bg) 50%, var(--bg-container) 75%); background-size: 200% 100%; animation: skeletonLoading 1.5s infinite; border-radius: 6px; height: 20px; width: 100%; margin: 5px 0; }
         @keyframes skeletonLoading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-        /* شوشەیی کردنی پەیامەکانی SweetAlert */
+        /* شوشەیی کردنی پەیامەکانی SweetAlert (Glassmorphism) */
         .swal2-popup { border-radius: 20px !important; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); background: rgba(255, 255, 255, 0.85) !important; box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important; border: 1px solid rgba(255,255,255,0.6) !important; font-family: 'Rudaw', Tahoma, sans-serif !important; }
         body.dark-mode .swal2-popup { background: rgba(30, 30, 30, 0.85) !important; border-color: rgba(255,255,255,0.1) !important; color: #e0e0e0 !important; }
         body.dark-mode .swal2-title, body.dark-mode .swal2-html-container { color: #e0e0e0 !important; }
@@ -151,6 +151,7 @@
 
         body { font-family: 'Rudaw', Tahoma, Arial, sans-serif; background-color: var(--bg-body); color: var(--text-main); padding: 0 10px 80px 10px; margin: 0; text-align: center; transition: background-color 0.4s, color 0.4s; display: flex; flex-direction: column; align-items: center; min-height: 100vh; user-select: none; }
         
+        /* شریتی ڕاکێشان بۆ خوارەوە (Pull-to-Refresh) */
         #ptr-indicator { width: 100%; height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: bold; color: var(--header-text); transition: height 0.2s ease-out; }
         
         .main-content { flex: 1; width: 100%; max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
@@ -199,6 +200,7 @@
         .container { background: var(--bg-container); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: 0 auto 20px auto; border: 1px solid var(--border-container); width: 100%; }
         h2 { color: var(--header-text); margin-top: 0; margin-bottom: 15px; font-size: 16px; }
 
+        /* دیزاینی نوێی فۆڕمی سەرئاوکەوتوو (Floating Labels) */
         .input-wrapper { position: relative; width: 100%; margin: 12px 0; }
         .input-wrapper i { position: absolute; right: 12px; top: 15px; color: var(--header-text); font-size: 16px; z-index: 2; }
         .input-wrapper input { width: 100%; padding: 20px 35px 8px 10px; box-sizing: border-box; border: 2px solid var(--input-border); border-radius: 6px; font-size: 14px; font-family: 'Rudaw', Tahoma, Arial, sans-serif; outline: none; transition: 0.3s ease all; background: var(--input-bg); color: var(--input-text); user-select: text; }
@@ -210,6 +212,7 @@
         .input-wrapper input.valid-input { border-color: #28a745 !important; box-shadow: 0 0 5px rgba(40, 167, 69, 0.3); }
         .input-wrapper input.invalid-input { border-color: #f5c6cb !important; box-shadow: 0 0 5px rgba(245, 198, 203, 0.5); }
         
+        /* بۆ خانەکانی تر کە ڕەنگە پێویستی بەم ستایلە نەبێت وەک خۆیان دەمێننەوە */
         .input-wrapper select, .input-wrapper textarea { width: 100%; padding: 10px; border: 2px solid var(--input-border); border-radius: 6px; font-family: 'Rudaw', Tahoma, sans-serif; background: var(--input-bg); color: var(--input-text); outline: none; }
         
         button.action-btn { background: #28a745; color: white; border: none; padding: 12px 20px; cursor: pointer; border-radius: 6px; font-size: 15px; font-weight: bold; width: 100%; margin-top: 8px; font-family: 'Rudaw', Tahoma, sans-serif; transition: 0.3s; }
@@ -307,8 +310,7 @@
         .nav-item span { font-size: 11px; font-weight: bold; }
         
         /* ڕەنگی تایبەتی ئایکۆنەکانی خوارەوە بەپێی داواکاری */
-        #nav-portal i { color: #ffffff !important; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4)); }
-        #nav-queue i, #nav-fine i { color: #ffc107 !important; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4)); }
+        #nav-portal i, #nav-queue i, #nav-fine i { color: #ffffff !important; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4)); }
         
         .nav-item.active i { transform: translateY(-3px) scale(1.15); }
     </style>
@@ -641,6 +643,7 @@
         </div>
     </footer>
 
+    <!-- مینیوی خوارەوە -->
     <nav class="bottom-nav no-print" id="bottomNav">
         <div class="nav-item active" onclick="navTo('portal')" id="nav-portal">
             <i class="fa-solid fa-house"></i>
