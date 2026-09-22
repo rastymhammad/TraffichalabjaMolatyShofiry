@@ -17,9 +17,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 
     <style>
         @font-face {
@@ -29,6 +26,48 @@
             font-style: normal;
             font-display: swap;
         }
+
+        @keyframes pulseRotate {
+            0% { transform: scale(1) rotate(0deg); opacity: 0.8; }
+            50% { transform: scale(1.15) rotate(180deg); opacity: 1; filter: drop-shadow(0 0 5px rgba(220, 53, 69, 0.7)); }
+            100% { transform: scale(1) rotate(360deg); opacity: 0.8; }
+        }
+
+        .fa-hourglass-half, #countdownTimer i {
+            display: inline-block;
+            animation: pulseRotate 2.5s infinite ease-in-out;
+        }
+
+        @keyframes badgePulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(72, 187, 120, 0.4); }
+            70% { transform: scale(1.02); box-shadow: 0 0 0 8px rgba(72, 187, 120, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(72, 187, 120, 0); }
+        }
+
+        .status-badge { animation: badgePulse 2s infinite; }
+
+        @keyframes softGlow {
+            0% { box-shadow: 0 0 5px rgba(40, 167, 69, 0.4); }
+            50% { box-shadow: 0 0 18px rgba(40, 167, 69, 0.8); }
+            100% { box-shadow: 0 0 5px rgba(40, 167, 69, 0.4); }
+        }
+        button.action-btn:not(:disabled) { animation: softGlow 3s infinite; }
+
+        @keyframes slideFade {
+            0% { opacity: 0; transform: translateX(20px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+        .page-section { display: none; animation: slideFade 0.35s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; }
+
+        .skeleton { background: linear-gradient(90deg, var(--bg-container) 25%, var(--info-bg) 50%, var(--bg-container) 75%); background-size: 200% 100%; animation: skeletonLoading 1.5s infinite; border-radius: 6px; height: 20px; width: 100%; margin: 5px 0; }
+        @keyframes skeletonLoading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        .swal2-popup { border-radius: 20px !important; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); background: rgba(255, 255, 255, 0.85) !important; box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important; border: 1px solid rgba(255,255,255,0.6) !important; font-family: 'Rudaw', Tahoma, sans-serif !important; }
+        body.dark-mode .swal2-popup { background: rgba(30, 30, 30, 0.85) !important; border-color: rgba(255,255,255,0.1) !important; color: #e0e0e0 !important; }
+        body.dark-mode .swal2-title, body.dark-mode .swal2-html-container { color: #e0e0e0 !important; }
+        body.dark-mode .swal2-input, body.dark-mode .swal2-textarea { background: #2c2c2c !important; color: #fff !important; border-color: #444 !important; }
+
+        * { box-sizing: border-box; }
 
         :root {
             --bg-body: #f0f8ff;
@@ -55,7 +94,6 @@
             --modal-text: #2d3748;
             --grid-bg: #edf2f7;
             
-            /* گۆڕاوەکان بۆ ڕەنگی تایبەتمەند (Theme Colors) */
             --theme-color: #0056b3;
             --theme-color-dark: #4da3ff;
             --active-color: var(--theme-color);
@@ -89,28 +127,14 @@
             --active-color: var(--theme-color-dark);
         }
 
+        @media all and (display-mode: standalone) {
+            #installAppContainer {
+                display: none !important;
+            }
+        }
+
         body { font-family: 'Rudaw', Tahoma, Arial, sans-serif; background-color: var(--bg-body); color: var(--text-main); padding: 0 10px 80px 10px; margin: 0; text-align: center; transition: background-color 0.4s, color 0.4s; display: flex; flex-direction: column; align-items: center; min-height: 100vh; user-select: none; }
         
-        * { box-sizing: border-box; }
-
-        /* ئەنیمەیشنی نوێی خلیسکانی پەڕەکان */
-        @keyframes slideFade {
-            0% { opacity: 0; transform: translateX(20px); }
-            100% { opacity: 1; transform: translateX(0); }
-        }
-        .page-section { display: none; animation: slideFade 0.35s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; }
-
-        /* شاشەی بارکردنی مۆدێرن (Skeleton Loading) */
-        .skeleton { background: linear-gradient(90deg, var(--bg-container) 25%, var(--info-bg) 50%, var(--bg-container) 75%); background-size: 200% 100%; animation: skeletonLoading 1.5s infinite; border-radius: 6px; height: 20px; width: 100%; margin: 5px 0; }
-        @keyframes skeletonLoading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-
-        /* شوشەیی کردنی پەیامەکانی SweetAlert */
-        .swal2-popup { border-radius: 20px !important; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); background: rgba(255, 255, 255, 0.85) !important; box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important; border: 1px solid rgba(255,255,255,0.6) !important; font-family: 'Rudaw', Tahoma, sans-serif !important; }
-        body.dark-mode .swal2-popup { background: rgba(30, 30, 30, 0.85) !important; border-color: rgba(255,255,255,0.1) !important; color: #e0e0e0 !important; }
-        body.dark-mode .swal2-title, body.dark-mode .swal2-html-container { color: #e0e0e0 !important; }
-        body.dark-mode .swal2-input, body.dark-mode .swal2-textarea { background: #2c2c2c !important; color: #fff !important; border-color: #444 !important; }
-
-        /* شریتی ڕاکێشان بۆ خوارەوە (Pull-to-Refresh) */
         #ptr-indicator { width: 100%; height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: bold; color: var(--active-color); transition: height 0.2s ease-out; }
         
         .main-content { flex: 1; width: 100%; max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
@@ -121,14 +145,12 @@
         .header-title h1 { color: var(--active-color); font-size: 16px; margin: 0; font-weight: bold; text-align: center; }
         .header-title h1 a { color: inherit; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; }
         
-        /* بازنەکانی گۆڕینی ڕەنگ */
         .theme-colors { position: absolute; left: 45px; top: 50%; transform: translateY(-50%); display: flex; gap: 6px; }
         .color-dot { width: 14px; height: 14px; border-radius: 50%; cursor: pointer; border: 2px solid var(--bg-body); transition: transform 0.2s; }
         .color-dot:active { transform: scale(0.8); }
         
         .theme-toggle-btn { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); background: transparent; border: none; font-size: 20px; cursor: pointer; padding: 0; margin: 0; transition: transform 0.2s; z-index: 10; color: var(--active-color); }
         
-        /* سڵاوکردنی زیرەک */
         #smartGreeting { font-size: 12px; font-weight: bold; color: var(--label-color); margin-top: 5px; animation: fadeInUp 1s ease-out; }
         
         .visitor-counter { text-align: center; font-size: 12px; color: var(--label-color); margin-bottom: 8px; font-weight: bold; }
@@ -159,7 +181,6 @@
         .container { background: var(--bg-container); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: 0 auto 20px auto; border: 1px solid var(--border-container); width: 100%; }
         h2 { color: var(--active-color); margin-top: 0; margin-bottom: 15px; font-size: 16px; transition: color 0.3s; }
 
-        /* فۆڕمی سەرئاوکەوتوو (Floating Labels) */
         .input-wrapper { position: relative; width: 100%; margin: 12px 0; }
         .input-wrapper i { position: absolute; right: 12px; top: 15px; color: var(--active-color); font-size: 16px; z-index: 2; transition: color 0.3s; }
         .input-wrapper input { width: 100%; padding: 20px 35px 8px 10px; box-sizing: border-box; border: 2px solid var(--input-border); border-radius: 6px; font-size: 14px; font-family: 'Rudaw', Tahoma, Arial, sans-serif; outline: none; transition: 0.3s ease all; background: var(--input-bg); color: var(--input-text); user-select: text; }
@@ -547,17 +568,6 @@
                     </div>
                 </div>
 
-                <div id="gpsAdminBlock" style="display: none; background: rgba(253, 126, 20, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(253, 126, 20, 0.2);" class="no-print">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <h3 style="margin: 0; font-size: 14px; color: #fd7e14;"><i class="fa-solid fa-location-dot"></i> نۆرەگرتن بەپێی شوێن (GPS)</h3>
-                        <label class="switch">
-                            <input type="checkbox" id="gpsToggleBtn" onchange="toggleGpsStatus()">
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-                    <p style="margin: 5px 0 0 0; font-size: 11px; color: var(--label-color);">ئەگەر هەڵبکرێت، تەنها دانیشتووانی (هەڵەبجە، سیروان، خورماڵ، بیارە، تەوێڵە) دەتوانن نۆرە بگرن.</p>
-                </div>
-
                 <div style="display: flex; gap: 8px; margin-bottom: 10px;" class="no-print">
                     <button class="action-btn search-btn" onclick="loadTodayUsers()" style="flex: 1; margin-top: 0; padding: 10px;">نیشاندانی لیستی ئەمڕۆ</button>
                     <button class="action-btn" style="background: #20c997; color: white; width: auto; margin-top: 0; padding: 10px 15px;" onclick="loadTodayUsers()" title="نوێکردنەوەی خشتەکە">🔄</button>
@@ -728,9 +738,12 @@
         });
 
         // ----------------- سیستەمی دەنگی ئەلیکترۆنی (Sound Effects) -----------------
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
         function playSound(type) {
+            if (!audioCtx) audioCtx = new AudioContext();
             if(audioCtx.state === 'suspended') audioCtx.resume();
+            
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.connect(gain);
@@ -760,6 +773,14 @@
             }
         }
 
+        // بۆ کارپێکردنی دەنگەکان لە مۆبایل، پێویستە بەکارهێنەر یەکەم جار کلیک بکات
+        document.body.addEventListener('touchstart', function() {
+            if (!audioCtx) audioCtx = new AudioContext();
+        }, { once:true });
+        document.body.addEventListener('click', function() {
+            if (!audioCtx) audioCtx = new AudioContext();
+        }, { once:true });
+
         // ----------------- گۆڕینی ڕەنگی ئەپەکە (Themes) -----------------
         function changeThemeColor(primary, darkPrimary) {
             playSound('tick');
@@ -769,7 +790,6 @@
             localStorage.setItem('customThemeDark', darkPrimary);
         }
         
-        // جێبەجێکردنی ڕەنگە سەیڤکراوەکان
         let savedPrimary = localStorage.getItem('customThemePrimary');
         let savedDark = localStorage.getItem('customThemeDark');
         if (savedPrimary && savedDark) {
@@ -827,6 +847,7 @@
 
         // ----------------- ئاگادارکردنەوەی ئۆفلاین بوون -----------------
         window.addEventListener('offline', () => {
+            playSound('error');
             Swal.fire({
                 title: 'تۆ ئۆفلاینی!',
                 text: 'پەیوەندی ئینتەرنێت پچڕا، بەڵام دەتوانیت غەرامە هەژمار بکەیت و تاقیکردنەوە ئەنجام بدەیت.',
@@ -850,15 +871,6 @@
         let globalSystemIsActive = true; 
         let statChart = null;
         let globalUsersData = [];
-
-        let isGpsRequired = false; 
-        const allowedZones = [
-            { name: "بەڕێوەبەرایەتی هەڵەبجە", lat: 35.1877797, lng: 46.0072475, radius: 15 },
-            { name: "تەوێڵە", lat: 35.207216, lng: 46.185475, radius: 8 },
-            { name: "بیارە", lat: 35.228500, lng: 46.115500, radius: 8 },
-            { name: "خورماڵ", lat: 35.311500, lng: 46.009000, radius: 10 },
-            { name: "سیروان", lat: 35.204500, lng: 45.940000, radius: 10 }
-        ];
 
         function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
             var R = 6371; 
@@ -1270,10 +1282,6 @@
                     
                     globalSystemIsActive = (result.isActive !== false);
 
-                    isGpsRequired = result.isGpsRequired === true; 
-                    let gpsToggle = document.getElementById("gpsToggleBtn");
-                    if(gpsToggle) gpsToggle.checked = isGpsRequired;
-
                     let badge = document.getElementById("statusBadge");
                     let dot = document.getElementById("statusDot");
                     let statusText = document.getElementById("statusText");
@@ -1419,55 +1427,6 @@
             let name = document.getElementById("nameInput").value.trim(); 
             let phone = document.getElementById("phoneInput").value.trim();
 
-            if (isGpsRequired) {
-                if (!navigator.geolocation) {
-                    playSound('error');
-                    return Swal.fire('هەڵە', 'مۆبایلەکەت یان وێبگەڕەکەت پشتگیری سیستەمی شوێندۆزی (GPS) ناکات.', 'error');
-                }
-
-                let regBtn = document.getElementById("registerBtn"); 
-                let origBtnHtml = regBtn.innerHTML;
-                regBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> دڵنیابوونەوە لە شوێن...';
-                regBtn.disabled = true;
-
-                try {
-                    const position = await new Promise((resolve, reject) => {
-                        navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 10000 });
-                    });
-
-                    let userLat = position.coords.latitude;
-                    let userLng = position.coords.longitude;
-                    let isUserInAllowedZone = false;
-
-                    for (let zone of allowedZones) {
-                        let distance = getDistanceFromLatLonInKm(zone.lat, zone.lng, userLat, userLng);
-                        if (distance <= zone.radius) {
-                            isUserInAllowedZone = true;
-                            break; 
-                        }
-                    }
-
-                    if (!isUserInAllowedZone) {
-                        regBtn.innerHTML = origBtnHtml;
-                        regBtn.disabled = false;
-                        playSound('error');
-                        return Swal.fire(
-                            'لە دەرەوەی بازنەیت!', 
-                            'بەپێی سیستەمی GPS، تۆ لە دەرەوەی پارێزگای هەڵەبجە و ناحیەکانی دەوروبەریتی. نۆرەگرتن تەنها بۆ دانیشتووانی ناوچەکە ڕێگەپێدراوە.', 
-                            'warning'
-                        );
-                    }
-                } catch (error) {
-                    regBtn.innerHTML = origBtnHtml;
-                    regBtn.disabled = false;
-                    playSound('error');
-                    return Swal.fire('ئاگاداری', 'تکایە ئیزنی (Location) بدە بە وێبسایتەکە بۆ ئەوەی بتوانیت نۆرە بگریت.', 'warning');
-                }
-                
-                regBtn.innerHTML = origBtnHtml;
-                regBtn.disabled = false;
-            }
-
             const confirmation = await Swal.fire({
                 title: 'دڵنیابوونەوە لە زانیارییەکان',
                 html: `
@@ -1593,14 +1552,12 @@
                             document.getElementById('preRegAdminBlock').style.display = 'none';
                             document.getElementById('toggleStatusBtn').style.display = 'none';
                             document.getElementById('blacklistAdminBlock').style.display = 'none'; 
-                            document.getElementById('gpsAdminBlock').style.display = 'none';
                         } else {
                             document.getElementById('quotaAdminBlock').style.display = 'block';
                             document.getElementById('noticeAdminBlock').style.display = 'block';
                             document.getElementById('preRegAdminBlock').style.display = 'block';
                             document.getElementById('toggleStatusBtn').style.display = 'inline-block';
                             document.getElementById('blacklistAdminBlock').style.display = 'block';
-                            document.getElementById('gpsAdminBlock').style.display = 'block';
                         }
 
                         fetch(`${baseUrl}/api/users/count`)
@@ -1799,35 +1756,6 @@
                     location.reload();
                 } else { playSound('error'); Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان دەسەڵاتت نییە!', 'error'); }
             } catch (error) { playSound('error'); Swal.fire('کێشە', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error'); }
-        }
-
-        async function toggleGpsStatus() {
-            playSound('tick');
-            if (!window.adminPwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە', 'warning');
-            
-            let isChecked = document.getElementById("gpsToggleBtn").checked;
-            
-            try {
-                let response = await fetch(`${baseUrl}/api/admin/toggle-gps?status=${isChecked}`, { 
-                    method: "POST", 
-                    headers: { "Admin-Password": window.adminPwd } 
-                });
-                let result = await response.json().catch(() => ({}));
-                
-                if(response.ok) {
-                    playSound('success');
-                    Swal.fire('سەرکەوتوو', `سیستەمی GPS بە سەرکەوتوویی ${isChecked ? 'چالاک کرا' : 'ناچالاک کرا'}`, 'success');
-                    isGpsRequired = isChecked;
-                } else {
-                    document.getElementById("gpsToggleBtn").checked = !isChecked; 
-                    playSound('error');
-                    Swal.fire('هەڵە', result.message || 'نەتوانرا دۆخەکە بگۆڕدرێت!', 'error');
-                }
-            } catch (error) {
-                document.getElementById("gpsToggleBtn").checked = !isChecked;
-                playSound('error');
-                Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە', 'error');
-            }
         }
 
         async function loadTodayUsers() {
