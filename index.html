@@ -73,7 +73,79 @@
         body.dark-mode .swal2-popup { background: rgba(30, 30, 30, 0.85) !important; border-color: rgba(255,255,255,0.1) !important; color: #e0e0e0 !important; }
         body.dark-mode .swal2-title, body.dark-mode .swal2-html-container { color: #e0e0e0 !important; }
         body.dark-mode .swal2-input, body.dark-mode .swal2-textarea { background: #2c2c2c !important; color: #fff !important; border-color: #444 !important; }
+/* ==========================================
+           پێشنیارە نوێیەکانی دیزاین (UI/UX Upgrades)
+           ========================================== */
 
+        /* 1. پاشبنەمای مۆدێرن (خاوەن کێشکردنێکی جوان) */
+        body {
+            background: linear-gradient(135deg, #f0f8ff 0%, #e6f2ff 100%);
+            background-attachment: fixed;
+        }
+        body.dark-mode {
+            background: linear-gradient(135deg, #121212 0%, #1a1a2e 100%);
+        }
+
+        /* 2. سەردێڕی شوشەیی چەسپاو (Sticky Glass Header) */
+        .header-title {
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.85) !important;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06) !important;
+        }
+        body.dark-mode .header-title {
+            background: rgba(30, 30, 30, 0.85) !important;
+            border-color: rgba(255,255,255,0.1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3) !important;
+        }
+
+        /* 3. مینیوی خوارەوەی سەرئاوکەوتوو (Floating Bottom Nav) */
+        .bottom-nav {
+            bottom: 15px !important;
+            width: 92% !important;
+            left: 4% !important;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+            border: 1px solid rgba(255,255,255,0.4) !important;
+        }
+        body.dark-mode .bottom-nav {
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4) !important;
+            border-color: rgba(255,255,255,0.1) !important;
+        }
+
+        /* 4. نەرمکردنی دیزاینی کارتەکان (Soft Neumorphism) */
+        .portal-card {
+            border: none !important;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04), inset 0 0 0 1.5px rgba(0,86,179,0.1) !important;
+        }
+        .portal-card:hover {
+            box-shadow: 0 12px 25px rgba(0,86,179,0.12), inset 0 0 0 1.5px rgba(0,86,179,0.3) !important;
+        }
+        body.dark-mode .portal-card {
+            background: linear-gradient(145deg, #242424, #1e1e1e) !important;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2), inset 0 0 0 1px rgba(77,163,255,0.1) !important;
+        }
+
+        /* 5. کاریگەری زیندوو بۆ دوگمەکان (Ripple & Active Scale) */
+        button.action-btn, .start-quiz-btn, .portal-card, .date-box, .nav-item {
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.3s ease !important;
+        }
+        button.action-btn:active:not(:disabled), .start-quiz-btn:active, .portal-card:active, .date-box:active {
+            transform: scale(0.96) !important;
+        }
+        
+        /* جوانکاری بۆ بۆکسی تێبینییەکان */
+        .notice-slider-box {
+            border: none !important;
+            box-shadow: 0 5px 15px rgba(0,86,179,0.08), inset 0 0 0 1.5px rgba(0,86,179,0.2) !important;
+        }
+        body.dark-mode .notice-slider-box {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(77,163,255,0.2) !important;
+        }
         * { box-sizing: border-box; }
 
         :root {
