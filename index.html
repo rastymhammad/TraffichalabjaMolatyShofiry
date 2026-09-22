@@ -73,7 +73,8 @@
         body.dark-mode .swal2-popup { background: rgba(30, 30, 30, 0.85) !important; border-color: rgba(255,255,255,0.1) !important; color: #e0e0e0 !important; }
         body.dark-mode .swal2-title, body.dark-mode .swal2-html-container { color: #e0e0e0 !important; }
         body.dark-mode .swal2-input, body.dark-mode .swal2-textarea { background: #2c2c2c !important; color: #fff !important; border-color: #444 !important; }
-/* ==========================================
+
+        /* ==========================================
            پێشنیارە نوێیەکانی دیزاین (UI/UX Upgrades)
            ========================================== */
 
@@ -147,32 +148,7 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(77,163,255,0.2) !important;
         }
         * { box-sizing: border-box; }
-/* ==========================================
-           چاکسازی ڕەنگی مینیوی خوارەوە بۆ ڕووناکی و تاریکی
-           ========================================== */
-        
-        /* لە دۆخی ڕووناکی (Light Mode): ئایکۆن و نووسینەکان با ڕەش بن */
-        #nav-portal i, #nav-queue i, #nav-fine i, .nav-item span { 
-            color: #333333 !important; 
-            filter: none !important; 
-        }
 
-        /* لە دۆخی تاریکی (Dark Mode): ئایکۆن و نووسینەکان با سپی بن */
-        body.dark-mode #nav-portal i, 
-        body.dark-mode #nav-queue i, 
-        body.dark-mode #nav-fine i, 
-        body.dark-mode .nav-item span { 
-            color: #ffffff !important; 
-            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5)) !important; 
-        }
-
-        /* کاتێک ئایکۆنێک چالاکە (Active) با ڕەنگەکەی شین بێت بۆ ئەوەی دیار بێت کە لەو پەڕەیەیت */
-        .nav-item.active i, .nav-item.active span {
-            color: #0056b3 !important;
-        }
-        body.dark-mode .nav-item.active i, body.dark-mode .nav-item.active span {
-            color: #4da3ff !important;
-        }
         :root {
             --bg-body: #f0f8ff;
             --bg-container: white;
@@ -405,11 +381,33 @@
         .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--label-color); cursor: pointer; transition: all 0.3s ease; flex: 1; -webkit-tap-highlight-color: transparent; }
         .nav-item i { font-size: 22px; margin-bottom: 5px; transition: transform 0.2s; }
         .nav-item span { font-size: 11px; font-weight: bold; }
+
+        /* ==========================================
+           چاکسازی ڕەنگی مینیوی خوارەوە بۆ ڕووناکی و تاریکی
+           ========================================== */
         
-        /* ڕەنگی تایبەتی ئایکۆنەکانی خوارەوە بەپێی داواکاری */
-        #nav-portal i, #nav-queue i, #nav-fine i { color: #ffffff !important; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4)); }
-        
-        .nav-item.active i { transform: translateY(-3px) scale(1.15); }
+        /* لە دۆخی ڕووناکی (Light Mode): ئایکۆن و نووسینەکان با ڕەش بن */
+        #nav-portal i, #nav-queue i, #nav-fine i, .nav-item span { 
+            color: #333333 !important; 
+            filter: none !important; 
+        }
+
+        /* لە دۆخی تاریکی (Dark Mode): ئایکۆن و نووسینەکان با سپی بن */
+        body.dark-mode #nav-portal i, 
+        body.dark-mode #nav-queue i, 
+        body.dark-mode #nav-fine i, 
+        body.dark-mode .nav-item span { 
+            color: #ffffff !important; 
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5)) !important; 
+        }
+
+        /* کاتێک ئایکۆنێک چالاکە (Active) با ڕەنگەکەی شین بێت بۆ ئەوەی دیار بێت کە لەو پەڕەیەیت */
+        .nav-item.active i, .nav-item.active span {
+            color: #0056b3 !important;
+        }
+        body.dark-mode .nav-item.active i, body.dark-mode .nav-item.active span {
+            color: #4da3ff !important;
+        }
     </style>
 </head>
 <body>
@@ -625,6 +623,10 @@
                     <h3 style="color: #8e44ad; font-size: 14px; margin-bottom: 10px;">فیدباک و هەڵسەنگاندنەکان:</h3>
                     <div id="feedbacksList"></div>
                 </div>
+            </div>
+            
+            <div style="text-align: center; margin-bottom: 15px;" class="no-print">
+                <button onclick="handleAdminClick()" style="background: none; color: var(--label-color); border: none; font-size: 11px; cursor: pointer;">ئەدمین</button>
             </div>
         </div>
 
@@ -2053,4 +2055,4 @@
         });
     </script>
 </body>
-</html>
+</html> ئه‌مه‌ كۆده‌كامه‌ كێشه‌ی نیه‌ زۆر سوپاس پێشنیاری تر
