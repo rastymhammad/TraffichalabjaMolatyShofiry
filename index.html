@@ -57,18 +57,18 @@
         }
         button.action-btn:not(:disabled) { animation: softGlow 3s infinite; }
 
-        /* ئەنیمەیشنی نوێی خلیسکانی پەڕەکان (Page Slide Transitions) */
+        /* ئەنیمەیشنی نوێی خلیسکانی پەڕەکان */
         @keyframes slideFade {
             0% { opacity: 0; transform: translateX(25px); }
             100% { opacity: 1; transform: translateX(0); }
         }
         .page-section { display: none; animation: slideFade 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; }
 
-        /* شاشەی بارکردنی مۆدێرن (Skeleton Loading) */
+        /* شاشەی بارکردنی مۆدێرن */
         .skeleton { background: linear-gradient(90deg, var(--bg-container) 25%, var(--info-bg) 50%, var(--bg-container) 75%); background-size: 200% 100%; animation: skeletonLoading 1.5s infinite; border-radius: 6px; height: 20px; width: 100%; margin: 5px 0; }
         @keyframes skeletonLoading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-        /* شوشەیی کردنی پەیامەکانی SweetAlert (Glassmorphism) */
+        /* شوشەیی کردنی پەیامەکانی SweetAlert */
         .swal2-popup { border-radius: 20px !important; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); background: rgba(255, 255, 255, 0.85) !important; box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important; border: 1px solid rgba(255,255,255,0.6) !important; font-family: 'Rudaw', Tahoma, sans-serif !important; }
         body.dark-mode .swal2-popup { background: rgba(30, 30, 30, 0.85) !important; border-color: rgba(255,255,255,0.1) !important; color: #e0e0e0 !important; }
         body.dark-mode .swal2-title, body.dark-mode .swal2-html-container { color: #e0e0e0 !important; }
@@ -144,14 +144,11 @@
         }
 
         @media all and (display-mode: standalone) {
-            #installAppContainer {
-                display: none !important;
-            }
+            #installAppContainer { display: none !important; }
         }
 
         body { font-family: 'Rudaw', Tahoma, Arial, sans-serif; background-color: var(--bg-body); color: var(--text-main); padding: 0 10px 80px 10px; margin: 0; text-align: center; transition: background-color 0.4s, color 0.4s; display: flex; flex-direction: column; align-items: center; min-height: 100vh; user-select: none; }
         
-        /* شریتی ڕاکێشان بۆ خوارەوە (Pull-to-Refresh) */
         #ptr-indicator { width: 100%; height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: bold; color: var(--header-text); transition: height 0.2s ease-out; }
         
         .main-content { flex: 1; width: 100%; max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
@@ -162,9 +159,8 @@
         body.dark-mode .header-title { border-bottom-color: #4da3ff; }
         .header-title h1 { color: var(--header-text); font-size: 16px; margin: 0; font-weight: bold; text-align: center; }
         .header-title h1 a { color: inherit; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; }
-        .header-title h1 a:hover { opacity: 0.8; }
         .theme-toggle-btn { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); background: transparent; border: none; font-size: 20px; cursor: pointer; padding: 0; margin: 0; transition: transform 0.2s; z-index: 10; }
-        .theme-toggle-btn:hover { transform: translateY(-50%) scale(1.1); }
+        
         .visitor-counter { text-align: center; font-size: 12px; color: var(--label-color); margin-bottom: 8px; font-weight: bold; }
         .visitor-counter b { color: var(--text-main); }
         
@@ -178,7 +174,6 @@
         .notice-scroll-container.vertical marquee { font-size: 12px; color: var(--text-main); line-height: 1.6; white-space: pre-line; text-align: center; width: 100%; height: 100%; }
         
         .portal-cards { display: flex; flex-direction: column; gap: 10px; width: 100%; align-items: center; }
-        
         .portal-card { position: relative; background: var(--header-bg); border: 2px solid var(--border-container); border-radius: 12px; padding: 12px 15px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; width: 100%; max-width: 380px; margin: 0 auto; min-height: 75px; }
         .portal-card:hover { transform: translateY(-4px); border-color: #0056b3; box-shadow: 0 8px 20px rgba(0,86,179,0.15); }
         body.dark-mode .portal-card:hover { border-color: #4da3ff; box-shadow: 0 8px 20px rgba(77,163,255,0.15); }
@@ -197,19 +192,15 @@
         .container { background: var(--bg-container); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: 0 auto 20px auto; border: 1px solid var(--border-container); width: 100%; }
         h2 { color: var(--header-text); margin-top: 0; margin-bottom: 15px; font-size: 16px; }
 
-        /* دیزاینی نوێی فۆڕمی سەرئاوکەوتوو (Floating Labels) */
         .input-wrapper { position: relative; width: 100%; margin: 12px 0; }
         .input-wrapper i { position: absolute; right: 12px; top: 15px; color: var(--header-text); font-size: 16px; z-index: 2; }
         .input-wrapper input { width: 100%; padding: 20px 35px 8px 10px; box-sizing: border-box; border: 2px solid var(--input-border); border-radius: 6px; font-size: 14px; font-family: 'Rudaw', Tahoma, Arial, sans-serif; outline: none; transition: 0.3s ease all; background: var(--input-bg); color: var(--input-text); user-select: text; }
         .input-wrapper label { position: absolute; right: 35px; top: 14px; font-size: 13px; color: var(--label-color); transition: 0.3s ease all; pointer-events: none; z-index: 1; }
         .input-wrapper input:focus ~ label, .input-wrapper input:not(:placeholder-shown) ~ label { top: 4px; font-size: 10px; color: #0056b3; font-weight: bold; }
         body.dark-mode .input-wrapper input:focus ~ label, body.dark-mode .input-wrapper input:not(:placeholder-shown) ~ label { color: #4da3ff; }
-        
         .input-wrapper input:disabled { background-color: #e9ecef; cursor: not-allowed; opacity: 0.7; }
         .input-wrapper input.valid-input { border-color: #28a745 !important; box-shadow: 0 0 5px rgba(40, 167, 69, 0.3); }
         .input-wrapper input.invalid-input { border-color: #f5c6cb !important; box-shadow: 0 0 5px rgba(245, 198, 203, 0.5); }
-        
-        /* بۆ خانەکانی تر کە ڕەنگە پێویستی بەم ستایلە نەبێت وەک خۆیان دەمێننەوە */
         .input-wrapper select, .input-wrapper textarea { width: 100%; padding: 10px; border: 2px solid var(--input-border); border-radius: 6px; font-family: 'Rudaw', Tahoma, sans-serif; background: var(--input-bg); color: var(--input-text); outline: none; }
         
         button.action-btn { background: #28a745; color: white; border: none; padding: 12px 20px; cursor: pointer; border-radius: 6px; font-size: 15px; font-weight: bold; width: 100%; margin-top: 8px; font-family: 'Rudaw', Tahoma, sans-serif; transition: 0.3s; }
@@ -219,17 +210,19 @@
         .search-btn:hover { background: #0056b3; }
         .timer-box { background: rgba(220, 53, 69, 0.08); border: 1px dashed #dc3545; padding: 8px 10px; border-radius: 8px; font-size: 13px; color: #d9534f; margin-top: 12px; font-weight: bold; display: none; text-align: center; }
         .timer-box span { font-size: 12px; color: #dc3545; display: inline-block; margin-left: 5px; }
+        
         .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 15px; }
         #usersTable { width: 100%; border-collapse: collapse; text-align: center; font-size: 11px; }
         #usersTable th, #usersTable td { white-space: nowrap; padding: 8px; border: 1px solid var(--border-container); color: var(--text-main); }
         #usersTable th { background: #0056b3; color: white; }
         body.dark-mode #usersTable th, body.dark-mode #usersTable td { border-color: #444; }
+        
         .dashboard-cards { display: flex; gap: 6px; margin-bottom: 12px; justify-content: space-between; }
         .dash-card { background: var(--bg-container); border: 1px solid var(--border-container); border-radius: 6px; padding: 8px 4px; flex: 1; text-align: center; }
         .dash-card h4 { margin: 0 0 2px 0; font-size: 10px; color: var(--label-color); }
         .dash-card h3 { margin: 0; font-size: 15px; color: #0056b3; }
         body.dark-mode .dash-card h3 { color: #4da3ff; }
-        .chart-container { max-width: 160px; margin: 0 auto; }
+        
         .fine-container { background: var(--bg-container); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 18px; border: 2px solid var(--border-container); text-align: center; width: 100%; }
         .toggle-container { display: flex; justify-content: space-between; align-items: center; background: var(--toggle-bg); padding: 10px; border-radius: 10px; margin-bottom: 12px; border: 1px solid var(--toggle-border); }
         .switch { position: relative; display: inline-block; width: 50px; height: 28px; }
@@ -238,10 +231,12 @@
         .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: #48bb78; }
         input:checked + .slider:before { transform: translateX(22px); }
+        
         .checklist-box { background: var(--toggle-bg); border: 1px solid var(--toggle-border); border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; text-align: right; }
         .checklist-title { font-size: 12px; font-weight: bold; color: var(--text-main); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
         .checklist-items { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 11px; color: var(--label-color); }
         .check-item { display: flex; align-items: center; gap: 5px; }
+        
         .date-section { background: var(--date-bg); border: 1px solid var(--date-border); border-radius: 12px; padding: 12px; margin-bottom: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
         .date-title-wrap { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .date-title { color: var(--date-title); font-weight: bold; font-size: 13px; }
@@ -252,17 +247,14 @@
         body.dark-mode .date-box:hover { border-color: #4da3ff; }
         .date-box label { display: block; font-size: 11px; color: var(--label-color); margin-bottom: 2px; font-weight: bold; pointer-events: none;}
         .date-custom-input { width: 100%; padding: 0; border: none; background: transparent; text-align: center; font-size: 16px; font-weight: bold; color: var(--input-text); pointer-events: none; }
+        
         .results { background: var(--results-bg); border-radius: 10px; padding: 12px; border: 2px solid var(--dynamic-status-color); margin-bottom: 12px; position: relative; overflow: hidden; z-index: 1; text-align: right; }
         .result-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed var(--results-border); font-size: 13px; color: var(--text-row); position: relative; z-index: 2; }
         .result-row:last-child { border-bottom: none; }
         .total-row { font-size: 16px; font-weight: bold; color: var(--total-color); }
         .fine-row { color: var(--fine-color); font-weight: bold; }
         .fee-row { color: var(--fee-color); font-weight: bold; }
-        .gauge-container { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%); width: 200px; height: 100px; text-align: center; display: none; opacity: 0.25; pointer-events: none; z-index: 0; }
-        .gauge { position: relative; width: 200px; height: 100px; overflow: hidden; background: var(--slider-bg); border-top-left-radius: 100px; border-top-right-radius: 100px; }
-        .gauge-fill { position: absolute; top: 100%; left: 0; width: inherit; height: 100%; background: #48bb78; transform-origin: center top; transition: transform 0.8s ease-out, background 0.8s; border-bottom-left-radius: 100px; border-bottom-right-radius: 100px; }
-        .gauge-cover { position: absolute; top: 20px; left: 20px; width: 160px; height: 80px; background: var(--results-bg); border-top-left-radius: 80px; border-top-right-radius: 80px; }
-        .needle { position: absolute; bottom: 0; left: 50%; width: 4px; height: 80px; background: var(--input-text); transform-origin: bottom center; transform: translateX(-50%) rotate(-90deg); transition: transform 0.8s; border-radius: 4px; z-index: 2; }
+        
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-overlay); justify-content: center; align-items: center; z-index: 1000; }
         .modal-content { background: var(--modal-bg); padding: 15px; border-radius: 12px; width: 90%; max-width: 350px; text-align: center; }
         .modal-content h3 { margin-top: 0; margin-bottom: 12px; color: var(--modal-text); font-size: 14px; }
@@ -276,7 +268,7 @@
         .social-icons { margin-top: 10px; }
         .social-icons a { color: #0056b3; font-size: 24px; margin: 0 10px; text-decoration: none; display: inline-block; transition: all 0.3s ease; }
         .social-icons a:hover { transform: scale(1.1) translateY(-2px); }
-        body.dark-mode .social-icons a { color: #4da3ff; }
+        
         .no-print { display: block; }
         @media print { 
             body * { visibility: hidden; } 
@@ -295,12 +287,14 @@
         .stars i { font-size: 26px; color: #cbd5e1; transition: color 0.2s, transform 0.2s; }
         .stars i:hover { transform: scale(1.1); }
         .stars i.active { color: #ffc107; text-shadow: 0 0 8px rgba(255, 193, 7, 0.4); }
-        .admin-feedbacks-container { display: none; margin-top: 15px; text-align: right; background: var(--info-bg); padding: 12px; border-radius: 8px; border: 1px solid var(--border-container); }
 
         /* ستايلی تایبەت بە بەشی تاقیکردنەوەی هاتووچۆ */
         .quiz-container { background: var(--bg-container); border: 2px solid var(--border-container); border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: right; margin-bottom: 20px; }
         body.dark-mode .quiz-container { border-color: #334155; }
         .quiz-header { font-size: 15px; font-weight: bold; color: var(--header-text); text-align: center; margin-bottom: 15px; border-bottom: 1px dashed var(--border-container); padding-bottom: 10px; }
+        
+        .quiz-timer { font-size: 16px; font-weight: bold; color: #dc3545; margin-bottom: 15px; text-align: center; }
+        
         .quiz-question-text { font-size: 14px; font-weight: bold; color: var(--text-main); margin-bottom: 15px; line-height: 1.6; }
         .quiz-options { display: flex; flex-direction: column; gap: 10px; }
         .quiz-btn { background: var(--input-bg); color: var(--input-text); border: 2px solid var(--input-border); border-radius: 8px; padding: 12px; font-family: 'Rudaw', Tahoma, sans-serif; font-size: 13px; font-weight: bold; cursor: pointer; text-align: right; transition: 0.2s; }
@@ -383,15 +377,17 @@
             <div class="quiz-container">
                 <div class="quiz-header" id="quizHeaderTitle">تاقیکردنەوەی هاتووچۆ 🚦</div>
                 <div id="quizPlayArea">
+                    <div id="quizTimer" class="quiz-timer">⏳ کاتی ماوە: 60 چرکە</div>
+                    <img id="quizImage" src="" style="max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px; display: none; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-left: auto; margin-right: auto;">
                     <div class="quiz-question-text" id="quizQText">چاوەڕێ بکە...</div>
                     <div class="quiz-options" id="quizOptionsDiv"></div>
-                    <div class="quiz-progress" id="quizProgressText">پرسیاری 0 لە 10</div>
+                    <div class="quiz-progress" id="quizProgressText">پرسیاری 0 لە 25</div>
                 </div>
                 <div id="quizResultArea" style="display: none; text-align: center;">
                     <i class="fa-solid fa-award" style="font-size: 50px; color: #ffc107; margin-bottom: 15px;"></i>
                     <h3 style="color: var(--text-main); margin-bottom: 10px;">ئەنجامەکەت</h3>
-                    <p id="quizScoreText" style="font-size: 18px; font-weight: bold; color: #28a745; margin-bottom: 20px;">0 / 10</p>
-                    <p id="quizFeedbackText" style="font-size: 14px; color: var(--text-main); margin-bottom: 20px; line-height: 1.6;"></p>
+                    <p id="quizScoreText" style="font-size: 18px; font-weight: bold; margin-bottom: 20px;">0 / 25</p>
+                    <p id="quizFeedbackText" style="font-size: 14px; margin-bottom: 20px; line-height: 1.6;"></p>
                     <button class="action-btn" onclick="initQuiz()"><i class="fa-solid fa-rotate-right"></i> دووبارەکردنەوە</button>
                 </div>
             </div>
@@ -627,7 +623,6 @@
         </div>
     </div>
 
-    <!-- دوگمەی دابەزاندن کە سەرەتا شاراەوەیە و تەنها لە براوەردا دەردەکەوێت -->
     <div id="installAppContainer" style="display: none; text-align: center; margin-bottom: 15px;" class="no-print">
         <button id="installAppBtn" class="action-btn" style="background: #28a745; width: auto; padding: 10px 25px; border-radius: 25px; box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);">
             <i class="fa-solid fa-download"></i> دابەزاندنی ئەپڵیکەیشن (Install)
@@ -677,7 +672,6 @@
         </div>
     </footer>
 
-    <!-- مینیوی خوارەوە -->
     <nav class="bottom-nav no-print" id="bottomNav">
         <div class="nav-item active" onclick="navTo('portal')" id="nav-portal">
             <i class="fa-solid fa-house"></i>
@@ -705,7 +699,6 @@
             }
         });
 
-        // ----------------- سیستەمی ڕاکێشان بۆ خوارەوە (Pull-to-Refresh) -----------------
         let pullStartY = 0;
         let pullMoveY = 0;
         let isPulling = false;
@@ -838,24 +831,20 @@
             }
         }
 
-        // کۆنترۆڵکردنی مینیوی خوارەوە بە ئەنیمەیشن
         function navTo(section) {
             vibrate(10);
             openSection(section);
         }
 
         function openSection(section) {
-            // شاردنەوەی هەموویان
             document.querySelectorAll('.page-section').forEach(el => {
                 el.style.display = 'none';
             });
 
-            // گۆڕینی ڕەنگی دوگمەی مینیوی خوارەوە
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             let activeNav = document.getElementById('nav-' + section);
             if(activeNav) activeNav.classList.add('active');
 
-            // کردنەوەی بەشەکە بە ئەنیمەیشنەوە
             let targetSection = document.getElementById(section + 'Section');
             if(targetSection) {
                 targetSection.style.display = 'block';
@@ -1702,7 +1691,6 @@
 
             if (!window.adminPwd) { return Swal.fire('ئاگاداری', 'تکایە سەرەتا لە بەشی ئەدمین چوونەژوورەوە بکە!', 'warning'); }
 
-            // نیشاندانی Skeleton لەناو خشتەکە لەکاتی هێنانی داتادا
             table.style.display = "table";
             tbody.innerHTML = `
                 <tr><td colspan='5'><div class='skeleton'></div></td></tr>
@@ -2003,71 +1991,263 @@
 
         // ----------------- یاری زانیارییەکانی هاتووچۆ -----------------
         const allTrafficQuestions = [
-            { q: "هێڵی بەردەوام (موتەسিল) چی دەگەیەنێت؟", options: ["پەڕینەوە و پێشپەڕین قەدەغەیە", "بۆ جوانی کێشراوە", "خێرایی دیاری دەکات", "ڕێگەپێدراوە بۆ پێشپەڕین"], answer: 0 },
-            { q: "کامێرای خاڵ بۆ خاڵ (پۆینت تو پۆینت) چۆن کار دەکات؟", options: ["تێکڕای خێرایی نێوان دوو کامێرا هەژمار دەکات", "تەنها لە شەو کار دەکات", "تەنها خێرایی یەک خاڵ دەپێوێت", "وێنەی سەرنشین دەگرێت"], answer: 0 },
-            { q: "هێمای سێگۆشەی سوور بە گشتی مانای چییە؟", options: ["ئاگادارکردنەوە و مەترسی", "فەرمانکردن", "ڕێگەپێدان", "زانیاری"], answer: 0 },
-            { q: "هێمای بازنەی سوور مانای چییە؟", options: ["قەدەغەکردن یان ڕێگریکردن", "شوێنی حەسانەوە", "ئاگادارکردنەوە", "ناچارکردن"], answer: 0 },
-            { q: "هێمای بازنەی شین مانای چییە؟", options: ["ناچارکردن یان فەرمانکردن", "قەدەغەکردن", "مەترسی", "تەنها بۆ جوانی"], answer: 0 },
-            { q: "ئەگەر لە ترافیک لایت گلۆپی زەرد پێبوو چی دەکەیت؟", options: ["ئامادە دەبم بۆ وەستان پێش هێڵی پەڕینەوە", "خێرایی زیاد دەکەم", "لای چەپ دەگرم", "هۆڕن لێدەدەم"], answer: 0 },
-            { q: "لە چوارڕیانێک کە هیچ هێمایەکی تێدا نییە، مافی پێشینە بۆ کێیە؟", options: ["بۆ ئەو ئۆتۆمبێلەی لە لای ڕاستەوە دێت", "بۆ ئەو ئۆتۆمبێلەی خێرایە", "بۆ بارهەڵگر", "بۆ ئەو ئۆتۆمبێلەی لە لای چەپەوە دێت"], answer: 0 },
-            { q: "بەکارهێنانی مۆبایل لە کاتی شۆفێریدا؟", options: ["بە هەموو شێوەیەک قەدەغەیە", "ڕێگەپێدراوە تەنها بۆ نامە", "لە کاتی قەرەباڵغی دەبێت", "تەنها بۆ دەنگ دەبێت"], answer: 0 },
-            { q: "لە کاتی بارانباریندا، دەبێت مەودای سەلامەتی نێوان تۆ و ئۆتۆمبێلی پێشەوەت چۆن بێت؟", options: ["دەبێت زیاتر بێت و دوری زیاتر جێبهێڵیت", "وەک خۆی بێت", "دەبێت کەمتر بێت", "پێویست بە جێهێشتنی مەودا ناکات"], answer: 0 },
-            { q: "کێبڵی ڕاکێشان لە نێوان دوو ئۆتۆمبێل دەبێت چەند بێت؟", options: ["٣ بۆ ٥ مەتر", "١٠ مەتر", "١ مەتر", "٨ مەتر"], answer: 0 },
-            { q: "هێمای (P) کە هێڵێکی سووری بەسەردا هاتبێت بە مانای چییە؟", options: ["وەستان قەدەغەیە", "پارکینگ ڕێگەپێدراوە", "شوێنی پەڕینەوەی پیادە", "ڕێگای خێرا"], answer: 0 },
-            { q: "لە کاتی نزیکبوونەوە لە قوتابخانە یان نەخۆشخانە؟", options: ["خێرایی زۆر کەم دەکرێتەوە و هۆڕن لێدان قەدەغەیە", "ئاساییە هۆڕن لێبدەیت", "دەبێت خێرایی زیاد بکەیت", "لایت لێدان قەدەغەیە"], answer: 0 },
-            { q: "هێڵی زەردی کەناری شەقام مانای چییە؟", options: ["وەستانی کاتی و هەمیشەیی قەدەغەیە", "ڕێگەپێدراوە بۆ چاوەڕوانی", "شوێنی پاسە", "تەنها بۆ بارهەڵگرە"], answer: 0 },
-            { q: "ئەگەر ئۆتۆمبێلی فریاکەوتن (ئەمبوڵانس) لە دواتەوە بوو؟", options: ["ڕێڕەوی بۆ چۆڵ دەکەم بەرەو لای ڕاست", "خێرایی زیاد دەکەم و لە پێشی دەڕۆم", "هەر لە شوێنی خۆم دەمێنمەوە", "هۆڕنی بۆ لێدەدەم"], answer: 0 },
-            { q: "خێرایی ڕێگەپێدراو لەناو بازاڕ و سەنتەری شارەکاندا بەبێ بوونی تابلۆ چەندە؟", options: ["٤٠ بۆ ٥٠ کم/کاتژمێر", "٨٠ کم/کاتژمێر", "١٠٠ کم/کاتژمێر", "بێ سنوورە"], answer: 0 },
-            { q: "پێشپەڕین (تەجاووزکردن) بەپێی یاسا لە کام لایە دەکرێت؟", options: ["تەنها لە لای چەپەوە", "لە لای ڕاستەوە", "لە هەردوو لاوە ڕێگەپێدراوە", "لە شانی ڕێگاکەوە"], answer: 0 },
-            { q: "لێدانی هۆڕن لە ناوەندی شار بە شێوەیەکی گشتی؟", options: ["قەدەغەیە تەنها بۆ حاڵەتی مەترسی نەبێت", "بۆ سڵاوکردن ئاساییە", "ڕێگەپێدراوە لە هەموو کاتێکدا", "تەنها لە شەواندا دەبێت"], answer: 0 },
-            { q: "ئایا سەرنشینی تەنیشت شۆفێر پێویستە قایشی سەلامەتی ببەستێت؟", options: ["بەڵێ، پێویستە وەک شۆفێرەکە", "نەخێر تەنها بۆ شۆفێرە", "لە ناو شار پێویست ناکات", "بە ئارەزوومەندانەیە"], answer: 0 },
-            { q: "ئەگەر لە ناو بازنە (فەلەکە) بوویت، مافی پێشینە بۆ کێیە؟", options: ["بۆ ئەو کەسەی لە ناو بازنەکەدایە", "بۆ ئەو کەسەی دێتە ناو بازنەکە", "بۆ ئۆتۆمبێلی گەورەتر", "بۆ ئەو کەسەی خێرایە"], answer: 0 },
-            { q: "چوونە ناو یەکتربڕ کاتێک قەرەباڵغیە و ڕێگاکە گیراوە؟", options: ["قەدەغەیە بچیتە ناوی تەنانەت ئەگەر گلۆپ سەوزیش بێت", "ئاساییە ئەگەر گلۆپ سەوز بێت", "دەتوانیت بچیتە ناوی و هۆڕن لێبدەیت", "دەبێت بە خێرایی لای ڕاست بگریت"], answer: 0 },
-            { q: "هێمای (خێرایی ٦٠) لەناو بازنەیەکی سووردا بە مانای چییە؟", options: ["زۆرترین خێرایی ڕێگەپێدراو ٦٠ یە", "کەمترین خێرایی ٦٠ یە", "خێرایی پێشنیارکراو ٦٠ یە", "ئاساییە لە ٦٠ زیاتر بڕۆیت"], answer: 0 },
-            { q: "لە شەقامی دوو ئاراستە (دوو ساید)، دەبێت لە کام لای شەقامەکە شۆفێری بکەیت؟", options: ["لای ڕاست", "لای چەپ", "ناوەڕاستی شەقام", "هەرلایەک ئارەزوو بکەیت"], answer: 0 },
-            { q: "هێمای سێگۆشە کە سەری بەرەو خوارەوەیە (لەسەر ڕێگا دەبینرێت) مانای چییە؟", options: ["بەخشینی مافی پێشینە (ڕێگە بدە بەوانی تر)", "مەترسی لە پێشە", "قف (بوەستە)", "ڕێگای سەرەکی"], answer: 0 },
-            { q: "منداڵی خوار تەمەن ١٠ ساڵ دەبێت لە کوێ دابنیشێت لەناو ئۆتۆمبێل؟", options: ["لە کوشنی پشتەوە بە بەستنی قایش", "لە باوەشی سەرنشینی پێشەوە", "لە کوشنی پێشەوە", "لە تەنیشت شۆفێر"], answer: 0 },
-            { q: "لە کاتی تەمومژێکی چڕدا پێویستە چ ڕووناکییەک بەکاربهێنیت؟", options: ["ڕووناکی نزم (لۆک) یان لایتی تەمومژ", "ڕووناکی بەرز (فول لایت)", "فلاشەر (چوار ئیشارەت)", "هیچ لایتێک پێویست ناکات"], answer: 0 },
-            { q: "تابلۆی (قف / وەستان) شێوەکەی چۆنە؟", options: ["هەشتلای سوورە", "سێگۆشەیە", "لاکێشەیەکی شینە", "بازنەیەکی زەردە"], answer: 0 },
-            { q: "کاتێک پۆلیسی هاتووچۆ لە چوارڕیانێکدایە و ڕووخساری یان پشتی لە تۆیە، واتای چییە؟", options: ["دەبێت بوەستیت پێش هێڵی پەڕینەوە", "دەتوانیت بڕۆیت", "خێرایی کەم بکەرەوە", "ئامادەبە بۆ ڕۆیشتن"], answer: 0 },
-            { q: "ئاستی کحولی ڕێگەپێدراو لە کاتی شۆفێری لە هەرێمی کوردستان چەندە؟", options: ["سفر (هیچ بڕێک ڕێگەپێدراو نییە)", "ڕێژەیەکی زۆر کەم", "یەک پەرداخ", "بەپێی کێشی لەش دەگۆڕێت"], answer: 0 },
-            { q: "هێمای (ڕێگای بنبەست) لە کام جۆری تابلۆکاندایە؟", options: ["تابلۆی زانیاری (لاکێشەی شین یان سەوز)", "تابلۆی ئاگادارکردنەوە", "تابلۆی قەدەغەکردن", "تابلۆی فەرمانکردن"], answer: 0 },
-            { q: "لە شەقامە خێراکاندا، لای چەپ (لێنی خێرا) بۆ چی بەکاردێت؟", options: ["تەنها بۆ پێشپەڕین (تەجاووزکردن)", "بۆ ڕۆیشتنی ئاسایی", "بۆ وەستان لە کاتی پێویست", "بۆ بارهەڵگرەکان"], answer: 0 },
-            { q: "کاتێک تایەی ئۆتۆمبێلەکەت دەتەقێت لە کاتی خێراییدا، دەبێت چی بکەیت؟", options: ["ستێرنەکە قایم بگرە و هێدی هێدی خێرایی کەم بکەرەوە", "بە خێرایی برێک بکە", "ستێرنەکە بەردە", "یەکەمجار بزوێنەر بکوژێنەوە"], answer: 0 },
-            { q: "گڵۆپی سەوزی فلاشدار (پێ و کوژ) لە ترافیک لایت بە مانای چی دێت؟", options: ["کاتەکەی بەرەو تەواوبوون دەچێت و دەبێتە زەرد", "ڕاستەوخۆ دەبێتە سوور", "کاتت زۆر ماوە بۆ پەڕینەوە", "وێستگەی پشکنین هەیە"], answer: 0 },
-            { q: "ئایا گۆڕینی لێن (ڕێڕەو) لەناو تونێلەکاندا ڕێگەپێدراوە؟", options: ["نەخێر، بە هەموو شێوەیەک قەدەغەیە", "بەڵێ ئاساییە ئەگەر ئیشارەت بدەیت", "تەنها بە ڕۆژ دەبێت", "تەنها بۆ ئۆتۆمبێلی بچووک دەبێت"], answer: 0 },
-            { q: "لە چوارڕیانێک کە کارەبای ترافیک لایت بڕابوو یان ئیشی نەدەکرد چی دەکەیت؟", options: ["وەک چوارڕیانی بێ هێما مامەڵە دەکەم و ماف بۆ ڕاستە", "بە خێرایی دەپەڕمەوە تا قەرەباڵغ نەبێت", "لە ناوەڕاستدا دەوەستم", "تەنها لە لای چەپەوە دەڕۆم"], answer: 0 },
-            { q: "کەی دەتوانیت فلاشەر (چوار ئیشارەت) بەکاربهێنیت؟", options: ["تەنها لە کاتی مەترسی لەناکاو یان پەککەوتنی ئۆتۆمبێل", "بۆ ڕاگرتن لە شوێنی قەدەغە", "بۆ پێشپەڕین", "لە کاتی بارانبارینی ئاسایی"], answer: 0 },
-            { q: "شۆفێریکردن کاتێک زۆر هەست بە خەواڵوویی دەکەیت مەترسییەکەی وەک چییە؟", options: ["وەک شۆفێریکردنە لەژێر کاریگەری کحول", "مەترسی نییە ئەگەر خێرایی کەم بکەیتەوە", "تەنها بۆ بارهەڵگرەکان مەترسیدارە", "پێویست بە خەمی زۆر ناکات"], answer: 0 },
-            { q: "مەبەست لە هێمای (قف)ی سەر شەقام پێش چوارڕیان چییە؟", options: ["وەستانی تەواوەتی تا دڵنیابوون لە چۆڵبوونی ڕێگاکە", "تەنها کەمکردنەوەی خێرایی", "ئامادەبوون بۆ ڕۆیشتن", "بەردەوام بوون بەبێ وەستان"], answer: 0 },
-            { q: "تابلۆیەکی سێگۆشە کە وێنەی ئاسکێکی تێدایە مانای چییە؟", options: ["ئاگاداربە مەترسی پەڕینەوەی ئاژەڵی کێوی هەیە", "باخچەی ئاژەڵان لە نزیکە", "شوێنی ڕاوکردن", "قەدەغەی هاتنی ئاژەڵ"], answer: 0 },
-            { q: "چ شتێک زۆرترین هۆکارە بۆ ڕووداوە کوشندەکانی هاتووچۆ؟", options: ["تیژڕەوی و پابەندنەبوون بە یاساکان", "خراپی کەشوهەوا", "جۆری ئۆتۆمبێلەکان", "کێشەی بزوێنەر"], answer: 0 },
-            { q: "ئایا لێخوڕینی ماتۆڕسکیل پێویستی بە مۆڵەتی شۆفێری هەیە؟", options: ["بەڵێ، پێویستی بە مۆڵەتی تایبەت بە خۆی هەیە", "نەخێر پێویست ناکات", "تەنها بۆ سەروو ٣٠ ساڵ پێویستە", "تەنها بۆ گەشتکردن پێویستە"], answer: 0 },
-            { q: "لە کاتی پەڕینەوەی پیادەکان لەسەر هێڵی زێبراکرۆس مافی کێیە؟", options: ["مافی پێشینە بۆ پیادەکەیە و شۆفێر دەبێت بوەستێت", "شۆفێر مافی پێشینەی هەیە", "هەرکەسیان خێراتر بوو", "شۆفێر دەبێت هۆڕن لێبدات تا پیادەکە بوەستێت"], answer: 0 },
-            { q: "تابلۆی شین کە تیایدا تیری سپی هەیە بەرەو پێشەوە مانای چییە؟", options: ["دەبێت بەردەوام بیت بەو ئاراستەیە (فەرمانکردنە)", "ئەگەر ویستت بڕۆ", "مەترسی لە پێشە", "ڕێگای خێرا دەست پێدەکات"], answer: 0 },
-            { q: "بینینی ڕووناکی سور و شین (فلاشەری پۆلیس یان ئەمبوڵانس) لە ئاوێنەوە؟", options: ["دەبێت بە خێرایی و سەلامەتی ڕێڕەوی بۆ چۆڵ بکەیت", "ئاساییە گرنگی پێمەدە", "خێرایی زیاد بکە و لە پێشی بمێنەوە", "هەر لەو لێنەدا بمێنەوە و خێرایی کەم بکەرەوە"], answer: 0 },
-            { q: "ئایا دەتوانیت ئۆتۆمبێلەکەت پارک بکەیت لەبەردەم دەریچەی ئاوپڕژێنی ئاگرکوژێنەوە؟", options: ["نەخێر بە هەموو شێوەیەک قەدەغەیە", "بەڵێ ئەگەر بۆ کاتێکی کورت بێت", "لە شەواندا دەکرێت", "ئەگەر چوار ئیشارەت پێبکەیت دەبێت"], answer: 0 },
-            { q: "ئەگەر بە بەردەوامی فشاری هەوای تایەکان کەمتر بێت لە ئاستی پێویست چی ڕوودەدات؟", options: ["تایەکان زووتر دەخوڕێن و بەنزین زیاتر سەرف دەبێت", "ئۆتۆمبێلەکە خێراتر دەبێت", "هیچ کێشەیەک دروست ناکات", "برێک بەهێزتر دەبێت"], answer: 0 },
-            { q: "کەی شۆفێر بۆی هەیە لەسەر شانی ڕێگا (لای ڕاستی دەرەوەی هێڵەکە) شۆفێری بکات؟", options: ["تەنها لە حاڵەتی لەناکاو و پەککەوتندا", "کاتێک شەقامەکە قەرەباڵغە", "بۆ پێشپەڕینی ئۆتۆمبێلی خاو", "بۆ ئەوەی خێراتر بگاتە جێگا"], answer: 0 },
-            { q: "خێرایی پێشنیارکراو (بازنەی شین کە ژمارەی تێدایە) واتای چییە؟", options: ["باشترە بەو خێراییە بڕۆیت بۆ سەلامەتیت", "ناچارکراویت لەو خێراییە کەمتر نەڕۆیت", "زۆرترین خێرایی ڕێگەپێدراوە", "قەدەغەکردنی ئەو خێراییەیە"], answer: 0 },
-            { q: "ئەگەر بزوێنەری ئۆتۆمبێلەکەت کوژایەوە لە کاتی شۆفێریدا، چی زەحمەت دەبێت؟", options: ["سوڕاندنی ستێرن و برێكکردن زەحمەت دەبێت", "هیچ گۆڕانکارییەک ڕوونادات", "ئۆتۆمبێلەکە خێراتر دەبێت", "تایەکان دەتەقن"], answer: 0 },
-            { q: "پێش دەستپێکردنی گەشتێکی دوور، پشکنینی کام لەمانە زۆر پێویستە؟", options: ["ئاو، ڕۆن، تایەکان و برێک", "ڕادیۆ و گۆرانی", "پاکی کوشنەکان", "لێدانی پۆلیش بۆ بۆیەکە"], answer: 0 },
-            { q: "هێمای (ڕێگای خلیسکان) چۆنە؟", options: ["سێگۆشەیەکە وێنەی ئۆتۆمبێلێکی تێدایە کە خلیسکاوە", "بازنەیەکی سوورە", "لاکێشەیەکی سەوزە", "تابلۆیەکی زەردی خاڵییە"], answer: 0 },
-            { q: "پێش ئەوەی دەرگای ئۆتۆمبێلەکەت بکەیتەوە لە قەراغی شەقام، پێویستە چی بکەیت؟", options: ["سەیری ئاوێنەکە بکەم نەوەک ئۆتۆمبێل یان پایسکیل بێت", "یەکسەر دەرگاکە بکەمەوە", "تەنها سەیرێکی پێشەوە بکەم", "هۆڕن لێبدەم پاشان بیکەمەوە"], answer: 0 },
-            { q: "لە ڕێگایەکی دوو ئاراستەدا کاتێک ئۆتۆمبێلێکی بەرامبەر فول لایتی لێداویت، دەبێت چی بکەیت؟", options: ["سەیری لای ڕاستی شەقامەکە (خەتی سپی قەراغەکە) بکەم تا تێپەڕ دەبێت", "منیش فول لایتی لێبدەمەوە", "چاوەکانم دابخەم و برێک بکەم", "لە ناوەڕاستی شەقامەکە بوەستم"], answer: 0 },
-            { q: "ماوەی سەلامەتی چییە بەپێی یاسای دوو چرکە؟", options: ["هێشتنەوەی دووری ٢ چرکە لە نێوان خۆت و ئۆتۆمبێلی پێشەوەت", "دەبێت هەر ٢ چرکە جارێک سەیری ئاوێنە بکەیت", "واتە ٢ چرکە پێش لادان ئیشارەت بدە", "لێدانی برێک بۆ ٢ چرکە"], answer: 0 },
-            { q: "چ شتێک دەبێتە هۆی کەمبوونەوەی توانای بینینت لە کاتی شۆفێری؟", options: ["شۆفێری کردن بە ماندوێتی و خەواڵوویی", "کردنەوەی ڕادیۆ", "قسەکردن لەگەڵ سەرنشین بە دەنگی نزم", "لێخوڕین بە خێرایی کەم"], answer: 0 },
-            { q: "بەپێی یاسا، نابێت چەند مەتر نزیک ببیتەوە لە ئۆتۆمبێلی ئاگرکوژێنەوە کە لە ئەرکدایە؟", options: ["٥٠ مەتر", "١٠ مەتر", "٥ مەتر", "هیچ مەودایەک دیاری نەکراوە"], answer: 0 },
-            { q: "کەی ڕێگەپێدراوە ئۆتۆمبێلەکەت لەسەر پیادەڕەو (شۆستە) پارک بکەیت؟", options: ["لە هیچ کاتێکدا ڕێگەپێدراو نییە", "ئەگەر شەقامەکە زۆر قەرەباڵغ بێت", "بۆ ماوەی کەمتر لە ٥ خولەک", "تەنها لە شەواندا"], answer: 0 },
-            { q: "هێمای هێڵی پیادە (زێبراکرۆس) لەسەر شەقام کامەیە؟", options: ["هێڵە سپییە پانەکان کە بە شێوەی درێژی کێشراون", "هێڵێکی زەردی بەردەوام", "هێڵێکی سووری پچڕ پچڕ", "دوو هێڵی سپی بەردەوام"], answer: 0 },
-            { q: "لەکاتی ڕووداوێکی هاتووچۆ (صدمە) و بوونی بریندار، یەکەم هەنگاو چییە؟", options: ["ئاگادارکردنەوەی پۆلیس و ئەمبوڵانس و پاراستنی شوێنەکە", "بەجێهێشتنی شوێنەکە بە خێرایی", "جوڵاندنی بریندارەکان بەبێ شارەزایی", "گواستنەوەی ئۆتۆمبێلەکان پێش هاتنی پۆلیس"], answer: 0 },
-            { q: "بەرزبوونەوەی پلەی گەرمای بزوێنەر (حەماوە) مانای چییە؟", options: ["پێویستە دەستبەجێ لە شوێنێکی سەلامەت بوەستیت و بزوێنەر بکوژێنیتەوە", "ئاساییە و دەتوانیت بەردەوام بیت", "پێویستە خێرایی زیاد بکەیت تا هەوای بەرکەوێت", "مانای وایە بەنزینی کەم ماوە"], answer: 0 },
-            { q: "هێمای بازنەی سپی کە چوارچێوەیەکی سووری هەیە مانای چییە؟", options: ["قەدەغەیە تێپەڕین بەو ڕێگایەدا بۆ هەموو جۆرە ئۆتۆمبێلێک", "ڕێگەپێدراوە بۆ هەموو ئۆتۆمبێلێک", "تەنها بۆ بارهەڵگر قەدەغەیە", "ڕێگایەکی خێرایە"], answer: 0 }
+            { 
+                q: "1- هێما قەدەغەکراوەکان بە گشتی شێوەیان بازنەیەکی چ ڕەنگێکە؟", 
+                options: ["سوور", "شین", "سەوز"], 
+                answer: 0 
+            },
+            { 
+                q: "2- هێماکانی ئاگادارکردنەوە بە گشتی شێوەکەیان؟", 
+                options: ["سێگۆشەی لایەکسانە", "چوارگۆشەیە", "بازنەییە"], 
+                answer: 0 
+            },
+            { 
+                q: "3- هێماکانی پابەندبوونی ڕەها بە گشتی شێوەکەیان؟", 
+                options: ["بازنەییە", "لاکێشەیە", "سێگۆشەیە"], 
+                answer: 0 
+            },
+            { 
+                q: "4- دابەزینی سەرنشین لە دیوی چەپی ئۆتۆمبێل قەدەغەیە؟", 
+                options: ["لە هەموو جۆرەکانی ئۆتۆمبێل", "لە ئۆتۆمبێلی تەکسی", "تەنها لە پاسەکان"], 
+                answer: 0 
+            },
+            { 
+                q: "5- ئۆتۆمبێلێک لە پێشتە و دەتەوێت لێی تێپەڕیت پێویستە لە کامە لای ئەم کردارە ئەنجام بدەیت؟", 
+                options: ["تەنها لە دیوی چەپی", "لە هەردوو لای ڕاست و چەپ", "تەنها لە دیوی ڕاستی"], 
+                answer: 0 
+            },
+            { 
+                q: "6- باشترین ڕێگەچارە بۆ ئاگادارکردنەوەی شۆفێرەکانی تر؟", 
+                options: ["بەکارهێنانی لایتی فوول (فلاش) بۆ یەک بۆ دوو جار", "بەکارهێنانی هۆڕن بە بەردەوامی", "نزیکبوونەوە لە ئۆتۆمبێلەکە و ئاگادارکردنەوەی شۆفێرەکە بە قسەکردن لەگەڵی"], 
+                answer: 0 
+            },
+            { 
+                q: "7- هێمای دەستنیشانکردنی خێرایی چ واتایەک دەگەیەنێت؟", 
+                options: ["بەرزترین پلەی خێرایی ڕێگەپێدراو لە باری ئاسایی", "کەمترین پلەی خێرایی ڕێگەپێدراو بۆ ئۆتۆمبێلەکان", "بەرزترین پلەی خێرایی ڕێگەپێدراو لە کاتی باران بارین"], 
+                answer: 0 
+            },
+            { 
+                q: "8- ئایا لێکرەتبوون لە ئۆتۆمبێلی دیکە ئاساییە لە کاتی لێخوڕین لەسەر پرد؟", 
+                options: ["بە هەموو شێوەیەک قەدەغەیە", "ڕێگەپێدراوە و زۆریش ئاساییە", "ڕێگەپێدراوە ئەگەر هاتوو ئۆتۆمبێلەکان بە خێراییەکی کەم دەڕۆیشتن"], 
+                answer: 0 
+            },
+            { 
+                q: "9- هێماکانی قەدەغەکردن مانای چی دەگەیەنێت؟", 
+                options: ["پێدانی فەرمانی قەدەغەکردن", "ئاگادارکردنەوەی شۆفێر", "ئاگادارکردنەوە لە بوونی مەترسی"], 
+                answer: 0 
+            },
+            { 
+                q: "10- کەی دەتوانیت ڕێڕەوی لای ڕاستی ئۆتۆمبێلەکان بەکار بهێنیت بۆ لێکرەتبوون؟", 
+                options: ["کاتێک شۆفێری پێشەوە ئاماژەی دا بە چوون بۆ لای چەپ", "ئەگەر ڕێڕەوی لای ڕاست چۆڵ بوو", "هەردوو ڕێڕەوەکە ئاساییە بۆ تێپەڕبوون"], 
+                answer: 0 
+            },
+            { 
+                q: "11- لێخوڕینی ئۆتۆمبێل قەدەغەیە ئەگەر ڕووناکی لایتەکانی ئۆتۆمبێل لە ئاستی پێوەری نەبوو بۆ؟", 
+                options: ["هەموو لایتە پێوەرییەکان", "لایتەکانی دەستنیشانکردن (سەکەن)", "تەنها لایتە سەرەکییەکان"], 
+                answer: 0 
+            },
+            { 
+                q: "12- ئۆتۆمبێل لە شەقام دەخلیسکێت و کۆنترۆڵ لەدەست دەدات کاتێک شەقامەکە تەڕ بێت ئەگەر؟", 
+                options: ["هەموو ئەوانەی کە باسکران", "شەقامەکە ڕاست نەبێت و بەرزی و نزمی تێدابێت", "ئۆتۆمبێلەکە بە خێراییەکی زۆر بڕوات و تایەکانی تێکچووبن"], 
+                answer: 0 
+            },
+            { 
+                q: "13- لە کاتی بەفربارین بە ڕۆژ پێویستە شۆفێر؟", 
+                options: ["لایتی نزم (نزم) پێ بکات", "لایتی بەرز پێ بکات", "لایتی ئاگادارکردنەوە پێ بکات"], 
+                answer: 0 
+            },
+            { 
+                q: "14- مەرجەکانی لێکرەتبوون لە ئۆتۆمبێلەکان چین؟", 
+                options: ["دڵنیابوونی تەواو لە چۆڵی پێشەوە و بوونی بوار بۆ تێپەڕبوون بە سەلامەتی", "ئەگەر شۆفێری پێشەوە ئاماژەی دا بۆ تێپەڕبوون", "کاتێک ئۆتۆمبێلەکەی پێشەوە هێواش دەڕوات"], 
+                answer: 0 
+            },
+            { 
+                q: "15- بەرزترین پلەی خێرایی ڕێگاپێدراو لە نزیک قوتابخانە و بازاڕە قەرەباڵغەکان؟", 
+                options: ["30 کم / لە کاتژمێرێک", "40 کم / لە کاتژمێرێک", "60 کم / لە کاتژمێرێک"], 
+                answer: 0 
+            },
+            { 
+                q: "16- لە کام باردا تێپەڕبوون یان هەوڵدان بۆ تێپەڕبوون لە ئۆتۆمبێلی دیکە قەدەغەیە؟", 
+                options: ["هەموو ئەوانەی کە باسکران", "لە کاتی بەسەرکەوتنی ڕێگا هەورازەکان", "کاتێک ئاستی بینین کەمە"], 
+                answer: 0 
+            },
+            { 
+                q: "17- تۆ لە ناو تونێلێک ئۆتۆمبێل لێدەخوڕیت و لە پێشت ئۆتۆمبێلێک هەیە بە هێواشی دەڕوات، ئایا ڕێگەپێدراوە لێی ڕەت بیت؟", 
+                options: ["بە هیچ شێوەیەک ڕێگەپێدراو نییە تێپەڕبوون ئەنجام بدەم", "بەڵێ ڕێگەپێدراوە ئەگەر هێواش بڕوات", "بەڵێ بە مەرجی دروستنەکردنی کێشە بۆ کەسانی تر"], 
+                answer: 0 
+            },
+            { 
+                q: "18- لە کام بار لەمانەی خوارەوە دەتوانیت مانۆڕی تێپەڕاندن ئەنجام بدەیت؟", 
+                options: ["لە کاتی بوونی هێڵێکی پچڕاو لە دیوی لای چەپ", "لە کاتی بوونی هێڵێکی نەپچڕاو", "لە کاتی بوونی دوو هێڵی نەپچڕاو"], 
+                answer: 0 
+            },
+            { 
+                q: "19- ناکرێت شۆفێری بکرێت بە بوونی شتێک بەرچاوی شۆفێری گرتبێت وەکو؟", 
+                options: ["شکان لە جامەکانی پێشەوە و تەنیشتەکان یان بوونی لەزگەی جام", "هەڵگرتنی بارێک کە مەودای بینینی نەگرتبێت", "ئاوێنەکانی دەرەوەی هەبێت"], 
+                answer: 0 
+            },
+            { 
+                q: "20- تێپەڕبوون لە ئۆتۆمبێلەکان ئەنجام دەدرێت بە؟", 
+                options: ["داگیرساندنی ئاماژەی لای چەپ و چوونە لای چەپ و زیادکردنی خێرایی", "ئاگادارکردنەوە بە لایتی فوول بۆ چەندین جار", "لێخوڕین شان بە شانی ئۆتۆمبێلەکە"], 
+                answer: 0 
+            },
+            { 
+                q: "21- ئایا شۆفێر بۆی هەیە ئۆتۆمبێلەکەی لە ناوەندی شەقام جێبهێڵێت ئەگەر تووشی لەکارکەوتن بوو؟", 
+                options: ["بە هیچ شێوەیەک نابێت جێی بهێڵێت", "دەتوانێت ئەگەر لە نزیکی بوەستێت", "دەتوانێت ئەگەر سێگۆشەی فۆسفۆری دانا"], 
+                answer: 0 
+            },
+            { 
+                q: "22- لە کاتی لێخوڕین لە کەش و هەوای تەم و مژ پێویستە؟", 
+                options: ["لایتی نزم بەکار بێنیت", "لایتی ئاگادارکردنەوە بەکار بێنیت", "لایتی فوول بەکار بێنیت"], 
+                answer: 0 
+            },
+            { 
+                q: "23- لە کاتی لێخوڕینی ئۆتۆمبێل لە کەشی بەفر و باراناوی یان تەڕ، ئەو مەودایەی کە پێویستە بۆ وەستانی سەلامەتی؟", 
+                options: ["زیاد دەکات و پێویستە مەودای زیاتر جێبهێڵیت", "وەک خۆیەتی و ناگۆڕێت", "کەمتر دەبێتەوە"], 
+                answer: 0 
+            },
+            { 
+                q: "24- ئایا نمرەی دەرچوون لە تاقیکردنەوەی هێما و میکانیک چەندە؟", 
+                options: ["80%", "75%", "90%"], 
+                answer: 0 
+            },
+            { 
+                q: "25- ئایا ڕێگە دەدرێت بە لێکرەتبوونی ئۆتۆمبێلەکان لە یەکتربڕی هێڵی شەمەندەفەر؟", 
+                options: ["بە هەموو شێوەیەک قەدەغەیە", "ڕێگە دەدرێت ئەگەر دووری ١٠٠م هەبێت", "ڕێگە دەدرێت ئەگەر شەمەندەفەر نەبینرا"], 
+                answer: 0 
+            },
+            { 
+                q: "26- کحول و ماددەی هۆشبەر کاریگەریان لەسەر مرۆڤ هەیە بۆیە؟", 
+                options: ["ئۆتۆمبێل لێناخوڕم ئەگەر کحولم خواردبێتەوە وە ناهێڵم کەس لێبخوڕێت", "ڕێژەی کەم کاریگەری نییە", "کاریگەری نییە لەسەر بڕیاردان لە کاتی لێخوڕین"], 
+                answer: 0 
+            },
+            { 
+                q: "27- دەبێت خێرایی ئۆتۆمبێل کەم بکرێتەوە لە کاتی پێچکردنەوە لە؟", 
+                options: ["پێش نزیکبوونەوە لە شوێنی پێچەکە", "لە کاتی چوونە نێو پێچەکە", "لە کۆتایی پێچکردنەوەکە"], 
+                answer: 0 
+            },
+            { 
+                q: "28- کاتێک لە شەقامێکی یەک ئاراستە یا دوو ئاراستە نزیک دەبیتەوە لە پاسی قوتابخانە پێویستە لەسەرت؟", 
+                options: ["خێراییت کەم بکەیەوە و بە وریایی بەردەوام بیت", "بە دووری ١٠م بوەستیت", "بە زووترین کات لێی تێپەڕیت"], 
+                answer: 0 
+            },
+            { 
+                q: "29- لە کاتی بیستنی دەنگ یان بینینی لایتی فریاگوزاری پێویستە؟", 
+                options: ["ڕێڕەوی بۆ چۆڵ دەکەم بەرەو لای ڕاست", "خێراییت کەم بکەیتەوە لە ڕێچکەی خۆت", "خێراییت زیاد بکەیت بۆ چۆڵکردنی ڕێگاکە"], 
+                answer: 0 
+            },
+            { 
+                q: "30- لێخوڕینی ئۆتۆمبێل بە پێچەوانەی ئاراستەی ڕۆیشتن لە شەقام سزاکەی؟", 
+                options: ["بەندکردن و پێبژاردن", "پێبژاردن", "لێسەندنەوەی مۆڵەت"], 
+                answer: 0 
+            },
+            { 
+                q: "31- کاتێک لە شەقامێکی خۆڵ یان چەوڕێژکراو دێیتە سەر شەقامێکی قیرتاوکراو پێویستە لەسەرت؟", 
+                options: ["مافی پێشینە بدەیت بەو ئۆتۆمبێلانەی لەسەر شەقامە قیرتاوەکە دەڕۆن", "مافی پێشینە بۆ خۆتە", "هیچ مافێکی پێشینە نییە"], 
+                answer: 0 
+            },
+            { 
+                q: "32- دوو هێڵی نەپچڕاو بە ڕەنگی زەرد لە دیوی ڕاستی شەقام بە واتای؟", 
+                options: ["وەستان بە هەموو شێوەیەک قەدەغەیە", "وەستان لە ڕۆژانی پشوو قەدەغەیە", "وەستان ئاساییە"], 
+                answer: 0 
+            },
+            { 
+                q: "33- ئەنجامدانی مانۆڕی لێکرەتبوون لە شوێنی پەڕینەوەی پیادە یان نزیکی؟", 
+                options: ["بە هەموو شێوەیەک قەدەغەیە", "ڕێگەپێدراوە ئەگەر کەس نەبوو", "تێپەڕبوون پێش گەیشتن پێی ڕێگاپێدراوە"], 
+                answer: 0 
+            },
+            { 
+                q: "34- چرای زەردی پچڕپچڕ لە ڕێگاکان بە واتای؟", 
+                options: ["وریا بە مەترسی لە پێشت هەیە", "بوەستە", "ئامادەبە بۆ ڕۆیشتن"], 
+                answer: 0 
+            },
+            { 
+                q: "35- ئایا دەکرێت لایتی ئاگادارکردنەوە یان دەنگی فریاگوزاری بەکاربهێنرێت لەلایەن کەسی ئاساییەوە؟", 
+                options: ["نەخێر بە هیچ شێوەیەک ڕێگا نادرێت", "بەڵێ بۆ هەندێک کەس ڕێگەپێدراوە", "بۆ بارهەڵگرەکان ڕێگەپێدراوە"], 
+                answer: 0 
+            },
+            { 
+                q: "36- کاتێک نزیک دەبیتەوە لە یەکتربڕێکی بێ هێما و ئۆتۆمبێلێک لە ڕاستەوە دێت پێویستە چی بکەیت؟", 
+                options: ["بوەستە و مافی پێشینە بەو ئۆتۆمبێلە بدە", "بەردەوام بە چونکە پێشینە بۆ خۆتە", "خێراییت زیاد بکە بۆ تێپەڕین"], 
+                answer: 0 
+            },
+            { 
+                q: "37- لە کاتی لێخوڕین بە خێرایی 30 کم پێویستە مەودایەک جێبهێڵدرێت بە دووری؟", 
+                options: ["10 مەتر", "5 مەتر", "20 مەتر"], 
+                answer: 0 
+            },
+            { 
+                q: "38- لێخوڕین بە شەو پێویستی بە وریایی زیاتر هەیە چونکە؟", 
+                options: ["بینین لە شەو سنووردارە", "زیادبوونی ژمارەی ئۆتۆمبێلەکان لە شەودا", "کەمبوونەوەی توانای ئۆتۆمبێلەکان"], 
+                answer: 0 
+            },
+            { 
+                q: "39- نوێنەکردنەوەی پشکنینی تەکنیکی ساڵانە سزاکەی؟", 
+                options: ["پێبژاردن", "بەندکردن", "دەستبەسەرداگرتنی ئۆتۆمبێل"], 
+                answer: 0 
+            },
+            { 
+                q: "40- خێرایی دەستنیشانکراو لە هەر شەقامێک بەپێی یاسا ئەو خێراییەیە کە؟", 
+                options: ["کە بە هێماکانی هاتووچۆ دیاریکراوە", "80 کم لە ناو شار و 100 کم لە دەرەوەی شار", "ئەو خێراییەی کە خۆت دیاری دەکەیت"], 
+                answer: 0 
+            },
+            { 
+                q: "41- تازەنەکردنەوەی ساڵانەی ئۆتۆمبێل سزاکەی؟", 
+                options: ["پێبژاردن", "بەندکردن", "دەستبەسەرداگرتنی ئۆتۆمبێل"], 
+                answer: 0 
+            },
+            { 
+                q: "42- هێڵی سپی بەردەوام و نەپچڕاو لەسەر شەقامێکی تاک ساید بە واتای؟", 
+                options: ["تێپەڕبوون لێی قەدەغەیە", "ئەگەر ئۆتۆمبێل نەبوو تێپەڕە", "دەتوانیت تێپەڕیت لە کاتی وەستان"], 
+                answer: 0 
+            },
+            { 
+                q: "43- ئایا دەکرێت پێشبڕکێ یان چالاکی هاوشێوە لە ڕێگا گشتییەکان ئەنجام بدرێت؟", 
+                options: ["نەخێر بە هیچ شێوەیەک ڕێگەی پێ نادرێت", "بۆ ئۆتۆمبێلی وەرزشی ڕێگەپێدراوە", "لە گەراجەکان ڕێگەپێدراوە"], 
+                answer: 0 
+            },
+            { 
+                q: "44- لە کاتی بینینی نابینایەک یان کەسێک یارمەتی بدات لە پەڕینەوە؟", 
+                options: ["بە تەواوەتی بوەستی و ڕێگەی بدەیت بپەڕێتەوە", "خێرایی کەم بکەرەوە و ڕێگەی بدە", "بەردەوام بە و بە وریایی لێخوڕە"], 
+                answer: 0 
+            },
+            { 
+                q: "45- هۆڕن دەبێت کەی و چۆن بەکاربێت؟", 
+                options: ["بۆ یەک جار و بۆ ماوەیەکی کورت لە باری زۆر پێویست بۆ ئاگادارکردنەوەی کەسانی تر", "بۆ ئاگادارکردنەوەی سەرپێچیکاران", "بۆ سڵاوکردن یان بانگکردن"], 
+                answer: 0 
+            },
+            { 
+                q: "46- بەرزترین پلەی خێرایی ڕێگەپێدراو بە شەو لە ڕێگا جووت ئاراستەکان؟", 
+                options: ["هەمان خێرایی کە یاسا دەستنیشانی کردووە", "نیوەی خێرایی دیاریکراو", "80 کم لە کاتژمێرێک"], 
+                answer: 0 
+            },
+            { 
+                q: "47- ئەو یەکتربڕانەی درەخت و باڵەخانە دایپۆشیون توانای بینین کەم دەکاتەوە پێویستە؟", 
+                options: ["لە سەرەتای یەکتربڕەکە بوەستی و دڵنیا بی پاشان بە هێمنی تێپەڕی", "خێرایی کەم بکەیتەوە و تێپەڕیت", "هۆڕن بەکاربێنە و تێپەڕە"], 
+                answer: 0 
+            },
+            { 
+                q: "48- بەرزترین خێرایی بۆ ئۆتۆمبێلی بچووک لە ڕێگا دەرەوەی شارەکان چەندە؟", 
+                options: ["100 کم / کاتژمێرێک", "90 کم / کاتژمێرێک", "120 کم / کاتژمێرێک"], 
+                answer: 0 
+            },
+            { 
+                q: "49- بەرزترین خێرایی ڕێگەپێدراو لە شەقامە خێراکانی هەرێمی کوردستان؟", 
+                options: ["110 کم بۆ بچووک و 80 کم بۆ بارهەڵگر", "دیاریکراو نییە", "80 کم بۆ هەموو ئۆتۆمبێلەکان"], 
+                answer: 0 
+            },
+            { 
+                q: "50- لە ڕێگا شاخاوییەکان دیسکەکانی برێک زوو گەرم دەبن، پێویستە چی بکرێت؟", 
+                options: ["بوەستیت چاوەڕێ بکەیت تاکو دیسکەکانی برێک سارد دەبنەوە", "بەردەوام بیت بە خێرایی تا سارد دەبنەوە", "هاند برێک بەکاربێنیت تا سارد دەبنەوە"], 
+                answer: 0 
+            }
         ];
 
         let selectedQuestions = [];
         let currentQuizIndex = 0;
         let quizScore = 0;
+        let questionTimerInterval;
+        let timeRemaining = 60;
 
         function shuffleArray(array) {
             let currentIndex = array.length, randomIndex;
@@ -2081,13 +2261,13 @@
 
         function initQuiz() {
             let shuffled = shuffleArray([...allTrafficQuestions]);
-            selectedQuestions = shuffled.slice(0, 10); 
+            selectedQuestions = shuffled.slice(0, 25); 
             
             selectedQuestions = selectedQuestions.map(q => {
                 let optionsWithIndex = q.options.map((opt, i) => ({text: opt, isCorrect: i === q.answer}));
                 let shuffledOptions = shuffleArray(optionsWithIndex);
                 let newCorrectIndex = shuffledOptions.findIndex(o => o.isCorrect);
-                return { q: q.q, options: shuffledOptions.map(o => o.text), answer: newCorrectIndex };
+                return { q: q.q, image: q.image, options: shuffledOptions.map(o => o.text), answer: newCorrectIndex };
             });
 
             currentQuizIndex = 0;
@@ -2097,25 +2277,70 @@
             loadQuestion();
         }
 
+        function startTimer() {
+            timeRemaining = 60;
+            document.getElementById("quizTimer").innerText = `⏳ کاتی ماوە: ${timeRemaining} چرکە`;
+            clearInterval(questionTimerInterval);
+            
+            questionTimerInterval = setInterval(() => {
+                timeRemaining--;
+                document.getElementById("quizTimer").innerText = `⏳ کاتی ماوە: ${timeRemaining} چرکە`;
+                
+                if(timeRemaining <= 0) {
+                    clearInterval(questionTimerInterval);
+                    handleTimeout();
+                }
+            }, 1000);
+        }
+
+        function handleTimeout() {
+            let correctIndex = selectedQuestions[currentQuizIndex].answer;
+            let allBtns = document.getElementById("quizOptionsDiv").getElementsByTagName("button");
+            
+            for(let i=0; i<allBtns.length; i++) {
+                allBtns[i].style.pointerEvents = "none";
+            }
+            
+            allBtns[correctIndex].classList.add("correct");
+            vibrate([20, 50, 20]);
+            
+            setTimeout(() => {
+                currentQuizIndex++;
+                loadQuestion();
+            }, 1500);
+        }
+
         function loadQuestion() {
             if (currentQuizIndex >= selectedQuestions.length) {
                 showQuizResults();
                 return;
             }
             
-            document.getElementById("quizProgressText").innerText = `پرسیاری ${currentQuizIndex + 1} لە 10`;
+            document.getElementById("quizProgressText").innerText = `پرسیاری ${currentQuizIndex + 1} لە 25`;
             
             let qData = selectedQuestions[currentQuizIndex];
             document.getElementById("quizQText").innerText = qData.q;
+            
+            let imgEl = document.getElementById("quizImage");
+            if(qData.image) {
+                imgEl.src = qData.image;
+                imgEl.style.display = "block";
+            } else {
+                imgEl.style.display = "none";
+            }
             
             let optionsHtml = "";
             qData.options.forEach((opt, idx) => {
                 optionsHtml += `<button class="quiz-btn" onclick="checkQuizAnswer(${idx}, this)">${opt}</button>`;
             });
             document.getElementById("quizOptionsDiv").innerHTML = optionsHtml;
+            
+            startTimer(); 
         }
 
         function checkQuizAnswer(selectedIndex, btnElement) {
+            clearInterval(questionTimerInterval);
+            
             let correctIndex = selectedQuestions[currentQuizIndex].answer;
             let allBtns = document.getElementById("quizOptionsDiv").getElementsByTagName("button");
             
@@ -2140,16 +2365,20 @@
         }
 
         function showQuizResults() {
+            clearInterval(questionTimerInterval);
             document.getElementById("quizPlayArea").style.display = "none";
             document.getElementById("quizResultArea").style.display = "block";
             
-            document.getElementById("quizScoreText").innerText = `${quizScore} / 10`;
+            document.getElementById("quizScoreText").innerText = `${quizScore} / 25`;
             
             let message = "";
-            if(quizScore === 10) message = "ئافەرین! تۆ شۆفێرێکی زۆر نموونەییت 🏆";
-            else if(quizScore >= 7) message = "زۆر باشە! زانیارییەکانت باشن 👍";
-            else if(quizScore >= 5) message = "مامناوەندە، پێویستە زیاتر ئاگاداری ڕێنماییەکان بیت 🤔";
-            else message = "پێویستە زیاتر هێماکانی هاتووچۆ بخوێنیتەوە 😅";
+            if(quizScore >= 20) {
+                message = "پیرۆزە! تۆ سەرکەوتوو بوویت 🏆🎉";
+                document.getElementById("quizScoreText").style.color = "#28a745";
+            } else {
+                message = "دەرنەچوویت، تکایە زیاتر هەوڵ بدە ❌";
+                document.getElementById("quizScoreText").style.color = "#dc3545";
+            }
             
             document.getElementById("quizFeedbackText").innerText = message;
         }
