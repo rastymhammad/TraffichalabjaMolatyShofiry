@@ -57,18 +57,18 @@
         }
         button.action-btn:not(:disabled) { animation: softGlow 3s infinite; }
 
-        /* ئەنیمەیشنی نوێی خلیسکانی پەڕەکان */
+        /* ئەنیمەیشنی نوێی خلیسکانی پەڕەکان (Page Slide Transitions) */
         @keyframes slideFade {
             0% { opacity: 0; transform: translateX(25px); }
             100% { opacity: 1; transform: translateX(0); }
         }
         .page-section { display: none; animation: slideFade 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; }
 
-        /* شاشەی بارکردنی مۆدێرن */
+        /* شاشەی بارکردنی مۆدێرن (Skeleton Loading) */
         .skeleton { background: linear-gradient(90deg, var(--bg-container) 25%, var(--info-bg) 50%, var(--bg-container) 75%); background-size: 200% 100%; animation: skeletonLoading 1.5s infinite; border-radius: 6px; height: 20px; width: 100%; margin: 5px 0; }
         @keyframes skeletonLoading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-        /* شوشەیی کردنی پەیامەکانی SweetAlert */
+        /* شوشەیی کردنی پەیامەکانی SweetAlert (Glassmorphism) */
         .swal2-popup { border-radius: 20px !important; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); background: rgba(255, 255, 255, 0.85) !important; box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important; border: 1px solid rgba(255,255,255,0.6) !important; font-family: 'Rudaw', Tahoma, sans-serif !important; }
         body.dark-mode .swal2-popup { background: rgba(30, 30, 30, 0.85) !important; border-color: rgba(255,255,255,0.1) !important; color: #e0e0e0 !important; }
         body.dark-mode .swal2-title, body.dark-mode .swal2-html-container { color: #e0e0e0 !important; }
@@ -144,11 +144,14 @@
         }
 
         @media all and (display-mode: standalone) {
-            #installAppContainer { display: none !important; }
+            #installAppContainer {
+                display: none !important;
+            }
         }
 
         body { font-family: 'Rudaw', Tahoma, Arial, sans-serif; background-color: var(--bg-body); color: var(--text-main); padding: 0 10px 80px 10px; margin: 0; text-align: center; transition: background-color 0.4s, color 0.4s; display: flex; flex-direction: column; align-items: center; min-height: 100vh; user-select: none; }
         
+        /* شریتی ڕاکێشان بۆ خوارەوە (Pull-to-Refresh) */
         #ptr-indicator { width: 100%; height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: bold; color: var(--header-text); transition: height 0.2s ease-out; }
         
         .main-content { flex: 1; width: 100%; max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
@@ -159,8 +162,9 @@
         body.dark-mode .header-title { border-bottom-color: #4da3ff; }
         .header-title h1 { color: var(--header-text); font-size: 16px; margin: 0; font-weight: bold; text-align: center; }
         .header-title h1 a { color: inherit; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .header-title h1 a:hover { opacity: 0.8; }
         .theme-toggle-btn { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); background: transparent; border: none; font-size: 20px; cursor: pointer; padding: 0; margin: 0; transition: transform 0.2s; z-index: 10; }
-        
+        .theme-toggle-btn:hover { transform: translateY(-50%) scale(1.1); }
         .visitor-counter { text-align: center; font-size: 12px; color: var(--label-color); margin-bottom: 8px; font-weight: bold; }
         .visitor-counter b { color: var(--text-main); }
         
@@ -174,6 +178,7 @@
         .notice-scroll-container.vertical marquee { font-size: 12px; color: var(--text-main); line-height: 1.6; white-space: pre-line; text-align: center; width: 100%; height: 100%; }
         
         .portal-cards { display: flex; flex-direction: column; gap: 10px; width: 100%; align-items: center; }
+        
         .portal-card { position: relative; background: var(--header-bg); border: 2px solid var(--border-container); border-radius: 12px; padding: 12px 15px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; width: 100%; max-width: 380px; margin: 0 auto; min-height: 75px; }
         .portal-card:hover { transform: translateY(-4px); border-color: #0056b3; box-shadow: 0 8px 20px rgba(0,86,179,0.15); }
         body.dark-mode .portal-card:hover { border-color: #4da3ff; box-shadow: 0 8px 20px rgba(77,163,255,0.15); }
@@ -192,15 +197,19 @@
         .container { background: var(--bg-container); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: 0 auto 20px auto; border: 1px solid var(--border-container); width: 100%; }
         h2 { color: var(--header-text); margin-top: 0; margin-bottom: 15px; font-size: 16px; }
 
+        /* دیزاینی نوێی فۆڕمی سەرئاوکەوتوو (Floating Labels) */
         .input-wrapper { position: relative; width: 100%; margin: 12px 0; }
         .input-wrapper i { position: absolute; right: 12px; top: 15px; color: var(--header-text); font-size: 16px; z-index: 2; }
         .input-wrapper input { width: 100%; padding: 20px 35px 8px 10px; box-sizing: border-box; border: 2px solid var(--input-border); border-radius: 6px; font-size: 14px; font-family: 'Rudaw', Tahoma, Arial, sans-serif; outline: none; transition: 0.3s ease all; background: var(--input-bg); color: var(--input-text); user-select: text; }
         .input-wrapper label { position: absolute; right: 35px; top: 14px; font-size: 13px; color: var(--label-color); transition: 0.3s ease all; pointer-events: none; z-index: 1; }
         .input-wrapper input:focus ~ label, .input-wrapper input:not(:placeholder-shown) ~ label { top: 4px; font-size: 10px; color: #0056b3; font-weight: bold; }
         body.dark-mode .input-wrapper input:focus ~ label, body.dark-mode .input-wrapper input:not(:placeholder-shown) ~ label { color: #4da3ff; }
+        
         .input-wrapper input:disabled { background-color: #e9ecef; cursor: not-allowed; opacity: 0.7; }
         .input-wrapper input.valid-input { border-color: #28a745 !important; box-shadow: 0 0 5px rgba(40, 167, 69, 0.3); }
         .input-wrapper input.invalid-input { border-color: #f5c6cb !important; box-shadow: 0 0 5px rgba(245, 198, 203, 0.5); }
+        
+        /* بۆ خانەکانی تر کە ڕەنگە پێویستی بەم ستایلە نەبێت وەک خۆیان دەمێننەوە */
         .input-wrapper select, .input-wrapper textarea { width: 100%; padding: 10px; border: 2px solid var(--input-border); border-radius: 6px; font-family: 'Rudaw', Tahoma, sans-serif; background: var(--input-bg); color: var(--input-text); outline: none; }
         
         button.action-btn { background: #28a745; color: white; border: none; padding: 12px 20px; cursor: pointer; border-radius: 6px; font-size: 15px; font-weight: bold; width: 100%; margin-top: 8px; font-family: 'Rudaw', Tahoma, sans-serif; transition: 0.3s; }
@@ -210,19 +219,17 @@
         .search-btn:hover { background: #0056b3; }
         .timer-box { background: rgba(220, 53, 69, 0.08); border: 1px dashed #dc3545; padding: 8px 10px; border-radius: 8px; font-size: 13px; color: #d9534f; margin-top: 12px; font-weight: bold; display: none; text-align: center; }
         .timer-box span { font-size: 12px; color: #dc3545; display: inline-block; margin-left: 5px; }
-        
         .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 15px; }
         #usersTable { width: 100%; border-collapse: collapse; text-align: center; font-size: 11px; }
         #usersTable th, #usersTable td { white-space: nowrap; padding: 8px; border: 1px solid var(--border-container); color: var(--text-main); }
         #usersTable th { background: #0056b3; color: white; }
         body.dark-mode #usersTable th, body.dark-mode #usersTable td { border-color: #444; }
-        
         .dashboard-cards { display: flex; gap: 6px; margin-bottom: 12px; justify-content: space-between; }
         .dash-card { background: var(--bg-container); border: 1px solid var(--border-container); border-radius: 6px; padding: 8px 4px; flex: 1; text-align: center; }
         .dash-card h4 { margin: 0 0 2px 0; font-size: 10px; color: var(--label-color); }
         .dash-card h3 { margin: 0; font-size: 15px; color: #0056b3; }
         body.dark-mode .dash-card h3 { color: #4da3ff; }
-        
+        .chart-container { max-width: 160px; margin: 0 auto; }
         .fine-container { background: var(--bg-container); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 18px; border: 2px solid var(--border-container); text-align: center; width: 100%; }
         .toggle-container { display: flex; justify-content: space-between; align-items: center; background: var(--toggle-bg); padding: 10px; border-radius: 10px; margin-bottom: 12px; border: 1px solid var(--toggle-border); }
         .switch { position: relative; display: inline-block; width: 50px; height: 28px; }
@@ -231,12 +238,10 @@
         .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: #48bb78; }
         input:checked + .slider:before { transform: translateX(22px); }
-        
         .checklist-box { background: var(--toggle-bg); border: 1px solid var(--toggle-border); border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; text-align: right; }
         .checklist-title { font-size: 12px; font-weight: bold; color: var(--text-main); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
         .checklist-items { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 11px; color: var(--label-color); }
         .check-item { display: flex; align-items: center; gap: 5px; }
-        
         .date-section { background: var(--date-bg); border: 1px solid var(--date-border); border-radius: 12px; padding: 12px; margin-bottom: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
         .date-title-wrap { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .date-title { color: var(--date-title); font-weight: bold; font-size: 13px; }
@@ -247,14 +252,17 @@
         body.dark-mode .date-box:hover { border-color: #4da3ff; }
         .date-box label { display: block; font-size: 11px; color: var(--label-color); margin-bottom: 2px; font-weight: bold; pointer-events: none;}
         .date-custom-input { width: 100%; padding: 0; border: none; background: transparent; text-align: center; font-size: 16px; font-weight: bold; color: var(--input-text); pointer-events: none; }
-        
         .results { background: var(--results-bg); border-radius: 10px; padding: 12px; border: 2px solid var(--dynamic-status-color); margin-bottom: 12px; position: relative; overflow: hidden; z-index: 1; text-align: right; }
         .result-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed var(--results-border); font-size: 13px; color: var(--text-row); position: relative; z-index: 2; }
         .result-row:last-child { border-bottom: none; }
         .total-row { font-size: 16px; font-weight: bold; color: var(--total-color); }
         .fine-row { color: var(--fine-color); font-weight: bold; }
         .fee-row { color: var(--fee-color); font-weight: bold; }
-        
+        .gauge-container { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%); width: 200px; height: 100px; text-align: center; display: none; opacity: 0.25; pointer-events: none; z-index: 0; }
+        .gauge { position: relative; width: 200px; height: 100px; overflow: hidden; background: var(--slider-bg); border-top-left-radius: 100px; border-top-right-radius: 100px; }
+        .gauge-fill { position: absolute; top: 100%; left: 0; width: inherit; height: 100%; background: #48bb78; transform-origin: center top; transition: transform 0.8s ease-out, background 0.8s; border-bottom-left-radius: 100px; border-bottom-right-radius: 100px; }
+        .gauge-cover { position: absolute; top: 20px; left: 20px; width: 160px; height: 80px; background: var(--results-bg); border-top-left-radius: 80px; border-top-right-radius: 80px; }
+        .needle { position: absolute; bottom: 0; left: 50%; width: 4px; height: 80px; background: var(--input-text); transform-origin: bottom center; transform: translateX(-50%) rotate(-90deg); transition: transform 0.8s; border-radius: 4px; z-index: 2; }
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-overlay); justify-content: center; align-items: center; z-index: 1000; }
         .modal-content { background: var(--modal-bg); padding: 15px; border-radius: 12px; width: 90%; max-width: 350px; text-align: center; }
         .modal-content h3 { margin-top: 0; margin-bottom: 12px; color: var(--modal-text); font-size: 14px; }
@@ -268,7 +276,7 @@
         .social-icons { margin-top: 10px; }
         .social-icons a { color: #0056b3; font-size: 24px; margin: 0 10px; text-decoration: none; display: inline-block; transition: all 0.3s ease; }
         .social-icons a:hover { transform: scale(1.1) translateY(-2px); }
-        
+        body.dark-mode .social-icons a { color: #4da3ff; }
         .no-print { display: block; }
         @media print { 
             body * { visibility: hidden; } 
@@ -287,14 +295,12 @@
         .stars i { font-size: 26px; color: #cbd5e1; transition: color 0.2s, transform 0.2s; }
         .stars i:hover { transform: scale(1.1); }
         .stars i.active { color: #ffc107; text-shadow: 0 0 8px rgba(255, 193, 7, 0.4); }
+        .admin-feedbacks-container { display: none; margin-top: 15px; text-align: right; background: var(--info-bg); padding: 12px; border-radius: 8px; border: 1px solid var(--border-container); }
 
         /* ستايلی تایبەت بە بەشی تاقیکردنەوەی هاتووچۆ */
         .quiz-container { background: var(--bg-container); border: 2px solid var(--border-container); border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: right; margin-bottom: 20px; }
         body.dark-mode .quiz-container { border-color: #334155; }
         .quiz-header { font-size: 15px; font-weight: bold; color: var(--header-text); text-align: center; margin-bottom: 15px; border-bottom: 1px dashed var(--border-container); padding-bottom: 10px; }
-        
-        .quiz-timer { font-size: 16px; font-weight: bold; color: #dc3545; margin-bottom: 15px; text-align: center; }
-        
         .quiz-question-text { font-size: 14px; font-weight: bold; color: var(--text-main); margin-bottom: 15px; line-height: 1.6; }
         .quiz-options { display: flex; flex-direction: column; gap: 10px; }
         .quiz-btn { background: var(--input-bg); color: var(--input-text); border: 2px solid var(--input-border); border-radius: 8px; padding: 12px; font-family: 'Rudaw', Tahoma, sans-serif; font-size: 13px; font-weight: bold; cursor: pointer; text-align: right; transition: 0.2s; }
@@ -377,17 +383,15 @@
             <div class="quiz-container">
                 <div class="quiz-header" id="quizHeaderTitle">تاقیکردنەوەی هاتووچۆ 🚦</div>
                 <div id="quizPlayArea">
-                    <div id="quizTimer" class="quiz-timer">⏳ کاتی ماوە: 60 چرکە</div>
-                    <img id="quizImage" src="" style="max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px; display: none; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-left: auto; margin-right: auto;">
                     <div class="quiz-question-text" id="quizQText">چاوەڕێ بکە...</div>
                     <div class="quiz-options" id="quizOptionsDiv"></div>
-                    <div class="quiz-progress" id="quizProgressText">پرسیاری 0 لە 25</div>
+                    <div class="quiz-progress" id="quizProgressText">پرسیاری 0 لە 10</div>
                 </div>
                 <div id="quizResultArea" style="display: none; text-align: center;">
                     <i class="fa-solid fa-award" style="font-size: 50px; color: #ffc107; margin-bottom: 15px;"></i>
                     <h3 style="color: var(--text-main); margin-bottom: 10px;">ئەنجامەکەت</h3>
-                    <p id="quizScoreText" style="font-size: 18px; font-weight: bold; margin-bottom: 20px;">0 / 25</p>
-                    <p id="quizFeedbackText" style="font-size: 14px; margin-bottom: 20px; line-height: 1.6;"></p>
+                    <p id="quizScoreText" style="font-size: 18px; font-weight: bold; color: #28a745; margin-bottom: 20px;">0 / 10</p>
+                    <p id="quizFeedbackText" style="font-size: 14px; color: var(--text-main); margin-bottom: 20px; line-height: 1.6;"></p>
                     <button class="action-btn" onclick="initQuiz()"><i class="fa-solid fa-rotate-right"></i> دووبارەکردنەوە</button>
                 </div>
             </div>
@@ -623,6 +627,7 @@
         </div>
     </div>
 
+    <!-- دوگمەی دابەزاندن کە سەرەتا شاراەوەیە و تەنها لە براوەردا دەردەکەوێت -->
     <div id="installAppContainer" style="display: none; text-align: center; margin-bottom: 15px;" class="no-print">
         <button id="installAppBtn" class="action-btn" style="background: #28a745; width: auto; padding: 10px 25px; border-radius: 25px; box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);">
             <i class="fa-solid fa-download"></i> دابەزاندنی ئەپڵیکەیشن (Install)
@@ -672,6 +677,7 @@
         </div>
     </footer>
 
+    <!-- مینیوی خوارەوە -->
     <nav class="bottom-nav no-print" id="bottomNav">
         <div class="nav-item active" onclick="navTo('portal')" id="nav-portal">
             <i class="fa-solid fa-house"></i>
@@ -699,6 +705,7 @@
             }
         });
 
+        // ----------------- سیستەمی ڕاکێشان بۆ خوارەوە (Pull-to-Refresh) -----------------
         let pullStartY = 0;
         let pullMoveY = 0;
         let isPulling = false;
@@ -831,20 +838,24 @@
             }
         }
 
+        // کۆنترۆڵکردنی مینیوی خوارەوە بە ئەنیمەیشن
         function navTo(section) {
             vibrate(10);
             openSection(section);
         }
 
         function openSection(section) {
+            // شاردنەوەی هەموویان
             document.querySelectorAll('.page-section').forEach(el => {
                 el.style.display = 'none';
             });
 
+            // گۆڕینی ڕەنگی دوگمەی مینیوی خوارەوە
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             let activeNav = document.getElementById('nav-' + section);
             if(activeNav) activeNav.classList.add('active');
 
+            // کردنەوەی بەشەکە بە ئەنیمەیشنەوە
             let targetSection = document.getElementById(section + 'Section');
             if(targetSection) {
                 targetSection.style.display = 'block';
@@ -1691,6 +1702,7 @@
 
             if (!window.adminPwd) { return Swal.fire('ئاگاداری', 'تکایە سەرەتا لە بەشی ئەدمین چوونەژوورەوە بکە!', 'warning'); }
 
+            // نیشاندانی Skeleton لەناو خشتەکە لەکاتی هێنانی داتادا
             table.style.display = "table";
             tbody.innerHTML = `
                 <tr><td colspan='5'><div class='skeleton'></div></td></tr>
@@ -1991,1561 +2003,71 @@
 
         // ----------------- یاری زانیارییەکانی هاتووچۆ -----------------
         const allTrafficQuestions = [
-            { 
-                q: " هێما قەدەغەکراوەکان بە گشتی شێوەیان بازنەیەکی چ ڕەنگێکە؟", 
-                options: ["سوور", "شین", "سەوز"], 
-                answer: 0 
-            },
-            { 
-                q: " هێماکانی ئاگادارکردنەوە بە گشتی شێوەکەیان؟", 
-                options: ["سێگۆشەی لایەکسانە", "چوارگۆشەیە", "بازنەییە"], 
-                answer: 0 
-            },
-            { 
-                q: " هێماکانی پابەندبوونی ڕەها بە گشتی شێوەکەیان؟", 
-                options: ["بازنەییە", "لاکێشەیە", "سێگۆشەیە"], 
-                answer: 0 
-            },
-            { 
-                q: " دابەزینی سەرنشین لە دیوی چەپی ئۆتۆمبێل قەدەغەیە؟", 
-                options: ["لە هەموو جۆرەکانی ئۆتۆمبێل", "لە ئۆتۆمبێلی تەکسی", "تەنها لە پاسەکان"], 
-                answer: 0 
-            },
-            { 
-                q: " ئۆتۆمبێلێک لە پێشتە و دەتەوێت لێی تێپەڕیت پێویستە لە کامە لای ئەم کردارە ئەنجام بدەیت؟", 
-                options: ["تەنها لە دیوی چەپی", "لە هەردوو لای ڕاست و چەپ", "تەنها لە دیوی ڕاستی"], 
-                answer: 0 
-            },
-            { 
-                q: " باشترین ڕێگەچارە بۆ ئاگادارکردنەوەی شۆفێرەکانی تر؟", 
-                options: ["بەکارهێنانی لایتی فوول (فلاش) بۆ یەک بۆ دوو جار", "بەکارهێنانی هۆڕن بە بەردەوامی", "نزیکبوونەوە لە ئۆتۆمبێلەکە و ئاگادارکردنەوەی شۆفێرەکە بە قسەکردن لەگەڵی"], 
-                answer: 0 
-            },
-            { 
-                q: " هێمای دەستنیشانکردنی خێرایی چ واتایەک دەگەیەنێت؟", 
-                options: ["بەرزترین پلەی خێرایی ڕێگەپێدراو لە باری ئاسایی", "کەمترین پلەی خێرایی ڕێگەپێدراو بۆ ئۆتۆمبێلەکان", "بەرزترین پلەی خێرایی ڕێگەپێدراو لە کاتی باران بارین"], 
-                answer: 0 
-            },
-            { 
-                q: " ئایا لێکرەتبوون لە ئۆتۆمبێلی دیکە ئاساییە لە کاتی لێخوڕین لەسەر پرد؟", 
-                options: ["بە هەموو شێوەیەک قەدەغەیە", "ڕێگەپێدراوە و زۆریش ئاساییە", "ڕێگەپێدراوە ئەگەر هاتوو ئۆتۆمبێلەکان بە خێراییەکی کەم دەڕۆیشتن"], 
-                answer: 0 
-            },
-            { 
-                q: " هێماکانی قەدەغەکردن مانای چی دەگەیەنێت؟", 
-                options: ["پێدانی فەرمانی قەدەغەکردن", "ئاگادارکردنەوەی شۆفێر", "ئاگادارکردنەوە لە بوونی مەترسی"], 
-                answer: 0 
-            },
-            { 
-                q: " کەی دەتوانیت ڕێڕەوی لای ڕاستی ئۆتۆمبێلەکان بەکار بهێنیت بۆ لێکرەتبوون؟", 
-                options: ["کاتێک شۆفێری پێشەوە ئاماژەی دا بە چوون بۆ لای چەپ", "ئەگەر ڕێڕەوی لای ڕاست چۆڵ بوو", "هەردوو ڕێڕەوەکە ئاساییە بۆ تێپەڕبوون"], 
-                answer: 0 
-            },
-            { 
-                q: " لێخوڕینی ئۆتۆمبێل قەدەغەیە ئەگەر ڕووناکی لایتەکانی ئۆتۆمبێل لە ئاستی پێوەری نەبوو بۆ؟", 
-                options: ["هەموو لایتە پێوەرییەکان", "لایتەکانی دەستنیشانکردن (سەکەن)", "تەنها لایتە سەرەکییەکان"], 
-                answer: 0 
-            },
-            { 
-                q: " ئۆتۆمبێل لە شەقام دەخلیسکێت و کۆنترۆڵ لەدەست دەدات کاتێک شەقامەکە تەڕ بێت ئەگەر؟", 
-                options: ["هەموو ئەوانەی کە باسکران", "شەقامەکە ڕاست نەبێت و بەرزی و نزمی تێدابێت", "ئۆتۆمبێلەکە بە خێراییەکی زۆر بڕوات و تایەکانی تێکچووبن"], 
-                answer: 0 
-            },
-            { 
-                q: " لە کاتی بەفربارین بە ڕۆژ پێویستە شۆفێر؟", 
-                options: ["لایتی نزم (نزم) پێ بکات", "لایتی بەرز پێ بکات", "لایتی ئاگادارکردنەوە پێ بکات"], 
-                answer: 0 
-            },
-            { 
-                q: " مەرجەکانی لێکرەتبوون لە ئۆتۆمبێلەکان چین؟", 
-                options: ["دڵنیابوونی تەواو لە چۆڵی پێشەوە و بوونی بوار بۆ تێپەڕبوون بە سەلامەتی", "ئەگەر شۆفێری پێشەوە ئاماژەی دا بۆ تێپەڕبوون", "کاتێک ئۆتۆمبێلەکەی پێشەوە هێواش دەڕوات"], 
-                answer: 0 
-            },
-            { 
-                q: " بەرزترین پلەی خێرایی ڕێگاپێدراو لە نزیک قوتابخانە و بازاڕە قەرەباڵغەکان؟", 
-                options: ["30 کم / لە کاتژمێرێک", "40 کم / لە کاتژمێرێک", "60 کم / لە کاتژمێرێک"], 
-                answer: 0 
-            },
-            { 
-                q: " لە کام باردا تێپەڕبوون یان هەوڵدان بۆ تێپەڕبوون لە ئۆتۆمبێلی دیکە قەدەغەیە؟", 
-                options: ["هەموو ئەوانەی کە باسکران", "لە کاتی بەسەرکەوتنی ڕێگا هەورازەکان", "کاتێک ئاستی بینین کەمە"], 
-                answer: 0 
-            },
-            { 
-                q: " تۆ لە ناو تونێلێک ئۆتۆمبێل لێدەخوڕیت و لە پێشت ئۆتۆمبێلێک هەیە بە هێواشی دەڕوات، ئایا ڕێگەپێدراوە لێی ڕەت بیت؟", 
-                options: ["بە هیچ شێوەیەک ڕێگەپێدراو نییە تێپەڕبوون ئەنجام بدەم", "بەڵێ ڕێگەپێدراوە ئەگەر هێواش بڕوات", "بەڵێ بە مەرجی دروستنەکردنی کێشە بۆ کەسانی تر"], 
-                answer: 0 
-            },
-            { 
-                q: " لە کام بار لەمانەی خوارەوە دەتوانیت مانۆڕی تێپەڕاندن ئەنجام بدەیت؟", 
-                options: ["لە کاتی بوونی هێڵێکی پچڕاو لە دیوی لای چەپ", "لە کاتی بوونی هێڵێکی نەپچڕاو", "لە کاتی بوونی دوو هێڵی نەپچڕاو"], 
-                answer: 0 
-            },
-            { 
-                q: " ناکرێت شۆفێری بکرێت بە بوونی شتێک بەرچاوی شۆفێری گرتبێت وەکو؟", 
-                options: ["شکان لە جامەکانی پێشەوە و تەنیشتەکان یان بوونی لەزگەی جام", "هەڵگرتنی بارێک کە مەودای بینینی نەگرتبێت", "ئاوێنەکانی دەرەوەی هەبێت"], 
-                answer: 0 
-            },
-            { 
-                q: " تێپەڕبوون لە ئۆتۆمبێلەکان ئەنجام دەدرێت بە؟", 
-                options: ["داگیرساندنی ئاماژەی لای چەپ و چوونە لای چەپ و زیادکردنی خێرایی", "ئاگادارکردنەوە بە لایتی فوول بۆ چەندین جار", "لێخوڕین شان بە شانی ئۆتۆمبێلەکە"], 
-                answer: 0 
-            },
-            { 
-                q: " ئایا شۆفێر بۆی هەیە ئۆتۆمبێلەکەی لە ناوەندی شەقام جێبهێڵێت ئەگەر تووشی لەکارکەوتن بوو؟", 
-                options: ["بە هیچ شێوەیەک نابێت جێی بهێڵێت", "دەتوانێت ئەگەر لە نزیکی بوەستێت", "دەتوانێت ئەگەر سێگۆشەی فۆسفۆری دانا"], 
-                answer: 0 
-            },
-            { 
-                q: " لە کاتی لێخوڕین لە کەش و هەوای تەم و مژ پێویستە؟", 
-                options: ["لایتی نزم بەکار بێنیت", "لایتی ئاگادارکردنەوە بەکار بێنیت", "لایتی فوول بەکار بێنیت"], 
-                answer: 0 
-            },
-            { 
-                q: " لە کاتی لێخوڕینی ئۆتۆمبێل لە کەشی بەفر و باراناوی یان تەڕ، ئەو مەودایەی کە پێویستە بۆ وەستانی سەلامەتی؟", 
-                options: ["زیاد دەکات و پێویستە مەودای زیاتر جێبهێڵیت", "وەک خۆیەتی و ناگۆڕێت", "کەمتر دەبێتەوە"], 
-                answer: 0 
-            },
-            { 
-                q: " ئایا نمرەی دەرچوون لە تاقیکردنەوەی هێما و میکانیک چەندە؟", 
-                options: ["80%", "75%", "90%"], 
-                answer: 0 
-            },
-            { 
-                q: " ئایا ڕێگە دەدرێت بە لێکرەتبوونی ئۆتۆمبێلەکان لە یەکتربڕی هێڵی شەمەندەفەر؟", 
-                options: ["بە هەموو شێوەیەک قەدەغەیە", "ڕێگە دەدرێت ئەگەر دووری ١٠٠م هەبێت", "ڕێگە دەدرێت ئەگەر شەمەندەفەر نەبینرا"], 
-                answer: 0 
-            },
-            { 
-                q: " کحول و ماددەی هۆشبەر کاریگەریان لەسەر مرۆڤ هەیە بۆیە؟", 
-                options: ["ئۆتۆمبێل لێناخوڕم ئەگەر کحولم خواردبێتەوە وە ناهێڵم کەس لێبخوڕێت", "ڕێژەی کەم کاریگەری نییە", "کاریگەری نییە لەسەر بڕیاردان لە کاتی لێخوڕین"], 
-                answer: 0 
-            },
-            { 
-                q: " دەبێت خێرایی ئۆتۆمبێل کەم بکرێتەوە لە کاتی پێچکردنەوە لە؟", 
-                options: ["پێش نزیکبوونەوە لە شوێنی پێچەکە", "لە کاتی چوونە نێو پێچەکە", "لە کۆتایی پێچکردنەوەکە"], 
-                answer: 0 
-            },
-            { 
-                q: " کاتێک لە شەقامێکی یەک ئاراستە یا دوو ئاراستە نزیک دەبیتەوە لە پاسی قوتابخانە پێویستە لەسەرت؟", 
-                options: ["خێراییت کەم بکەیەوە و بە وریایی بەردەوام بیت", "بە دووری ١٠م بوەستیت", "بە زووترین کات لێی تێپەڕیت"], 
-                answer: 0 
-            },
-            { 
-                q: " لە کاتی بیستنی دەنگ یان بینینی لایتی فریاگوزاری پێویستە؟", 
-                options: ["ڕێڕەوی بۆ چۆڵ دەکەم بەرەو لای ڕاست", "خێراییت کەم بکەیتەوە لە ڕێچکەی خۆت", "خێراییت زیاد بکەیت بۆ چۆڵکردنی ڕێگاکە"], 
-                answer: 0 
-            },
-            { 
-                q: " لێخوڕینی ئۆتۆمبێل بە پێچەوانەی ئاراستەی ڕۆیشتن لە شەقام سزاکەی؟", 
-                options: ["بەندکردن و پێبژاردن", "پێبژاردن", "لێسەندنەوەی مۆڵەت"], 
-                answer: 0 
-            },
-            { 
-                q: " کاتێک لە شەقامێکی خۆڵ یان چەوڕێژکراو دێیتە سەر شەقامێکی قیرتاوکراو پێویستە لەسەرت؟", 
-                options: ["مافی پێشینە بدەیت بەو ئۆتۆمبێلانەی لەسەر شەقامە قیرتاوەکە دەڕۆن", "مافی پێشینە بۆ خۆتە", "هیچ مافێکی پێشینە نییە"], 
-                answer: 0 
-            },
-            { 
-                q: " دوو هێڵی نەپچڕاو بە ڕەنگی زەرد لە دیوی ڕاستی شەقام بە واتای؟", 
-                options: ["وەستان بە هەموو شێوەیەک قەدەغەیە", "وەستان لە ڕۆژانی پشوو قەدەغەیە", "وەستان ئاساییە"], 
-                answer: 0 
-            },
-            { 
-                q: " ئەنجامدانی مانۆڕی لێکرەتبوون لە شوێنی پەڕینەوەی پیادە یان نزیکی؟", 
-                options: ["بە هەموو شێوەیەک قەدەغەیە", "ڕێگەپێدراوە ئەگەر کەس نەبوو", "تێپەڕبوون پێش گەیشتن پێی ڕێگاپێدراوە"], 
-                answer: 0 
-            },
-            { 
-                q: " چرای زەردی پچڕپچڕ لە ڕێگاکان بە واتای؟", 
-                options: ["وریا بە مەترسی لە پێشت هەیە", "بوەستە", "ئامادەبە بۆ ڕۆیشتن"], 
-                answer: 0 
-            },
-            { 
-                q: " ئایا دەکرێت لایتی ئاگادارکردنەوە یان دەنگی فریاگوزاری بەکاربهێنرێت لەلایەن کەسی ئاساییەوە؟", 
-                options: ["نەخێر بە هیچ شێوەیەک ڕێگا نادرێت", "بەڵێ بۆ هەندێک کەس ڕێگەپێدراوە", "بۆ بارهەڵگرەکان ڕێگەپێدراوە"], 
-                answer: 0 
-            },
-            { 
-                q: " کاتێک نزیک دەبیتەوە لە یەکتربڕێکی بێ هێما و ئۆتۆمبێلێک لە ڕاستەوە دێت پێویستە چی بکەیت؟", 
-                options: ["بوەستە و مافی پێشینە بەو ئۆتۆمبێلە بدە", "بەردەوام بە چونکە پێشینە بۆ خۆتە", "خێراییت زیاد بکە بۆ تێپەڕین"], 
-                answer: 0 
-            },
-            { 
-                q: " لە کاتی لێخوڕین بە خێرایی 30 کم پێویستە مەودایەک جێبهێڵدرێت بە دووری؟", 
-                options: ["10 مەتر", "5 مەتر", "20 مەتر"], 
-                answer: 0 
-            },
-            { 
-                q: " لێخوڕین بە شەو پێویستی بە وریایی زیاتر هەیە چونکە؟", 
-                options: ["بینین لە شەو سنووردارە", "زیادبوونی ژمارەی ئۆتۆمبێلەکان لە شەودا", "کەمبوونەوەی توانای ئۆتۆمبێلەکان"], 
-                answer: 0 
-            },
-            { 
-                q: " نوێنەکردنەوەی پشکنینی تەکنیکی ساڵانە سزاکەی؟", 
-                options: ["پێبژاردن", "بەندکردن", "دەستبەسەرداگرتنی ئۆتۆمبێل"], 
-                answer: 0 
-            },
-            { 
-                q: " خێرایی دەستنیشانکراو لە هەر شەقامێک بەپێی یاسا ئەو خێراییەیە کە؟", 
-                options: ["کە بە هێماکانی هاتووچۆ دیاریکراوە", "80 کم لە ناو شار و 100 کم لە دەرەوەی شار", "ئەو خێراییەی کە خۆت دیاری دەکەیت"], 
-                answer: 0 
-            },
-            { 
-                q: " تازەنەکردنەوەی ساڵانەی ئۆتۆمبێل سزاکەی؟", 
-                options: ["پێبژاردن", "بەندکردن", "دەستبەسەرداگرتنی ئۆتۆمبێل"], 
-                answer: 0 
-            },
-            { 
-                q: " هێڵی سپی بەردەوام و نەپچڕاو لەسەر شەقامێکی تاک ساید بە واتای؟", 
-                options: ["تێپەڕبوون لێی قەدەغەیە", "ئەگەر ئۆتۆمبێل نەبوو تێپەڕە", "دەتوانیت تێپەڕیت لە کاتی وەستان"], 
-                answer: 0 
-            },
-            { 
-                q: " ئایا دەکرێت پێشبڕکێ یان چالاکی هاوشێوە لە ڕێگا گشتییەکان ئەنجام بدرێت؟", 
-                options: ["نەخێر بە هیچ شێوەیەک ڕێگەی پێ نادرێت", "بۆ ئۆتۆمبێلی وەرزشی ڕێگەپێدراوە", "لە گەراجەکان ڕێگەپێدراوە"], 
-                answer: 0 
-            },
-            { 
-                q: " لە کاتی بینینی نابینایەک یان کەسێک یارمەتی بدات لە پەڕینەوە؟", 
-                options: ["بە تەواوەتی بوەستی و ڕێگەی بدەیت بپەڕێتەوە", "خێرایی کەم بکەرەوە و ڕێگەی بدە", "بەردەوام بە و بە وریایی لێخوڕە"], 
-                answer: 0 
-            },
-            { 
-                q: " هۆڕن دەبێت کەی و چۆن بەکاربێت؟", 
-                options: ["بۆ یەک جار و بۆ ماوەیەکی کورت لە باری زۆر پێویست بۆ ئاگادارکردنەوەی کەسانی تر", "بۆ ئاگادارکردنەوەی سەرپێچیکاران", "بۆ سڵاوکردن یان بانگکردن"], 
-                answer: 0 
-            },
-            { 
-                q: " بەرزترین پلەی خێرایی ڕێگەپێدراو بە شەو لە ڕێگا جووت ئاراستەکان؟", 
-                options: ["هەمان خێرایی کە یاسا دەستنیشانی کردووە", "نیوەی خێرایی دیاریکراو", "80 کم لە کاتژمێرێک"], 
-                answer: 0 
-            },
-            { 
-                q: " ئەو یەکتربڕانەی درەخت و باڵەخانە دایپۆشیون توانای بینین کەم دەکاتەوە پێویستە؟", 
-                options: ["لە سەرەتای یەکتربڕەکە بوەستی و دڵنیا بی پاشان بە هێمنی تێپەڕی", "خێرایی کەم بکەیتەوە و تێپەڕیت", "هۆڕن بەکاربێنە و تێپەڕە"], 
-                answer: 0 
-            },
-            { 
-                q: " بەرزترین خێرایی بۆ ئۆتۆمبێلی بچووک لە ڕێگا دەرەوەی شارەکان چەندە؟", 
-                options: ["100 کم / کاتژمێرێک", "90 کم / کاتژمێرێک", "120 کم / کاتژمێرێک"], 
-                answer: 0 
-            },
-            { 
-                q: " بەرزترین خێرایی ڕێگەپێدراو لە شەقامە خێراکانی هەرێمی کوردستان؟", 
-                options: ["110 کم بۆ بچووک و 80 کم بۆ بارهەڵگر", "دیاریکراو نییە", "80 کم بۆ هەموو ئۆتۆمبێلەکان"], 
-                answer: 0 
-            },
-            { 
-                q: " لە ڕێگا شاخاوییەکان دیسکەکانی برێک زوو گەرم دەبن، پێویستە چی بکرێت؟", 
-                options: ["بوەستیت چاوەڕێ بکەیت تاکو دیسکەکانی برێک سارد دەبنەوە", "بەردەوام بیت بە خێرایی تا سارد دەبنەوە", "هاند برێک بەکاربێنیت تا سارد دەبنەوە"], 
-                answer: 0 
-            }
-{ 
-        q: " مافی پێشینەی هاتووچۆ بۆ؟", 
-        options: ["ئەو ئۆتۆمبێلەیە کە لە شەقامی سەرەکی دەڕوات نەک ئەوەی لە شەقامی لاوەکی دەڕوات", "ئەو ئۆتۆمبێلەی وەستاوە نەک ئەوەی دەڕوات", "ئەو ئۆتۆمبێلەی لە شەقامی لاوەکییە نەک ئەوەی لە شەقامی سەرەکی دەڕوات"], 
-        answer: 0 
-    },
-    { 
-        q: " لە کاتی جووڵە کردن بە ئۆتۆمبێل و هەوڵدان بۆ چوونە ناو شەقام پێویستە لەسەرت؟", 
-        options: ["لایتی ئاماژەکار بۆ لای چەپ پێ بکەیت دوای دڵنیابوونەوە کە شەقامەکە چۆڵە بۆ ڕۆیشتن", "لایتی ئاگادارکەرەوەی چوار فلاش پێ بکەیت بۆ ئاگادارکردنەوەی ئەو ئۆتۆمبێلانەی کە لە ڕێگاکە لێدەخوڕن", "لایتی چەپ پێ بکە و ڕاستەوخۆ بچۆرە نێو ڕێڕەوی شەقامەکە"], 
-        answer: 0 
-    },
-    { 
-        q: "53- لە کاتی بوونی ناوەندە شەقام لە ڕێگاکان لەسەر ئەو پیادانەی کە بە نیازی پەڕینەوەن لە شوێنی پەڕینەوەی پیادە پێویستە بە یەکێک لەم شێوانەی خوارەوە بپەڕنەوە؟", 
-        options: ["پەڕینەوە بۆ ناوەندە شەقامەکە پاش دڵنیابوون لە چۆڵبوونی شەقام لە ئۆتۆمبێل ئینجا چاوەڕێ کردن بۆ دیوەکەی تر", "پەڕینەوە بە خێرا تاکو گەیشتن بۆ دورگەی ناوەندە شەقامەکە", "پەڕینەوە لە فراوانترین شوێنی شەقامەکە"], 
-        answer: 0 
-    },
-    { 
-        q: " ڕەفتاری شۆفێر بەرامبەر خەڵکی پیادەڕەو دەبێت؟", 
-        options: ["پێشینە بدات بە پیادە بۆ پەڕینەوە لەسەر هێڵی پەڕینەوە وە دەبێت ئۆتۆمبێل بە تەواوەتی بوەستێنرێت", "پێشینە بدات بە شۆفێری ئۆتۆمبێلەکان", "پێشینە بدات بە ئەوانەی کە لەسەر شۆستە وەستاون"], 
-        answer: 0 
-    },
-    { 
-        q: " ئەو ئۆتۆمبێلانەی کە تابلۆی ژمارە کاتییان هەڵگرتووە قەدەغە دەکرێن بە لێخوڕین لە دوای تێپەڕبوونی ؟", 
-        options: ["شەست ڕۆژ لە ڕێکەوتی واژۆکردنی گرێبەستی کڕینەکە", "یەک مانگ لە ڕێکەوتی واژۆکردنی گرێبەستی کڕینەکە", "سێ مانگ لە ڕێکەوتی واژۆکردنی گرێبەستی کڕینەکە"], 
-        answer: 0 
-    },
-    { 
-        q: " سزای ئەو کەسەی ئۆتۆمبێلەکەی لە شوێنی قەدەغەکراو بوەستێنێت و ببێتە هۆی ڕووداو؟", 
-        options: ["پێبژاردن و دەستبەسەرداگرتنی ئۆتۆمبێلەکە", "دەستبەسەرداگرتنی ئۆتۆمبێلەکە", "پێبژاردن"], 
-        answer: 0 
-    },
-    { 
-        q: " پێویستە ئاوێنەکانی لا تەنیشت ڕێک بخرێن بەم شێوەیە خوارەوە؟", 
-        options: ["زۆرترین بەشی ڕێگا وە کەمترین بەشی هەردوو لای ئۆتۆمبێلەکەت ببینیت", "تایەکانی پشتەوەی ئۆتۆمبێلەکەت ببینی", "جامەکانی پشتەوەی ئۆتۆمبێلەکەت ببینی"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا وەستان لە شەقامی خێرا ئاساییە بۆ سەرکەوتن و دابەزینی سەرنشینەکان؟", 
-        options: ["بە هەموو شێوەیەک قەدەغەیە", "ڕێگەپێدراوە تەنها لە کاتژمێرەکانی ڕۆژدا", "ڕێگەپێدراوە لە کاتی وەستان لە شوێنەکانی وەستان"], 
-        answer: 0 
-    },
-    { 
-        q: " پێویستە چی بکەیت ئەگەر تایەی پێشەوەی ئۆتۆمبێلەکەت تەقی؟", 
-        options: ["پێ لەسەر بەنزین لاببە و بەرە بەرە پێت هەڵگرە و سوکانەکە توند بگرە بەبێ برێک گرتنی توند", "هاند برێک ڕابکێشە", "گێڕ بگۆڕە"], 
-        answer: 0 
-    },
-    { 
-        q: " لە چ شوێنێک لەمانەی خوارەوە قەدەغەیە ئۆتۆمبێل بوەستێت یان پارک بکرێت؟", 
-        options: ["لە شوێنی سووڕانەوە و تونێلەکان و سەر هێڵی پەڕینەوەی پیادە", "لە ڕێگاکانی دەرەوەی شار", "لە گەراجەکانی وەستانی ئۆتۆمبێل"], 
-        answer: 0 
-    },
-    { 
-        q: " بۆ دەربازبوون لە کاریگەری هەڵخلیسکانی ئۆتۆمبێل لە کاتی لێخوڕین پێویستە؟", 
-        options: ["خێراییت کەم بکەیتەوە لە ڕێگەی پێ هەڵگرتن لە بەنزین و بە توندی پێ لەسەر برێک دانەگریت", "هاند برێک ڕابکێشیت", "سوکانەکە بسوڕێنە بە پێچەوانەی ئاراستەی هەڵخلیسکانیەکە"], 
-        answer: 0 
-    },
-    { 
-        q: " پێویستە چی بکەیت ئەگەر تایەکانی پشتەوەی ئۆتۆمبێلەکەت تەقی؟", 
-        options: ["ستێرنەکە توند بگرە و هەوڵدە خێراییت کەم بکەیتەوە بەرەو دیوی لای ڕاست", "بە توندی پێ لەسەر برێک داگرە و بەرەو لای ڕاست بڕۆ", "ستێرن بسوڕێنە بە ئاراستەی تایە تەقیوەکە"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا ڕاگرتن یان وەستانی ئۆتۆمبێل لە شەقامە خێراکان ئاساییە؟", 
-        options: ["بەڵێ دەکرێت لە شوێنە تەرخانکراوەکان بۆ ڕاگرتن یان وەستان", "بەڵێ ئاساییە لە ڕێڕەوی ئۆتۆمبێلی فریاگوزاری", "بەڵێ وەستانی ئۆتۆمبێل ئاساییە لەو شوێنانەی قەدەغەیە"], 
-        answer: 0 
-    },
-    { 
-        q: " فلتەری هەوای ئۆتۆمبێل پێویستە خاوێن بکرێتەوە یان بگۆڕدرێت لە دوای ؟", 
-        options: ["بە شێوەیەکی خولی خاوێن دەکرێتەوە بەپێی ئەو ژینگەیەی تێیدایە", "دوای 5000 کم", "دوای 10000 کم"], 
-        answer: 0 
-    },
-    { 
-        q: " گرنگترین لەو بەڵگەنامانە چین کە پێویستە لە ئۆتۆمبێلەکەتدا هەبێت لە کاتی شۆفێری؟", 
-        options: ["مۆڵەتی لێخوڕین کارپێکراو لەگەڵ ساڵیانەی ئۆتۆمبێل", "ناسنامەی باری شارستانی و ڕەگەزنامە", "کەتەلۆگی ئۆتۆمبێل"], 
-        answer: 0 
-    },
-    { 
-        q: " پێویستە شۆفێری ماتۆڕسکیل لە کاتی لێخوڕین چی بەکاربهێنێت ؟", 
-        options: ["کڵاوی تایبەت بە لێخوڕینی ماتۆڕ لەگەڵ چاویلکە و بەستەری پارێزگاری", "تەنها پێڵاوی تایبەت بە لێخوڕینی ماتۆڕ", "پۆشاکی ئاسایی لەگەڵ سەرپۆشێکی سادە"], 
-        answer: 0 
-    },
-    { 
-        q: " نابێت هیچ وشە یا ڕستەیەک لەسەر ئۆتۆمبێل بنووسرێ بێجگە لەوانەی ڕێگەپێدراون بۆ؟", 
-        options: ["لە سەر بارهەڵگرەکان بەپێی ڕێنماییەکان", "لە سەر ئۆتۆمبێلی تایبەت", "لە سەر تەکسی"], 
-        answer: 0 
-    },
-    { 
-        q: " پێویستە چی بکەیت ئەگەر ئۆتۆمبێلەکەت ژاوەژاو و دەنگێکی نائاسایی دەریکرد؟", 
-        options: ["لێخوڕینی قەدەغەیە بۆیە پێویستە ڕابگیرێت تاکو چاک دەکرێتەوە", "ڕێگەدراوە بە لێخوڕینی و بێ هیچ کۆت و بەندێک", "ڕێگەدراوە بە لێخوڕینی بەڵام بەبوونی کۆت و بەند"], 
-        answer: 0 
-    },
-    { 
-        q: " سزای فڕێدانی کەرەستە زبڵ و خاشاک لە پەنجەرەی ئۆتۆمبێل قەدەغەیە وە سزاکەی ؟", 
-        options: ["پێبژاردن و دەست بەسەرداگرتنی ئۆتۆمبێلەکە", "دەست بەسەر داگرتنی ئۆتۆمبێلە", "پێبژاردن"], 
-        answer: 0 
-    },
-    { 
-        q: " کەی و لە کوێ ڕاگرتن یان وەستانی ئۆتۆمبێل قەدەغەیە ؟", 
-        options: ["کاتێک شوێنی وەستانەکە ببێتە هۆی گرفتی هاتووچۆ یان نزیک خاڵی ئاگرکوژێنەوە بێت", "کاتێک بزوێنەری ئۆتۆمبێلەکە لە کار وەستا", "کاتێک سەرنشینی بار نەکردبوو"], 
-        answer: 0 
-    },
-    { 
-        q: " کام لەو سیفەتانە هی شۆفێرێکە کە هەست بە بەرپرسیاریەتی بکات؟", 
-        options: ["ئەو شۆفێرەی کە بیر لە دەرەنجامی کارەکانی دەکاتەوە", "بە بێ بوونی دڵەڕاوکێ سەرپێچی دەکات", "کە سڵ ناکاتەوە لە مەترسی خستنە سەر خۆی و کەسانی تر"], 
-        answer: 0 
-    },
-    { 
-        q: " پێویستە لە سەر خاوەن یان وەدەستهێنی ئۆتۆمبێل:", 
-        options: ["ڕێگە بە کەس نەدات مۆڵەتی شۆفێری نەبێت ئۆتۆمبێلەکەی لێبخوڕێت", "هەر کەسێک داوای لێ کرد ئۆتۆمبێلەکەی لێبخوڕێت پێیبدات", "ڕێگە دان بە بەکارهێنانی ئۆتۆمبێل بێ مەرجی سەلامەتی"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا دەکرێت ئۆتۆمبێل لە لای چەپی شەقامێکی دوو ئاراستە ڕابگریت ؟", 
-        options: ["بە هەموو شێوەیەک قەدەغەیە", "ئاساییە بەو مەرجەی لە تەنیشت شۆستەکە بێت", "ئاساییە ئەگەر زیاتر لە دوو ڕێڕەوی هەبێت"], 
-        answer: 0 
-    },
-    { 
-        q: " مافی پێشینە بۆ یەکێک لەم بارانەی خوارەوەیە ؟", 
-        options: ["ئاماژەی دەستی پۆلیسی هاتووچۆ لەسەر هێمای ترافیک و هێماکانی سەر شەقام", "هێمای ترافیک لەسەر ئاماژەی دەستی پۆلیس", "هێماکانی سەر شەقام لەسەر هێمای ترافیک"], 
-        answer: 0 
-    },
-    { 
-        q: " کەی کاتی کار پێکردنی ڕووناکی یە (لایت) بە پێی یاسا؟", 
-        options: ["لەکاتی پێش ڕۆژئاوا بوون تاکو دوای ڕۆژهەڵاتن", "لە کاتی لێخوڕین لە شەقامێکی جەنجاڵ", "بە ڕۆژ لە کاتی لێخوڕین لە ڕێگاکانی دەرەوەی شار"], 
-        answer: 0 
-    },
-    { 
-        q: " کێ بەرپرسیارە لە نەبەستنی پشتێنی سەلامەتی بۆ هەموو سەرنشینەکان؟", 
-        options: ["لە سەر شۆفێر و سەرنشینەکان بە یەکسانی", "تەنها لە سەر شۆفێر", "لە سەر ئەو سەرنشینەیە کە پشتێنەکەی نەبەستووە"], 
-        answer: 0 
-    },
-    { 
-        q: " مافی پێشینە بۆ یەکێک لەم بارانەی خوارەوەیە؟", 
-        options: ["ئۆتۆمبێلی جووڵاو لە سەر ئۆتۆمبێلی وەستاو", "ئۆتۆمبێلی وەستاو لە سەر ئۆتۆمبێلی جووڵاو", "ئۆتۆمبێلی دابەزیو لە سەر ئۆتۆمبێلی سەرکەوتوو"], 
-        answer: 0 
-    },
-    { 
-        q: " مافی پێشینەی هاتووچۆ بۆ یەکێک لەم بارانەی خوارەوەیە؟", 
-        options: ["ئۆتۆمبێلی ڕۆیشتوو لە شەقامی سەرەکی لە سەر ئەو ئۆتۆمبێلەی لە لاوەکی دەڕوات", "لاوەکی لە سەر سەرەکی", "ئۆتۆمبێلی وەستاو لە سەر ئۆتۆمبێلی جووڵاو"], 
-        answer: 0 
-    },
-    { 
-        q: " کەی ڕێگە دەدرێت بە لێکرەتبوون بە یەک سات لە دوو ئۆتۆمبێلی پێشت دەڕۆن؟", 
-        options: ["لە کاتی چۆڵبوونی ئاراستەی بەرامبەر بە تەواوەتی لە ئۆتۆمبێل و نەبوونی هیچ ڕێگرییەک", "یاسا بە هیچ شێوەیەک ڕێگە نادات", "کاتێک هەردوو ئۆتۆمبێلەکە بچووک بێت"], 
-        answer: 0 
-    },
-    { 
-        q: " ڕاگرتنی ئۆتۆمبێل لە سەر شۆستە ئاساییە؟", 
-        options: ["نەخێر بە هەموو شێوەیەک قەدەغەیە", "لە سەر شۆستەی بە کۆنکرێت دروست کراو ئاساییە", "لە سەر شۆستەی دەروازەی چوونە نێو گەراج ئاساییە"], 
-        answer: 0 
-    },
-    { 
-        q: " مافی پێشینەی هاتووچۆ بۆ یەکێک لەم بارانەی خوارەوەیە؟", 
-        options: ["ڕۆیشتنی لە ڕێگای بازنەیی لە سەر ڕۆیشتنی ڕاست", "ڕۆیشتنی لە ڕێگای ڕاست لە سەر ڕۆیشتنی بازنەیی", "ڕۆیشتن لە شەقامی لاوەکی لە سەر شەقامی سەرەکی"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا دەکرێت ئۆتۆمبێلی تایبەت بۆ گواستنەوەی سەرنشین بەکاربێت بەرامبەر کرێ؟", 
-        options: ["قەدەغەیە و ڕێگەی پێدراونیە", "پاش 12ی شەو ڕێگەپێدراوە", "ڕێگەپێدراوە ئەگەر تەکسی لە بەردەست نەبوو"], 
-        answer: 0 
-    },
-    { 
-        q: " مافی پێشینەی هاتووچۆ بۆ یەکێک لەم بارانەی خوارەوەیە؟", 
-        options: ["ئۆتۆمبێلی پێشکەوتوو لە سەر ئۆتۆمبێلی دواوە", "ئۆتۆمبێلی دواوە لە سەر ئۆتۆمبێلی پێشکەوتوو", "ئۆتۆمبێلی وەستاو لە سەڕئۆتۆمبێلی جووڵاو"], 
-        answer: 0 
-    },
-    { 
-        q: " ڕاگرتنی ئۆتۆمبێل لە تەنیشت ئۆتۆمبێلێکی دیکە کە وەستاوە لە شەقام ئاساییە؟", 
-        options: ["بە هەموو شێوەیەک و لە گشت شەقامەکان قەدەغەیە", "لە ڕێگاکانی دەرەوە قەدەغەیە", "قەدەغەیە ئەگەر پانتایی شەقامەکە کەمتر بوو لە 15م"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا دەکرێت دەستکاری یان گۆڕانکاری لە ساڵیانەی ئۆتۆمبێل یان مۆڵەت بکرێت؟", 
-        options: ["بە هەموو شێوەیەک قەدەغەیە دەستکاری بکرێت تەنیا لە لایەن هاتووچۆ نەبێت", "دەتوانرێت ئەگەر هەندێک نووسین ڕوون نەبوو", "لەکاتی کۆپیکردن ئاساییە"], 
-        answer: 0 
-    },
-    { 
-        q: " مافی پێشینەی هاتووچۆ بۆ یەکێک لەم بارانەی خوارەوەیە؟", 
-        options: ["ئەو ئۆتۆمبێلەی کە لە یەکتربڕە یا گۆڕەپانە لەسەر ئەو ئۆتۆمبێلەی دەیەوێت بچێتە ناوی", "ئەوەی دەیەوێت بچێتە ناوی لە سەر ئەوەی تێیدایە", "ئۆتۆمبێلی دواوە لەسەر پێشەوە"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا پێویستە لە سەر پیادەکان ملکەچی هێماکانی هاتووچۆ و فەرمانەکانی پۆلیس بن؟", 
-        options: ["بەڵێ پێویستە پیادەکان پابەند بن لە هەر شوێنێک بێت", "بەڵێ تەنها هێماکانی سەر شەقام", "بەڵێ تەنها هێماکانی سەر شۆستە"], 
-        answer: 0 
-    },
-    { 
-        q: " مافی پێشینەی هاتووچۆ لە یەکتربڕەکان بۆ کام ئۆتۆمبێلەیە؟", 
-        options: ["بۆ ئۆتۆمبێلی هاتوو لە دیوی ڕاستی یەکتربڕەکان", "بۆ ئۆتۆمبێلی هاتوو لە دیوی چەپ", "بۆ ئۆتۆمبێلی هاتوو لە دیوی بەرامبەر"], 
-        answer: 0 
-    },
-    { 
-        q: " مافی پێشینەی هاتووچۆ لە هەورازەکان بۆ کێیە؟", 
-        options: ["ئۆتۆمبێلی سەرکەوتوو بۆ هەوراز لە سەر ئۆتۆمبێلی دابەزیو", "ئۆتۆمبێلی دابەزیو لە سەر سەرکەوتوو", "ئۆتۆمبێلی وەستاو لە سەر جووڵاو"], 
-        answer: 0 
-    },
-    { 
-        q: " ئاماژەکانی پۆلیسی هاتووچۆ پابەندبوونە لە سەر هەمووان و گوێڕایەڵبوونی ئەرکە؟", 
-        options: ["بەڵێ لە گشت بارودۆخ و هەموو شوێنەکان", "بەڵێ لە شەقامە سەرەکی و یەکتربڕەکان", "تەنها لە کاتی ئاراستەکردنی جووڵەی هاتووچۆ"], 
-        answer: 0 
-    },
-    { 
-        q: " مافی پێشینەی هاتووچۆ بۆ یەکێک لەم بارانەی خوارەوەیە؟", 
-        options: ["ئۆتۆمبێلەکانی فریاگوزاری لە سەر گشت ئۆتۆمبێلەکانی تر", "ئۆتۆمبێلەکانی بیناسازی لە سەر ئۆتۆمبێلەکانی تر", "ئۆتۆمبێلی تایبەت لە سەر فریاگوزاری"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا دەکرێت شۆفێری بکرێت لە دوای وەرگرتنی دەرمان کە کاریگەریی هەبێت ؟", 
-        options: ["نەخێر قەدەغەیە تەنها لە دوای تێپەڕبوونی کاتی دیاریکراو لە نەمانی کاریگەرییەکانی", "ڕێگەپێدراوە لەبەرئەوەی دەرمان کاریگەریی نییە", "ڕێگەپێدراوە دوای دوو کاتژمێر"], 
-        answer: 0 
-    },
-    { 
-        q: " مافی پێشینەی هاتووچۆ بۆ یەکێک لەم بارانەی خوارەوەیە؟", 
-        options: ["پیادەکان کە لە شوێنی پەڕینەوە دەڕۆن لە سەر ئۆتۆمبێلەکان", "ئۆتۆمبێل لە سەر پیادەکان", "پێشینە تەنیا بۆ ئۆتۆمبێلە"], 
-        answer: 0 
-    },
-    { 
-        q: " پێویستە کەسی سوتاو لە ڕووداو چارەسەر بکرێت لە سەرەتا بە؟", 
-        options: ["داپۆشینی شوێنە سوتاوەکە و گواستنەوەی بۆ نەخۆشخانە", "دانانی کرێم مەرهەم", "لەبەرکردنەوەی جل و بەرگی سووتاوەکە بە خێرایی"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا ڕێگاپێدراوە کە ئۆتۆمبێلێکی شکست خواردوو لێبخورێت؟", 
-        options: ["لێخوڕینی ئۆتۆمبێلێکی شکست و بڕوانامەی پشکنینی نەبێت قەدەغەیە", "ڕێگەپێدراوە بەو مەرجەی کێشەی لە برێکی نەبێت", "ڕێگەپێدراوە ئەگەر کێشەکە لە لایتەکان بوو"], 
-        answer: 0 
-    },
-    { 
-        q: " ژمارەی تەلەفۆنی بەرگری شارستانی چەندە؟", 
-        options: ["115", "188", "104"], 
-        answer: 0 
-    },
-    { 
-        q: " لە کوێ ڕێگەدراوە مۆبایل بەکاربهێنرێت لە کاتی لێخوڕین؟", 
-        options: ["بەکارهێنانی مۆبایل ڕێگەپێدراوە تەنها لە کاتی وەستانی ئۆتۆمبێل لە شوێنی ڕێپێدراو", "لە کاتی لێخوڕین لە ڕێگاکانی دەرەوە", "ئەگەر شۆفێر بە دەستی چەپی گرتبێت"], 
-        answer: 0 
-    },
-    { 
-        q: " پابەندنەبوونی شۆفێر بە هێمای ترافیک یان ئاماژەکانی دەستی پۆلیس سزاکەی؟", 
-        options: ["پێبژاردن", "بەند کردن", "بەند کردن و پێبژاردن"], 
-        answer: 0 
-    },
-    { 
-        q: " لێخوڕینی ئۆتۆمبێل بە پێچەوانەی ئاراستەی ڕۆیشتن سزاکەی؟", 
-        options: ["دەستبەسەرداگرتنی ئۆتۆمبێلەکە و پێبژاردن", "پێبژاردن", "دەست بەسەرداگرتنی ئۆتۆمبێلەکە"], 
-        answer: 0 
-    },
-    { 
-        q: " لەو شەقامانەی کە دەتوانرێت تیایدا ڕێڕەوی ئەو پەڕی ڕاست بەکاربهێندرێت؟", 
-        options: ["گشت شەقامەکان", "شەقامی دووڕێڕەو", "شەقامی یەک ڕێڕەو"], 
-        answer: 0 
-    },
-    { 
-        q: " لێخوڕینی ئۆتۆمبێل بێ لایتی پێشەوە و دواوە قەدەغەیە و سزاکەی؟", 
-        options: ["پێبژاردن", "بەندکردن", "بەندکردن و پێبژاردن"], 
-        answer: 0 
-    },
-    { 
-        q: " لە شەقامێکی یەک ئاراستە کەی لە ڕێگەبدرێت بە لێخوڕین بە پێچەوانەی ئاراستە؟", 
-        options: ["بە هەموو شێوەیەک قەدەغەیە تەنانەت بە فەرمانی پۆلیسیش بێت", "تەنها پۆلیسی هاتووچۆ بۆی هەیە ڕێگەبدات لە هەندێک بارودۆخ", "شۆفێرەکانی تر دەتوانن ڕێگەت پێبدەن"], 
-        answer: 0 
-    },
-    { 
-        q: " لێخوڕینی ئۆتۆمبێلی بێ تابلۆ قەدەغەیە و سزاکەی؟", 
-        options: ["دەست بەسەر داگرتنی ئۆتۆمبێلەکە", "دەست بەسەر داگرتن و بەندکردنی شۆفێرەکە", "پێبژاردن"], 
-        answer: 0 
-    },
-    { 
-        q: " کەی ڕێگە دەدرێت بە لێخوڕینی ئۆتۆمبێل لە سەر شۆستە؟", 
-        options: ["بە هەموو شێوەیەک قەدەغەیە", "ڕێگەپێدراوە ئەگەر شۆستەکە خاڵی بێت لە پیادە", "ڕێگەپێدراوە ئەگەر پانتایی شۆستەکە زیاتر بوو لە 5م"], 
-        answer: 0 
-    },
-    { 
-        q: " کەی ڕێگە دەدرێت بە وەستانی ئۆتۆمبێل لە سەر پرد یان لە نێو تونێل؟", 
-        options: ["هیچ کات ڕێگەپێدراو نییە وە قەدەغەیە", "ئاساییە لە کاتی ڕۆژ", "ئاساییە ئەگەر زیاتر لە سێ ڕێڕەوی هەبێت"], 
-        answer: 0 
-    },
-    { 
-        q: " لە کام ڕێچکەی شەقام شۆفێری تراکتۆر بۆی هەیە لێبخورێت ؟", 
-        options: ["بەکار‌هێنانی شانی ڕێگا لە ڕێگاکانی دەرەوە", "لە هەموو بەشەکانی ڕێگاکە", "ڕێڕەوی چەپ لە ڕێگاکانی دەرەوە"], 
-        answer: 0 
-    },
-    { 
-        q: " لە کامە شەقام ڕێگە دەدرێت بە لێخوڕینی تراکتۆر ؟", 
-        options: ["لە شەقامە کشتوکاڵی و شەقامی سنوری گوندەکان", "لە شەقامە خێراکان", "لە شەقامە ناوخۆییەکان"], 
-        answer: 0 
-    },
-    { 
-        q: " ڕێگەی دروست چییە بۆ ئەنجام دانی سووڕانەوە بەرەو لای ڕاست؟", 
-        options: ["لێخوڕین بەرەو ڕێڕەوی ڕاست دوای دڵنیابوون لە خاڵی بوونی و هەڵکردنی لایتی سووڕانەوە", "پێ کردنی لایت و ڕۆیشتن ڕاستەوخۆ", "ڕۆیشتن بەرەو ئەو سووڕانەوەی کە مەبەستتە بێ دوو دڵی"], 
-        answer: 0 
-    },
-    { 
-        q: " ڕێکارەکانی شۆفێر چین دوای ڕاگرتنی ئۆتۆمبێلەکەی لە شوێنی وەستان؟", 
-        options: ["دڵنیابوون لە وە‌ی ئۆتۆمبێلەکە کوژاوەتەوە و دەرگاکان داخراوە و هاند برێک ڕاکێشراوە", "جێهێشتنی بێ ڕاکێشانی هاند برێک", "دانانی سێگۆشەی فۆسفۆر"], 
-        answer: 0 
-    },
-    { 
-        q: " ئەو خاڵانە چین کە پێویستە لێیان دڵنیا بیت پێش سووڕانەوە بەرەو ئاراستەی ڕاست؟", 
-        options: ["چۆڵبوونی ڕێڕەوەکانی دیوی لای ڕاستی شەقامەکە لە ئۆتۆمبێل", "چۆڵبوونی ڕێڕەوەکانی دیوی لای چەپ", "بەکارهێنانی لایتەکانی ئاگادارکردنەوە"], 
-        answer: 0 
-    },
-    { 
-        q: " مەرجەکانی لێخوڕینی کشانەوە بۆ دواوە بەگ چین؟", 
-        options: ["دڵنیابوون لە چۆڵبوونی شەقام لە دواوەی ئۆتۆمبێل و بەگ لێدان نابێت زیاتر بێت لە 10م", "بەگ لێدان مەرجی مەودای بۆ دانەنراوە", "بێ مەرجە بە بوونی لایتی ڕەنگ سپی دواوە"], 
-        answer: 0 
-    },
-    { 
-        q: " چۆن ئۆتۆمبێلەکەت لە شەقام پارک دەکەیت؟", 
-        options: ["هاوتەریب لەگەڵ لێواری شەقامەکە بە دووری 30 سم نەبێت لە شۆستەکە", "بە گۆشەی 30 پلە", "لە شوێنی پەڕینەوەی پیادەکان"], 
-        answer: 0 
-    },
-    { 
-        q: " لە کاتی ڕووبەڕوو بوونی دوو ئۆتۆمبێل لە شەقامێکی تەسک و ڕاست پێویستە؟", 
-        options: ["کەمکردنەوەی خێرایی و ئاراستەکردنی ئۆتۆمبێل بەرەو لێواری شەقامەکە بۆ خۆلادان", "ڕووبەڕوبوون لە تەسکترین خاڵ", "هەوڵدان بۆ یەکەم جار تێپەڕبوون بە خێرایی"], 
-        answer: 0 
-    },
-    { 
-        q: " چۆنیەتی ڕەفتارکردنی شۆفێران لە شەقامە تەسک یان نشێوەکان یان هەورازی تیژ؟", 
-        options: ["پێویستە لەسەر شۆفێری ئۆتۆمبێلی دابەزیو لە هەوراز بوەستێت تا ئۆتۆمبێلی سەرکەوتوو تێدەپەڕێت", "ئەوەی یەکەم بگات ئەو تێدەپەڕێت", "ئۆتۆمبێلی سەرکەوتوو بوەستێت"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا دەتوانین ئۆتۆمبێل لێبخوڕین لە کاتێک بەشێکی جەستەمان لە دەرەوەی ئۆتۆمبێلەکە بێت؟", 
-        options: ["نەخێر بە هەموو شێوەیەک قەدەغەیە", "ڕێگەی پێدراوە بۆ کامیۆن", "ڕێگەپێدراوە لە شەقامەکانی دەرەوەی شار"], 
-        answer: 0 
-    },
-    { 
-        q: " کەی لایتی بەرز بەکاردێت بۆ ڕووناککردنەوە لە شەودا لە شەقامێک کە یەک ڕێڕەو بێت؟", 
-        options: ["لە کاتی نەبوونی ئۆتۆمبێل لە ئاراستەی بەرامبەر", "بە شێوەیەکی بەردەوام", "کاتی بوونی ئۆتۆمبێل لە ئاراستەی بەرامبەر"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا پێویست دەکات مۆڵەتی لێخوڕین هەڵبگریت هەر کاتێک شۆفێری بکەیت ؟", 
-        options: ["بەڵێ", "مەرج نییە تەنیا پێویستە هەتبێت", "تەنیا بۆ گەشتی دوور پێویستە"], 
-        answer: 0 
-    },
-    { 
-        q: " کاتێک نزیک دەبیتەوە لە یەکتربڕێک و ئۆتۆمبێلێکی تر لە لای ڕاستەوە دێت؟", 
-        options: ["ئامادەبیت بۆ وەستان وە ڕێگا بدەیت بە ئۆتۆمبێلەکە بۆ تێپەڕین", "خێراییت زیاد بکەیت بۆ دەرچوون", "هۆڕن بەکاربێنیت بۆ ئاگادارکردنەوە"], 
-        answer: 0 
-    },
-    { 
-        q: " لە کاتی چوونە نێو ڕێگا و دەستکردن بە جووڵەی ئۆتۆمبێلەکەت پێویستە سەیری ئاوێنەکان بکەیت بۆ؟", 
-        options: ["شەقامەکە چۆڵە لە پیادە و هەموو جۆرەکانی ئۆتۆمبێل", "شەقامەکە چۆڵە لە پیادە", "شەقامەکە چۆڵە لە ئۆتۆمبێل"], 
-        answer: 0 
-    },
-    { 
-        q: " ئەو ڕێکارانە چین کە پێویستە بیانگریتە بەر لە کاتی لێخوڕین لە کەشێکی تەمیاوی؟", 
-        options: ["کەمکردنەوەی خێرایی و پێکردنی لایتی نزم (نزم)", "لێخوڕین بە شێوەیەکی ئاسایی و بەکارهێنانی فلاش", "بەکارهێنانی فوول لایت و وەستان"], 
-        answer: 0 
-    },
-    { 
-        q: " کەی دەتوانیت مانۆڕی لێکرەتبوون ئەنجام بدەیت لە دوو ئۆتۆمبێل کە لە پێشتەوە دەڕۆن؟", 
-        options: ["ئەگەر هیچ ڕێگرییەک نەبێت بۆ لێکرەتبوون و بێ مەترسی بێت", "ئەگەر مەودای بینین باش نەبوو", "ئەگەر هەردوو ئۆتۆمبێل لە جۆری بارهەڵگر بوون"], 
-        answer: 0 
-    },
-    { 
-        q: " ئەرکی شۆفێران چییە کاتێک ڕووبەڕووی یەکتر دەبنەوە لە شەقامێکی بەرتەسکی ناڕێک؟", 
-        options: ["هێمن ولەسەرەخۆ بن بەرەو ئەو پەڕی لای ڕاستی ڕێگاکە بۆ دوورکەوتنەوە لە پێکدادان", "لای چەپی ڕێگاکە بگرن", "خێراییان زیاد بکەن بۆ دەربازبوون"], 
-        answer: 0 
-    },
-    { 
-        q: " ئەرکی شۆفێران چییە کاتێک لە ڕێگایەکی هەورازی سەخت کە یەک ڕێڕەو بێت ڕووبەڕوودەبن؟", 
-        options: ["ئۆتۆمبێلەی دادەبەزێت پێویستە بوەستێت تاکو ئەو ئۆتۆمبێلەی سەردەکەوێت تێدەپەڕێت", "لێخوڕین بە خێرایی ئاسایی بە بێ ڕێگە کردنەوە", "ئۆتۆمبێلەی سەردەکەوێت پێویستە بوەستێت"], 
-        answer: 0 
-    },
-    { 
-        q: " یەکێک لە فاکتەرە سەرەکییەکانی سەلامەتی و دڵنیایی ئۆتۆمبێل؟", 
-        options: ["هەبوونی مەرجەکانی سەلامەتی و دڵنیایی پشکنینی تەکنیکی خولی", "سەلامەتی پەیوەندیی بە پشکنینی تەکنیکی نییە", "بزوێنەری بەهێز"], 
-        answer: 0 
-    },
-    { 
-        q: " ئەو دەرمانانەی کاریگەریان هەیە وە پێویستە نەخورێن بەر لە شۆفێری ئەمانەن؟", 
-        options: ["هەموو ئەو دەرمانانەی کە باسکران", "هێمن کەرەوەکان و ئازار شکێنەکان", "دەرمانەکانی تایبەت بە چارەسەری فشاری خوێن"], 
-        answer: 0 
-    },
-    { 
-        q: " لە پێناو فەراهەم کردنی عەمبارکردنی سووتەمەنی بە سەلامەت پێویستە؟", 
-        options: ["هەموو ئەوانەی کە باسکران", "بزوێنەرەکان بکوژێترێنەوە لە کاتی تێکردنی سووتەمەنی", "جگەرە نەخورێت لە وێستگەکانی تێکردنی سووتەمەنی"], 
-        answer: 0 
-    },
-    { 
-        q: " ئەگەر ماددەی سەرخۆشکەر یان هۆشبەری نایاساییت خوارد؟", 
-        options: ["پێویستە ئۆتۆمبێل لێ نەخوڕیت", "پێویستە قاوەیەک بخۆیتەوە بەر لە شۆفێری کردن", "دەتوانی ئۆتۆمبێل لێبخوڕیت بە هێواشی"], 
-        answer: 0 
-    },
-    { 
-        q: " ئەو هۆکارانە چین کە دەبنە هۆی دەرکەوتنی دووکەڵی شین لە ئەگزۆز؟", 
-        options: ["تێکچوونی بزوێنەر یان شکانی پستۆنەکان", "کەمی ڕۆن لە بزوێنەر", "بەکارهێنانی ڕۆنی زۆرچڕ"], 
-        answer: 0 
-    },
-    { 
-        q: " لە ڕووی یاساییەوە ئەو کەسەی بەتەمایە مۆڵەتی لێخوڕینی گشتی دەربهێنێت دەبێت تەمەنی؟", 
-        options: ["20 ساڵی تەواو کردبێت", "18 ساڵی تەواو کردبێت", "22 ساڵی تەواو کردبێت"], 
-        answer: 0 
-    },
-    { 
-        q: " لە کاتی لێخوڕینی ئۆتۆمبێل بە شەو پێویستە ؟", 
-        options: ["بەکارهێنانی لایتی ئاگادارکردنەوە لە مەترسییەکان لە کاتی تێپەڕبوون لە ئۆتۆمبێلەکانی دیکە", "لێخوڕین لە نزیکی ئۆتۆمبێلی پێشەوەت", "هێشتنەوەی مەودایەکی دوور"], 
-        answer: 0 
-    },
-    { 
-        q: " لە ڕووی یاساییەوە مۆڵەتی لێخوڕینی ئۆتۆمبێلی بیناسازی تەمەنی چەندە؟", 
-        options: ["20 ساڵی تەواو کردبێت", "18 ساڵی تەواو کردبێت", "22 ساڵی تەواو کردبێت"], 
-        answer: 0 
-    },
-    { 
-        q: " لە کاتی لێخوڕین لە شەودا لە نێو ڕیزێک ئۆتۆمبێل، ئەو مەودایە بە پێی سیستەمی سێ چرکەیی؟", 
-        options: ["نزیکەی چوار چرکە لە بەرئەوەی ڕەنگە لە خەمڵاندنی دوورییەکان لە شەودا هەڵەبکرێت", "نزیکەی دوو چرکە", "هەمان مەودای سێ چرکەکان"], 
-        answer: 0 
-    },
-    { 
-        q: " لە ڕووی یاساییەوە مۆڵەتی لێخوڕینی ئۆتۆمبێلی تایبەت تەمەنی چەندە؟", 
-        options: ["18 ساڵی تەواو کردبێت", "20 ساڵی تەواو کردبێت", "22 ساڵی تەواو کردبێت"], 
-        answer: 0 
-    },
-    { 
-        q: " هەر کەسێک هەڕەشە و پەلاماری پۆلیسی هاتووچۆ بدات سزا دەدرێت بە؟", 
-        options: ["زیندانی دەکرێت بۆ ماوەیەک زیاتر نەبێت لە سێ ساڵ", "پێبژاردن", "هیچ ڕێکارێک ناگیرێتە بەر"], 
-        answer: 0 
-    },
-    { 
-        q: " لە کاتی لێخوڕین بە شەو پێویستە بەردەوام لایتی بەرز هەڵبکەیت؟", 
-        options: ["نەخێر دەبێت لایتی نزم بەکاربهێنیت", "بەڵێ", "تەنها لە ڕێگای دەرەوە"], 
-        answer: 0 
-    },
-    { 
-        q: " هەر کەسێک پەلاماری پۆلیسی هاتووچۆ بدات و برینداری بکات سزا دەدرێت بە؟", 
-        options: ["زیندانی دەکرێت بۆ ماوەیەک زیاتر نەبێت لە پێنج ساڵ", "مۆڵەتی شۆفێرییەکەی لێدەسەندرێتەوە بۆهەتا هەتایە", "دانی پێبژاردنی دارایی"], 
-        answer: 0 
-    },
-    { 
-        q: " لێخوڕین بە خێراییەکی زیاتر لە دوا پلەی دەستنیشانکراو کەی دەبێت؟", 
-        options: ["یاسا بە هیچ شێوەیەک ڕێگەی پێ نادات کە لە سنوری خێرایی دەربچیت", "بتەوێت لە ئۆتۆمبێلەکەی پێشت ڕەت بیت", "ئۆتۆمبێلەکانی پێشت بە خێراییەکی زۆر بڕۆن"], 
-        answer: 0 
-    },
-    { 
-        q: " ئەگەر هاتوو تایەی یەدەگی ئۆتۆمبێلەکەت لووس و تێکچوو بوو ئایا بەکارهێنانی یاساییە؟", 
-        options: ["نەخێر، لێخوڕین بە تایەی لووس کارێکی نا یاساییە تەنانەت ئەگەر تایە سپێرەکەش بێت", "بەڵێ بەو مەرجەی تایەکە پڕ هەوا بێت", "بەڵێ بەڵام پێویستە لە ماوەی بیست و چوار کاتژمێر چاک بکەیت"], 
-        answer: 0 
-    },
-    { 
-        q: " بە پێی ڕیز بەندی پێشینەکانی هاتووچۆ کاتێک دەست بە جووڵە دەکەیت بۆ ڕێگا پێویستە؟", 
-        options: ["بوەستیت و سەری شەقامەکە بکەیت کاتێک هەلت بۆ ڕەخسا و شەقام چۆڵبوو ئینجا دەست بە جووڵە بکەیت", "دەستبەجێ دەست بە جووڵە بکەیت", "ڕێگە بە هیچ ئۆتۆمبێلێک مەدە"], 
-        answer: 0 
-    },
-    { 
-        q: " چۆن ژینگە دەپارێزیت و دەبیت بە دۆستی؟", 
-        options: ["بە لێخوڕینی ئۆتۆمبێل بە خێرایی لە نێوان 60 - 70 کم لە کاتژمێرێک", "بە لێخوڕینی ئۆتۆمبێل بە خێرایی 110 کم", "بە لێخوڕینی ئۆتۆمبێل بە خێرایی 100 کم"], 
-        answer: 0 
-    },
-    { 
-        q: " چۆن ژینگە دەپارێزیت لە کاتی گەرمکردنی بزوێنەر؟", 
-        options: ["هێشتنەوەی کارکردنی بزوێنەر بۆ گەرمداهاتن ماوەی یەک خولەک لە وەرزی زستان یا هاوین", "ماوەی زیاتر لە سێ خولەک لە وەرزی زستان", "ماوەی زیاتر لە پێنج خولەک لە وەرزی زستان"], 
-        answer: 0 
-    },
-    { 
-        q: " تۆ لە شەقام لێخوڕین دەکەیت و لە ناکاو ئۆتۆمبێلەکەت پەکیکەوت پێویستە چی بکەیت؟", 
-        options: ["پێکردنی چوار فلاش و پاڵنانی ئۆتۆمبێل بۆ ڕێڕەوی ڕاست بە زووترین کات و دانانی سێگۆشە", "جێهێشتنی ئۆتۆمبێلەکە هەر لە جێگەی خۆی", "دەستکردن بە چاککردنی لە ناوەڕاستی شەقام"], 
-        answer: 0 
-    },
-    { 
-        q: " لە کاتی بەرکەوتنی شلەی ترشی پاتری ئۆتۆمبێل (تیزاب) بە پێستی مرۆڤ پێویستە؟", 
-        options: ["دەبێت شوێنی بەرکەوتنەکە بە زووترین کات بە ئاو بشۆردرێت", "گواستنەوەی کەسەکە بۆ نەخۆشخانە", "چاوەڕێی ئەمبوڵانس بکەیت"], 
-        answer: 0 
-    },
-    { 
-        q: " کەی پێویستە شۆفێر ئاماژەکانی ڕووناکی ئۆتۆمبێلەکەی (ئیشارەت) دابگیرسێنێت؟", 
-        options: ["کاتێک بە نیازیە ڕێڕەوەکەی بگۆڕێت", "کاتێک دەگاتە لێژاییەکی تیژ", "کاتێک دەگاتە پۆلیسی هاتووچۆ"], 
-        answer: 0 
-    },
-    { 
-        q: " لە کاتی وەستانی جووڵە لە شەقامە قەرەباڵغیەکان بزوێنەر بکوژێنەوە ئەگەر تێپەڕی لە؟", 
-        options: ["سێ خولەک", "پێنج خولەک", "حەوت خولەک"], 
-        answer: 0 
-    },
-    { 
-        q: " هۆکارەکانی درووستبوونی تەقەتەق لە بزوێنەر لە ژێر باری قورسدا چییە؟", 
-        options: ["بەکارهێنانی بەنزین بە ئۆکتانی نزم", "دانەنانی قورساییەکی زۆر", "بەنزین لە تانکی کەمی کردووە"], 
-        answer: 0 
-    },
-    { 
-        q: " لە هەمووی مەترسیدارترین لێخوڕینی ئۆتۆمبێل لە شەقامە هەڵخلیسکاوەکان بریتییە لە ؟", 
-        options: ["لێخوڕین بە خێرایی زۆر", "لێخوڕین بە خێرایی کەم", "بەکارهێنانی پشتێنی سەلامەتی"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا ئامێری ئاگرکوژێنەوە گرنگە لە ئۆتۆمبێلدا هەبێت؟", 
-        options: ["بەڵێ", "نەخێر", "گرنگ نییە"], 
-        answer: 0 
-    },
-    { 
-        q: " لە ڕووی یاساییەوە کاتێک لە سەر پردێک دەڕۆیت وئۆتۆمبێلێک لە پێشتە دەتوانی ؟", 
-        options: ["لێ ڕەتبوونی قەدەغەیە", "ڕێگەپێدراویت لێی ڕەت بیت", "تەنها ئەگەر بارهەڵگر بوو قەدەغەیە"], 
-        answer: 0 
-    },
-    { 
-        q: " یەکێک لە هۆکارەکانی گەرمبوونی بزوێنەر ئەوەیە ؟", 
-        options: ["کەمی ئاو لە سیستەمی ساردکردنەوە یان تێکچوونی قەپاغی ڕادیەتەر", "لێخوڕینی ئۆتۆمبێل لە کەشێکی تەمیاوی", "لێخوڕین لە کەش و هەوای سارد"], 
-        answer: 0 
-    },
-    { 
-        q: " لە ڕووی یاساییەوە مۆڵەتی لێخوڕینی ماتۆڕسکیل دەدرێت بە کەسێک کە تەمەنی ؟", 
-        options: ["16 ساڵی تەواو کردبێت", "17 ساڵی تەواو کردبێت", "18 ساڵی تەواو کردبێت"], 
-        answer: 0 
-    }
-{ 
-        q: " ئایا فۆسفۆری سێگۆشە گرنگە لە ئۆتۆمبێلدا هەبێت؟", 
-        options: ["بەڵێ", "نەخێر", "گرنگ نییە"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا تایەی یەدەگ و پێداویستییەکانی گرنگە لە ئۆتۆمبێلدا هەبێت؟", 
-        options: ["بەڵێ", "نەخێر", "گرنگ نییە"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا ئەگەر ئۆتۆمبێل لێچوونی سووتەمەنی هەبێت لە سیستمەکەیدا دەبێتە هۆی دەرنەچوونی ئۆتۆمبێل لە پشکنینی ساڵانە؟", 
-        options: ["بەڵێ دەبێتە هۆکاری دەرنەچوون", "نەخێر نابێتە هۆکاری دەرنەچوون", "گرنگ نییە"], 
-        answer: 0 
-    },
-    { 
-        q: " بارکردنی سەرنشین بە ژمارەی زیاتر لەوەی دیاری کراوە بۆ ئۆتۆمبێلەکە قەدەغەیە چونکە؟", 
-        options: ["دەبێتە هۆی ڕوودانی ڕووداو لەبەر ئەوەی ڕێگری لە شۆفێر دەکات و بەرچاوی دەگرێت", "لەبەر ئەوەی دەبێتە هۆی بێزار کردنی سەرنشینەکان", "تێکچونی ئۆتۆمبێلەکە"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا لێچوونی ڕۆنی برێک (ئیستۆپ) دەبێتە هۆکاری دەرنەچوونی ئۆتۆمبێل لە پشکنینی ساڵانە؟", 
-        options: ["بەڵێ دەبێتە هۆکاری دەرنەچوون", "نەخێر نابێتە هۆکاری دەرنەچوون", "گرنگ نییە"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا کارنەکردنی هاند برێک دەبێتە هۆکاری دەرنەچوونی ئۆتۆمبێل لە پشکنینی ساڵانە؟", 
-        options: ["بەڵێ دەبێتە هۆکاری دەرنەچوون", "نەخێر نابێتە هۆکاری دەرنەچوون", "گرنگ نییە"], 
-        answer: 0 
-    },
-    { 
-        q: " لە کاتی گەیشتنت بە یەکتربڕێک لە نێو گەڕەک نشینەکان وە لە نەمانی مەودای بینین بە هۆی باڵەخانە و درەختەکان لە دیتنی یەکتربڕەکە پێویستە لەسەرت؟", 
-        options: ["لە دەروازەی یەکتربڕەکە بوەستی وە لە دوای دڵنیابوون لە چۆڵبوونی بە هێواشی دەست بکەیتەوە بە ڕۆیشتن بە ئاگایی", "لە ناوەندی یەکتربڕەکە بوەستە و تەماشای لایەکانی تر بکە و ئینجا بڕۆ", "مەوەستە و تەنها هۆڕنێک لێبدە بۆ ئاگادارکردنەوەی شۆفێرەکانی تر"], 
-        answer: 0 
-    },
-    { 
-        q: " هۆکارەکانی تێکچوونی تایەکان بە تایبەتی تایەی پێشەوە بە خێرای دەگەڕێتەوە بۆ؟", 
-        options: ["تێکچونی گۆشەی تایەکانی پێشەوە", "لێخوڕینی ئۆتۆمبێل بە بێ سەرنشین", "لێخوڕینی ئۆتۆمبێل لە ڕێگاکانی ناوەوەی شارەکان"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا شکان و نەبوونی ئاوێنەی تەنیشتەکانی ئۆتۆمبێل دەبێتە هۆکاری دەرنەچوونی ئۆتۆمبێل لە پشکنینی ساڵانە؟", 
-        options: ["بەڵێ دەبێتە هۆکاری دەرنەچوون", "نەخێر نابێتە هۆکاری دەرنەچوون", "گرنگ نییە"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا کارنەکردنی فڵچەی جامەکانی ئۆتۆمبێل دەبێتە هۆکاری دەرنەچوونی ئۆتۆمبێل لە پشکنینی ساڵانە؟", 
-        options: ["بەڵێ دەبێتە هۆکاری دەرنەچوون", "نەخێر نابێتە هۆکاری دەرنەچوون", "گرنگ نییە"], 
-        answer: 0 
-    },
-    { 
-        q: " شانی ڕێگا بەشێکی شەقامە دەکەوێتە هەردوو دیوی قیرتاوە یا چەوڕێژکراوە وە پانتاییەکەی تێناپەڕێت لە؟", 
-        options: ["لە 2.5م", "لە 3.5 م", "لە 4.0م"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا دەکرێت ئۆتۆمبێلەکەت ڕابگریت لە تەنیشت ئۆتۆمبێلێکی تر کە لە لێواری ڕێگا ڕایگرتبێت (ڕاگرتن بە دوو ڕیز)؟", 
-        options: ["نەخێر قەدەغەیە بە هەموو شێوەیەک", "بەڵێ دەبێت ئەگەر پانتایی ڕێگاکە یارمەتیدەر بێت بۆ ڕاگرتنەکە", "بەڵێ ڕێگەپێدراوە بۆ ماوەیەکی کورت"], 
-        answer: 0 
-    },
-    { 
-        q: " لە چ کاتێک ڕێگە دەدرێت ئۆتۆمبێل ڕابگریت لەسەر پرد یا لە ناو تونێلێک؟", 
-        options: ["هیچ کات ڕێگەپێدراو نیە وە قەدەغەیە", "تەنها لە کاتی شەو قەدەغەیە", "ڕێگەپێدراوە ئەگەر بۆ ماوەیەکی کورت بێت"], 
-        answer: 0 
-    },
-    { 
-        q: " لە چ کاتێک پێویستە ڕۆنی بزوێنەری ئۆتۆمبێلەکان بگۆڕدرێت؟", 
-        options: ["ڕۆنی بزوێنەر دەگۆڕدرێت بە پێی گۆنجی ڕۆیشتنی ئۆتۆمبێل و جۆر و خەسڵەتەکانی ڕۆنەکە", "ڕۆنی بزوێنەر پاش 1000 کم پێویستە بگۆڕدرێت", "ڕۆنی بزوێنەر دەگۆڕدرێت لە وەرزی زستان و هاوین"], 
-        answer: 0 
-    },
-    { 
-        q: " هەر کەسێک ئۆتۆمبێل لێبخوڕێت بە سەرخۆشی یا لە ژێر کاریگەری بەکارهێنانی ماددەی هۆشبەر سزا دەدرێت بە؟", 
-        options: ["بەندکردنی یا پێبژاردنی یا بە هەردوو سزاکە", "پسوولەی سزای پێ دەدرێت", "ئۆتۆمبێلەکەی دەستی بەسەر دادەگیرێت"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا هەڵکردنی گڵۆپی ڕووناکی بزوێنەر لە نێو داشبۆردی ئۆتۆمبێل دەبێتە هۆی دەرنەچوونی لە پشکنینی ساڵانە؟", 
-        options: ["بەڵێ دەبێتە هۆکاری دەرنەچوون", "نەخێر نابێتە هۆکاری دەرنەچوون", "تەنیا نمرەی دادەبەزێت"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا ئەگەر ئۆتۆمبێل لایتەکانی بەرز و نزمی زینۆنی ڕەسەن بێت لە پشکنینی ساڵانە دەردەچێت؟", 
-        options: ["بەڵێ دەردەچێت", "نەخێر دەرناچێت", "گرنگ نییە"], 
-        answer: 0 
-    },
-    { 
-        q: " لێکرەتبوون ڕێگەپێدراوە لە شەقامێکی دوو ڕێڕەو؟", 
-        options: ["لە دیوی لای چەپ", "لە دیوی لای ڕاست", "ئەگەر هاتوو هێمای هاتووچۆ هەبێت ئەم کارە قەدەغە بکات"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا ئەگەر بۆنیدی ئۆتۆمبێل گیر بێت و نەکرێتەوە دەبێتە هۆکاری دەرنەچوونی لە پشکنینی ساڵانە؟", 
-        options: ["بەڵێ دەبێتە هۆکاری دەرنەچوون", "نەخێر نابێتە هۆکاری دەرنەچوون", "گرنگ نییە"], 
-        answer: 0 
-    },
-    { 
-        q: " ئەنجامدانی مانۆڕی لێکرەتبوون قەدەغەیە لە؟", 
-        options: ["لە نزیک ناوچەکانی پەڕینەوەی پیادە", "لە دیوی لای چەپی ئۆتۆمبێلەکان", "بە بێ ئاگادارکردنەوەی ئەو شۆفێرەی مەبەستتە لێی ڕەتبی"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا لە باری دانانی بەرزکەرەوەی دەنگ (ئەگزۆز)ی ئۆتۆمبێل لە پشکنینی ساڵانە دەردەچێت؟", 
-        options: ["نەخێر دەرناچێت دەبێت لەسەر شێوازی دروست کردنی بێت", "بەڵێ دەردەچێت", "گرنگ نییە"], 
-        answer: 0 
-    },
-    { 
-        q: " دەکرێت مۆبایل بەکاربهێنرێت لە لایەن شۆفێر لە کاتی؟", 
-        options: ["وەستانی ئۆتۆمبێلەکە بە تەواوەتی لە شوێنێکی گونجاو", "دانیشتنی سەرنشینی پێشەوە لەگەڵی", "هەڵگرتنی مۆبایلەکە بە دەستی چەپ"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا ئەگەر سۆندەی برێک (ئیستۆپ) لێچوونی ڕۆنی هەبێت لە پشکنینی ساڵانە دەردەچێت؟", 
-        options: ["نەخێر دەرناچێت", "بەڵێ دەردەچێت", "گرنگ نییە"], 
-        answer: 0 
-    },
-    { 
-        q: " سوودەکانی پشتێنی سەلامەتی؟", 
-        options: ["بۆ شۆفێر و گشت سەرنشینەکانی ترە", "تەنها بۆ شۆفێرە", "هیچ سوودێکی نییە و گرنگ نییە"], 
-        answer: 0 
-    },
-    { 
-        q: " هەوڵمەدە ئۆتۆمبێلەکەت لێبخوڕی ئەگەر بزوێنەرەکەی سارد بوو وە بە ئیشکراوی جێی مەهێڵە بۆ گەرم داهاتن زیاتر لە؟", 
-        options: ["یەک خولەک لە وەرزی زستان", "سێ خولەک لە وەرزی زستان", "پێنج خولەک لە وەرزی زستان"], 
-        answer: 0 
-    },
-    { 
-        q: " سوودی جێگیربوونی پاتری چییە؟", 
-        options: ["ئۆتۆمبێل دەپارێزێت لە هەر گرفتێک وەک تێکچوون و پچڕانی تۆڕی کارەبا و گرگرتن", "زوو هەڵبوونی ئۆتۆمبێل", "پارێزگاری کردن لە سلفی ئۆتۆمبێل"], 
-        answer: 0 
-    },
-    { 
-        q: " لە حاڵەتی تێپەڕبوونی ئۆتۆمبێلێک لە ئۆتۆمبێلەکەی تۆ پێویستە چی بکەیت بۆ ئەنجامدانی مانۆڕەکە بە سەلامەتی؟", 
-        options: ["یارمەتی بدەیت لە ڕێگەی مانەوەت لە ڕێڕەوی خۆت لە لای ڕاستی ڕێگا وە کەمکردنەوەی خێراییت تاکو تێپەڕاندنەکە ئەنجام دەدرێت", "دەرهێنانی دەستت بۆ ئەوەی ئاماژە بدەیت بۆ تێپەڕاندنەکە", "زیادکردنی خێرایی ئۆتۆمبێلەکەت بۆ ئەوەی تێنەپەڕێ"], 
-        answer: 0 
-    },
-    { 
-        q: " نابێت بەرکەوتەی هەوای کە ڕووبەڕووی ئۆتۆمبێلەکەت دەبێتەوە زیاد بکەیت بە دانانی باڵ وەک جوانکاری چونکە؟", 
-        options: ["بەکاربردنی سووتەمەنی زیاد", "بەکاربردنی تایەکان", "تەمەنی ئۆتۆمبێلەکە زیاد دەکات"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا لێچوونی سووتەمەنی لە بەشەکانی ئۆتۆمبێل مەترسیدارە؟", 
-        options: ["لە هەر هەمووی مەترسیدارە", "تەنها ئەگەر لە تانکی سووتەمەنی بێت", "تەنها ئەگەر لە بۆرییەکان بێت"], 
-        answer: 0 
-    },
-    { 
-        q: " لە کاتی گۆڕینی ڕۆنی بزوێنەر ڕۆنە پیسەکە فڕێ دەدرێتە؟", 
-        options: ["لە شوێنی تەرخانکراو", "ناو ئاوەڕۆ", "سەر زەوی"], 
-        answer: 0 
-    },
-    { 
-        q: " سوودی پشکنینی ساڵانەی شیاوی ئۆتۆمبێل چییە؟", 
-        options: ["بۆ پارێزگاری ئۆتۆمبێل و شۆفێر و کەسانی ترە", "بۆ پارێزگاری لە ئۆتۆمبێلەکەیە", "بۆ پارێزگاری شۆفێرە"], 
-        answer: 0 
-    },
-    { 
-        q: " دەرچوونی بار لە تەنیشتەکانی ئۆتۆمبێلی بارهەڵگر دەستنیشانکراوە بە مەودایەک کە بریتییە لە؟", 
-        options: ["دوا پلە بە 15سم", "دوا پلە بە 50 سم", "دوا پلە بە 80 سم"], 
-        answer: 0 
-    },
-    { 
-        q: " پێویستە چارەسەری سەرەتایی بۆ بریندارەکانی ڕووداوی هاتووچۆ ئەنجام بدرێت؟", 
-        options: ["لە شوێنی ڕووداوەکە و تا وەکو دەکرێت پێویستە بریندارەکان لە جێگەی خۆیان نەجووڵێندرێن", "لە نەخۆشخانە", "لە ماڵی بریندارەکە"], 
-        answer: 0 
-    },
-    { 
-        q: " مەترسییەکانی پەیدا بوونی شکان و درز لە جامی پێشەوەی بەردەمی شۆفێر بریتییە لە؟", 
-        options: ["زیانی بۆ ئاست و مەودای بینینی شۆفێر هەیە", "کاردەکاتە سەر جوانی ئۆتۆمبێل", "هیچ مەترسییەکی نییە تەنیا لە ڕۆژانی گەرما و سەرما کاریگەری هەیە"], 
-        answer: 0 
-    },
-    { 
-        q: " لە کاتی لێخوڕین بە شەو گرنگترین شت کە پێویستە بیکەیت؟", 
-        options: ["لێخوڕین لە چوارچێوەی ئەو ڕووناکییەی کە گڵۆپەکانی ئۆتۆمبێلەکەت بۆت فەراهەم دەکات", "ئامادەبیت بۆ برێک کردن بە خێراییەکی زیاتر", "بەکارهێنانی لایتی بەرز بە درێژایی کاتەکە"], 
-        answer: 0 
-    },
-    { 
-        q: " پاتری ئۆتۆمبێل بارگاوی دەبێت لە ڕێگەی؟", 
-        options: ["دینەمۆ", "دیلکۆ", "فیت پەمپ"], 
-        answer: 0 
-    },
-    { 
-        q: " دەرچوونی باری ئۆتۆمبێلی بارهەڵگر لە پێش و دواوەی دیاری کراوە بە؟", 
-        options: ["1 مەتر لەگەڵ دانانی ئاڵایەکی سوور", "50 سم لەگەڵ دانانی ئاڵایەکی سوور", "1.5 مەتر لەگەڵ دانانی ئاڵایەکی سوور"], 
-        answer: 0 
-    },
-    { 
-        q: " لە هۆکارە سەرەکییەکانی ڕوودانی ئاگرکەوتنەوە لە ئۆتۆمبێل بریتییە لە؟", 
-        options: ["جگەرە کێشان لە وێستگەکانی سووتەمەنی و کەمتەرخەمی لە بەکارهێنانی جگەرە و چەرخ", "لێخوڕینی ئۆتۆمبێل بێ هەڵکردنی لایتەکانی پێشەوە و دواوە", "لێخوڕینی ئۆتۆمبێل بە تایەی لووس"], 
-        answer: 0 
-    },
-    { 
-        q: " دەبێت ڕێژەی ڕۆنی بزوێنەر لەسەر سیمی پێوەری ڕۆنەکە؟", 
-        options: ["لە نێوان پیتەکانی (L) و (H) بێت", "لەسەر پیتی (L) بێت", "لەسەر پیتی (H) بێت"], 
-        answer: 0 
-    },
-    { 
-        q: " بەکارهێنانی مۆبایل ڕێگا پێدراوە تەنها؟", 
-        options: ["لە کاتی وەستانی ئۆتۆمبێل بە شێوەیەکی تەواو لە شوێنی تەرخانکراو بۆ وەستان تاکو کۆتایی هاتنی پەیوەندییەکە", "بەکارهێنانی لە دوای کەمکردنەوەی خێرایی ئۆتۆمبێل", "لە کاتی وەستان لە ترافیک لایت"], 
-        answer: 0 
-    },
-    { 
-        q: " سندوقی ئۆتۆمبێل بەکار دەهێنرێت وەک؟", 
-        options: ["شوێن هەڵگرتنی کەل و پەلی چاککردنەوە و فریاگوزاری و چارەسەری پێویست", "هەڵگرتنی سەرنشین", "بۆ هەڵگرتنی ئاژەڵان و باڵندەی ماڵی"], 
-        answer: 0 
-    },
-    { 
-        q: " شۆستە دەکەوێتە هەردوو لا تەنیشتی ڕێگا وە بەکار دەهێنرێت بۆ؟", 
-        options: ["بۆ ڕۆیشتنی پیادەکان", "وەستانی ئۆتۆمبێل", "بۆ ڕۆیشتنی ماتۆڕسکیل"], 
-        answer: 0 
-    },
-    { 
-        q: " لە کاتی بەفر بارینی چڕ و کەمبوونەوەی ئاستی بینین پێویستە شۆفێر؟", 
-        options: ["وەستاندنی ئۆتۆمبێلەکەی لە شوێنێکی سەلامەت", "بەردەوام بێت لە لێخوڕین", "لایتی فوول هەڵبکات"], 
-        answer: 0 
-    },
-    { 
-        q: " پێشینە بۆ ئەو ئۆتۆمبێلانە دەبێت کە؟", 
-        options: ["لە شەقامەکان دەڕۆن لەسەر ئەوانەی کە دێنە ناوی", "لە گەراجەکان دەردەچن", "لە وێستگەکانی سووتەمەنی دەردەچن"], 
-        answer: 0 
-    },
-    { 
-        q: " گشت ئەو شوێنانەی لێکرەتبوون تیایدا ڕێگەی پێدراوە دەبێت؟", 
-        options: ["مەودای بینینی تێیدا باش بێت", "شەقامەکە تەڕ بێت", "هێڵی سپی ناوەندی شەقام بە یەک ئاراستە و نەپچڕاوبێت"], 
-        answer: 0 
-    },
-    { 
-        q: " پێشینە لە یەکتربڕەکان بۆ ئەو ئۆتۆمبێلانە دەبێت کە لە؟", 
-        options: ["ئەوانەی لە گۆڕەپانن", "ئەوانەی دەچنە نێو گۆڕەپان", "هیچ پێشینەیەک نییە"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا گواستنەوەی سەرنشین ئاساییە لە سندوقی ئۆتۆمبێلی بچووک یان لە بۆدی بارهەڵگر و پیکاپ و کامیۆنەکان؟", 
-        options: ["نەخێر بە هەموو شێوەیەک قەدەغەیە", "بەڵێ ئاساییە ئەگەر ژمارەیان کەم بێت", "بەڵێ لە هەموو بەشێکی ئۆتۆمبێل ئاساییە"], 
-        answer: 0 
-    },
-    { 
-        q: " پێشینە ڕۆیشتن بۆ شەقامی؟", 
-        options: ["قیرتاوکراوە لەسەر شەقامی قیرتاونەکراو", "قیرتاونەکراو لەسەر شەقامی قیرتاوکراو", "هیچ پێشینەیەک نییە"], 
-        answer: 0 
-    },
-    { 
-        q: " لە کاتی بوونی تەم و مژ پێویستە لەسەرت؟", 
-        options: ["هەموو ئەوانەی کە باس کران", "لێکرەتبوون ئەنجام نەدەیت لە ئۆتۆمبێلەکانی پێشت", "ڕێڕەوت نەگۆڕیت"], 
-        answer: 0 
-    },
-    { 
-        q: " پێشینە بۆ یەکێک لەمانەیە؟", 
-        options: ["پیادەکانی کە لەسەر شۆستە دەڕۆن نەک ئۆتۆمبێلەکان کە شۆستە دەبڕن", "ئەو ئۆتۆمبێلانەی کە شۆستە دەبڕن بۆ چوونە نێو گەراج لەسەر پیادەکان", "ئەو ئۆتۆمبێلانەی کە شۆستە دەبڕن بۆ دەرچوون لە گەراج لەسەر پیادەکان"], 
-        answer: 0 
-    },
-    { 
-        q: " باشترین ڕێگا بۆ دوورکەوتنەوە لە ڕووداوی پێکدادان؟", 
-        options: ["لێخوڕینە بە هێمنی و بە خێراییەکی کەم", "لێخوڕین بە خێرایی", "گۆڕینی ڕێڕەوەکان بە شێوەیەکی بەردەوام وە ڕۆیشتن بە شێوەی پێچ"], 
-        answer: 0 
-    },
-    { 
-        q: " پێشینە بۆ؟", 
-        options: ["بۆ شەمەندەفەر یا هەر ئامرازێکی تری گواستنەوە بە هێڵی ئاسنین لەسەر گشت جۆرەکانی ئۆتۆمبێل", "ئۆتۆمبێلەکانی بیناسازییە لەسەر شەمەندەفەر", "ئۆتۆمبێلی کشتوکاڵی و ماتۆڕسکیل لەسەر شەمەندەفەر"], 
-        answer: 0 
-    },
-    { 
-        q: " هەڵگری مۆڵەتی لێخوڕینی ئۆتۆمبێلی بیناسازی مافی هەیە شۆفێری؟", 
-        options: ["تەنها ئۆتۆمبێلی بیناسازی بکات", "ئۆتۆمبێلی کشتوکاڵی بکات", "ئۆتۆمبێلەکانی بارهەڵگر و کرێ بکات"], 
-        answer: 0 
-    },
-    { 
-        q: " لە کاتی وەستانی پاسی گواستنەوەی سەرنشینەکان لە شەقام پێویستە چی بکەیت؟", 
-        options: ["بە وریایی تێپەڕیت لە پاسەکە و لەگەڵ کەمکردنەوەی خێرایی", "بەردەوام بیت لە لێخوڕین بە هەمان خێراییت", "لێخوڕین بە خێراییەکی زۆر لە پێش پاسەکە"], 
-        answer: 0 
-    },
-    { 
-        q: " چی پێویستە بکەیت لە دوای دەرچوون لە گۆماوێکی وەستاو لەسەر ڕێگا؟", 
-        options: ["قاچ خستنە سەر برێک بە شێوەی پچڕ پچڕ بۆ چەند جارێک", "لێخوڕین بە بەردەوامی لەگەڵ قاچ خستنە سەر برێک", "وەستان تاکو دیسکەکانی برێک وشک دەبنەوە"], 
-        answer: 0 
-    },
-    { 
-        q: " پێویستە چی بکەیت کاتێک بە شەو لێخوڕین دەکەیت وە شۆفێرەکەی بەرامبەرت لایتی بەرز (فوول) لایت بەکاردێنێت و نایکوژێنێتەوە؟", 
-        options: ["هەڵکردنی لایتی ڕووناکی ئاماژەکار بۆ لای ڕاست و چوون بەرەو لای ڕاستی ڕێگاکە و کەمکردنەوەی خێرایی", "کەمکردنەوەی خێرایی تاکو تووشی ڕووداو نەبم", "هەڵکردنی لایتی بەرز (فوول) لایت تاکو شۆفێری بەرامبەرم لایتەکەی بکاتە لایتی نزم"], 
-        answer: 0 
-    },
-    { 
-        q: " سەرکەوتن و دابەزینی سەرنشینەکان لە ئۆتۆمبێل پێویستە ئەنجام بدرێت؟", 
-        options: ["لە لای ڕاست ئەگەر ئۆتۆمبێلەکە لە دیوی لای ڕاستی شەقامەکە وەستابوو", "لە شوێنی تەرخان نەکراو بۆ وەستانی ئۆتۆمبێلەکان", "لە لای ڕاست ئەگەر ئۆتۆمبێلەکە لە دیوی لای چەپی شەقامەکە وەستابوو"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا ڕێگە دەدرێت بە سەرکەوتن و دابەزینی سەرنشین لە ڕێگا خێراکان (ئۆتۆبان)؟", 
-        options: ["نەخێر قەدەغەیە بە هەموو شێوەیەک", "بەڵێ ڕێگەپێدراوە بە مەرجێک تەنیشتی ڕێگاکە بەرین بێت", "تەنها لە کاتی ڕۆژ ڕێگەپێدراوە"], 
-        answer: 0 
-    },
-    { 
-        q: " نووسینی وشە و ڕستە لەسەر ئۆتۆمبێل ئاساییە؟", 
-        options: ["نووسین بە پێی ڕێنماییەکان دەبێت وە لە شوێنی تەرخانکراو", "لەسەر جامی دواوەی ئۆتۆمبێل", "لەسەر سندوقی دواوەی ئۆتۆمبێل"], 
-        answer: 0 
-    },
-    { 
-        q: " لە کاتی چوونە ژوور بۆ نێو سووڕانەوەی بازنەیی دەکرێت ڕێڕەو بگۆڕدرێت؟", 
-        options: ["نەخێر", "بەڵێ", "بە شەو قەدەغەیە"], 
-        answer: 0 
-    },
-    { 
-        q: " ئەگەر لەگەڵ ئۆتۆمبێلێکی وەستاو لە گەراج تووشی پێکدادان بوویت چی دەکەیت؟", 
-        options: ["چاوەڕێی خاوەنی دەکەم، یان لەسەر کاغەزێک ناوونیشان و ژمارەی تەلەفۆنەکەم بۆ دەنووسم و لەسەر ئۆتۆمبێلەکەی دایدەنێم", "شوێنەکە جێ دێڵم بێ ئاگادارکردنەوە", "شوێنی ڕاگرتنی ئۆتۆمبێلەکەم دەگۆڕم"], 
-        answer: 0 
-    },
-    { 
-        q: "213- لە کاتی لێخوڕینی هەر ئۆتۆمبێلێک دەبێت یەکێک لەمانەی خوارەوە لە ناویاندا هەبێت؟", 
-        options: ["سێگۆشەی فۆسفۆری", "بتڵێکی ئاو", "بتڵێکی بچووکی بەنزین"], 
-        answer: 0 
-    },
-    { 
-        q: " لە شەقام لێخوڕین دەکەیت و لە ناکاو ئۆتۆمبێلەکەی پێشت برێکی کرد تۆ پێویستە چی بکەیت؟", 
-        options: ["بوەستیت یان خێراییت کەم بکەیەوە چونکە لەوانەیە مەترسییەک لە پێشەوە هەبێت", "نەوەستیت ولێی تێپەڕیت", "وەستانی ئۆتۆمبێلەکانی پێشت هیچ پەیوەندی بە تۆوە نییە"], 
-        answer: 0 
-    },
-    { 
-        q: " پێویستە چی بکەیت بەر لە وەستاندنی ئۆتۆمبێلەکەت لەسەر شەقام و جێهێشتنی بۆ ماوەیەکی دیاریکراو لە شوێنێکی ڕێگەپێدراو؟", 
-        options: ["دڵنیابوون لە ڕاگرتنی ئۆتۆمبێل لە شوێنێکی گونجاو و کە یاسا ڕێگەی پێ دەدات", "ئۆتۆمبێلەکە لەسەر شەقامەکە ڕاگرە بە دووری کەمتر نەبێت لە 1 مەتر لە شۆستە", "ئۆتۆمبێلەکە مەکوژێنەوە ئەگەر بۆ ماوەی 5 خولەک دوا دەکەویت"], 
-        answer: 0 
-    },
-    { 
-        q: " لێخوڕینی ئۆتۆمبێل بە کەمتەرخەمی یا هەڵەشەیی قەدەغەیە و سزاکەی؟", 
-        options: ["بەندکردنی شۆفێر و دەست بەسەر داگرتنی ئۆتۆمبێلەکە", "پێبژاردن", "دەست بەسەرداگرتنی ئۆتۆمبێلەکە"], 
-        answer: 0 
-    },
-    { 
-        q: " دانەپۆشینی باری کامیۆنەکان بە ڕێک و پێکی قەدەغەیە و سزای لەسەرە بە؟", 
-        options: ["پێبژاردن", "دەست بەسەرداگرتنی بارەکە", "دەست بەسەر داگرتنی بارهەڵگرەکە"], 
-        answer: 0 
-    },
-    { 
-        q: " کەی مۆڵەتی شۆفێری هەڵدەوەشێتەوە؟", 
-        options: ["لە کاتی لە دەست دانی شیاوی تەندرووستی بە پێی ڕاپۆرتی لیژنەی پزیشکی", "لێخوڕینی ئۆتۆمبێل بە پێچەوانەی ئاراستەی ڕێگا", "دەرچوونی بڕیاری دادگا بە زیندانیکردنی شۆفێر"], 
-        answer: 0 
-    },
-    { 
-        q: " ڕاگرتنی ئۆتۆمبێل لە شوێنێک کە وەستان تیایدا قەدەغە بێت سزاکەی؟", 
-        options: ["پێبژاردن", "دەست بەسەرداگرتنی ئۆتۆمبێلەکە", "بەندکردنی شۆفێرەکە"], 
-        answer: 0 
-    },
-    { 
-        q: " بەکارهێنانی جامی لێڵ و ڕەش یان دانانی پەردەی ڕێگرلە بینین لەسەر جامەکانی ئۆتۆمبێل قەدەغەیە و سزاکەی؟", 
-        options: ["دەست بەسەر داگرتنی ئۆتۆمبێلەکە", "بەندکردنی شۆفێر", "پێبژاردن"], 
-        answer: 0 
-    },
-    { 
-        q: " پێچکردن لە شوێنی ڕێگاپێنەدراو بە پێچکردن تیایدا قەدەغەیە و سزاکەی؟", 
-        options: ["پێبژاردن", "دەست بەسەر داگرتنی ئۆتۆمبێلەکە", "بەندکردنی شۆفێر"], 
-        answer: 0 
-    },
-    { 
-        q: " نەوەستان لە کاتی دەرچوون لە شەقامێکی لاوەکی بۆ سەر شەقامێکی سەرەکی قەدەغەیە و سزاکەی؟", 
-        options: ["پێبژاردن", "دەست بەسەرداگرتنی ئۆتۆمبێلەکە", "دەست بەسەرداگرتنی ئۆتۆمبێلەکە و پێبژاردن"], 
-        answer: 0 
-    },
-    { 
-        q: " تۆ ئۆتۆمبێلەکەت لێدەخوڕیت لە شەقامێکی جەنجاڵ و قەرەباڵغ وە ڕێڕەوەکەی تۆ داخراوە بە ئۆتۆمبێلێک دەیەوێت پێچ بکاتەوە بۆ لای چەپ پێویستە چی بکەیت؟", 
-        options: ["چاوەڕێ کردن تاکو ئۆتۆمبێلەکە پێچ دەکاتەوە ئینجا پێشڕەوی بکەیت", "هەوڵ بدەیت کە بە ئۆتۆمبێلەکەت بە سەر شۆستە بکەویت و لە لای ڕاستی ئۆتۆمبێلەکە بڕۆیت", "هۆڕن یان ئامێری ئاگادارکردنەوە بەکار بێنیت"], 
-        answer: 0 
-    },
-    { 
-        q: " نەدانی پێشینە بەو پیادانەی چوونەتە نێو شوێنی دیاریکراوبۆ پەڕینەوە قەدەغەیە و سزاکەی؟", 
-        options: ["پێبژاردن", "دەست بەسەرداگرتنی ئۆتۆمبێلەکە", "لێسەندنەوەی مۆڵەتی شۆفێری بۆ ماوەی یەک ساڵ"], 
-        answer: 0 
-    },
-    { 
-        q: " لە کاتی پێکدادانەکان ئەگەر هەیە بکەویتە دەرەوەی ئۆتۆمبێلەکەت. دەتوانرێت خۆت بپارێزیت لە ڕێگای؟", 
-        options: ["بەستنی پشتێنەی دڵنیایی بە شێوەیەکی دروست", "دەست گرتن بە داشبۆڵی ئۆتۆمبێل بە تووندی", "کڕینی ئۆتۆمبێلێک کە ئێرباگی هەبێت"], 
-        answer: 0 
-    },
-    { 
-        q: " جێهێشتن یان ڕاگرتنی ئۆتۆمبێلی گەورە لە کۆڵان و شەقامە ناوخۆییەکانی ناو شار قەدەغەیە، سزاکەی دەبێت بە؟", 
-        options: ["پێبژاردن", "لێسەندنەوەی مۆڵەتی شۆفێری بۆ ماوەی 6 مانگ", "دەست بەسەرداگرتنی ئۆتۆمبێلەکە"], 
-        answer: 0 
-    },
-    { 
-        q: " لە هێما نەخشێنراوەکانی سەر شەقامەکان کە ڕێگا دەدات بە گۆڕینی ڕێڕەوەکان وە هەڵسان بە لێکرەتبوون بریتییە لە هێڵی؟", 
-        options: ["سپی پچڕپچڕ", "سپی نەپچڕاو", "سپی جووت و نەپچڕاو"], 
-        answer: 0 
-    },
-    { 
-        q: " لێخوڕینی ئۆتۆمبێل بە ژمارە تابلۆی ناڕوون یان تێکچوو قەدەغەیە و سزاکەی؟", 
-        options: ["پێبژاردن", "بەندکردنە", "لێسەندنەوەی مۆڵەتی شۆفێری بۆ ماوەی مانگێک"], 
-        answer: 0 
-    },
-    { 
-        q: " لە هێماکانی نەخشێنراو لە سەر ڕێگاکان بوونی هێڵێکی پانی نەپچڕاو لە نزیک ترافیکەکان ئەم هێڵە مانای چی دەگەیەنێت؟", 
-        options: ["بوەستە", "ئاگادارییە", "هیچ مانایەکی نییە تەنیا بۆ جوانکارییە"], 
-        answer: 0 
-    },
-    { 
-        q: " لێکرەتبوونی شۆفێر لە ئۆتۆمبێلێکی دیکە لە لای ڕاست یان لێکرەتبوون هەڵە قەدەغەیە و سزاکەی؟", 
-        options: ["پێبژاردنە", "دەست بەسەرداگرتنی ئۆتۆمبێلەکە", "دەست بەسەرداگرتنی ئۆتۆمبێلەکە و پێبژاردنە"], 
-        answer: 0 
-    },
-    { 
-        q: " لایتی ئاماژەکاری ڕووناکی پچڕ پچڕی ڕەنگ زەرد لە لاتەنیشتی ئۆتۆمبێل بەکاردێت لە کاتی؟", 
-        options: ["پێچکردنەوە و گۆڕینی ڕێڕەو", "ڕۆیشتن بە خێرایی کەم", "ڕۆیشتن بە خێرایی زۆر"], 
-        answer: 0 
-    },
-    { 
-        q: " دەبێت ئۆتۆمبێلی لەکارکەوتوو بگوازرێتەوە یان ڕابکێشرێ بە ڕێگەی؟", 
-        options: ["کرێنی تایبەت (Recovery vehicles)", "ڕاکێشانی لە ڕێگەی ئۆتۆمبێلی دیکە بە پەت", "ڕاکێشانی لە ڕێگەی کامیۆنی گەورە"], 
-        answer: 0 
-    },
-    { 
-        q: " سەرپێچی لە ڕێساکانی لێخوڕینی سەلامەت قەدەغەیە و سزاکەی؟", 
-        options: ["پێبژاردن", "دەست بەسەرداگرتنی ئۆتۆمبێلەکە", "لێسەندنەوەی مۆڵەتی شۆفێری بۆ ماوەی مانگێک"], 
-        answer: 0 
-    },
-    { 
-        q: " کردنەوەی دەرگای ئۆتۆمبێل لە دیوی چەپ پێش دڵنیایی لە چۆڵی شەقامەکە قەدەغەیە و سزاکەی؟", 
-        options: ["پێبژاردنە بە بڕی 30.000 دینار", "پێبژاردنە بە بڕی 15.000 دینار", "پێبژاردنە بە بڕی 20.000 دینار"], 
-        answer: 0 
-    },
-    { 
-        q: " دانانی لەزگەی جوانکاری و نووسین و وێنە لەسەر جامی پێشەوە و پشتەوەی ئۆتۆمبێل قەدەغەیە و سزاکەی؟", 
-        options: ["دەست بەسەرداگرتنی ئۆتۆمبێلەکە", "پێبژاردن", "لێسەندنەوەی مۆڵەتی شۆفێری بۆماوەی مانگێک"], 
-        answer: 0 
-    },
-    { 
-        q: " نابێت هیچ ئۆتۆمبێلێک لە ڕێگای خێرا بڕوات ئەگەر پانتایی زیاتر بوو لە ..... مەتر بێ ئەوەی ئۆتۆمبێلەکانی هاتووچۆ هاوەڵی بکات؟", 
-        options: ["3 مەتر", "2 مەتر", "2.5 مەتر"], 
-        answer: 0 
-    },
-    { 
-        q: " پێویستە کامیۆنەکان و بارهەڵگرە گەورەکان لە چ ڕێڕەوێکی شەقام بڕۆن؟", 
-        options: ["پێویستە لە ڕێڕەوی ئەو پەڕی لای ڕاستی ڕێگا بڕۆن", "کامیۆنەکان بۆیان هەیە لە هەموو ڕێڕەوەکان بڕۆن", "بارهەڵگرە دوو ئەکسلەکان دەتوانن لە هەر ڕێڕەوێک بڕۆن"], 
-        answer: 0 
-    },
-    { 
-        q: " پێویستە چرای لایتی نزم بەکاربێت لە کاتی ڕۆژدا لە کاتی بوونی؟", 
-        options: ["تەم و مژ یان تۆز", "پیادە", "کاروانێک لە ئۆتۆمبێل"], 
-        answer: 0 
-    },
-    { 
-        q: " سزای کەوتنە خوارەوەی شتومەک لە کامیۆنەکان وەک خۆڵ و بەرد و کەرەستەی بیناسازی چییە؟", 
-        options: ["شۆفێر بەرپرسیار هەڵ دەگرێت بە کۆکردنەوەی کەرەستەکان و خاوێنکردنەوەی شەقام", "پێبژاردن", "بەند کردن"], 
-        answer: 0 
-    },
-    { 
-        q: " سزای بەجێهێشتنی کەل و پەلی جۆراوجۆر لەسەر شەقام لە دوای چاککردنەوەی ئۆتۆمبێل بریتییە لە؟", 
-        options: ["پێبژاردن", "دەست بەسەرداگرتنی ئۆتۆمبێل", "بەند کردن"], 
-        answer: 0 
-    },
-    { 
-        q: " پێچ کردن بۆ لای چەپی شەقام ئەنجام دەدرێت بە؟", 
-        options: ["بەکارهێنانی لایتی ئاماژەی هێمای ڕووناکی بۆ لای چەپ", "دەرهێنانی دەستی چەپ لە پەنجەرەی ئۆتۆمبێل", "بەکارهێنانی لایتی وەستانی لە ناکاو"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا دەتوانین بزوێنەری ئۆتۆمبێل بە ئیشکراوی جێ بهێڵین بۆ ماوەی زیاتر لە سێ خولەک؟", 
-        options: ["نابێت لە بەرئەوەی دەبێتە هۆی بەرز بوونەوەی گەرمی بزوێنەر", "نەخێر پێویست ناکات لە یەک خولەک زیاتر بێت", "دەتوانین و کاریگەری لەسەر بزوێنەر نییە"], 
-        answer: 0 
-    },
-    { 
-        q: " کەی بارهەڵگرەکان بۆیان هەیە مانۆڕی تێپەڕاندن لە ئۆتۆمبێلی دیکە ئەنجام بدەن؟", 
-        options: ["دەکرێت تێپەڕبوونی بارهەڵگر لە شوێنی دیاریکراو بۆ ئەو مەبەستە بە هێماکانی هاتووچۆ", "بارهەڵگرەکان بۆیان هەیە لە هەر شەقامێک لە ئۆتۆمبێلەکانی دیکە تێپەڕن", "بارهەڵگرەکان تەنها دەتوانن لێکرەتبوون لە یەکتری ئەنجام بدەن"], 
-        answer: 0 
-    },
-    { 
-        q: " جێهێشتنی منداڵ بە تەنها لە ناو ئۆتۆمبێل قەدەغەیە؟", 
-        options: ["بە هەموو شێوەیەک جێهێشتنی منداڵ لە ناو ئۆتۆمبێل بە تەنیا قەدەغەیە", "دەکرێت بۆ ماوەی نیو کاتژمێر", "دەکرێت بۆ ماوەی زیاتر لە یەک کاتژمێر"], 
-        answer: 0 
-    },
-    { 
-        q: " ئەنجام دانی هەوڵدان بۆ لێکرەتبوون قەدەغەیە لە باری؟", 
-        options: ["ئەگەر هاتوو شەقامەکە هەڵخلیسکاو بوو سەرەڕای بوونی هێمای قەدەغەکردنی لێکرەتبوون", "بوونی هێمای وەستان قەدەغەیە", "لە ڕێگاکانی دەرەوە"], 
-        answer: 0 
-    },
-    { 
-        q: " پێویستە لەسەر سەرنشینەکانی هەر ئۆتۆمبێلێک پابەندبن ژیانی خۆیان و خەڵکی تر دووچاری مەترسی نەکەن بۆیە دەبێت دابەزین و سەرکەوتن؟", 
-        options: ["لە دەرگای لای ڕاستی ئۆتۆمبێل بێت", "لە هەموو دەرگاکان دەبێت", "شۆفێر دەتوانێت سەرکەوێت و دابەزێت لە لای ڕاست"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا دەکرێت ئۆتۆمبێلێک بە بێ شۆفێر ڕابکێشرێت لە لایەن کرێنێکەوە لە کاتی تێکچوونی؟", 
-        options: ["بەڵێ دەکرێت بۆ هەموو جۆرەکانی ئۆتۆمبێل", "تەنها بۆ کامیۆنەکان بارهەڵگرەکان", "تەنها بۆ ئۆتۆمبێلەکانی بیناسازی"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا پیادەکان بۆیان هەیە ڕۆیشتن یا پەڕینەوە لە شەقامی خێرا ئەنجام بدەن شەقامی 120 مەتری وەکو نمونە؟", 
-        options: ["نەخێر بە هیچ شێوەیەک ڕێگەی پێ نادرێت", "بەڵێ لە کاتی ڕۆژ ڕێگەپێدراوە", "بەڵێ پەڕینەوە ڕێگەپێدراوە بە خێرایی (ڕاکردن)"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا دەکرێت ئۆتۆمبێلێک لێبخوردرێت بە بوونی هەر بەربەستێک کە ڕێگری بکات لە بینینی شۆفێر؟", 
-        options: ["نەخێر ناکرێت لە کاتی بوونی شکان لە جامی پێشەوە یان تەنیشتەکان کە ڕێگر بێت لە بینین", "لێخوڕینی ئۆتۆمبێل ئاساییە ئەگەر جامی دەرگاکان تاریک بوو", "باری ئۆتۆمبێلەکە پەیوەندیی بەم بابەتە نییە"], 
-        answer: 0 
-    },
-    { 
-        q: " لێخوڕینی ئۆتۆمبێل بۆماوەیەکی دوور و درێژ دەبێتە هۆی خەواڵووی یان ماندووبوون هەربۆیە پێویستە بۆ هەر کاتژمێرێک لێخوڕین؟", 
-        options: ["پشوو وەربگیرێت", "20 خولەک پشوو وەربگیرێت", "30 خولەک پشوو وەربگیرێت"], 
-        answer: 0 
-    },
-    { 
-        q: " شۆفێری ئۆتۆمبێل بەرپرسیارە لە سەلامەتی ئۆتۆمبێلەکەی و پێویستە ڕۆژانە پشکنینی بۆ بکات لە پێناو دڵنیابوون لە؟", 
-        options: ["گونجاو بوونی بۆ لێخوڕین", "پاک و خاوێنی ئۆتۆمبێل", "تابلۆی تۆمار"], 
-        answer: 0 
-    },
-    { 
-        q: " پێویستە شۆفێری ئۆتۆمبێل پابەندە بە لێخوڕین لە ڕێڕەوی ئەو پەڕی لای ڕاستی شەقام لە یەکێک لەم بارانەی خوارەوە؟", 
-        options: ["ئەگەر ئۆتۆمبێلەکەی بە خێراییەکی کەمتر لە سنووری خێرایی دەستنیشانکراو لێدەخوڕی", "لە کاتی لێکرەتبوونی لە ئۆتۆمبێلی پێشی", "لە کاتی لێخوڕینی بە خێرایی لە ڕێڕەوێکی تر"], 
-        answer: 0 
-    },
-    { 
-        q: " دەبێت بوەستیت بۆ پیادەکان و ڕێگەیان پێبدەیت بە پەڕینەوە لەسەر هێڵەکانی پەڕینەوە ئەگەر هاتوو؟", 
-        options: ["چووبوونە نێو ناوچەی پەڕینەوە", "لە سەر شۆستەکە وەستابوون", "لە ناوەندە شەقامەکە وەستابوون"], 
-        answer: 0 
-    },
-    { 
-        q: " ڕەنگە شۆفێرەکان بتوانن پیادەکان بە شێوەیەکی ڕوونتر ببینن لە کەشی تاریک یا بە شەو ئەگەر هاتوو جلوبەرگی؟", 
-        options: ["ڕەنگ کاڵ یان تیشکدەرەوە (فۆسفۆر)یان لەبەر بوو", "ڕەنگ تاریکیان لەبەر بوو", "ڕەنگاوڕەنگیان لەبەر بوو"], 
-        answer: 0 
-    },
-    { 
-        q: " پێویستە ڕەنگی چراکانی لایتی ئۆتۆمبێل (بەرز و نزم) بە ڕەنگی؟", 
-        options: ["سپی بێت (یان زەرد)", "سوور بێت", "سەوز بێت"], 
-        answer: 0 
-    },
-    { 
-        q: " کاتێک لە نزیک پێچێک هیچ هێمایەکی دیاری کردنی بەرزترین ڕێژەی خێرایی لێنییە، دەبێت وادابنێیت؟", 
-        options: ["کە پێویستە خێراییت کەم بکەیتەوە بە شێوەیەک کە گونجاو بێت بە بەراورد لەگەڵ تیژی پێچەکە", "کە پێویستە بە زووترین کات لەو شوێن پێچە دەربچیت بە زۆرترین خێرایی", "بە هەمان خێرایی بڕۆیت"], 
-        answer: 0 
-    },
-    { 
-        q: " پاڵەپەستۆی نزمی هەوای تایەکانی ئۆتۆمبێل دەبێتە هۆی؟", 
-        options: ["تێکچوونی تایەکان لە ئەنجامی گەرمبوونی و بەکاربردنی لێوارەکەی", "خۆشتر ڕۆیشتنی ئۆتۆمبێل", "هەستکردن بە خۆشی لە کاتی سەرکەوتنی ئۆتۆمبێلەکە"], 
-        answer: 0 
-    },
-    { 
-        q: " ڕێگای هاتووچۆی خێرا نابێت بەکار بهێنرێت لە لایەن؟", 
-        options: ["پیادە و پاسکیلسوار و ئۆتۆمبێلەکانی بیناسازی و کشتوکاڵی", "ئۆتۆمبێلی ساڵۆن", "بارهەڵگری گەورە"], 
-        answer: 0 
-    },
-    { 
-        q: " پاڵەپەستۆی بەرز لە تایەکانی ئۆتۆمبێل دەبێتە هۆی؟", 
-        options: ["هەست کردن بە نائارامی لە کاتی سەرکەوتنی ئۆتۆمبێل و ئەگەری تەقینی", "تێکچوونی تایەکان لە پەراوێزەکان", "تێکچوونی بەشەکانی پێشەوەی ئۆتۆمبێل"], 
-        answer: 0 
-    },
-    { 
-        q: " ئەگەر هەستت بە خەواڵووی کرد لە کاتی لێخوڕینی ئۆتۆمبێل وا باشترە؟", 
-        options: ["بوەستە و پشوویەک بدە و ئەگەر بکرێت ئاڵوگۆڕی شۆفێر بکە", "ڕادیۆی ئۆتۆمبێلەکەت ئیش پێ بکەی بە دەنگی زۆر بەرز", "هەوا گۆڕکێی ئۆتۆمبێلەکە کارپێبکە"], 
-        answer: 0 
-    },
-    { 
-        q: " ناکرێت بە هیچ شێوەیەک بوەستیت و چاوەڕێ بکەیت بە ئۆتۆمبێل لەو شوێنانەی لای خوارەوە؟", 
-        options: ["لە هەموو ئەو شوێنانەی کە باسکران (ڕێچکە، پرد، تونێل)", "ڕێچکە و ڕێڕەو و پانتایی شەقامەکان", "لە سەر پرد و ناو تونێل و سەر هێڵەکانی پەڕینەوەی پیادە"], 
-        answer: 0 
-    },
-    { 
-        q: " بەکارهێنانی هۆڕن لەو شوێنانەی لای خوارەوە قەدەغەیە؟", 
-        options: ["قوتابخانە و نەخۆشخانە و هەموو شوێنە گشتییەکان تەنیا لە باری زۆر پێویست و فریاگوزار", "ناوچەی دام و دەزگاکانی میری", "ناوچە نیشتەجێگان"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا دەکرێت بە دوو ڕیزی بوەستی لە بەردەم شوێنە قەرەباڵغەکان وەک مزگەوت و شوێنەکانی تر؟", 
-        options: ["بە هیچ شێوەیەک نابێت", "وەستان ئاساییە", "بەڵێ وەستان ئاساییە لە لای چەپ"], 
-        answer: 0 
-    },
-    { 
-        q: " کەی ڕێگەپێدراوە ئۆتۆمبێل بۆ دواوە لێ بخوڕێت (بەگ لێدان)؟", 
-        options: ["لە کاتی پارککردنی ئۆتۆمبێل یان لە کاتی زۆر پێویست و لەو شوێنانەی کە مەودای بینین باشە و بۆ ماوەیەک زیاتر نەبێت لە 10م", "لە کاتی ڕۆیشتن لە سەر شەقامی خێرا", "لە کاتی قەتیس بوون لە شەقامێکی قەرەباڵغ"], 
-        answer: 0 
-    },
-    { 
-        q: " نابێت ئامێرەکانی ئاگادارکەرەوەی دەنگی و ڕووناکی بەکار بهێنرێت لە ئۆتۆمبێلدا وە بەکارهێنانی سنووردار کراوە بە؟", 
-        options: ["ئۆتۆمبێلەکانی فریاکەوتن و پۆلیس و هاتووچۆ و بەرگری شارستانی", "ئۆتۆمبێلی کرێ", "ئۆتۆمبێلی هەڵگری تابلۆی تۆماری بارهەڵگر"], 
-        answer: 0 
-    },
-    { 
-        q: " کاتێک بزوێنەری ئۆتۆمبێل گەرم دەبێت پێویستە چی بکەیت؟", 
-        options: ["نابێت بە هیچ شێوەیەک قەپاغی ئاوی ڕادیەتەر هەڵبگریت کاتێک بزوێنەرەکە گەرم داهاتبێت و ئاگاداربە ئاوی بۆ زیاد نەکەیت", "قەپاغی ئاوی ڕادیەتەر هەڵدەگریت و لێی دەگەڕێیت تا ئەو کاتەی بزوێنەرەکە سارد دەبێتەوە", "قەپاغی ئاوی ڕادیەتەر هەڵدەگریت و ئاوی بۆ زیاد دەکەیت تا سارد دەبێتەوە"], 
-        answer: 0 
-    },
-    { 
-        q: " ئایا دەکرێت لێخوڕین بکرێت ئەگەر منداڵ لە کوشنی پێشەوە دانیشتبوو یا لە باوەشی دایکی یان کەسێکی دیکە بوو؟", 
-        options: ["نەخێر بە هەموو شێوەیەک قەدەغەیە", "بەڵێ ئاساییە ئەگەر تەمەنی لە 2 ساڵ کەمتر بوو", "بەڵێ ئاساییە ئەگەر تەمەنی لە 5 ساڵ کەمتر بوو"], 
-        answer: 0 
-    },
-    { 
-        q: " دانیشتنی منداڵان و ئەوانەی تەمەنیان لە خوارووی 10 ساڵە بە چ شێوەیەک دەبێت؟", 
-        options: ["لە کوشینی دواوە و لە کورسی تایبەت بە دانیشتنی منداڵان", "لە سندوقی ئۆتۆمبێل", "لە باوەشی سەرنشینی پێشەوە"], 
-        answer: 0 
-    },
-    { 
-        q: " بەکارهێنانی لایتی ڕووناکی بەرز (فوول) لە چ کاتێک قەدەغەیە؟", 
-        options: ["لەو کاتانەی کە ئۆتۆمبێلێک بەرامبەرت دێت یان کە لە ئۆتۆمبێلەکەی پێشت زۆر نزیک دەبیتەوە وە ناو شار", "لە کاتی چوونە سەیران و گەشت", "لە ڕێگاکانی دەرەوەی شار"], 
-        answer: 0 
-    },
-    { 
-        q: " جێهێشتنی ماوەی سەلامەتی پێویست گرنگییەکەی زیاتر دەبێت ئەگەر شەقامەکە؟", 
-        options: ["تەڕ بوو وە لێخوڕین بە خێرا بوو لە ڕێگاکانی هاتووچۆی خێرا یان خۆڵاوی بوو", "قەرەباڵغ بوو", "چۆڵ بوو"], 
-        answer: 0 
-    },
-    { 
-        q: " هەڵگری مۆڵەتی شۆفێری گشتی مافی هەیە بە لێخوڕینی؟", 
-        options: ["هەموو جۆرەکانی ئۆتۆمبێل لە هەرێم جێگە لە ئامێرە بیناسازی و کشتوکاڵی و ماتۆڕسکیل", "تەنها کامیۆنەکان", "ماتۆڕ و ئۆتۆمبێلی گشتی بچووک"], 
-        answer: 0 
-    },
-    { 
-        q: " بەرزترین خێرایی ڕێگەپێدراو لە کاتی نزیکبوونەوە لە شوێنەکانی پەڕینەوەی پیادە و باخچەی ساوایان و قوتابخانە و فەرمانگەکانی میری بریتییە لە؟", 
-        options: ["30 کم / لە کاتژمێرێک", "70 کم / لە کاتژمێرێک", "50 کم / لە کاتژمێرێک"], 
-        answer: 0 
-    },
-    { 
-        q: " سزای کەسێک کە ڕێگە بدات ئۆتۆمبێلەکەی لە لایەن کەسێکی بێ مۆڵەت لێبخوردرێت بریتییە لە ؟", 
-        options: ["بەندکردن یان پێبژاردن (غەرامە) یا بە هەردوو سزاکە", "دەست بەسەرداگرتنی ئۆتۆمبێلەکە", "تەنیا ئاگادارکردنەوەی خاوەنەکەی"], 
-        answer: 0 
-    },
-    { 
-        q: " سزای سەرپێچی دانانی منداڵ لە باوەشی شۆفێر بریتییە لە ؟", 
-        options: ["پێبژاردن بە بڕی 40000 دینار", "لێسەندنەوەی مۆڵەتی لێخوڕین", "بەندکردن"], 
-        answer: 0 
-    },
-    { 
-        q: " لە کاتی هەڵچوونی ئاوی بزوێنەر بەرزبوونەوەی حەماوە پێویستە لەسەر شۆفێر؟", 
-        options: ["نەکوژاندنەوەی بزوێنەر و ساردکردنەوەی ڕادیەتەر بە پیاکردنی ئاو لە دەرەوە بۆ ماوەی 20 خولەک و پاشان کردنەوەی قەپاغی ڕادیەتەرەکە", "قەپاغی ڕادیەتەر هەڵدانەوە بۆ نەهێشتنی پاڵەپەستۆ", "کوژاندنەوەی دەستبەجێی بزوێنەر"], 
-        answer: 0 
-    },
-    { 
-        q: " چۆن پێویستە هەڵسوکەوت بکەیت کاتێک دەگەیتە کۆمەڵێک منداڵ کە خەریکی یاری فۆتپۆڵن لە سەر شەقام یا شۆستە؟", 
-        options: ["کەمکردنەوەی خێرایی وە لێخوڕین بە ئاگاییەکی تەواو ئامادەبە بۆ وەستان", "ئاگات لە تۆپەکە بێت کە بەر ئۆتۆمبێلەکە نەکەوێت", "بە هەمان خێرایی بڕۆیت نەوەک ببێتە هۆی دروستکردنی قەرەباڵغی لە دواوە"], 
-        answer: 0 
-    },
-    { 
-        q: " لە شەقامێکی جەنجاڵ وە قەرەباڵغ دەڕۆیت پێویستە چی بکەیت بۆئەوەی پشێوی دروست نەکەیت؟", 
-        options: ["هێشتنەوەی ماوەیەی سەلامەتی پێویست لەگەڵ ئۆتۆمبێلەکانی پێشەوە وە هەروەها نەگۆڕینی ڕێڕەو لەگەڵ بە ئاگابوونی تەواو", "ناچار کردنی شۆفێرانی تر بۆئەوەی ڕێگات بۆبکەنەوە وە لێیان تێپەڕیت بە هەرشێوەیەک بێت", "هەوڵی تێپەڕاندن دەدەم بە دەرچوون لە ڕێڕەو وە لێکرەتبوونی هەموو ئۆتۆمبێلەکان بە یەکجار"], 
-        answer: 0 
-    },
-    { 
-        q: " چۆن دەستنیشانی گەرمبوونی دیسکەکانی برێکی ئۆتۆمبێلەکەت دەکەیت؟", 
-        options: ["لە کەمبوونەوەی تواناکانی دیسکی برێک و دەرچوونی بۆنی سووتاوی", "لە هەڵبوونی گڵۆپی بزوێنەری ئۆتۆمبێل لە ناو تابلۆی داشبۆرد", "لە کەمبوونەوەی تواناکانی بزوێنەری ئۆتۆمبێلەکە"], 
-        answer: 0 
-    },
-    { 
-        q: " هۆکارەکانی زوو تێکچوونی تایەی ئۆتۆمبێل چییە؟", 
-        options: ["هەموو ئەوانەی کە باسکران", "لێخوڕین بە تایەی پاڵەپەستۆی هەوای نزم", "بەرزبوونەوەی پلەی گەرما و هەڵگرتنی باری زیاد"], 
-        answer: 0 
-    },
-    { 
-        q: " ژمارەی تەلەفۆنی فریاکەوتنی هاتووچۆ چەندە؟", 
-        options: ["188", "122", "104"], 
-        answer: 0 
-    },
-    { 
-        q: " دەکرێت مۆڵەتی لێخوڕینی ئۆتۆمبێل بە هاوڵاتیانی بیانی ببەخشرێت لە جۆری ؟", 
-        options: ["مۆڵەتی تایبەت و گشتی", "تەنها مۆڵەتی گشتی", "تەنها مۆڵەتی تایبەت"], 
-        answer: 0 
-    }
-    { q: "1- لەم وێنەیەدا ئۆتۆمبێلەکە بۆی هەیە لە ماتۆڕەکە تێپەڕێت؟", image: "images/1.jpg", options: ["بەڵێ لەبەر بوونی هێڵێکی سپی پچڕ پچڕ لەلای چەپی ئۆتۆمبێلەکە", "نەخێر", "نەخێر بەهۆی بوونی هێڵێکی پچڕپچڕ و یەکتری بەردەوام لە لای چەپی ئۆتۆمبێلەکە"], answer: 0 },
-    { q: "2- ئەم هێمایە چی دەگەیەنێت؟", image: "images/2.jpg", options: ["ئاگادارییە لە بوونی تاسەی دەستکرد", "ئاگادارییە لە مەترسی کەوتن", "ئاگادارییە لە هەڵخلیسکانی ئۆتۆمبێل"], answer: 0 },
-    { q: "3- ئەم هێمایە چی دەگەیەنێت؟", image: "images/3.jpg", options: ["ئاگادار بە پێشینە بۆ ڕێگای سەرەکییە دوو ڕێگای لاوەکی لێ دەبێتەوە بۆ لای ڕاست و چەپ", "ئاگادار بە ترافیکت لە پێشە", "شوێنی پەڕینەوەی پیادە"], answer: 0 },
-    { q: "4- هۆکارەکەی چییە ئۆتۆمبێلە شینەکە ناتوانێت لە ئۆتۆمبێلە سەوزەکەی پێشی تێپەڕێت؟", image: "images/4.jpg", options: ["بوونی هێڵێکی نەپچڕاو لە دیوی لای چەپی ئۆتۆمبێلە ڕەنگ شینەکە", "بوونی ئۆتۆمبێلێکی دیکە لە بەرامبەر", "دەتوانێت تێپەڕێت کێشەی نییە"], answer: 0 },
-    { q: "5- ئەم هێمایە چی دەگەیەنێت؟", image: "images/5.jpg", options: ["ئاگادار بە پێچکردنەوە بۆ لای چەپ", "ئاگادار بە لقی ڕاست", "ئاگادار بە لقی چەپ"], answer: 0 },
-    { q: "6- ئەم هێمایە چی دەگەیەنێت؟", image: "images/6.jpg", options: ["ئاگادارییە هێمای ترافیکت لە پێشتەوەیە بە پێی ئاماژەکانی بڕۆ", "وەستان قەدەغەیە", "ئاگادار بە شوێنی پەڕینەوەی پیادەت لە پێشە"], answer: 0 },
-    { q: "7- کام لەو دوو ئۆتۆمبێلانە سەرپێچکارن بە یاسا؟", image: "images/7.jpg", options: ["هەردووکیان", "ئۆتۆمبێلی ڕەنگ سەوز", "ئۆتۆمبێلی ڕەنگ شین"], answer: 0 },
-    { q: "8- ئەم هێمایە چی دەگەیەنێت؟", image: "images/8.jpg", options: ["ڕێگای سەرەکی پێشینەی هاتووچۆ پێشینە بۆ تۆیە", "بوەستە", "هاتنە ژوورەوە قەدەغەیە"], answer: 0 },
-    { q: "9- ئەم هێمایە چی دەگەیەنێت؟", image: "images/9.jpg", options: ["بوەستە لە یەکتربڕ وە ڕێگا بدە بە پێشینەی هاتووچۆ", "پێشینەی بە ئۆتۆمبێلەکانی پێشەوە بدە", "بوەستە بۆ چرای سووری ترافیک لایت"], answer: 0 },
-    { q: "10- ئەم هێمایە چی دەگەیەنێت؟", image: "images/10.jpg", options: ["تەنها دەتوانی بەم دوو ئاراستەیە بڕۆیت", "ڕێگایەکە داخراوە", "پێچکردنەوە قەدەغەیە"], answer: 0 },
-    { q: "11- لەم وێنەیەدا پێشینە بۆ کێیە؟", image: "images/11.jpg", options: ["ئۆتۆمبێلی B", "ئۆتۆمبێلی A", "هەردووکیان"], answer: 0 },
-    { q: "12- ئەم هێمایە چی دەگەیەنێت؟", image: "images/12.jpg", options: ["ئاگاداری ڕێگای هەڵخلیسکاو بە", "ئاگاداری تاوەری کارەبایت لە پێشە", "ئاگاداری مەترسی جۆراوجۆر بە"], answer: 0 },
-    { q: "13- ئەم هێمایە چی دەگەیەنێت؟", image: "images/13.jpg", options: ["دەچیتە گۆڕەپان بە ئاراستەی هێماکە بڕۆ بۆ سووڕانەوە", "بە ئاراستەی میلی کاتژمێر بڕۆ", "بەرەو پێشەوە بڕۆ"], answer: 0 },
-    { q: "14- لەم وێنەیەدا پێشینە بۆ کێیە؟", image: "images/14.jpg", options: ["ئۆتۆمبێلی B", "ئۆتۆمبێلی A", "هەردووکیان"], answer: 0 },
-    { q: "15- ئەم هێمایە چی دەگەیەنێت؟", image: "images/15.jpg", options: ["ئاگادار بە ڕێگاکە تەسک دەبێتەوە لە لای ڕاست", "ئاگادار بە ڕێگاکە تەسک دەبێتەوە لە لای چەپ", "ئاگاداری ڕێگای جووت ئاراستە بە"], answer: 0 },
-    { q: "16- ئەم هێمایە چی دەگەیەنێت؟", image: "images/16.jpg", options: ["سووڕانەوەی ئۆتۆمبێل بە ئاراستەی لای ڕاست", "سووڕانەوەی ئۆتۆمبێل بە ئاراستەی لای چەپ", "سووڕانەوەی ئۆتۆمبێل بە ئاراستەی پێچەوانە"], answer: 0 },
-    { q: "17- ئەم هێمایە چی دەگەیەنێت؟", image: "images/17.jpg", options: ["ئاگادارییە ڕێگاکە تەسک دەبێتەوە لە هەردوو لا", "ئاگاداری شوێنی پەڕینەوەی قوتابیانی قوتابخانە بە", "ئاگادارییە ڕێگاکە تەسک دەبێتەوە لە لای ڕاست"], answer: 0 },
-    { q: "18- ئەم هێمایە چی دەگەیەنێت؟", image: "images/18.jpg", options: ["لێکرەتبوون قەدەغەیە", "لێکرەتبوون قەدەغە نییە", "شوێنی پەڕینەوەی پیادەکان"], answer: 0 },
-    { q: "19- لەم وێنەیەدا پێشینە بۆ کێیە لە کاتی تێکەڵبوونەوەی دوو ڕێڕەوی ڕێگاکە بە بەردەوامنەبوونی هێڵی پچڕ پچڕ؟", image: "images/19.jpg", options: ["ئۆتۆمبێلی A", "ئۆتۆمبێلی B", "هەردووکیان"], answer: 0 },
-    { q: "20- ئەم هێمایە چی دەگەیەنێت؟", image: "images/20.jpg", options: ["ئاگادارییە ڕێگاکە تەسک دەبێتەوە لە لای چەپ", "ئاگادارییە ڕێگاکە تەسک دەبێتەوە لە لای ڕاست", "ئاگادارییە ڕێگاکە تەسک دەبێتەوە لە هەردوو لا"], answer: 0 },
-    { q: "21- ئەم هێمایە چی دەگەیەنێت؟", image: "images/21.jpg", options: ["لێکرەتبوون لای چەپ قەدەغەیە", "لێکرەتبوون ڕێگاپێدراوە لە کاتی پێویست", "قەدەغەیە لێکرەتبوون ئەنجام بدەیت"], answer: 0 },
-    { q: "22- ئەم هێمایە چی دەگەیەنێت؟", image: "images/22.jpg", options: ["ئاگاداری داڕمانی تاشەبەرد بە لە لای ڕاست", "ئاگاداری داڕمانی تاشەبەرد بە لە لای چەپ", "ئاگاداری داڕمانی تاشەبەرد بە لە هەردوو لا"], answer: 0 },
-    { q: "23- ئەم هێمایە چی دەگەیەنێت؟", image: "images/23.jpg", options: ["لێکرەتبوون بۆ ئۆتۆمبێلەکانی لای ڕاستی ڕێگا ڕێگاپێدراوە لە کاتی پێویست وە قەدەغەیە بۆ ئۆتۆمبێلەکانی لای چەپ", "لێکرەتبوون لە هەردوو ڕێگا قەدەغەیە", "لێکرەتبوون بۆ ئەو ئۆتۆمبێلانەی لە دیوی چەپی ڕێگاکە دەڕۆن ڕێگاپێدراوە"], answer: 0 },
-    { q: "24- لەم وێنەیەدا پێشینە بۆ کێیە لە کاتی یەکگرتنی دوو ڕێڕەوی ڕێگاکە بە بەردەوامبوونی هێڵی پچڕپچڕ؟", image: "images/24.jpg", options: ["ئۆتۆمبێلی A", "ئۆتۆمبێلی B", "هەردووکیان"], answer: 0 },
-    { q: "25- ئەم هێمایە چی دەگەیەنێت؟", image: "images/25.jpg", options: ["ئاگاداری بەربەست بە", "ئاگاداری مەترسی جۆراوجۆر بە", "ئاگاداری تاسەی دەستکرد بە لە پێشت"], answer: 0 },
-    { q: "26- ئەم هێمایە چی دەگەیەنێت؟", image: "images/26.jpg", options: ["ئاگادار بە لە پێشت تونێل هەیە", "چوونە ژوورەوە قەدەغەیە", "ئاگادارییە لە تاشەبەردی کەوتوو"], answer: 0 },
-    { q: "27- ئەم هێمایە چی دەگەیەنێت؟", image: "images/27.jpg", options: ["ئاگادارییە هێڵی شەمەندەفەرت لە پێشە", "ئاگادار بە بە درێژایی 100 م", "ئاگادار بە بە درێژایی 200 م"], answer: 0 },
-    { q: "28- کەمترین مەودا چەندە کە پێویستە لە نێوان دوو ئۆتۆمبێل هەبێت لە کاتی وەستان؟", image: "images/28.jpg", options: ["1 مەتر", "نیو مەتر", "2 مەتر"], answer: 0 },
-    { q: "29- ئەم هێمایە چی دەگەیەنێت؟", image: "images/29.jpg", options: ["ئاگادار بە یەکتربڕت لە پێشە", "ئاگادارییە ڕێگاکە تەسک دەبێتەوە لە هەردوو لا", "ئاگادارییە ڕێگاکە دوو ئاراستەیە"], answer: 0 },
-    { q: "30- ئەم هێمایە چی دەگەیەنێت؟", image: "images/30.jpg", options: ["لێکرەتبوون بۆ ئۆتۆمبێلەکانی لای چەپی ڕێگا ڕێگاپێدراوە لە کاتی پێویست", "لێکرەتبوون لە هەردوو لای ڕێگا قەدەغەیە", "لێکرەتبوون لە هەردوو لای ڕێگا قەدەغە نییە"], answer: 0 },
-    { q: "31- ئەم هێمایە چی دەگەیەنێت؟", image: "images/31.jpg", options: ["ئاگادارییە ڕێگاکە کۆنترۆڵ کراوە بە کامێرای چاودێری خێرایی", "ئاگادار بە لە تەنیشتە با", "ئاگادارییە وێنەگرتن قەدەغەیە"], answer: 0 },
-    { q: "32- ئەم هێمایە چی دەگەیەنێت؟", image: "images/32.jpg", options: ["ڕێگای تایبەت بە لێخوڕینی پایسکل", "ئاگادارییە لە شەقامەکە پایسکل سوار بوونی هەیە", "لێخوڕینی پایسکل قەدەغەیە"], answer: 0 },
-    { q: "33- ئەم هێمایە چی دەگەیەنێت؟", image: "images/33.jpg", options: ["ئاگادار بە دوورییەکی گونجاو جێبهێڵە لە نێوان ئۆتۆمبێلەکەت لەگەڵ ئەو ئۆتۆمبێلەی لە پێشتە", "پێشینەی هاتووچۆ بۆ لای تۆیە", "مانۆڕی تێپەڕاندن لە ئۆتۆمبێلەکانی پێش خۆت قەدەغەیە"], answer: 0 },
-    { q: "34- ئەم هێمایە چی دەگەیەنێت؟", image: "images/34.jpg", options: ["تێپەڕبوون قەدەغەیە لە هەردوو ئاراستەکە، وە ڕۆیشتن لەسەر هێڵە سپییەکانی ناوەندە شەقامەکە قەدەغەیە", "سووڕانەوە قەدەغەیە", "شوێنی پەڕینەوەی پیادە"], answer: 0 },
-    { q: "35- مەودای دروست چەندە بۆ وەستانی ئۆتۆمبێل لە نزیک وێستگەی پاسەکان؟", image: "images/35.jpg", options: ["20 مەتر پێش و 10 مەتر لە دوای وێستگەی وەستانی پاسەکان", "وەستان لە وێستگەی پاسەکان بۆ ماوەی 3 خولەک ئاساییە", "15 مەتر پێش و 10 مەتر پاش وێستگەی پاسەکان"], answer: 0 },
-    { q: "36- ئەم هێمایە چی دەگەیەنێت؟", image: "images/36.jpg", options: ["کۆتایی قەدەغەبوونی ئەنجامدانی مانۆڕی تێپەڕاندن لە گشت جۆری ئۆتۆمبێلەکان", "کۆتایی قەدەغەبوونی ئەنجامدانی تێپەڕاندن لە ئۆتۆمبێلی بچووک", "کۆتاییەکی دیاریکراو"], answer: 0 },
-    { q: "37- ئەم هێمایە چی دەگەیەنێت؟", image: "images/37.jpg", options: ["سەرەتای بەیەکەوەلکانی دوو ڕێگا و قەدەغەبوونی ڕۆیشتن لەسەر ناوەندە شۆستە", "شوێنی پەڕینەوەی پیادە", "لێکرەتبوون قەدەغەیە"], answer: 0 },
-    { q: "38- ئەم هێمایە چی دەگەیەنێت؟", image: "images/38.jpg", options: ["مانۆڕی تێپەڕاندن قەدەغەیە بۆ بارهەڵگرەکان", "کۆتایی قەدەغەبوونی تێپەڕاندنی بارهەڵگرەکان", "هاتووچۆ کردنی ئەو ئۆتۆمبێلانەی کە درێژییەکەیان لە 10 مەتر زیاترە قەدەغەیە"], answer: 0 },
-    { q: "39- ئەم هێمایە چی دەگەیەنێت؟", image: "images/39.jpg", options: ["کۆتایی بەیەکەوەلکانی دوو ڕێگا و قەدەغەبوونی ڕۆیشتن لەسەر ناوەندە شۆستە", "سەرەتای بەیەکەوەلکانی دوو ڕێگا و قەدەغەبوونی ڕۆیشتن لەسەر ناوەندە شۆستە", "لێکرەتبوون قەدەغەیە"], answer: 0 },
-    { q: "40- ئەم هێمایە چی دەگەیەنێت؟", image: "images/40.jpg", options: ["کۆتایی هاتنی قەدەغەبوونی مانۆڕی تێپەڕاندن بۆ بارهەڵگرەکان", "مانۆڕی تێپەڕاندن قەدەغەیە بۆ بارهەڵگرەکان", "کۆتایی قەدەغەبوونی تێپەڕاندن بۆ گشت جۆری ئۆتۆمبێلەکان"], answer: 0 },
-    { q: "41- ئەم هێمایە چی دەگەیەنێت؟", image: "images/41.jpg", options: ["ڕێگای خێرا", "کۆتایی ڕێگای خێرا", "ڕێگایەکی داخراو"], answer: 0 },
-    { q: "42- مەودای دروست چەندە بۆ وەستانی ئۆتۆمبێل لە نزیک هێڵی پەڕینەوەی پیادە؟", image: "images/42.jpg", options: ["20 مەتر پێش و 10 مەتر دوای هێڵی پەڕینەوە", "مەودا گرنگ نییە گرنگ ئەوەیە لەسەر هێڵ نەوەستیت", "5 مەتر پێش و 5 مەتر دوای هێڵی پەڕینەوە"], answer: 0 },
-    { q: "43- ئەم هێمایە چی دەگەیەنێت؟", image: "images/43.jpg", options: ["کۆتایی ڕێگای خێرا", "ڕێگایەکی داخراو", "ڕێگای خێرا"], answer: 0 },
-    { q: "44- ئەم هێمایە چی دەگەیەنێت؟", image: "images/44.jpg", options: ["هاتووچۆ کردنی گشت جۆری ئۆتۆمبێلەکان قەدەغەیە", "هاتووچۆ کردنی ئۆتۆمبێلی بچووک و ماتۆڕسکیل قەدەغەیە", "هاتووچۆ کردنی ئۆتۆمبێلی بچووک و ماتۆڕسکیل قەدەغە نییە"], answer: 0 },
-    { q: "45- ئەم هێمایە چی دەگەیەنێت؟", image: "images/45.jpg", options: ["وێستگەی سووتەمەنی", "بنکەی چاککردنەوە", "شوێنی وەستانی ئۆتۆمبێل"], answer: 0 },
-    { q: "46- کاتێک ئۆتۆمبێلەکەت پەکی دەکەوێت لە دووری چەند سێگۆشەی فۆسفۆر دادەنێیت؟", image: "images/46.jpg", options: ["لە ناو شار 50 مەتر وە لە دەرەوەی شار 100 تا 150 مەتر بە گوێرەی خێرایی شەقامەکە", "لە ناو شار 100 مەتر دوور لە ئۆتۆمبێلەکەوە", "پێویست ناکا دابنرێت"], answer: 0 },
-    { q: "47- ئەم هێمایە چی دەگەیەنێت؟", image: "images/47.jpg", options: ["میوانخانە", "نەخۆشخانە", "خواردنگە"], answer: 0 },
-    { q: "48- ئەم هێمایە چی دەگەیەنێت؟", image: "images/48.jpg", options: ["بنکەی گومرگە بوەستە", "هاتووچۆ کردن قەدەغەیە بە هەردوو ئاراستە", "وەستان قەدەغەیە"], answer: 0 },
-    { q: "49- ئەم هێمایە چی دەگەیەنێت؟", image: "images/49.jpg", options: ["ڕێگایەکی یەک ئاراستە", "ڕێگاکە داخراوە", "کۆتایی ڕێگای خێرایی"], answer: 0 },
-    { q: "50- ئەم هێمایە چی دەگەیەنێت؟", image: "images/50.jpg", options: ["ئاگادار بە قوتابخانەت لە پێشە", "شوێنی پەڕینەوەی پیادە", "شوێنی وەستانی خاوەن پێداویستی تایبەت"], answer: 0 },
-    { q: "51- ئەم هێمایە چی دەگەیەنێت؟", image: "images/51.jpg", options: ["بەرزترین خێرایی ڕێگەپێدراو بۆ ئۆتۆمبێلە بچووکەکان 100 کم لە کاتژمێرێک، وە بۆ بارهەڵگر 80 کم", "بەرزترین خێرایی ڕێگەپێدراو بۆ ئۆتۆمبێلە بچووکەکان 80 کم لە کاتژمێرێک", "بەرزترین ڕێژەی دیاریکراو بۆ خێرایی"], answer: 0 },
-    { q: "52- بە مۆڵەتی تایبەت دەتوانیت ئۆتۆمبێلی جۆری پێک ئاپ دەبڵ کابینە لێبخوڕیت؟", image: "images/52.jpg", options: ["بەڵێ دەتوانیت بەو مەرجەی کاری کرێی پێ نەکەیت و لەتۆمار بۆ گواستنەوەی تایبەت بێت", "نەخێر مۆڵەتی تایبەت تەنها ئۆتۆمبێلی جۆری تایبەتی پێ لێ دەخوڕێت", "بەڵێ بە بێ مەرج"], answer: 0 },
-    { q: "53- ئەم هێمایە چی دەگەیەنێت؟", image: "images/53.jpg", options: ["شوێنی پەڕینەوەی پیادە", "شوێنی قەپانی ئۆتۆمبێلی گەورە", "نەخۆشخانە"], answer: 0 },
-    { q: "54- ئەم هێمایە چی دەگەیەنێت؟", image: "images/54.jpg", options: ["هاتنە ژوورەوە قەدەغەیە", "وەستان زیاتر لە 5 خولەک قەدەغەیە", "وەستان و چاوەڕێ کردن قەدەغەیە"], answer: 0 },
-    { q: "55- ئەم هێمایە چی دەگەیەنێت؟", image: "images/55.jpg", options: ["شوێنی وەستانی خاوەن پێداویستی تایبەت", "نەخۆشخانە", "شوێنی پەڕینەوەی پیادە"], answer: 0 },
-    { q: "56- ئەم هێمایە چی دەگەیەنێت؟", image: "images/56.jpg", options: ["شوێنی وەستانی پاسەکان", "شوێنی وەستانی ئۆتۆمبێلی تایبەت و تەکسی", "شوێنی وەستانی تەکسی"], answer: 0 },
-    { q: "57- ئایا ڕێگەپێدراوە تابلۆی ژمارە یان جامی ئۆتۆمبێل بە ئاڵا یان وێنە دابپۆشرێت؟", image: "images/57.jpg", options: ["نەخێر قەدەغەیە بە هیچ جۆرێک نابێت تابڵۆ و جام دابپۆشرێت", "بەڵێ بە مەرجێک ئاڵای کوردستان بێت", "تەنها داپۆشینی جامەکان قەدەغەیە"], answer: 0 },
-    { q: "58- ئەم هێمایە چی دەگەیەنێت؟", image: "images/58.jpg", options: ["وەستان و چاوەڕێ کردن قەدەغەیە", "وەستان زیاتر لە 5 خولەک قەدەغەیە", "هاتنە ژوورەوە قەدەغەیە"], answer: 0 },
-    { q: "59- ئەم هێمایە چی دەگەیەنێت؟", image: "images/59.jpg", options: ["ئاگادارییە لە نزم فڕینی فڕۆکەکان لەم ناوچەیە", "ئاگادار بە هێڵی شەمەندەفەرت لە پێشە", "ئاگادارییە لە پەڕینەوەی لە ناکاوی ئاژەڵی کێوی"], answer: 0 },
-    { q: "60- ئەم هێمایە چی دەگەیەنێت؟", image: "images/60.jpg", options: ["سووڕانەوە بۆ لای چەپ قەدەغەیە", "سووڕانەوە بە لای ڕاست قەدەغەیە", "چوونە ژوورەوە قەدەغەیە"], answer: 0 },
-    { q: "61- ئەم هێمایە چی دەگەیەنێت؟", image: "images/61.jpg", options: ["ئاگادارییە پردت لە پێشە", "وەستان قەدەغەیە", "ئاگادارییە ڕێگاکە تەسک دەبێتەوە لە هەردوو لا"], answer: 0 },
-    { q: "62- بە پێی یاسا کێ بۆی هەیە ئۆتۆمبێلەکان ڕابگرێت لە شەقام بۆ پشکنینی مەرجەکانی توند و تۆڵی؟", image: "images/62.jpg", options: ["پۆلیسی هاتووچۆ", "ڕێپێدراوی هاتووچۆ", "ئەفسەری هاتووچۆ"], answer: 0 },
-    { q: "63- ئەم هێمایە چی دەگەیەنێت؟", image: "images/63.jpg", options: ["سووڕانەوە بۆ ئاراستەی پێچەوانە قەدەغەیە", "سووڕانەوە بۆ لای ڕاست قەدەغەیە", "سووڕانەوە بۆ لای چەپ قەدەغەیە"], answer: 0 },
-    { q: "64- ئەم هێمایە چی دەگەیەنێت؟", image: "images/64.jpg", options: ["پێچکردن قەدەغەیە", "وەستان قەدەغەیە", "چوونە ژوورەوە قەدەغەیە"], answer: 0 },
-    { q: "65- ئەم هێمایە چی دەگەیەنێت؟", image: "images/65.jpg", options: ["هاتووچۆ کردنی ئەو ئۆتۆمبێلانەی کە درێژییەکەیان لە 10 مەتر زیاترە قەدەغەیە", "هاتووچۆ کردنی ئەو ئۆتۆمبێلانەی کە درێژییەکەیان لە 10 مەتر زیاترە قەدەغە نییە", "هاتووچۆ کردنی ئەو ئۆتۆمبێلانەی بارەکەیان لە 10 تەن قەدەغەیە"], answer: 0 },
-    { q: "66- ئەم هێمایە چی دەگەیەنێت؟", image: "images/66.jpg", options: ["هاتووچۆ کردنی ئەو ئۆتۆمبێلانەی کە پانییەکەیان لە 2.5 مەتر زیاترە قەدەغەیە", "هاتووچۆ کردنی ئەو ئۆتۆمبێلانەی کە بەرزییەکەیان لە 2.5 مەتر زیاترە قەدەغەیە", "هاتووچۆ کردنی ئەو ئۆتۆمبێلانەی کە درێژییەکەیان لە 2.5 مەتر زیاترە قەدەغەیە"], answer: 0 },
-    { q: "67- شۆفێری بێ مۆڵەت سزا دەدرێت بە؟", image: "images/67.jpg", options: ["بەندکردن و پێبژاردن", "بەند کردن", "پێبژاردن"], answer: 0 },
-    { q: "68- ئەم هێمایە چی دەگەیەنێت؟", image: "images/68.jpg", options: ["هاتووچۆ کردنی ئەو بارهەڵگرانەی کە بەرزیان زیاترە لە 3.5 مەتر قەدەغەیە", "هاتووچۆ کردنی ئەو بارهەڵگرانەی کە بەرزیان زیاترە لە 3.5 مەتر قەدەغە نییە", "هاتووچۆ کردنی بارهەڵگر قەدەغەیە"], answer: 0 },
-    { q: "69- ئەم هێمایە چی دەگەیەنێت؟", image: "images/69.jpg", options: ["بەکار‌هێنانی ئامێری ئاگادارکردنەوە (هۆڕن) قەدەغەیە", "کۆتایی قەدەغەبوونی بەکارهێنانی ئامێری ئاگادارکردنەوە (هۆڕن)", "بەکارهێنانی ئامێری ئاگادارکردنەوە (هۆڕن) قەدەغە نییە"], answer: 0 },
-    { q: "70- لێخوڕینی ئۆتۆمبێل لە ژێر کاریگەری مەی و ماددەی هۆشبەر و سەرخۆشکەرەکان؟", image: "images/70.jpg", options: ["تاوانە و مەترسیدارە", "مەترسیدارە", "ئاساییە"], answer: 0 },
-    { q: "71- ئەم هێمایە چی دەگەیەنێت؟", image: "images/71.jpg", options: ["وێنەگرتن قەدەغەیە", "وێنەگرتن قەدەغە نییە", "وێنەگرتن ڕێگەپێدراوە بۆ گەشتیار"], answer: 0 },
-    { q: "72- ئەم هێمایە چی دەگەیەنێت؟", image: "images/72.jpg", options: ["کۆتایی ڕێگای پێشینەی هاتووچۆ (کۆتایی پێشینە)", "ڕێگای سەرەکی پێشینەی هاتووچۆ پێشینە بۆ تۆ نییە", "ڕێگای سەرەکی پێشینەی هاتووچۆ پێشینە بۆ تۆیە"], answer: 0 },
-    { q: "73- ئەم هێمایە چی دەگەیەنێت؟", image: "images/73.jpg", options: ["ئاگادار بە ڕێگای پێچاوپێچت لە پێشە بە یەکەمیان بۆ لای چەپ", "ئاگادار بە ڕێگای پێچاوپێچت لە پێشە بە یەکەمیان بۆ لای ڕاست", "ئاگادار بە پێچکردنەوەت لە پێشە بۆ هەردوو لا"], answer: 0 },
-    { q: "74- لەم وێنەیەدا ئەو ئۆتۆمبێلە سپییە لەم شوێنە پارکی کردووە ئایا ئاساییە؟", image: "images/74.jpg", options: ["دەتوانیت لێرە پارک بکەیت", "قەدەغەیە لێرە پارک بکەیت", "پەڕینەوەی پیادە قەدەغەیە"], answer: 0 },
-    { q: "75- ئەم هێمایە چی دەگەیەنێت؟", image: "images/75.jpg", options: ["ئاگادار بە ڕێگای پێچاوپێچت لە پێشە بە یەکەمیان بۆ لای ڕاست", "ئاگادار بە ڕێگای پێچاوپێچت لە پێشە بە یەکەمیان بۆ لای چەپ", "ئاگادار بە ڕێگای پێچاوپێچت لە پێشە بۆ هەردوو لا"], answer: 0 },
-    { q: "76- ئەم هێمایە چی دەگەیەنێت؟", image: "images/76.jpg", options: ["شوێنی چاککردنەوە", "وێستگەی بەنزینخانە", "شوێنی وەستان"], answer: 0 },
-    { q: "77- ئەم هێمایە چی دەگەیەنێت؟", image: "images/77.jpg", options: ["پێشینە بۆ تۆیە", "پێشینەی بۆ تۆ نییە", "تەنها دەبێت ڕاستەوڕاست بڕۆیت"], answer: 0 },
-    { q: "78- لە دۆخێکی ئاوا هەر وەک لە وێنەکەدا دیارە لێخوڕین دەکەیت ڕێگاکە تەسک و پێچاوپێچە و بەفرە تۆ پێویستە چی بکەیت؟", image: "images/78.jpg", options: ["نەرمە برێک دەکەم و خێرایی زۆر کەم دەکەمەوە", "خێراییم زیاد دەکەم بۆ زوو دەرباز بوون لە شوێنەکە", "بە هەمان خێرایی پێشووم لێدەخوڕم"], answer: 0 },
-    { q: "79- ئەم هێمایە چی دەگەیەنێت؟", image: "images/79.jpg", options: ["هاتووچۆ کردنی ئۆتۆمبێلی بارهەڵگری گەورە قەدەغەیە (تریلە)", "هاتووچۆ کردنی ئۆتۆمبێلی بارهەڵگری گەورە قەدەغە نییە (تریلە)", "وەستانی ئۆتۆمبێلی گەورە قەدەغەیە"], answer: 0 },
-    { q: "80- ئەم هێمایە چی دەگەیەنێت؟", image: "images/80.jpg", options: ["هاتووچۆ کردنی تراکتۆر قەدەغەیە", "ڕێگای تایبەتکراوە بە هاتووچۆ کردنی تراکتۆر", "لە پێشت ڕێگای هاتووچۆ کردنی تراکتۆر هەیە"], answer: 0 },
-    { q: "81- کەسێک کە هیچ شارەزای لێخوڕینی ئۆتۆمبێل نییە دەبێت؟", image: "images/81.jpg", options: ["لە گۆڕەپانی داخراو فێر بکرێت", "لە نزیک قوتابخانە فێر بکرێت", "لە ناوچەکانی نیشتەجێ بوون و یاریکردنی منداڵان فێر بکرێت"], answer: 0 },
-    { q: "82- ئەم هێمایە چی دەگەیەنێت؟", image: "images/82.jpg", options: ["سەرەتای ڕێگای خێرا", "ڕێگاکە یەک ئاراستەیە", "کۆتایی ڕێگاکە داخراوە"], answer: 0 },
-    { q: "83- ئەم هێمایە چی دەگەیەنێت؟", image: "images/83.jpg", options: ["هاتووچۆ کردن قەدەغەیە لە هەردوو ئاراستە", "چوونە ژوورەوە قەدەغەیە", "هاتووچۆ کردنی ئۆتۆمبێلی بچووک قەدەغەیە"], answer: 0 },
-    { q: "84- ئەم هێمایە چی دەگەیەنێت؟", image: "images/84.jpg", options: ["بوەستە و ڕێگا بەو ئۆتۆمبێلانە بدە کە پێشینەیان هەیە بۆ ڕۆیشتن", "ڕێگای سەرەکی پێشینەیی (پێشینە بۆ تۆیە)", "ئاگادارییە لە ڕەتبوونی ئۆتۆمبێلەکانی ئاراستەی بەرامبەر"], answer: 0 },
-    { q: "85- ئەم هێمایە چی دەگەیەنێت؟", image: "images/85.jpg", options: ["ئاگادارییە لە پێشت نشێوێکی مەترسیدار هەیە بە پلەی 12%", "ئاگادار بە لە پێشت هەورازێکی تیژ هەیە بە پلەی 12%", "ئاگادارییە تاسەت لە پێشە بە پلەی 12%"], answer: 0 },
-    { q: "86- لەم وێنەیەدا چی تێ دەگەیت لە بارێک کە هێماکانی هاتووچۆی لێنییە؟", image: "images/86.jpg", options: ["وریا و بەئاگابە، ناوچەی دانیشتوانی چڕە", "شەقامی کشتوکاڵی", "شوێنی حەوانەوە"], answer: 0 },
-    { q: "87- لەم وێنەیەدا چی تێ دەگەیت لە بارێک کە هێماکانی هاتووچۆی لێنییە؟", image: "images/87.jpg", options: ["گەڕەکی نیشتەجێ وریا و بەئاگابە", "شەقامی کشتوکاڵی", "گەڕەکێکی قەرەباڵغی دانیشتوان"], answer: 0 },
-    { q: "88- بە خێرایی 80 کم / لە کاتژمێرێک لێدەخوڕیت تازە بەفر باریوە پێویستە چ کارێک بکەیت؟", image: "images/88.jpg", options: ["نەرمە برێک دەگرم و خێراییەکەم کەم دەکەمەوە", "بە هەمان خێرایی بەردەوام دەبم", "خێراییەکەم بەرز دەکەمەوە"], answer: 0 },
-    { q: "89- پێشینە بۆ کێیە لەم وێنەیەدا؟", image: "images/89.jpg", options: ["ئۆتۆمبێلی ڕەنگ سپی چونکە ڕاست دەڕوات", "ئۆتۆمبێلی ڕەنگ سوور", "هەردووکیان"], answer: 0 },
-    { q: "90- پێشینە بۆ کێیە لەم وێنەیەدا؟", image: "images/90.jpg", options: ["ئۆتۆمبێلی ڕەنگ سوور چونکە ڕاست دەڕوات", "ئۆتۆمبێلی ڕەنگ سپی", "هەردووکیان"], answer: 0 },
-    { q: "91- پێشینە بۆ کێیە لەم وێنەیەدا؟", image: "images/91.jpg", options: ["ئۆتۆمبێلی ڕەنگ سپی چونکە لە شەقامی سەرەکی دەڕوات", "ئۆتۆمبێلی ڕەنگ سوور کە لە وێستگەی سووتەمەنی دەردەچێت", "هەردووکیان"], answer: 0 },
-    { q: "92- لەم وێنەیەدا پێویستە لە چی وریا بیت؟", image: "images/92.jpg", options: ["دەوروبەری ڕێگاکە", "کامێراکانی چاودێری خێرایی", "مۆبایل"], answer: 0 },
-    { q: "93- لە کاتی مەشقی فێرکردنی شۆفێری هەر سەرپێچییەکی هاتووچۆ ڕووبدات؟", image: "images/93.jpg", options: ["ڕاهێنەر لێی بەرپرسە", "فێرخواز لێی بەرپرسە", "هیچ کامیان لێی بەرپرس نین"], answer: 0 },
-    { q: "94- پێشینە بۆ کێیە لەم وێنەیەدا؟", image: "images/94.jpg", options: ["پیادەکان چونکە پێیان ناوەتە سەر شەقام لە شوێنی پەڕینەوە", "ئۆتۆمبێلی ڕەنگ سپی", "پێشینە نییە"], answer: 0 },
-    { q: "95- کەی دەبێت ئاوێنەکانی ئۆتۆمبێل ڕێک بخرێن؟", image: "images/95.jpg", options: ["بەر لە لێخوڕینی ئۆتۆمبێل دەبێت هەر سێ ئاوێنەکە ڕێک بخرێن", "لە کاتی شۆفێری کردن", "لە هەر کاتێک بێت ئاساییە ئاوێنەکان ڕێک بخرێن"], answer: 0 },
-    { q: "96- ئەم هێمایە چی دەگەیەنێت؟", image: "images/96.jpg", options: ["ئاگادار بە لە پێشت هەورازێکی تیژ بە پلەی 12%", "ئاگادارییە لە پێشت نشێوێکی مەترسیدار هەیە بە پلەی 12%", "ئاگادار بە تاسەت لە پێشە بە پلەی 12%"], answer: 0 },
-    { q: "97- چۆن هەڵسوکەوت دەکەیت لە کاتی بینینت بۆ ئەو دیمەنەی کە لە وێنەکە دیارە؟", image: "images/97.jpg", options: ["وریا بە و خێراییت کەم بکەوە", "خێراییت زیاد بکە و لێی تێپەڕە", "بەردەوام بە لە ڕۆیشتن بە پێی خێرایی دەستنیشانکراوی شەقام"], answer: 0 },
-    { q: "98- ئەم هێمایە چی دەگەیەنێت؟", image: "images/98.jpg", options: ["ئاگادار بە لە داڕمانی تاشەبەرد لە لای ڕاستی ڕێگا", "ئاگادارییە لە وردە بەردی بڵاوە بوو لە سەر ڕووی ڕێگا", "ئاگادارییە لە هەڵخلیسکان"], answer: 0 },
-    { q: "99- لەم وێنەیەدا پێشینە بۆ کێیە؟", image: "images/99.jpg", options: ["ئۆتۆمبێلی ڕەنگ سەوز چونکە لە لای ڕاست هاتووە", "ئۆتۆمبێلی ڕەنگ سپی", "پێشینە نییە"], answer: 0 },
-    { q: "100- ئەم هێمایە چی دەگەیەنێت؟", image: "images/100.jpg", options: ["ئاگادارییە کاری چاککردنەوەی ڕێگات لە پێشە", "ئاگادارییە لە هەڵخلیسکان", "ئاگادار بە نشێوێکی مەترسیدارت لە پێشە"], answer: 0 },
-    { q: "101- لەم وێنەیەدا پێشینە بۆ کێیە؟", image: "images/101.jpg", options: ["ئۆتۆمبێلی ڕەنگ سوور چونکە لە شەقامی سەرەکییە و ڕاست دەڕوات", "ئۆتۆمبێلی ڕەنگ سپی چونکە پێچ دەکاتەوە", "پێشینە نییە"], answer: 0 },
-    { q: "102- ئەم هێمایە چی دەگەیەنێت؟", image: "images/102.jpg", options: ["ئاگادار بە لە پێشەوە ڕێگایەکی لاوەکی هەیە بۆ لای چەپ", "ئاگادار بە چەند پێچێک هەیە لە پێشت کە یەکەمیان بۆ لای چەپە", "ئاگادار بە لە پێشت پێچکردنەوە هەیە بۆ لای چەپ"], answer: 0 },
-    { q: "103- لەم وێنەیەدا ئۆتۆمبێلی ڕەنگ شین بە نیازیە لەم شوێنە پێچ بکاتەوە ئایا ڕەفتارەکەی دروستە؟", image: "images/103.jpg", options: ["نەخێر دروست نییە چونکە هێمای نەخشێنراوی سەر شەقامەکە ڕێگەی پێ نادات", "بەڵێ دروستە چونکە ئاماژەی پێچکردنەوەی هەڵکردووە", "بەڵێ دروستە چونکە لە ئاراستەی بەرامبەری شەقام هیچ ئۆتۆمبێلێکی نەهاتووە"], answer: 0 },
-    { q: "104- ئەو هێمایە چی دەگەیەنێت؟", image: "images/104.jpg", options: ["بەرزترین خێرایی ڕێگاپێدراو 60 کم لە کاتژمێرێکدا", "هاتووچۆ کردنی بارهەڵگر کە کێشی لە 60 تەن زیاتر بێت قەدەغەیە", "دەتوانیت لە خێرایی 60 کم لە کاتژمێرێک بەرەو سەرەوە لێبخوڕیت"], answer: 0 },
-    { q: "105- لەم وێنەیەدا پێشینە بۆ کێیە؟", image: "images/105.jpg", options: ["پیادەکانی سەر شۆستە", "ئۆتۆمبێلی ڕەنگ سپی", "پێشینە نییە"], answer: 0 },
-    { q: "106- ئەو هێمایە چی دەگەیەنێت؟", image: "images/106.jpg", options: ["هاتووچۆ کردنی ئەو بارهەڵگرانەی کە درێژیان لە 10 مەتر زیاترە قەدەغەیە", "هاتووچۆ کردنی ئەو بارهەڵگرانەی کە پانیان لە 10 مەتر زیاترە قەدەغەیە", "هاتووچۆ کردنی بارهەڵگرەکان قەدەغەیە"], answer: 0 },
-    { q: "107- تۆ شۆفێری دەکەیت و ئەو هێمایە بەرەو ڕووت دەبینیت پێویستە چی بکەیت؟", image: "images/107.jpg", options: ["جێهێشتنی مەودایی سەلامەتی لە نێوان ئۆتۆمبێلەکەم و ئۆتۆمبێلی پێشەوە بە دووری کەمتر نەبێت لە 70 مەتر", "لێبخوڕم بە خێرایی 70 کم لە کاتژمێرێک", "ئاگادار بم چونکە نشێوێکی تیژ لە پێشم هەیە"], answer: 0 },
-    { q: "108- ئەو هێمایە چی دەگەیەنێت؟", image: "images/108.jpg", options: ["هاتووچۆی ئەو ئۆتۆمبێلانەی کە قورسایی باریان لە دوو تەن زیاترە قەدەغەیە", "هاتووچۆی ئەو ئۆتۆمبێلانەی کە پانیان لە دوو مەتر زیاترە قەدەغەیە", "هاتووچۆی ئەو ئۆتۆمبێلانەی کە قورسایی باریان لە دوو تەن زیاترە ڕێگەپێدراوە"], answer: 0 },
-    { q: "109- ئەم هێمایە چی دەگەیەنێت؟", image: "images/109.jpg", options: ["ئاگادارییە لە پێشت ناوچەی پەڕینەوەی منداڵانی قوتابخانە هەیە", "ئاگادارییە لە پێشت کار کردن هەیە لەسەر ڕێگا", "ئاگادارییە لە مەترسی هەمەجۆر و فرە سەرچاوە"], answer: 0 },
-    { q: "110- ئایا دەکرێت ئۆتۆمبێلی ڕەنگ سپی بە بەگ بگەڕێتەوە لەم وێنەیەدا؟", image: "images/110.jpg", options: ["ناتوانێت", "دەتوانێت", "دەتوانێت بە هەڵکردنی لایتی بەگ لێدان"], answer: 0 },
-    { q: "111- ئەم هێمایە چی دەگەیەنێت؟", image: "images/111.jpg", options: ["ئاگادارییە ڕێگا کە بە ناوچە کشتوکاڵییەکان تێدەپەڕێت و ئەگەری بوونی ئاژەڵی ماڵی لە ئارادایە", "ئاگادارییە لە ئاژەڵی کێوی", "ئاگادارییە لە ئەسپ سوارەکان"], answer: 0 },
-    { q: "112- لە کاتی بوونی هێڵی سپی نەپچڕاوی بۆیە کراو بە درێژای ڕووی ڕێگا پێویستە چی ڕەچاو بکەیت؟", image: "images/112.jpg", options: ["مانۆڕی لێکرەتبوون ئەنجام نەدەیت لەگەڵ ئۆتۆمبێلەکانی پێشخۆت و بەسەر هێڵەکە نەکەویت", "ئەنجام دانی مانۆڕی لێکرەتبوون ئەگەر هاتوو جووڵەی هاتووچۆی ئاراستەی بەرامبەرت ڕێگای پێدایت", "تەنها لە کاتی لێکرەتبوون بۆت هەیە بەسەری بکەویت"], answer: 0 },
-    { q: "113- شێوازی دروست بۆ گرتنی سوکانی ئۆتۆمبێل چۆنە؟", image: "images/113.jpg", options: ["گرتنی سوکان بە هەردوو دەست لە شێوەی کاتژمێر دە و دە خولەک", "گرتنی سوکان تەنها بە دەستی ڕاست", "گرتنی سوکان بە هەردوو دەست لە شێوەی کاتژمێر هەشت و بیست خولەک"], answer: 0 },
-    { q: "114- لەم وێنەیەدا پێشینە بۆ کێیە؟", image: "images/114.jpg", options: ["ئۆتۆمبێلی B چونکە لە لای ڕاستەوە دێت", "هەر کامیان نزیکتر بێت لە چواڕیانەکە", "ئۆتۆمبێلی A"], answer: 0 },
-    { q: "115- لەم وێنەیەدا ئۆتۆمبێلی شینەکە قەدەغەیە مانۆڕی لێکرەتبوون ئەنجام بدات چونکە؟", image: "images/115.jpg", options: ["بوونی هێڵێکی سپی نەپچڕاو لە دیوی لای ئەو بە درێژایی ڕێگاکە", "خێراییەکەی کەمە", "شۆفێرەکەی لێهاتوو کارامە نییە"], answer: 0 },
-    { q: "116- لە ڕێگایەک دەڕۆیشتی وە پۆلیسی هاتووچۆ ئاماژەی پێدایت کە بە ئاراستەیەکی پێچەوانەی شەقامەکە بڕۆیت چی دەکەیت؟", image: "images/116.jpg", options: ["بە پێی ئاماژەکانی پۆلیسەکە دەڕۆم ئەگەر بە پێچەوانەی ڕێساکانی هاتووچۆ و هێماکانی سەر شەقامیش بێت", "بە پێی ئاماژەکانی پۆلیسەکە ناڕۆم چونکە ڕێنمایکردنی بە پێچەوانەی ئاراستەی شەقامەکەیە", "لە شوێنی خۆم دەوەستم و ناجموڵێم"], answer: 0 },
-    { q: "117- لەم وێنەیەدا پێشینە بۆ کێیە؟", image: "images/117.jpg", options: ["ئۆتۆمبێلی هاتوو لە لای ڕاست", "ئۆتۆمبێلی B", "ئۆتۆمبێلی A"], answer: 0 },
-    { q: "118- لەم سووڕانەوە بازنەییەی ئەم وێنەیدا پێشینە بۆ کێیە؟", image: "images/118.jpg", options: ["ئۆتۆمبێلی A", "ئۆتۆمبێلی B", "هیچ کامیان"], answer: 0 },
-    { q: "119- لەم سووڕانەوە بازنەییەی ئەم وێنەیدا پێشینە بۆ کێیە؟", image: "images/119.jpg", options: ["ئۆتۆمبێلی H", "ئۆتۆمبێلی G", "پێشینە بۆ هیچ کامیان نییە"], answer: 0 },
-    { q: "120- تۆ شۆفێری ئۆتۆمبێلە سەوزەکەی ئایا مافت هەیە بەردەوام بیت لە ڕۆیشتن؟", image: "images/120.jpg", options: ["پێویستە لەسەرت بوەستیت بۆتنییە ڕێی ئۆتۆمبێلە سوورەکە چونکە لە لای ڕاستەوە دێت", "بەڵێ بۆت هەیە بەردەوام بیت لە ڕۆیشتن بە ئاگاییەوە", "نەخێر بۆت نییە بەردەوام بیت لە ڕۆیشتن"], answer: 0 },
-    { q: "121- لە کاتی لێخوڕین بە شەو مەودای پێویست چەندە بۆ بەکارهێنانی لایتی نزم لە نێوان دوو ئۆتۆمبێلی هاتوو بەرامبەر یەکتری ؟", image: "images/121.jpg", options: ["150 مەتر", "200 مەتر", "پێویستە لایتەکان بە بەردەوام داگیرساو بێت"], answer: 0 },
-    { q: "122- لە کاتی لێخوڕین بە شەو مەودای پێویست چەندە بۆ بەکارهێنانی لایتی نزم لە نێوان ئۆتۆمبێلەکەت و ئەوەی پێشەوەت ؟", image: "images/122.jpg", options: ["200 مەتر", "300 مەتر", "پێویستە لایتەکان بە بەردەوام داگیرسێت"], answer: 0 },
-    { q: "123- کامە بارودۆخ سەلامەتترە لە کاتی لێکرەتبوونی ماتۆڕ سکیلەکە لەم دوو وێنەیەدا ؟", image: "images/123.jpg", options: ["باری A", "باری B", "پێشینە بۆ هیچ کامیان نییە"], answer: 0 },
-    { q: "124- لەم وێنەیەدا پێشینە بۆ کێیە؟", image: "images/124.jpg", options: ["ئۆتۆمبێلی B", "ئۆتۆمبێلی A", "هەردووکیان بە یەکەوە"], answer: 0 },
-    { q: "125- لە ڕێگایەک لێدەخوڕیت وە ئەم هێمایە دەبینیت وە ئۆتۆمبێلێک لە پێشتە و بە هێواشی دەڕوات و بێزاری کردوویت ئایا بۆت هەیە لێی ڕەتبیت؟", image: "images/125.jpg", options: ["نەخێر بۆت نییە لێی ڕەتبیت چونکە یەکێک لەو شوێنانەی قەدەغەیە لێکرەتبوون تیایدا ئەنجام بدرێت نزیک هێڵی پەڕینەوەی پیادەکانە", "بەڵێ بۆت هەیە لێی ڕەتبیت بۆئەوەی بێزار نەبیت", "بەڵێ بۆت هەیە لێی ڕەتبیت چونکە ڕێگا بۆ ئۆتۆمبێلەکانە نەک بۆ پیادەکان"], answer: 0 },
-    { q: "126- لەم وێنەیەدا پێشینە بۆ کێیە؟", image: "images/126.jpg", options: ["ئۆتۆمبێلی B", "ئۆتۆمبێلی A", "هەردووکیان بە یەکەوە"], answer: 0 },
-    { q: "127- لەم وێنەیەدا پێشینە بۆ کێیە؟", image: "images/127.jpg", options: ["نزیکترین ئۆتۆمبێل لە یەکتربڕەکە", "ئۆتۆمبێلی A", "ئۆتۆمبێلی B"], answer: 0 },
-    { q: "128- لەم وێنەیەدا پێشینە بۆ کێیە؟", image: "images/128.jpg", options: ["ئۆتۆمبێلی B", "ئۆتۆمبێلی A", "هەردووکیان پێکەوە"], answer: 0 },
-    { q: "129- کاردانەوەی دروست لە کاتی بینینی ئەم هێمایە چییە؟", image: "images/129.jpg", options: ["کەمکردنەوەی خێرایی وە گرتنی لای ڕاستی شەقامەکە وە تێنەپەڕین لە ئۆتۆمبێلەکانی پێشەوە", "کەمکردنەوەی خێرایی وە گرتنی لای چەپی ڕێگا وە ئەنجامدانی تێپەڕاندن", "زیادکردنی خێرایی وە گرتنی لای چەپی ڕێگا وە ئەنجام نەدانی تێپەڕاندن"], answer: 0 },
-    { q: "130- لەم وێنەیەدا پێشینە بۆ کێیە بە بوونی هێمای بوەستە ؟", image: "images/130.jpg", options: ["ئۆتۆمبێلی B", "ئۆتۆمبێلی A", "نزیکترین ئۆتۆمبێل لە چواڕیان"], answer: 0 },
-    { q: "131- کاردانەوەی پێویست چییە کە بیگریتە بەر لە بینینی ئەم هێمایە لە کاتی لێخوڕیندا؟", image: "images/131.jpg", options: ["کەمکردنەوەی خێرایی و ڕێڕەو نەگۆڕین و ئەنجام نەدانی مانۆڕی لێکرەتبوون", "زیادکردنی خێرایی بۆ زوو دەرچوون لە شوێنەکە", "ڕێگادان بە ئۆتۆمبێلەکانی تر بۆ ئەوەی بە پێشت بکەونەوە لەگەڵ کەمکردنەوەی خێرایی"], answer: 0 },
-    { q: "132- لەم وێنەیەدا پێشینە بۆ کێیە لە کاتی بوونی هێمای پێشینە؟", image: "images/132.jpg", options: ["ئۆتۆمبێلی B", "ئۆتۆمبێلی A", "هەردووکیان پێکەوە"], answer: 0 },
-    { q: "133- کاردانەوەی دروست چییە بۆ پارککردنی ئۆتۆمبێلە سپییەکە لەم وێنەیەی خوارەوە؟", image: "images/133.jpg", options: ["پارککردن بە چوونە ژوورەوە بە ئاراستەی ڕۆیشتنی ئۆتۆمبێلەکان", "پارککردن بە چوونە ژوورەوە بە پێچەوانەی ئاراستەی ڕۆیشتنی ئۆتۆمبێلەکان (گەڕانەوە بۆ دواوە)", "هەردووکی قەدەغەیە"], answer: 0 },
-    { q: "134- لەم وێنەیەدا پێشینە بۆ کێیە؟", image: "images/134.jpg", options: ["ئۆتۆمبێلی B", "ئۆتۆمبێلی A", "نزیکترین ئۆتۆمبێل لە یەکتربڕەکە"], answer: 0 },
-    { q: "135- ناوی ئەو بەشەی بزوێنەر کە بە هێڵی سوور ئاماژەی بۆ کراوە ناوی چییە؟", image: "images/135.jpg", options: ["دەفری شلەی برێک", "دەفری شلەی پاوەر", "دەفری ئاوی فڵچەکان"], answer: 0 },
-    { q: "136- لەم وێنەیەدا ئۆتۆمبێلەکە بۆی هەیە لە ماتۆڕەکە تێپەڕێت؟", image: "images/136.jpg", options: ["نەخێر چونکە هێڵێکی سپی نەپچڕاو بە درێژایی ڕێگاکە هەیە کە تێپەڕاندن قەدەغە دەکات", "بەڵێ", "بەڵێ لە بەرئەوەی ماتۆڕ سکیلە"], answer: 0 },
-    { q: "137- ئەو بەشەی بزوێنەر کە تیری لەسەر دانراوە ناوی چییە؟", image: "images/137.jpg", options: ["خەزانی شلەی پاوەر", "خەزانی ئاوی فڵچەکان", "خەزانی شلەی برێک"], answer: 0 },
-    { q: "138- ناوی ئەو بەشەی بزوێنەر کە بە هێڵی سوور ئاماژەی بۆ کراوە چییە؟", image: "images/138.jpg", options: ["پاتری", "فلتەری هەوا", "دەفری شلەی برێک"], answer: 0 },
-    { q: "139- ناوی ئەو بەشەی بزوێنەر کە بە هێڵی سوور ئاماژەی پێکراوە چییە؟", image: "images/139.jpg", options: ["فلتەری هەوا", "پاتری", "دەفری ئاوی فڵچەکان"], answer: 0 },
-    { q: "140- ناوی ئەو بەشەی بزوێنەر کە بە هێڵی سوور ئاماژەی پێکراوە چییە؟", image: "images/140.jpg", options: ["گێچی پێوەری بزوێنەر", "گێچی پێوەری ڕۆنی برێک", "گێچی پێوەری ڕۆنی پاوەر"], answer: 0 },
-    { q: "141- ناوی ئەو بەشەی بزوێنەر کە بە هێڵی سوور ئاماژەی پێکراوە چییە؟", image: "images/141.jpg", options: ["دەفری ئاوی فڵچەکان", "دەفری شلەی برێک", "دەفری شلەی پاوەر"], answer: 0 },
-    { q: "142- ئەم هێمایە چی دەگەیەنێت؟", image: "images/142.jpg", options: ["کۆتایی ڕێگای پێشینەی هاتووچۆ (کۆتایی پێشینە)", "ڕێگای سەرەکی پێشینەی هاتووچۆ پێشینە بۆ تۆیە", "ڕێگای سەرەکی پێشینەی هاتووچۆ پێشینە بۆ تۆ نییە"], answer: 0 }
-];
+            { q: "هێڵی بەردەوام (موتەسিল) چی دەگەیەنێت؟", options: ["پەڕینەوە و پێشپەڕین قەدەغەیە", "بۆ جوانی کێشراوە", "خێرایی دیاری دەکات", "ڕێگەپێدراوە بۆ پێشپەڕین"], answer: 0 },
+            { q: "کامێرای خاڵ بۆ خاڵ (پۆینت تو پۆینت) چۆن کار دەکات؟", options: ["تێکڕای خێرایی نێوان دوو کامێرا هەژمار دەکات", "تەنها لە شەو کار دەکات", "تەنها خێرایی یەک خاڵ دەپێوێت", "وێنەی سەرنشین دەگرێت"], answer: 0 },
+            { q: "هێمای سێگۆشەی سوور بە گشتی مانای چییە؟", options: ["ئاگادارکردنەوە و مەترسی", "فەرمانکردن", "ڕێگەپێدان", "زانیاری"], answer: 0 },
+            { q: "هێمای بازنەی سوور مانای چییە؟", options: ["قەدەغەکردن یان ڕێگریکردن", "شوێنی حەسانەوە", "ئاگادارکردنەوە", "ناچارکردن"], answer: 0 },
+            { q: "هێمای بازنەی شین مانای چییە؟", options: ["ناچارکردن یان فەرمانکردن", "قەدەغەکردن", "مەترسی", "تەنها بۆ جوانی"], answer: 0 },
+            { q: "ئەگەر لە ترافیک لایت گلۆپی زەرد پێبوو چی دەکەیت؟", options: ["ئامادە دەبم بۆ وەستان پێش هێڵی پەڕینەوە", "خێرایی زیاد دەکەم", "لای چەپ دەگرم", "هۆڕن لێدەدەم"], answer: 0 },
+            { q: "لە چوارڕیانێک کە هیچ هێمایەکی تێدا نییە، مافی پێشینە بۆ کێیە؟", options: ["بۆ ئەو ئۆتۆمبێلەی لە لای ڕاستەوە دێت", "بۆ ئەو ئۆتۆمبێلەی خێرایە", "بۆ بارهەڵگر", "بۆ ئەو ئۆتۆمبێلەی لە لای چەپەوە دێت"], answer: 0 },
+            { q: "بەکارهێنانی مۆبایل لە کاتی شۆفێریدا؟", options: ["بە هەموو شێوەیەک قەدەغەیە", "ڕێگەپێدراوە تەنها بۆ نامە", "لە کاتی قەرەباڵغی دەبێت", "تەنها بۆ دەنگ دەبێت"], answer: 0 },
+            { q: "لە کاتی بارانباریندا، دەبێت مەودای سەلامەتی نێوان تۆ و ئۆتۆمبێلی پێشەوەت چۆن بێت؟", options: ["دەبێت زیاتر بێت و دوری زیاتر جێبهێڵیت", "وەک خۆی بێت", "دەبێت کەمتر بێت", "پێویست بە جێهێشتنی مەودا ناکات"], answer: 0 },
+            { q: "کێبڵی ڕاکێشان لە نێوان دوو ئۆتۆمبێل دەبێت چەند بێت؟", options: ["٣ بۆ ٥ مەتر", "١٠ مەتر", "١ مەتر", "٨ مەتر"], answer: 0 },
+            { q: "هێمای (P) کە هێڵێکی سووری بەسەردا هاتبێت بە مانای چییە؟", options: ["وەستان قەدەغەیە", "پارکینگ ڕێگەپێدراوە", "شوێنی پەڕینەوەی پیادە", "ڕێگای خێرا"], answer: 0 },
+            { q: "لە کاتی نزیکبوونەوە لە قوتابخانە یان نەخۆشخانە؟", options: ["خێرایی زۆر کەم دەکرێتەوە و هۆڕن لێدان قەدەغەیە", "ئاساییە هۆڕن لێبدەیت", "دەبێت خێرایی زیاد بکەیت", "لایت لێدان قەدەغەیە"], answer: 0 },
+            { q: "هێڵی زەردی کەناری شەقام مانای چییە؟", options: ["وەستانی کاتی و هەمیشەیی قەدەغەیە", "ڕێگەپێدراوە بۆ چاوەڕوانی", "شوێنی پاسە", "تەنها بۆ بارهەڵگرە"], answer: 0 },
+            { q: "ئەگەر ئۆتۆمبێلی فریاکەوتن (ئەمبوڵانس) لە دواتەوە بوو؟", options: ["ڕێڕەوی بۆ چۆڵ دەکەم بەرەو لای ڕاست", "خێرایی زیاد دەکەم و لە پێشی دەڕۆم", "هەر لە شوێنی خۆم دەمێنمەوە", "هۆڕنی بۆ لێدەدەم"], answer: 0 },
+            { q: "خێرایی ڕێگەپێدراو لەناو بازاڕ و سەنتەری شارەکاندا بەبێ بوونی تابلۆ چەندە؟", options: ["٤٠ بۆ ٥٠ کم/کاتژمێر", "٨٠ کم/کاتژمێر", "١٠٠ کم/کاتژمێر", "بێ سنوورە"], answer: 0 },
+            { q: "پێشپەڕین (تەجاووزکردن) بەپێی یاسا لە کام لایە دەکرێت؟", options: ["تەنها لە لای چەپەوە", "لە لای ڕاستەوە", "لە هەردوو لاوە ڕێگەپێدراوە", "لە شانی ڕێگاکەوە"], answer: 0 },
+            { q: "لێدانی هۆڕن لە ناوەندی شار بە شێوەیەکی گشتی؟", options: ["قەدەغەیە تەنها بۆ حاڵەتی مەترسی نەبێت", "بۆ سڵاوکردن ئاساییە", "ڕێگەپێدراوە لە هەموو کاتێکدا", "تەنها لە شەواندا دەبێت"], answer: 0 },
+            { q: "ئایا سەرنشینی تەنیشت شۆفێر پێویستە قایشی سەلامەتی ببەستێت؟", options: ["بەڵێ، پێویستە وەک شۆفێرەکە", "نەخێر تەنها بۆ شۆفێرە", "لە ناو شار پێویست ناکات", "بە ئارەزوومەندانەیە"], answer: 0 },
+            { q: "ئەگەر لە ناو بازنە (فەلەکە) بوویت، مافی پێشینە بۆ کێیە؟", options: ["بۆ ئەو کەسەی لە ناو بازنەکەدایە", "بۆ ئەو کەسەی دێتە ناو بازنەکە", "بۆ ئۆتۆمبێلی گەورەتر", "بۆ ئەو کەسەی خێرایە"], answer: 0 },
+            { q: "چوونە ناو یەکتربڕ کاتێک قەرەباڵغیە و ڕێگاکە گیراوە؟", options: ["قەدەغەیە بچیتە ناوی تەنانەت ئەگەر گلۆپ سەوزیش بێت", "ئاساییە ئەگەر گلۆپ سەوز بێت", "دەتوانیت بچیتە ناوی و هۆڕن لێبدەیت", "دەبێت بە خێرایی لای ڕاست بگریت"], answer: 0 },
+            { q: "هێمای (خێرایی ٦٠) لەناو بازنەیەکی سووردا بە مانای چییە؟", options: ["زۆرترین خێرایی ڕێگەپێدراو ٦٠ یە", "کەمترین خێرایی ٦٠ یە", "خێرایی پێشنیارکراو ٦٠ یە", "ئاساییە لە ٦٠ زیاتر بڕۆیت"], answer: 0 },
+            { q: "لە شەقامی دوو ئاراستە (دوو ساید)، دەبێت لە کام لای شەقامەکە شۆفێری بکەیت؟", options: ["لای ڕاست", "لای چەپ", "ناوەڕاستی شەقام", "هەرلایەک ئارەزوو بکەیت"], answer: 0 },
+            { q: "هێمای سێگۆشە کە سەری بەرەو خوارەوەیە (لەسەر ڕێگا دەبینرێت) مانای چییە؟", options: ["بەخشینی مافی پێشینە (ڕێگە بدە بەوانی تر)", "مەترسی لە پێشە", "قف (بوەستە)", "ڕێگای سەرەکی"], answer: 0 },
+            { q: "منداڵی خوار تەمەن ١٠ ساڵ دەبێت لە کوێ دابنیشێت لەناو ئۆتۆمبێل؟", options: ["لە کوشنی پشتەوە بە بەستنی قایش", "لە باوەشی سەرنشینی پێشەوە", "لە کوشنی پێشەوە", "لە تەنیشت شۆفێر"], answer: 0 },
+            { q: "لە کاتی تەمومژێکی چڕدا پێویستە چ ڕووناکییەک بەکاربهێنیت؟", options: ["ڕووناکی نزم (لۆک) یان لایتی تەمومژ", "ڕووناکی بەرز (فول لایت)", "فلاشەر (چوار ئیشارەت)", "هیچ لایتێک پێویست ناکات"], answer: 0 },
+            { q: "تابلۆی (قف / وەستان) شێوەکەی چۆنە؟", options: ["هەشتلای سوورە", "سێگۆشەیە", "لاکێشەیەکی شینە", "بازنەیەکی زەردە"], answer: 0 },
+            { q: "کاتێک پۆلیسی هاتووچۆ لە چوارڕیانێکدایە و ڕووخساری یان پشتی لە تۆیە، واتای چییە؟", options: ["دەبێت بوەستیت پێش هێڵی پەڕینەوە", "دەتوانیت بڕۆیت", "خێرایی کەم بکەرەوە", "ئامادەبە بۆ ڕۆیشتن"], answer: 0 },
+            { q: "ئاستی کحولی ڕێگەپێدراو لە کاتی شۆفێری لە هەرێمی کوردستان چەندە؟", options: ["سفر (هیچ بڕێک ڕێگەپێدراو نییە)", "ڕێژەیەکی زۆر کەم", "یەک پەرداخ", "بەپێی کێشی لەش دەگۆڕێت"], answer: 0 },
+            { q: "هێمای (ڕێگای بنبەست) لە کام جۆری تابلۆکاندایە؟", options: ["تابلۆی زانیاری (لاکێشەی شین یان سەوز)", "تابلۆی ئاگادارکردنەوە", "تابلۆی قەدەغەکردن", "تابلۆی فەرمانکردن"], answer: 0 },
+            { q: "لە شەقامە خێراکاندا، لای چەپ (لێنی خێرا) بۆ چی بەکاردێت؟", options: ["تەنها بۆ پێشپەڕین (تەجاووزکردن)", "بۆ ڕۆیشتنی ئاسایی", "بۆ وەستان لە کاتی پێویست", "بۆ بارهەڵگرەکان"], answer: 0 },
+            { q: "کاتێک تایەی ئۆتۆمبێلەکەت دەتەقێت لە کاتی خێراییدا، دەبێت چی بکەیت؟", options: ["ستێرنەکە قایم بگرە و هێدی هێدی خێرایی کەم بکەرەوە", "بە خێرایی برێک بکە", "ستێرنەکە بەردە", "یەکەمجار بزوێنەر بکوژێنەوە"], answer: 0 },
+            { q: "گڵۆپی سەوزی فلاشدار (پێ و کوژ) لە ترافیک لایت بە مانای چی دێت؟", options: ["کاتەکەی بەرەو تەواوبوون دەچێت و دەبێتە زەرد", "ڕاستەوخۆ دەبێتە سوور", "کاتت زۆر ماوە بۆ پەڕینەوە", "وێستگەی پشکنین هەیە"], answer: 0 },
+            { q: "ئایا گۆڕینی لێن (ڕێڕەو) لەناو تونێلەکاندا ڕێگەپێدراوە؟", options: ["نەخێر، بە هەموو شێوەیەک قەدەغەیە", "بەڵێ ئاساییە ئەگەر ئیشارەت بدەیت", "تەنها بە ڕۆژ دەبێت", "تەنها بۆ ئۆتۆمبێلی بچووک دەبێت"], answer: 0 },
+            { q: "لە چوارڕیانێک کە کارەبای ترافیک لایت بڕابوو یان ئیشی نەدەکرد چی دەکەیت؟", options: ["وەک چوارڕیانی بێ هێما مامەڵە دەکەم و ماف بۆ ڕاستە", "بە خێرایی دەپەڕمەوە تا قەرەباڵغ نەبێت", "لە ناوەڕاستدا دەوەستم", "تەنها لە لای چەپەوە دەڕۆم"], answer: 0 },
+            { q: "کەی دەتوانیت فلاشەر (چوار ئیشارەت) بەکاربهێنیت؟", options: ["تەنها لە کاتی مەترسی لەناکاو یان پەککەوتنی ئۆتۆمبێل", "بۆ ڕاگرتن لە شوێنی قەدەغە", "بۆ پێشپەڕین", "لە کاتی بارانبارینی ئاسایی"], answer: 0 },
+            { q: "شۆفێریکردن کاتێک زۆر هەست بە خەواڵوویی دەکەیت مەترسییەکەی وەک چییە؟", options: ["وەک شۆفێریکردنە لەژێر کاریگەری کحول", "مەترسی نییە ئەگەر خێرایی کەم بکەیتەوە", "تەنها بۆ بارهەڵگرەکان مەترسیدارە", "پێویست بە خەمی زۆر ناکات"], answer: 0 },
+            { q: "مەبەست لە هێمای (قف)ی سەر شەقام پێش چوارڕیان چییە؟", options: ["وەستانی تەواوەتی تا دڵنیابوون لە چۆڵبوونی ڕێگاکە", "تەنها کەمکردنەوەی خێرایی", "ئامادەبوون بۆ ڕۆیشتن", "بەردەوام بوون بەبێ وەستان"], answer: 0 },
+            { q: "تابلۆیەکی سێگۆشە کە وێنەی ئاسکێکی تێدایە مانای چییە؟", options: ["ئاگاداربە مەترسی پەڕینەوەی ئاژەڵی کێوی هەیە", "باخچەی ئاژەڵان لە نزیکە", "شوێنی ڕاوکردن", "قەدەغەی هاتنی ئاژەڵ"], answer: 0 },
+            { q: "چ شتێک زۆرترین هۆکارە بۆ ڕووداوە کوشندەکانی هاتووچۆ؟", options: ["تیژڕەوی و پابەندنەبوون بە یاساکان", "خراپی کەشوهەوا", "جۆری ئۆتۆمبێلەکان", "کێشەی بزوێنەر"], answer: 0 },
+            { q: "ئایا لێخوڕینی ماتۆڕسکیل پێویستی بە مۆڵەتی شۆفێری هەیە؟", options: ["بەڵێ، پێویستی بە مۆڵەتی تایبەت بە خۆی هەیە", "نەخێر پێویست ناکات", "تەنها بۆ سەروو ٣٠ ساڵ پێویستە", "تەنها بۆ گەشتکردن پێویستە"], answer: 0 },
+            { q: "لە کاتی پەڕینەوەی پیادەکان لەسەر هێڵی زێبراکرۆس مافی کێیە؟", options: ["مافی پێشینە بۆ پیادەکەیە و شۆفێر دەبێت بوەستێت", "شۆفێر مافی پێشینەی هەیە", "هەرکەسیان خێراتر بوو", "شۆفێر دەبێت هۆڕن لێبدات تا پیادەکە بوەستێت"], answer: 0 },
+            { q: "تابلۆی شین کە تیایدا تیری سپی هەیە بەرەو پێشەوە مانای چییە؟", options: ["دەبێت بەردەوام بیت بەو ئاراستەیە (فەرمانکردنە)", "ئەگەر ویستت بڕۆ", "مەترسی لە پێشە", "ڕێگای خێرا دەست پێدەکات"], answer: 0 },
+            { q: "بینینی ڕووناکی سور و شین (فلاشەری پۆلیس یان ئەمبوڵانس) لە ئاوێنەوە؟", options: ["دەبێت بە خێرایی و سەلامەتی ڕێڕەوی بۆ چۆڵ بکەیت", "ئاساییە گرنگی پێمەدە", "خێرایی زیاد بکە و لە پێشی بمێنەوە", "هەر لەو لێنەدا بمێنەوە و خێرایی کەم بکەرەوە"], answer: 0 },
+            { q: "ئایا دەتوانیت ئۆتۆمبێلەکەت پارک بکەیت لەبەردەم دەریچەی ئاوپڕژێنی ئاگرکوژێنەوە؟", options: ["نەخێر بە هەموو شێوەیەک قەدەغەیە", "بەڵێ ئەگەر بۆ کاتێکی کورت بێت", "لە شەواندا دەکرێت", "ئەگەر چوار ئیشارەت پێبکەیت دەبێت"], answer: 0 },
+            { q: "ئەگەر بە بەردەوامی فشاری هەوای تایەکان کەمتر بێت لە ئاستی پێویست چی ڕوودەدات؟", options: ["تایەکان زووتر دەخوڕێن و بەنزین زیاتر سەرف دەبێت", "ئۆتۆمبێلەکە خێراتر دەبێت", "هیچ کێشەیەک دروست ناکات", "برێک بەهێزتر دەبێت"], answer: 0 },
+            { q: "کەی شۆفێر بۆی هەیە لەسەر شانی ڕێگا (لای ڕاستی دەرەوەی هێڵەکە) شۆفێری بکات؟", options: ["تەنها لە حاڵەتی لەناکاو و پەککەوتندا", "کاتێک شەقامەکە قەرەباڵغە", "بۆ پێشپەڕینی ئۆتۆمبێلی خاو", "بۆ ئەوەی خێراتر بگاتە جێگا"], answer: 0 },
+            { q: "خێرایی پێشنیارکراو (بازنەی شین کە ژمارەی تێدایە) واتای چییە؟", options: ["باشترە بەو خێراییە بڕۆیت بۆ سەلامەتیت", "ناچارکراویت لەو خێراییە کەمتر نەڕۆیت", "زۆرترین خێرایی ڕێگەپێدراوە", "قەدەغەکردنی ئەو خێراییەیە"], answer: 0 },
+            { q: "ئەگەر بزوێنەری ئۆتۆمبێلەکەت کوژایەوە لە کاتی شۆفێریدا، چی زەحمەت دەبێت؟", options: ["سوڕاندنی ستێرن و برێكکردن زەحمەت دەبێت", "هیچ گۆڕانکارییەک ڕوونادات", "ئۆتۆمبێلەکە خێراتر دەبێت", "تایەکان دەتەقن"], answer: 0 },
+            { q: "پێش دەستپێکردنی گەشتێکی دوور، پشکنینی کام لەمانە زۆر پێویستە؟", options: ["ئاو، ڕۆن، تایەکان و برێک", "ڕادیۆ و گۆرانی", "پاکی کوشنەکان", "لێدانی پۆلیش بۆ بۆیەکە"], answer: 0 },
+            { q: "هێمای (ڕێگای خلیسکان) چۆنە؟", options: ["سێگۆشەیەکە وێنەی ئۆتۆمبێلێکی تێدایە کە خلیسکاوە", "بازنەیەکی سوورە", "لاکێشەیەکی سەوزە", "تابلۆیەکی زەردی خاڵییە"], answer: 0 },
+            { q: "پێش ئەوەی دەرگای ئۆتۆمبێلەکەت بکەیتەوە لە قەراغی شەقام، پێویستە چی بکەیت؟", options: ["سەیری ئاوێنەکە بکەم نەوەک ئۆتۆمبێل یان پایسکیل بێت", "یەکسەر دەرگاکە بکەمەوە", "تەنها سەیرێکی پێشەوە بکەم", "هۆڕن لێبدەم پاشان بیکەمەوە"], answer: 0 },
+            { q: "لە ڕێگایەکی دوو ئاراستەدا کاتێک ئۆتۆمبێلێکی بەرامبەر فول لایتی لێداویت، دەبێت چی بکەیت؟", options: ["سەیری لای ڕاستی شەقامەکە (خەتی سپی قەراغەکە) بکەم تا تێپەڕ دەبێت", "منیش فول لایتی لێبدەمەوە", "چاوەکانم دابخەم و برێک بکەم", "لە ناوەڕاستی شەقامەکە بوەستم"], answer: 0 },
+            { q: "ماوەی سەلامەتی چییە بەپێی یاسای دوو چرکە؟", options: ["هێشتنەوەی دووری ٢ چرکە لە نێوان خۆت و ئۆتۆمبێلی پێشەوەت", "دەبێت هەر ٢ چرکە جارێک سەیری ئاوێنە بکەیت", "واتە ٢ چرکە پێش لادان ئیشارەت بدە", "لێدانی برێک بۆ ٢ چرکە"], answer: 0 },
+            { q: "چ شتێک دەبێتە هۆی کەمبوونەوەی توانای بینینت لە کاتی شۆفێری؟", options: ["شۆفێری کردن بە ماندوێتی و خەواڵوویی", "کردنەوەی ڕادیۆ", "قسەکردن لەگەڵ سەرنشین بە دەنگی نزم", "لێخوڕین بە خێرایی کەم"], answer: 0 },
+            { q: "بەپێی یاسا، نابێت چەند مەتر نزیک ببیتەوە لە ئۆتۆمبێلی ئاگرکوژێنەوە کە لە ئەرکدایە؟", options: ["٥٠ مەتر", "١٠ مەتر", "٥ مەتر", "هیچ مەودایەک دیاری نەکراوە"], answer: 0 },
+            { q: "کەی ڕێگەپێدراوە ئۆتۆمبێلەکەت لەسەر پیادەڕەو (شۆستە) پارک بکەیت؟", options: ["لە هیچ کاتێکدا ڕێگەپێدراو نییە", "ئەگەر شەقامەکە زۆر قەرەباڵغ بێت", "بۆ ماوەی کەمتر لە ٥ خولەک", "تەنها لە شەواندا"], answer: 0 },
+            { q: "هێمای هێڵی پیادە (زێبراکرۆس) لەسەر شەقام کامەیە؟", options: ["هێڵە سپییە پانەکان کە بە شێوەی درێژی کێشراون", "هێڵێکی زەردی بەردەوام", "هێڵێکی سووری پچڕ پچڕ", "دوو هێڵی سپی بەردەوام"], answer: 0 },
+            { q: "لەکاتی ڕووداوێکی هاتووچۆ (صدمە) و بوونی بریندار، یەکەم هەنگاو چییە؟", options: ["ئاگادارکردنەوەی پۆلیس و ئەمبوڵانس و پاراستنی شوێنەکە", "بەجێهێشتنی شوێنەکە بە خێرایی", "جوڵاندنی بریندارەکان بەبێ شارەزایی", "گواستنەوەی ئۆتۆمبێلەکان پێش هاتنی پۆلیس"], answer: 0 },
+            { q: "بەرزبوونەوەی پلەی گەرمای بزوێنەر (حەماوە) مانای چییە؟", options: ["پێویستە دەستبەجێ لە شوێنێکی سەلامەت بوەستیت و بزوێنەر بکوژێنیتەوە", "ئاساییە و دەتوانیت بەردەوام بیت", "پێویستە خێرایی زیاد بکەیت تا هەوای بەرکەوێت", "مانای وایە بەنزینی کەم ماوە"], answer: 0 },
+            { q: "هێمای بازنەی سپی کە چوارچێوەیەکی سووری هەیە مانای چییە؟", options: ["قەدەغەیە تێپەڕین بەو ڕێگایەدا بۆ هەموو جۆرە ئۆتۆمبێلێک", "ڕێگەپێدراوە بۆ هەموو ئۆتۆمبێلێک", "تەنها بۆ بارهەڵگر قەدەغەیە", "ڕێگایەکی خێرایە"], answer: 0 }
         ];
 
         let selectedQuestions = [];
         let currentQuizIndex = 0;
         let quizScore = 0;
-        let questionTimerInterval;
-        let timeRemaining = 60;
 
         function shuffleArray(array) {
             let currentIndex = array.length, randomIndex;
@@ -3559,13 +2081,13 @@
 
         function initQuiz() {
             let shuffled = shuffleArray([...allTrafficQuestions]);
-            selectedQuestions = shuffled.slice(0, 25); 
+            selectedQuestions = shuffled.slice(0, 10); 
             
             selectedQuestions = selectedQuestions.map(q => {
                 let optionsWithIndex = q.options.map((opt, i) => ({text: opt, isCorrect: i === q.answer}));
                 let shuffledOptions = shuffleArray(optionsWithIndex);
                 let newCorrectIndex = shuffledOptions.findIndex(o => o.isCorrect);
-                return { q: q.q, image: q.image, options: shuffledOptions.map(o => o.text), answer: newCorrectIndex };
+                return { q: q.q, options: shuffledOptions.map(o => o.text), answer: newCorrectIndex };
             });
 
             currentQuizIndex = 0;
@@ -3575,70 +2097,25 @@
             loadQuestion();
         }
 
-        function startTimer() {
-            timeRemaining = 60;
-            document.getElementById("quizTimer").innerText = `⏳ کاتی ماوە: ${timeRemaining} چرکە`;
-            clearInterval(questionTimerInterval);
-            
-            questionTimerInterval = setInterval(() => {
-                timeRemaining--;
-                document.getElementById("quizTimer").innerText = `⏳ کاتی ماوە: ${timeRemaining} چرکە`;
-                
-                if(timeRemaining <= 0) {
-                    clearInterval(questionTimerInterval);
-                    handleTimeout();
-                }
-            }, 1000);
-        }
-
-        function handleTimeout() {
-            let correctIndex = selectedQuestions[currentQuizIndex].answer;
-            let allBtns = document.getElementById("quizOptionsDiv").getElementsByTagName("button");
-            
-            for(let i=0; i<allBtns.length; i++) {
-                allBtns[i].style.pointerEvents = "none";
-            }
-            
-            allBtns[correctIndex].classList.add("correct");
-            vibrate([20, 50, 20]);
-            
-            setTimeout(() => {
-                currentQuizIndex++;
-                loadQuestion();
-            }, 1500);
-        }
-
         function loadQuestion() {
             if (currentQuizIndex >= selectedQuestions.length) {
                 showQuizResults();
                 return;
             }
             
-            document.getElementById("quizProgressText").innerText = `پرسیاری ${currentQuizIndex + 1} لە 25`;
+            document.getElementById("quizProgressText").innerText = `پرسیاری ${currentQuizIndex + 1} لە 10`;
             
             let qData = selectedQuestions[currentQuizIndex];
             document.getElementById("quizQText").innerText = qData.q;
-            
-            let imgEl = document.getElementById("quizImage");
-            if(qData.image) {
-                imgEl.src = qData.image;
-                imgEl.style.display = "block";
-            } else {
-                imgEl.style.display = "none";
-            }
             
             let optionsHtml = "";
             qData.options.forEach((opt, idx) => {
                 optionsHtml += `<button class="quiz-btn" onclick="checkQuizAnswer(${idx}, this)">${opt}</button>`;
             });
             document.getElementById("quizOptionsDiv").innerHTML = optionsHtml;
-            
-            startTimer(); 
         }
 
         function checkQuizAnswer(selectedIndex, btnElement) {
-            clearInterval(questionTimerInterval);
-            
             let correctIndex = selectedQuestions[currentQuizIndex].answer;
             let allBtns = document.getElementById("quizOptionsDiv").getElementsByTagName("button");
             
@@ -3663,20 +2140,16 @@
         }
 
         function showQuizResults() {
-            clearInterval(questionTimerInterval);
             document.getElementById("quizPlayArea").style.display = "none";
             document.getElementById("quizResultArea").style.display = "block";
             
-            document.getElementById("quizScoreText").innerText = `${quizScore} / 25`;
+            document.getElementById("quizScoreText").innerText = `${quizScore} / 10`;
             
             let message = "";
-            if(quizScore >= 20) {
-                message = "پیرۆزە! تۆ سەرکەوتوو بوویت 🏆🎉";
-                document.getElementById("quizScoreText").style.color = "#28a745";
-            } else {
-                message = "دەرنەچوویت، تکایە زیاتر هەوڵ بدە ❌";
-                document.getElementById("quizScoreText").style.color = "#dc3545";
-            }
+            if(quizScore === 10) message = "ئافەرین! تۆ شۆفێرێکی زۆر نموونەییت 🏆";
+            else if(quizScore >= 7) message = "زۆر باشە! زانیارییەکانت باشن 👍";
+            else if(quizScore >= 5) message = "مامناوەندە، پێویستە زیاتر ئاگاداری ڕێنماییەکان بیت 🤔";
+            else message = "پێویستە زیاتر هێماکانی هاتووچۆ بخوێنیتەوە 😅";
             
             document.getElementById("quizFeedbackText").innerText = message;
         }
