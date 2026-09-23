@@ -150,8 +150,8 @@
         .nav-item i { font-size: 22px; margin-bottom: 5px; transition: transform 0.2s; }
         .nav-item span { font-size: 11px; font-weight: bold; }
         
-        #nav-portal i, #nav-queue i, #nav-fine i, .nav-item span { color: #333333 !important; filter: none !important; }
-        body.dark-mode #nav-portal i, body.dark-mode #nav-queue i, body.dark-mode #nav-fine i, body.dark-mode .nav-item span { color: #ffffff !important; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5)) !important; }
+        #nav-portal i, #nav-queue i, #nav-fine i, #nav-exam i, .nav-item span { color: #333333 !important; filter: none !important; }
+        body.dark-mode #nav-portal i, body.dark-mode #nav-queue i, body.dark-mode #nav-fine i, body.dark-mode #nav-exam i, body.dark-mode .nav-item span { color: #ffffff !important; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5)) !important; }
         .nav-item.active i, .nav-item.active span { color: #0056b3 !important; }
         body.dark-mode .nav-item.active i, body.dark-mode .nav-item.active span { color: #4da3ff !important; }
 
@@ -524,7 +524,7 @@
                     </div>
                     <div></div>
                 </div>
-                <!-- کاردی نوێکراوە لەگەڵ ئایکۆنی جوانی (Graduation Cap) -->
+                <!-- کاردی تاقیکردنەوە -->
                 <div class="portal-card" onclick="navTo('exam')">
                     <i class="fa-solid fa-graduation-cap"></i>
                     <div class="portal-card-content">
@@ -767,7 +767,7 @@
             </div>
         </div>
 
-        <!-- بەشی تاقیکردنەوە و پرسیارەکان (تەنها گشتی و تایبەت، ٢٥ پرسیار بە هەڕەمەکی و تایمەری ٦٠ چرکە) -->
+        <!-- بەشی تاقیکردنەوە و پرسیارەکان (بێ وێنە، هەڕەمەکی ٢٥ پرسیار، تایمەری ٦٠ چرکە و گواستنەوەی خۆکار) -->
         <div id="examSection" class="page-section" style="display: none;">
             <div class="exam-container">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -776,7 +776,7 @@
                 </div>
                 
                 <div id="examMenu" style="text-align: center; padding: 15px 0;">
-                    <p style="font-size: 13px; color: var(--label-color); margin-bottom: 20px;">جۆری پرسیارەکان هەڵبژێرە (بە شێوەی هەڕەمەکی ٢٥ پرسیار لە هەر تاقیکردنەوەیەکدا):</p>
+                    <p style="font-size: 13px; color: var(--label-color); margin-bottom: 20px;">جۆری پرسیارەکان هەڵبژێرە (بە شێوەی هەڕەمەکی ٢٥ پرسیار):</p>
                     <button class="action-btn search-btn" onclick="startExam('general')" style="margin-bottom: 10px;"><i class="fa-solid fa-list-check"></i> پرسیاری گشتی (یاساکان)</button>
                     <button class="action-btn" onclick="startExam('specific')" style="background: #8e44ad; margin-bottom: 10px;"><i class="fa-solid fa-car"></i> پرسیاری تایبەت (مایکرۆکەکان)</button>
                 </div>
@@ -853,6 +853,7 @@
         </button>
     </footer>
 
+    <!-- مینیوی خوارەوە (زیادکردنی ئایکۆنی تاقیکردنەوە لە دەستە چەپ تەنیشت غەرامە) -->
     <nav class="bottom-nav no-print" id="bottomNav">
         <div class="nav-item active" onclick="navTo('portal')" id="nav-portal">
             <i class="fa-solid fa-house"></i>
@@ -865,6 +866,10 @@
         <div class="nav-item" onclick="navTo('fine')" id="nav-fine">
             <i class="fa-solid fa-calculator"></i>
             <span>غەرامە</span>
+        </div>
+        <div class="nav-item" onclick="navTo('exam')" id="nav-exam">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>تاقیکردنەوە</span>
         </div>
     </nav>
 
@@ -982,7 +987,7 @@
             return R * c; 
         }
 
-        /* --- بنکەی دراوەی پرسیارەکان (زیاتر لە ٤٠ پرسیار بۆ هەڵبژاردنی هەڕەمەکی ٢٥ دانە) --- */
+        /* --- بنکەی دراوەی فراوانی پرسیارەکان بۆ هەڵبژاردنی هەڕەمەکی --- */
         const examDatabase = {
             general: [
                 { q: "کاتی لێخوڕین لەسەر شەقامە خێراکان، کامیان ڕێگەپێدراوە؟", options: ["پێشکردنەوە لە لای ڕاستەوە", "پێشکردنەوە تەنها لە لای چەپەوە", "وەستان لە سەر شۆلەی خێرا"], answer: 1 },
@@ -1050,7 +1055,7 @@
         let examTimerInterval = null;
         let timeLeft = 60;
 
-        /* فەنکشنی تێکەڵکردن و هەڵبژاردنی ٢٥ پرسیاری هەڕەمەکی */
+        /* فەنکشنی تێکەڵکردنی هەڕەمەکی (Random Shuffle) */
         function shuffleArray(array) {
             let currentIndex = array.length, randomIndex;
             while (currentIndex != 0) {
@@ -1067,7 +1072,7 @@
             currentQuestionIndex = 0;
             score = 0;
             
-            // وەرگرتنی کۆپیەک و ڕاندۆمکردنی و پاشان هەڵبژاردنی یەکەم ٢٥ پرسیار
+            // وەرگرتنی کۆپیەک و ڕاندۆمکردنی پاشان هەڵبژاردنی یەکەم ٢٥ پرسیار
             let allQuestions = [...examDatabase[type]];
             shuffleArray(allQuestions);
             activeQuestions = allQuestions.slice(0, 25);
@@ -1097,7 +1102,7 @@
                 optBox.appendChild(btn);
             });
 
-            // تایمەری ٦٠ چرکەیی کە بەرەو خوارەوە دەژمێرێت
+            // تایمەری ٦٠ چرکەیی
             examTimerInterval = setInterval(() => {
                 timeLeft--;
                 document.getElementById('timeLeft').innerText = timeLeft;
@@ -1142,7 +1147,7 @@
                 options[correctIndex].classList.add('correct');
             }
 
-            // گواستنەوەی خۆکارانەی خێرا دوای ١.٢ چرکە بۆ پرسیاری داهاتوو بێ ئەوەی پێویست بە کلیک بکات
+            // گواستنەوەی خۆکارانە دوای ١.٢ چرکە بۆ پرسیاری داهاتوو
             setTimeout(() => {
                 currentQuestionIndex++;
                 if(currentQuestionIndex < activeQuestions.length) {
