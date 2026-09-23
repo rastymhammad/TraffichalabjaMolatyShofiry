@@ -78,7 +78,6 @@
             background: linear-gradient(135deg, #121212 0%, #1a1a2e 100%);
         }
 
-        /* چاککردنەوەی سەردێڕەکە بۆ ئاستی ئاسایی خۆی */
         .header-title {
             position: sticky;
             top: 10px;
@@ -167,6 +166,10 @@
             background: linear-gradient(145deg, #242424, #1e1e1e) !important;
             box-shadow: 0 8px 20px rgba(0,0,0,0.2), inset 0 0 0 1px rgba(77,163,255,0.1) !important;
         }
+
+        /* لێرەدا کێشەی ئایکۆنەکان چاککراوەتەوە بۆ لای ڕاست */
+        .portal-card i { position: absolute; right: 20px; font-size: 30px; color: #8b0000; }
+        body.dark-mode .portal-card i { color: #d93838; } 
 
         button.action-btn, .start-quiz-btn, .portal-card, .date-box {
             transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.3s ease !important;
@@ -1664,6 +1667,7 @@
             }
         }
 
+        /* --- سکانی دەموچاو / پەنجەمۆر لە کاتی چوونەژوورەوەی ئەدمین --- */
         async function showAdminPanel() {
             let savedBioPwd = localStorage.getItem("admin_biometric_pwd");
             
