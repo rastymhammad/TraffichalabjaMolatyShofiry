@@ -27,7 +27,6 @@
             font-display: swap;
         }
 
-        /* چارەسەری شریتی سەرەوەی ئایفۆن */
         html { background-color: #f0f8ff; }
         html.dark-mode { background-color: #121212; }
 
@@ -107,6 +106,10 @@
         body.dark-mode .bottom-nav {
             box-shadow: 0 10px 25px rgba(0,0,0,0.4) !important;
             border-color: rgba(255,255,255,0.1) !important;
+        }
+        
+        .bottom-nav.hidden-by-modal {
+            transform: translateY(150%) !important;
         }
 
         .portal-card {
@@ -372,32 +375,6 @@
         
         .rating-thanks { display: none; margin-top: 10px; color: #28a745; font-weight: bold; }
 
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; display: flex; justify-content: space-around; padding: 10px 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--border-container); box-shadow: 0 -4px 15px rgba(0,0,0,0.05); z-index: 1000; padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
-        body.dark-mode .bottom-nav { background: rgba(30, 30, 30, 0.85); box-shadow: 0 -4px 15px rgba(0,0,0,0.2); }
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--label-color); cursor: pointer; transition: all 0.3s ease; flex: 1; -webkit-tap-highlight-color: transparent; }
-        .nav-item i { font-size: 22px; margin-bottom: 5px; transition: transform 0.2s; }
-        .nav-item span { font-size: 11px; font-weight: bold; }
-
-        #nav-portal i, #nav-queue i, #nav-fine i, .nav-item span { 
-            color: #333333 !important; 
-            filter: none !important; 
-        }
-
-        body.dark-mode #nav-portal i, 
-        body.dark-mode #nav-queue i, 
-        body.dark-mode #nav-fine i, 
-        body.dark-mode .nav-item span { 
-            color: #ffffff !important; 
-            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5)) !important; 
-        }
-
-        .nav-item.active i, .nav-item.active span {
-            color: #0056b3 !important;
-        }
-        body.dark-mode .nav-item.active i, body.dark-mode .nav-item.active span {
-            color: #4da3ff !important;
-        }
-
         .offline-banner {
             position: fixed;
             top: 0; left: 0; width: 100%;
@@ -441,64 +418,6 @@
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        .splash-screen {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-body);
-            z-index: 99999;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: opacity 0.6s ease-out, visibility 0.6s ease-out;
-        }
-        .splash-logo img {
-            width: 140px; 
-            height: auto;
-            animation: pulseSplash 1.2s infinite alternate;
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.15));
-        }
-        .splash-text {
-            margin-top: 20px; font-size: 18px; font-weight: bold; color: var(--header-text);
-            animation: fadeInUpSplash 0.8s ease-out forwards;
-        }
-        .splash-loader {
-            width: 180px;
-            height: 4px;
-            background: rgba(0, 86, 179, 0.2);
-            border-radius: 4px;
-            margin-top: 25px;
-            position: relative;
-            overflow: hidden;
-            animation: fadeInUpSplash 0.8s ease-out forwards;
-        }
-        .splash-loader::after {
-            content: '';
-            position: absolute;
-            left: -50px;
-            top: 0;
-            height: 100%;
-            width: 50px;
-            background: #0056b3;
-            border-radius: 4px;
-            animation: loadingBar 1.5s ease-in-out infinite;
-        }
-        body.dark-mode .splash-loader { background: rgba(77, 163, 255, 0.2); }
-        body.dark-mode .splash-loader::after { background: #4da3ff; }
-        
-        @keyframes pulseSplash {
-            0% { transform: scale(0.95); }
-            100% { transform: scale(1.05); filter: drop-shadow(0 15px 25px rgba(0,86,179,0.3)); }
-        }
-        @keyframes fadeInUpSplash {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes loadingBar {
-            0% { left: -50px; width: 30%; }
-            50% { width: 40%; }
-            100% { left: 100%; width: 30%; }
-        }
-        .splash-hidden {
-            opacity: 0; visibility: hidden;
-        }
     </style>
 </head>
 <body>
@@ -651,7 +570,7 @@
                             <option value="7">بۆ ماوەی ٧ ڕۆژ</option>
                             <option value="30">بۆ ماوەی ١ مانگ</option>
                             <option value="365">بۆ ماوەی ١ ساڵ</option>
-                            <option value="3650">بۆ هەمیشە (١٠ ساڵ)</option>
+                            <option value="3650">بۆ هەمیشە (١0 ساڵ)</option>
                         </select>
                     </div>
                     <div style="display: flex; gap: 8px; margin-top: 8px;">
@@ -804,7 +723,7 @@
         </button>
     </div>
 
-    <div class="modal-overlay" id="picker-modal" onclick="closeModal()">
+    <div class="modal-overlay" id="picker-modal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h3 id="modal-title">دیاریکردنی ژمارە</h3>
             <div class="number-grid" id="modal-grid"></div>
@@ -847,11 +766,10 @@
         </div>
         
         <button class="action-btn no-print" onclick="shareWebsite()" style="background: linear-gradient(135deg, #17a2b8, #007bff) !important; width: auto; padding: 10px 25px; font-size: 13px; margin: 15px auto 5px auto; display: block; border-radius: 25px; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);">
-            <i class="fa-solid fa-share-nodes"></i> نــاردنی بــۆ هــاوڕێكه‌ت
+            <i class="fa-solid fa-share-nodes"></i> بڵاوکردنەوەی سایت (Share)
         </button>
     </footer>
 
-    <!-- مینیوی خوارەوە -->
     <nav class="bottom-nav no-print" id="bottomNav">
         <div class="nav-item active" onclick="navTo('portal')" id="nav-portal">
             <i class="fa-solid fa-house"></i>
@@ -875,16 +793,15 @@
             }
         });
 
-        // ----------------- مێنیوی خوارەوەی زیرەک (حەشاردان لەکاتی سکڕۆڵ) -----------------
         let lastScrollTop = 0;
         const bottomNavBar = document.getElementById('bottomNav');
         
         window.addEventListener('scroll', function() {
             let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             if (scrollTop > lastScrollTop && scrollTop > 60) {
-                bottomNavBar.style.transform = 'translateY(150%)'; // شاردنەوە
+                bottomNavBar.style.transform = 'translateY(150%)'; 
             } else {
-                bottomNavBar.style.transform = 'translateY(0)'; // دەرکەوتنەوە
+                bottomNavBar.style.transform = 'translateY(0)'; 
             }
             lastScrollTop = scrollTop;
         }, { passive: true });
@@ -1158,7 +1075,6 @@
         }
         updateVisitorCounter();
 
-        // ----------------- دوگمەی شەیرکردن (بڵاوکردنەوەی ئەپەکە) -----------------
         function shareWebsite() {
             vibrate();
             if (navigator.share) {
@@ -1211,6 +1127,9 @@
         function getDaysInMonth(month, year) { return new Date(year, month, 0).getDate(); }
 
         function openModal(type) {
+            const bottomNavBar = document.getElementById('bottomNav');
+            if(bottomNavBar) bottomNavBar.classList.add('hidden-by-modal');
+
             const modal = document.getElementById('picker-modal');
             const title = document.getElementById('modal-title');
             const grid = document.getElementById('modal-grid');
@@ -1258,7 +1177,10 @@
             setTimeout(() => { modal.classList.add('show'); }, 10);
         }
 
-        function closeModal() { 
+        function closeModal(event) {
+            const bottomNavBar = document.getElementById('bottomNav');
+            if(bottomNavBar) bottomNavBar.classList.remove('hidden-by-modal');
+
             const modal = document.getElementById('picker-modal');
             modal.classList.remove('show');
             setTimeout(() => {
@@ -1738,7 +1660,6 @@
             }
         }
 
-        /* --- پێشنیاری نوێ: تێکەڵکردنی سکانی دەموچاو / پەنجەمۆر لە کاتی چوونەژوورەوەی ئەدمین --- */
         async function showAdminPanel() {
             let savedBioPwd = localStorage.getItem("admin_biometric_pwd");
             
