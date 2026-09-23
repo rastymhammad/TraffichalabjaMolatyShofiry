@@ -6,7 +6,7 @@
     <title>به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە</title>
     
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" id="meta-theme-color" content="#f0f8ff">
+    <meta name="theme-color" id="meta-theme-color" content="#0056b3">
     
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -29,6 +29,11 @@
 
         html { background-color: #f0f8ff; }
         html.dark-mode { background-color: #121212; }
+
+        :root {
+            --primary-color: #0056b3;
+            --primary-gradient: linear-gradient(135deg, #0056b3, #00aaff);
+        }
 
         @keyframes pulseRotate {
             0% { transform: scale(1) rotate(0deg); opacity: 0.8; }
@@ -90,7 +95,7 @@
             padding: 12px 20px;
             border-radius: 12px;
             margin: 5px auto 12px auto;
-            border-bottom: 4px solid #0056b3;
+            border-bottom: 4px solid var(--primary-color);
             transition: 0.3s;
             width: 100%;
             display: flex;
@@ -101,13 +106,17 @@
             background: rgba(30, 30, 30, 0.85) !important;
             border-color: rgba(255,255,255,0.1);
             box-shadow: 0 8px 20px rgba(0,0,0,0.3) !important;
-            border-bottom-color: #4da3ff;
         }
-        .header-title h1 { color: var(--header-text); font-size: 16px; margin: 0; font-weight: bold; text-align: center; }
+        .header-title h1 { color: var(--primary-color); font-size: 16px; margin: 0; font-weight: bold; text-align: center; }
         .header-title h1 a { color: inherit; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; }
         .header-title h1 a:hover { opacity: 0.8; }
-        .theme-toggle-btn { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); background: transparent; border: none; font-size: 20px; cursor: pointer; padding: 0; margin: 0; transition: transform 0.2s; z-index: 10; }
-        .theme-toggle-btn:hover { transform: translateY(-50%) scale(1.1); }
+        
+        .header-btns {
+            position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+            display: flex; gap: 8px; align-items: center; z-index: 10;
+        }
+        .theme-toggle-btn, .color-picker-btn { background: transparent; border: none; font-size: 18px; cursor: pointer; padding: 0; margin: 0; transition: transform 0.2s; }
+        .theme-toggle-btn:hover, .color-picker-btn:hover { transform: scale(1.1); }
 
         .bottom-nav {
             position: fixed !important;
@@ -152,8 +161,7 @@
         
         #nav-portal i, #nav-queue i, #nav-fine i, #nav-exam i, .nav-item span { color: #333333 !important; filter: none !important; }
         body.dark-mode #nav-portal i, body.dark-mode #nav-queue i, body.dark-mode #nav-fine i, body.dark-mode #nav-exam i, body.dark-mode .nav-item span { color: #ffffff !important; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5)) !important; }
-        .nav-item.active i, .nav-item.active span { color: #0056b3 !important; }
-        body.dark-mode .nav-item.active i, body.dark-mode .nav-item.active span { color: #4da3ff !important; }
+        .nav-item.active i, .nav-item.active span { color: var(--primary-color) !important; }
 
         .portal-cards { display: flex; flex-direction: column; gap: 12px; width: 100%; align-items: center; }
         .portal-card {
@@ -174,19 +182,14 @@
         }
         .portal-card:hover {
             transform: translateY(-4px) scale(1.03);
-            border-color: #0056b3;
+            border-color: var(--primary-color);
             box-shadow: 0 8px 20px rgba(0,86,179,0.15);
-        }
-        body.dark-mode .portal-card:hover {
-            border-color: #4da3ff;
-            box-shadow: 0 8px 20px rgba(77,163,255,0.15);
         }
         .portal-card i {
             font-size: 26px;
-            color: #dc3545;
+            color: var(--primary-color);
             justify-self: start;
         }
-        body.dark-mode .portal-card i { color: #f87171; }
 
         .portal-card-content {
             text-align: center;
@@ -199,9 +202,14 @@
         /* ستايڵی بەشی پرسیارەکان */
         .exam-container { background: var(--bg-container); border-radius: 16px; padding: 18px; border: 1px solid var(--border-container); text-align: right; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         .exam-option { background: var(--toggle-bg); border: 2px solid var(--toggle-border); border-radius: 10px; padding: 12px; margin: 8px 0; cursor: pointer; text-align: right; font-size: 13px; color: var(--text-main); transition: 0.2s; }
-        .exam-option:hover { border-color: #0056b3; background: var(--info-bg); }
+        .exam-option:hover { border-color: var(--primary-color); background: var(--info-bg); }
         .exam-option.correct { background: #d4edda !important; border-color: #28a745 !important; color: #155724 !important; font-weight: bold; }
         .exam-option.wrong { background: #f8d7da !important; border-color: #dc3545 !important; color: #721c24 !important; font-weight: bold; }
+
+        /* ستايڵی بەشی ڕێنماییەکان */
+        .safety-container { background: var(--bg-container); border-radius: 16px; padding: 18px; border: 1px solid var(--border-container); text-align: right; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .safety-item { background: var(--toggle-bg); border: 1px solid var(--toggle-border); border-radius: 10px; padding: 12px; margin-bottom: 10px; font-size: 12px; line-height: 1.6; color: var(--text-main); display: flex; align-items: flex-start; gap: 10px; }
+        .safety-item i { color: var(--primary-color); font-size: 16px; margin-top: 2px; flex-shrink: 0; }
 
         /* تایمەر */
         .exam-timer { display: inline-flex; align-items: center; gap: 5px; background: rgba(220, 53, 69, 0.1); color: #dc3545; padding: 4px 10px; border-radius: 20px; font-weight: bold; font-size: 12px; }
@@ -214,12 +222,14 @@
         }
         
         .notice-slider-box {
-            border: none !important;
-            box-shadow: 0 5px 15px rgba(0,86,179,0.08), inset 0 0 0 1.5px rgba(0,86,179,0.2) !important;
+            background: var(--bg-container); border: 2px solid var(--primary-color); border-radius: 12px; padding: 10px 15px; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,86,179,0.08); text-align: center; width: 100%; overflow: hidden; position: relative;
         }
-        body.dark-mode .notice-slider-box {
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(77,163,255,0.2) !important;
-        }
+        .notice-header-row { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: bold; color: var(--primary-color); margin-bottom: 6px; border-bottom: 1px dashed var(--border-container); padding-bottom: 4px; }
+        .notice-scroll-container.horizontal { width: 100%; height: 25px; display: flex; align-items: center; }
+        .notice-scroll-container.horizontal marquee { font-size: 12px; color: var(--text-main); font-weight: bold; width: 100%; text-align: center; }
+        .notice-scroll-container.vertical { width: 100%; height: 75px; overflow: hidden; position: relative; text-align: center; }
+        .notice-scroll-container.vertical marquee { font-size: 12px; color: var(--text-main); line-height: 1.6; white-space: pre-line; text-align: center; width: 100%; height: 100%; }
+
         * { box-sizing: border-box; }
 
         :root {
@@ -228,7 +238,7 @@
             --text-main: #333;
             --border-container: #e2e8f0;
             --header-bg: white;
-            --header-text: #0056b3;
+            --header-text: var(--primary-color);
             --input-bg: white;
             --input-border: #f5c6cb;
             --input-text: #333;
@@ -298,39 +308,22 @@
         #ptr-indicator { width: 100%; height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: bold; color: var(--header-text); transition: height 0.2s ease-out; }
         
         .main-content { flex: 1; width: 100%; max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
-        #portalSection, #queueSection, #fineSection, #examSection { width: 100%; }
+        #portalSection, #queueSection, #fineSection, #examSection, #safetySection { width: 100%; }
         #queueSection #adminSection { max-width: 700px; width: 100%; margin: 0 auto; }
         
         .visitor-counter { text-align: center; font-size: 12px; color: var(--label-color); margin-bottom: 8px; font-weight: bold; }
         .visitor-counter b { color: var(--text-main); }
         
-        .notice-slider-box { background: var(--bg-container); border: 2px solid #0056b3; border-radius: 12px; padding: 10px 15px; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,86,179,0.08); text-align: center; width: 100%; overflow: hidden; position: relative; }
-        body.dark-mode .notice-slider-box { border-color: #4da3ff; }
-        .notice-header-row { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: bold; color: #0056b3; margin-bottom: 6px; border-bottom: 1px dashed var(--border-container); padding-bottom: 4px; }
-        body.dark-mode .notice-header-row { color: #4da3ff; }
-        .notice-scroll-container.horizontal { width: 100%; height: 25px; display: flex; align-items: center; }
-        .notice-scroll-container.horizontal marquee { font-size: 12px; color: var(--text-main); font-weight: bold; width: 100%; text-align: center; }
-        .notice-scroll-container.vertical { width: 100%; height: 75px; overflow: hidden; position: relative; text-align: center; }
-        .notice-scroll-container.vertical marquee { font-size: 12px; color: var(--text-main); line-height: 1.6; white-space: pre-line; text-align: center; width: 100%; height: 100%; }
-        
-        .status-badge { display: inline-flex; align-items: center; gap: 8px; margin: 0 auto 12px auto; padding: 6px 14px; font-size: 12px; font-weight: bold; border-radius: 20px; width: fit-content; text-align: center; }
-        .status-open { background: #d4edda; color: #155724; }
-        .status-closed { background: #f8d7da; color: #721c24; }
-        .dot { height: 10px; width: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
-        .dot-green { background-color: #28a745; box-shadow: 0 0 8px #28a745; }
-        .dot-red { background-color: #dc3545; box-shadow: 0 0 8px #dc3545; }
         .container { background: var(--bg-container); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: 0 auto 20px auto; border: 1px solid var(--border-container); width: 100%; }
-        h2 { color: var(--header-text); margin-top: 0; margin-bottom: 15px; font-size: 16px; }
+        h2 { color: var(--primary-color); margin-top: 0; margin-bottom: 15px; font-size: 16px; }
 
         .input-wrapper { position: relative; width: 100%; margin: 12px 0; }
-        .input-wrapper i { position: absolute; right: 12px; top: 15px; color: var(--header-text); font-size: 16px; z-index: 2; transition: all 0.3s ease; }
+        .input-wrapper i { position: absolute; right: 12px; top: 15px; color: var(--primary-color); font-size: 16px; z-index: 2; transition: all 0.3s ease; }
         .input-wrapper input { width: 100%; padding: 20px 35px 8px 10px; box-sizing: border-box; border: 2px solid var(--input-border); border-radius: 6px; font-size: 14px; font-family: 'Rudaw', Tahoma, Arial, sans-serif; outline: none; transition: 0.3s ease all; background: var(--input-bg); color: var(--input-text); user-select: text; }
         .input-wrapper label { position: absolute; right: 35px; top: 14px; font-size: 13px; color: var(--label-color); transition: 0.3s ease all; pointer-events: none; z-index: 1; }
-        .input-wrapper input:focus ~ label, .input-wrapper input:not(:placeholder-shown) ~ label { top: 4px; font-size: 10px; color: #0056b3; font-weight: bold; }
-        body.dark-mode .input-wrapper input:focus ~ label, body.dark-mode .input-wrapper input:not(:placeholder-shown) ~ label { color: #4da3ff; }
+        .input-wrapper input:focus ~ label, .input-wrapper input:not(:placeholder-shown) ~ label { top: 4px; font-size: 10px; color: var(--primary-color); font-weight: bold; }
         
-        .input-wrapper:focus-within i { color: #0056b3; transform: scale(1.2); }
-        body.dark-mode .input-wrapper:focus-within i { color: #4da3ff; }
+        .input-wrapper:focus-within i { color: var(--primary-color); transform: scale(1.2); }
         
         .input-wrapper input:disabled { background-color: #e9ecef; cursor: not-allowed; opacity: 0.7; }
         .input-wrapper input.valid-input { border-color: #28a745 !important; box-shadow: 0 0 5px rgba(40, 167, 69, 0.3); }
@@ -342,18 +335,18 @@
         button.action-btn:hover:not(:disabled) { background: #218838; }
         .search-btn { background: #007bff; }
         .search-btn:hover { background: #0056b3; }
+        
         .timer-box { background: rgba(220, 53, 69, 0.08); border: 1px dashed #dc3545; padding: 8px 10px; border-radius: 8px; font-size: 13px; color: #d9534f; margin-top: 12px; font-weight: bold; display: none; text-align: center; }
         .timer-box span { font-size: 12px; color: #dc3545; display: inline-block; margin-left: 5px; }
         .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 15px; }
         #usersTable { width: 100%; border-collapse: collapse; text-align: center; font-size: 11px; }
         #usersTable th, #usersTable td { white-space: nowrap; padding: 8px; border: 1px solid var(--border-container); color: var(--text-main); }
-        #usersTable th { background: #0056b3; color: white; }
-        body.dark-mode #usersTable th, body.dark-mode #usersTable td { border-color: #444; }
+        #usersTable th { background: var(--primary-color); color: white; }
+        
         .dashboard-cards { display: flex; gap: 6px; margin-bottom: 12px; justify-content: space-between; }
         .dash-card { background: var(--bg-container); border: 1px solid var(--border-container); border-radius: 6px; padding: 8px 4px; flex: 1; text-align: center; }
         .dash-card h4 { margin: 0 0 2px 0; font-size: 10px; color: var(--label-color); }
-        .dash-card h3 { margin: 0; font-size: 15px; color: #0056b3; }
-        body.dark-mode .dash-card h3 { color: #4da3ff; }
+        .dash-card h3 { margin: 0; font-size: 15px; color: var(--primary-color); }
         .chart-container { max-width: 160px; margin: 0 auto; }
         .fine-container { background: var(--bg-container); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 18px; border: 2px solid var(--border-container); text-align: center; width: 100%; }
         .toggle-container { display: flex; justify-content: space-between; align-items: center; background: var(--toggle-bg); padding: 10px; border-radius: 10px; margin-bottom: 12px; border: 1px solid var(--toggle-border); }
@@ -376,16 +369,17 @@
         .btn-reset { background: transparent; border: 1px solid var(--date-border); color: var(--date-title); border-radius: 5px; padding: 2px 8px; font-size: 11px; font-weight: bold; cursor: pointer; }
         .date-inputs { display: flex; gap: 8px; justify-content: center; }
         .date-box { flex: 1; text-align: center; background: var(--bg-container); border: 1px solid var(--toggle-border); border-radius: 8px; padding: 6px 2px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.02); transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; cursor: pointer; }
-        .date-box:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.06); border-color: #0056b3; }
-        body.dark-mode .date-box:hover { border-color: #4da3ff; }
+        .date-box:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.06); border-color: var(--primary-color); }
         .date-box label { display: block; font-size: 11px; color: var(--label-color); margin-bottom: 2px; font-weight: bold; pointer-events: none;}
         .date-custom-input { width: 100%; padding: 0; border: none; background: transparent; text-align: center; font-size: 16px; font-weight: bold; color: var(--input-text); pointer-events: none; }
+        
         .results { background: var(--results-bg); border-radius: 10px; padding: 12px; border: 2px solid var(--dynamic-status-color); margin-bottom: 12px; position: relative; overflow: hidden; z-index: 1; text-align: right; }
         .result-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed var(--results-border); font-size: 13px; color: var(--text-row); position: relative; z-index: 2; }
         .result-row:last-child { border-bottom: none; }
         .total-row { font-size: 16px; font-weight: bold; color: var(--total-color); }
         .fine-row { color: var(--fine-color); font-weight: bold; }
         .fee-row { color: var(--fee-color); font-weight: bold; }
+        
         .gauge-container { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%); width: 200px; height: 100px; text-align: center; display: none; opacity: 0.25; pointer-events: none; z-index: 0; }
         .gauge { position: relative; width: 200px; height: 100px; overflow: hidden; background: var(--slider-bg); border-top-left-radius: 100px; border-top-right-radius: 100px; }
         .gauge-fill { position: absolute; top: 100%; left: 0; width: inherit; height: 100%; background: #48bb78; transform-origin: center top; transition: transform 0.8s ease-out, background 0.8s; border-bottom-left-radius: 100px; border-bottom-right-radius: 100px; }
@@ -399,20 +393,18 @@
             padding-bottom: calc(20px + env(safe-area-inset-bottom));
         }
         .modal-overlay.show .modal-content { transform: translateY(0); }
-        
         .modal-content h3 { margin-top: 0; margin-bottom: 12px; color: var(--modal-text); font-size: 14px; }
         .number-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; max-height: 50vh; overflow-y: auto; padding: 5px; }
         .grid-item { padding: 8px; min-height: 38px; display: flex; align-items: center; justify-content: center; background: var(--grid-bg); border-radius: 6px; font-weight: bold; color: var(--input-text); cursor: pointer; font-size: 13px;}
         .grid-item.selected-item { background: #3182ce !important; color: white !important; }
         
         footer { background-color: var(--header-bg); color: var(--text-main); text-align: center; padding: 15px; margin-top: 25px; border-radius: 12px 12px 0 0; font-size: 12px; border-top: 1px solid var(--border-container); width: 100%; max-width: 400px; margin-bottom: 20px; }
-        .dev-name { color: #0056b3; font-weight: bold; margin-top: 5px; cursor: pointer; }
-        body.dark-mode .dev-name { color: #4da3ff; }
+        .dev-name { color: var(--primary-color); font-weight: bold; margin-top: 5px; cursor: pointer; }
         .social-icons { margin-top: 10px; }
-        .social-icons a { color: #0056b3; font-size: 24px; margin: 0 10px; text-decoration: none; display: inline-block; transition: all 0.3s ease; }
+        .social-icons a { color: var(--primary-color); font-size: 24px; margin: 0 10px; text-decoration: none; display: inline-block; transition: all 0.3s ease; }
         .social-icons a:hover { transform: scale(1.1) translateY(-2px); }
-        body.dark-mode .social-icons a { color: #4da3ff; }
         .no-print { display: block; }
+        
         @media print { 
             body * { visibility: hidden; } 
             .table-responsive, .table-responsive * { visibility: visible; }
@@ -424,14 +416,12 @@
         }
 
         .rating-container { background: var(--bg-container); border: 1px solid var(--border-container); border-radius: 12px; padding: 15px; margin: 20px auto 5px auto; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: all 0.3s ease; }
-        body.dark-mode .rating-container { border-color: #334155; }
-        .rating-title { font-size: 14px; color: var(--header-text); font-weight: bold; margin-bottom: 12px; }
+        .rating-title { font-size: 14px; color: var(--primary-color); font-weight: bold; margin-bottom: 12px; }
         .stars { display: flex; justify-content: center; gap: 8px; direction: ltr; margin-bottom: 10px; cursor: pointer; }
         .stars i { font-size: 26px; color: #cbd5e1; transition: color 0.2s, transform 0.2s; }
         .stars i:hover { transform: scale(1.1); }
         .stars i.active { color: #ffc107; text-shadow: 0 0 8px rgba(255, 193, 7, 0.4); }
         .admin-feedbacks-container { display: none; margin-top: 15px; text-align: right; background: var(--info-bg); padding: 12px; border-radius: 8px; border: 1px solid var(--border-container); }
-        
         .rating-thanks { display: none; margin-top: 10px; color: #28a745; font-weight: bold; }
 
         .offline-banner { position: fixed; top: 0; left: 0; width: 100%; background: #dc3545; color: white; text-align: center; padding: 8px; font-size: 13px; font-weight: bold; z-index: 100000; transform: translateY(-100%); transition: transform 0.4s ease, background 0.4s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
@@ -441,17 +431,14 @@
         .page-transition-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.7); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 9999; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: opacity 0.2s ease, visibility 0.2s ease; }
         body.dark-mode .page-transition-overlay { background: rgba(18,18,18,0.7); }
         .page-transition-overlay.active { opacity: 1; visibility: visible; }
-        .spinner { width: 40px; height: 40px; border: 4px solid rgba(0, 86, 179, 0.2); border-top-color: #0056b3; border-radius: 50%; animation: spin 1s linear infinite; }
-        body.dark-mode .spinner { border-color: rgba(77, 163, 255, 0.2); border-top-color: #4da3ff; }
+        .spinner { width: 40px; height: 40px; border: 4px solid rgba(0, 86, 179, 0.2); border-top-color: var(--primary-color); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
         .splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-body); z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.6s ease-out, visibility 0.6s ease-out; }
         .splash-logo img { width: 140px; height: auto; animation: pulseSplash 1.2s infinite alternate; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.15)); }
-        .splash-text { margin-top: 20px; font-size: 18px; font-weight: bold; color: var(--header-text); animation: fadeInUpSplash 0.8s ease-out forwards; }
+        .splash-text { margin-top: 20px; font-size: 18px; font-weight: bold; color: var(--primary-color); animation: fadeInUpSplash 0.8s ease-out forwards; }
         .splash-loader { width: 180px; height: 4px; background: rgba(0, 86, 179, 0.2); border-radius: 4px; margin-top: 25px; position: relative; overflow: hidden; animation: fadeInUpSplash 0.8s ease-out forwards; }
-        .splash-loader::after { content: ''; position: absolute; left: -50px; top: 0; height: 100%; width: 50px; background: #0056b3; border-radius: 4px; animation: loadingBar 1.5s ease-in-out infinite; }
-        body.dark-mode .splash-loader { background: rgba(77, 163, 255, 0.2); }
-        body.dark-mode .splash-loader::after { background: #4da3ff; }
+        .splash-loader::after { content: ''; position: absolute; left: -50px; top: 0; height: 100%; width: 50px; background: var(--primary-color); border-radius: 4px; animation: loadingBar 1.5s ease-in-out infinite; }
         
         @keyframes pulseSplash { 0% { transform: scale(0.95); } 100% { transform: scale(1.05); filter: drop-shadow(0 15px 25px rgba(0,86,179,0.3)); } }
         @keyframes fadeInUpSplash { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -483,7 +470,10 @@
 
     <div class="main-content" id="mainWrapper">
         <div class="header-title no-print">
-            <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="گۆڕینی ڕەنگ">🌙</button>
+            <div class="header-btns">
+                <button class="color-picker-btn" onclick="openColorPicker()" title="گۆڕینی ڕەنگی سەرەکی">🎨</button>
+                <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="گۆڕینی ڕەنگ">🌙</button>
+            </div>
             <h1>
                 <a href="https://maps.app.goo.gl/iV7Ly21Rkx7ikreFA" target="_blank" title="کردنەوەی ناونیشان لە گوگڵ ماپ">
                     <i class="fa-solid fa-location-dot" style="font-size: 15px; color: #dc3545;"></i> به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە
@@ -530,6 +520,15 @@
                     <div class="portal-card-content">
                         <h3>تاقیکردنەوەی مۆڵەتی شۆفێری</h3>
                         <p>پرسیاری گشتی و تایبەت (هەڕەمەکی ٢٥ پرسیار)</p>
+                    </div>
+                    <div></div>
+                </div>
+                <!-- کاردی ڕێنماییەکان -->
+                <div class="portal-card" onclick="navTo('safety')">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <div class="portal-card-content">
+                        <h3>ڕێنماییەکانی سەلامەتی هاتووچۆ</h3>
+                        <p>ئامۆژگاری و ڕێنمایی گرنگ بۆ شۆفێران</p>
                     </div>
                     <div></div>
                 </div>
@@ -589,7 +588,7 @@
                 <h2>بەشی ئەدمین - کۆنتڕۆڵی سیستەم</h2>
 
                 <div class="no-print" style="margin-bottom: 15px;">
-                    <h3 style="text-align: right; margin-bottom: 6px; font-size: 13px; color: #0056b3;">ئاماری ئەمڕۆ</h3>
+                    <h3 style="text-align: right; margin-bottom: 6px; font-size: 13px; color: var(--primary-color);">ئاماری ئەمڕۆ</h3>
                     <div class="dashboard-cards">
                         <div class="dash-card"><h4>کۆی گشتی</h4><h3 id="statTotal">0</h3></div>
                         <div class="dash-card"><h4>هاووڵاتیان</h4><h3 id="statUser" style="color: #28a745;">0</h3></div>
@@ -640,7 +639,7 @@
                 </div>
 
                 <div id="preRegAdminBlock" style="background: rgba(0, 86, 179, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(0, 86, 179, 0.2);" class="no-print">
-                    <h3 style="margin-top: 0; font-size: 14px; color: #0056b3;">ده‌سه‌ڵاتی ئه‌دمین</h3>
+                    <h3 style="margin-top: 0; font-size: 14px; color: var(--primary-color);">ده‌سه‌ڵاتی ئه‌دمین</h3>
                     <button id="openPreRegBtn" class="action-btn" style="background: #17a2b8; padding: 10px;" onclick="showPreRegForm()">کردنەوەی بەشی تۆمارکردن</button>
                     
                     <div id="preRegForm" style="display: none; margin-top: 10px;">
@@ -771,7 +770,7 @@
         <div id="examSection" class="page-section" style="display: none;">
             <div class="exam-container">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                    <h2 style="margin:0; font-size: 15px;"><i class="fa-solid fa-graduation-cap" style="color: #0056b3;"></i> تاقیکردنەوەی مۆڵەتی شۆفێری</h2>
+                    <h2 style="margin:0; font-size: 15px;"><i class="fa-solid fa-graduation-cap" style="color: var(--primary-color);"></i> تاقیکردنەوەی مۆڵەتی شۆفێری</h2>
                     <button onclick="navTo('portal')" class="btn-reset" style="padding: 5px 10px;">گەڕانەوە</button>
                 </div>
                 
@@ -794,7 +793,51 @@
                     <i class="fa-solid fa-award" style="font-size: 50px; color: #28a745; margin-bottom: 15px;"></i>
                     <h3 id="resultTitle" style="font-size: 18px; margin-bottom: 10px;">ئەنجامی تاقیکردنەوە</h3>
                     <p id="resultScore" style="font-size: 15px; font-weight: bold; color: var(--text-main); margin-bottom: 20px;"></p>
-                    <button class="action-btn" onclick="resetExamMenu()" style="background: #0056b3;">گەڕانەوە بۆ لیستی پرسیارەکان</button>
+                    <button class="action-btn" onclick="resetExamMenu()" style="background: var(--primary-color);">گەڕانەوە بۆ لیستی پرسیارەکان</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- بەشی ڕێنماییە دەوڵەمەندەکانی سەلامەتی هاتووچۆ -->
+        <div id="safetySection" class="page-section" style="display: none;">
+            <div class="safety-container">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h2 style="margin:0; font-size: 15px;"><i class="fa-solid fa-shield-halved" style="color: var(--primary-color);"></i> ڕێنماییەکانی سەلامەتی هاتووچۆ</h2>
+                    <button onclick="navTo('portal')" class="btn-reset" style="padding: 5px 10px;">گەڕانەوە</button>
+                </div>
+                <p style="font-size: 12px; color: var(--label-color); margin-bottom: 15px; text-align: center;">پەیرەوکردنی ئەم ڕێنماییانە گیانی تۆ و هاووڵاتیان دەپارێزێت:</p>
+                
+                <div class="safety-item">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <div><b>بەستنی پشتێنەی سەلامەتی:</b> هەمیشە پێش جووڵانی ئۆتۆمبێل پشتێنەکەت ببەستە، چونکە مەترسی گیانلەدەستدان لە کاتی ڕووداوەکاندا تا ٥٠٪ کەم دەکاتەوە.</div>
+                </div>
+                <div class="safety-item">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <div><b>پەیرەوکردنی خێرایی ڕێگەپێدراو:</b> خێرایی زیاد لە سنوور هۆکاری یەکەمی ڕووداوە کوشندەکانە. هەمیشە ئاگاداری تابلۆکانی خێرایی ببن.</div>
+                </div>
+                <div class="safety-item">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <div><b>دوورکەوتنەوە لە بەکارهێنانی مۆبایل:</b> قسەکردن یان نووسینی پەیام لە کاتی لێخوڕیندا سەرنجی شۆفێر پچڕ دەكات و مەترسی پێکدادان زۆر زیاد دەکات.</div>
+                </div>
+                <div class="safety-item">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <div><b>جێهێشتنی مەودای سەلامەت:</b> هەمیشە مەودای پێویست لە نێوان ئۆتۆمبێلەکەت و ئۆتۆمبێلی پێشەوەت بهێڵە، بەتایبەت لە کاتی بارانبارین و تەموومژدا.</div>
+                </div>
+                <div class="safety-item">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <div><b>پشکنینی بەردەوامی ئۆتۆمبێل:</b> پشکنینی پەمپی برێک، بڕی ڕۆن، ئاوی ساردکەرەوە، و دۆخی تایەکان پێش هەر گەشتێکی دوور زۆر پێویستە.</div>
+                </div>
+                <div class="safety-item">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <div><b>ڕێزگرتن لە پیادەکان:</b> شۆفێر پابەندە بە وەستان لە خط الممشى (هێڵی پەڕینەوەی پیادە) بۆ ئەوەی هاووڵاتیان بە سەلامەتی بپەڕنەوە.</div>
+                </div>
+                <div class="safety-item">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <div><b>پاراستنی منداڵان:</b> دەبێت منداڵانی خوار ١٢ ساڵ هەمیشە لە کورسی دواوەی ئۆتۆمبێل دابنیشن و کورسی تایبەتی منداڵ بەکاربهێنرێت.</div>
+                </div>
+                <div class="safety-item">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <div><b>ئاگابوون لە ترافیک لایت و هێماکان:</b> بڕینی گڵۆپی سوور تاوانێکی گەورەیە و سزای قورسی دارایی و یاسایی بەدوای خۆیدا دەهێنێت.</div>
                 </div>
             </div>
         </div>
@@ -813,10 +856,25 @@
         </div>
     </div>
 
-    <div class="container" id="verifySection" style="display: none; max-width: 400px; margin: 50px auto; border: 3px solid #0056b3;">
-        <h2 style="color: #0056b3; margin-top: 10px;"><i class="fa-solid fa-shield-check"></i> دڵنیابوونەوەی پسوولە</h2>
+    <!-- مۆداڵی گۆڕینی ڕەنگی سەرەکی ئەپەکە -->
+    <div class="modal-overlay" id="color-modal" onclick="closeColorPicker(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <h3 style="color: var(--modal-text);">🎨 هەڵبژاردنی ڕەنگی سەرەکی ئەپەکە</h3>
+            <p style="font-size: 11px; color: var(--label-color); margin-bottom: 15px;">ڕەنگی دڵخوازی خۆت بۆ دوگمە و سەردێڕەکان هەڵبژێرە:</p>
+            <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 15px;">
+                <div onclick="setAccentColor('#0056b3')" style="width: 40px; height: 40px; border-radius: 50%; background: #0056b3; cursor: pointer; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" title="شینی کلاسیک"></div>
+                <div onclick="setAccentColor('#28a745')" style="width: 40px; height: 40px; border-radius: 50%; background: #28a745; cursor: pointer; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" title="سەوزی سەلامەتی"></div>
+                <div onclick="setAccentColor('#8e44ad')" style="width: 40px; height: 40px; border-radius: 50%; background: #8e44ad; cursor: pointer; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" title="مۆری شاهانە"></div>
+                <div onclick="setAccentColor('#e67e22')" style="width: 40px; height: 40px; border-radius: 50%; background: #e67e22; cursor: pointer; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" title="نارنجی گەرم"></div>
+            </div>
+            <button class="action-btn" onclick="closeColorPicker()" style="background: var(--primary-color);">داخستن</button>
+        </div>
+    </div>
+
+    <div class="container" id="verifySection" style="display: none; max-width: 400px; margin: 50px auto; border: 3px solid var(--primary-color);">
+        <h2 style="color: var(--primary-color); margin-top: 10px;"><i class="fa-solid fa-shield-check"></i> دڵنیابوونەوەی پسوولە</h2>
         <div id="verifyResult" style="padding: 15px; font-size: 15px; font-weight: bold; margin-top: 12px; border-radius: 8px; background: #e9ecef;">چاوەڕێ بکە...</div>
-        <button class="action-btn" onclick="window.location.href=window.location.origin + window.location.pathname" style="background: #0056b3; margin-top: 15px;">گەڕانەوە بۆ سەرەتا</button>
+        <button class="action-btn" onclick="window.location.href=window.location.origin + window.location.pathname" style="background: var(--primary-color); margin-top: 15px;">گەڕانەوە بۆ سەرەتا</button>
     </div>
 
     <div class="rating-container no-print" id="ratingSystem">
@@ -871,6 +929,10 @@
             <i class="fa-solid fa-graduation-cap"></i>
             <span>تاقیکردنەوە</span>
         </div>
+        <div class="nav-item" onclick="navTo('safety')" id="nav-safety">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>ڕێنمایی</span>
+        </div>
     </nav>
 
     <script>
@@ -880,6 +942,32 @@
                 event.preventDefault();
             }
         });
+
+        // سیستەمی گۆڕینی ڕەنگی سەرەکی ئەپەکە
+        function setAccentColor(color) {
+            vibrate();
+            document.documentElement.style.setProperty('--primary-color', color);
+            localStorage.setItem('app_accent_color', color);
+            closeColorPicker();
+        }
+
+        let savedColor = localStorage.getItem('app_accent_color');
+        if (savedColor) {
+            document.documentElement.style.setProperty('--primary-color', savedColor);
+        }
+
+        function openColorPicker() {
+            vibrate();
+            const modal = document.getElementById('color-modal');
+            modal.style.display = 'flex';
+            setTimeout(() => { modal.classList.add('show'); }, 10);
+        }
+
+        function closeColorPicker(e) {
+            const modal = document.getElementById('color-modal');
+            modal.classList.remove('show');
+            setTimeout(() => { modal.style.display = 'none'; }, 300);
+        }
 
         let lastScrollTop = 0;
         const bottomNavBar = document.getElementById('bottomNav');
@@ -1225,7 +1313,6 @@
             vibrate(10);
             if (section !== 'exam') { clearInterval(examTimerInterval); }
 
-            // تەنها ئەگەر یەکەمجار بێت لەم سێشنەدا (Session)، ئاگادارییەکە نیشان دەدات
             if (section === 'exam' && !sessionStorage.getItem('exam_alert_shown')) {
                 Swal.fire({
                     title: 'ئاگاداری گرنگ ⚠️',
@@ -1291,10 +1378,8 @@
         let currentTheme = localStorage.getItem("theme");
         
         if (!currentTheme) {
-            // ئەگەر بەکارهێنەر بە دەست خۆی ڕەنگی نەگۆڕیبێت، بەپێی کاتی عێراق (بغداد) هەڵسوکەوت دەکات
             const nowIraq = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Baghdad" }));
             const hour = nowIraq.getHours();
-            // لە کاتژمێر 7ی ئێوارە (19:00) تا 6ی بەیانی (06:00) دەبێتە تاریک
             currentTheme = (hour >= 19 || hour < 6) ? "dark" : "light";
         }
         
@@ -1304,7 +1389,7 @@
             document.getElementById("themeToggleBtn").innerText = "☀️"; 
             if(metaThemeColor) metaThemeColor.setAttribute("content", "#121212");
         } else {
-            if(metaThemeColor) metaThemeColor.setAttribute("content", "#f0f8ff");
+            if(metaThemeColor) metaThemeColor.setAttribute("content", "#0056b3");
         }
 
         function toggleTheme() {
@@ -1320,7 +1405,7 @@
             } else {
                 document.getElementById("themeToggleBtn").innerText = "🌙"; 
                 localStorage.setItem("theme", "light");
-                if(metaTheme) metaTheme.setAttribute("content", "#f0f8ff");
+                if(metaTheme) metaTheme.setAttribute("content", getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim());
             }
         }
         function vibrate(ms = 15) { if (navigator.vibrate) navigator.vibrate(ms); }
@@ -1624,9 +1709,9 @@
                 if(qrContainer) { qrContainer.innerHTML = ""; new QRCode(qrContainer, { text: verifyUrl, width: 90, height: 90, colorDark : "#000000", colorLight : "#ffffff", correctLevel : QRCode.CorrectLevel.H }); }
             }, 100);
             return `
-                <div style="border: 2px dashed #0056b3; padding: 20px; border-radius: 10px; background: #f0f8ff; text-align: center;">
-                    <i class="fa-solid fa-address-card" style="font-size: 40px; color: #0056b3; margin-bottom: 10px;"></i>
-                    <h3 style="margin: 0 0 15px 0; color: #0056b3; font-size: 18px;">هاتووچۆی هەڵەبجە</h3>
+                <div style="border: 2px dashed var(--primary-color); padding: 20px; border-radius: 10px; background: #f0f8ff; text-align: center;">
+                    <i class="fa-solid fa-address-card" style="font-size: 40px; color: var(--primary-color); margin-bottom: 10px;"></i>
+                    <h3 style="margin: 0 0 15px 0; color: var(--primary-color); font-size: 18px;">هاتووچۆی هەڵەبجە</h3>
                     <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #cce5ff; text-align: right;">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <div><p style="margin: 5px 0; font-size: 15px; color: #000000;"><strong>ناو:</strong> ${name}</p><p style="margin: 5px 0; font-size: 15px; color: #000000;"><strong>مۆبایل:</strong> ${phone}</p></div>
@@ -1948,7 +2033,7 @@
                     if (isManualLogin && window.PublicKeyCredential && !localStorage.getItem("admin_biometric_pwd")) {
                         Swal.close();
                         const enableBio = await Swal.fire({
-                            title: '<i class="fa-solid fa-face-viewfinder" style="font-size: 40px; color: #0056b3;"></i>',
+                            title: '<i class="fa-solid fa-face-viewfinder" style="font-size: 40px; color: var(--primary-color);"></i>',
                             html: '<b>دەتەوێت Face ID / Touch ID چالاک بکەیت؟</b><br><br><span style="font-size:13px; color:#555;">بۆ ئەوەی جارێکی تر پێویست بە نووسینی پاسوۆرد نەکات و ڕاستەوخۆ بە سکانکردنی دەموچاو یان پەنجەمۆر بچیتە ژوورەوە.</span>',
                             showCancelButton: true, confirmButtonText: 'بەڵێ، چالاکی بکە', cancelButtonText: 'نەخێر، سوپاس', confirmButtonColor: '#28a745'
                         });
@@ -2231,7 +2316,7 @@
                         }
 
                         let row = `<tr>
-                            <td style="font-weight: bold; color: #4da3ff;">${user.rank}</td><td>${user.name}</td><td>${user.phone}</td><td>${user.createdAt}</td>
+                            <td style="font-weight: bold; color: var(--primary-color);">${user.rank}</td><td>${user.name}</td><td>${user.phone}</td><td>${user.createdAt}</td>
                             <td class="no-print">
                                 <div style="display: flex; gap: 5px; justify-content: center;">
                                     ${actionButtons}
