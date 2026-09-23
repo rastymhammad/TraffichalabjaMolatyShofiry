@@ -155,7 +155,6 @@
         .nav-item.active i, .nav-item.active span { color: #0056b3 !important; }
         body.dark-mode .nav-item.active i, body.dark-mode .nav-item.active span { color: #4da3ff !important; }
 
-        /* دیزاینی نوێ و رێکوپێکی کاردەکان بە شێوازی Grid بۆ ئەوەی ئایکۆنەکان لە ناو بۆکسەکەدا بن و قایسیان وەک یەک بێت[cite: 10, 11] */
         .portal-cards { display: flex; flex-direction: column; gap: 12px; width: 100%; align-items: center; }
         .portal-card {
             background: var(--header-bg);
@@ -504,7 +503,6 @@
                         <h3>سیستەمی نۆرەگرتنی مۆڵەتی شۆفێری</h3>
                         <p>بۆ نوێکردنەوەی مۆڵەت و مامەڵەکان</p>
                     </div>
-                    <div></div>
                 </div>
                 <div class="portal-card" onclick="navTo('fine')">
                     <i class="fa-solid fa-calculator"></i>
@@ -512,7 +510,6 @@
                         <h3>هەژمارکردنی غەرامە</h3>
                         <p>بزانە مۆڵەتەکەت چەند غەرامەی هەیە</p>
                     </div>
-                    <div></div>
                 </div>
             </div>
         </div>
@@ -1659,6 +1656,7 @@
             }
         }
 
+        // --- چاککردنەوەی کێشەی گەڕان بۆ ئەوەی پسوولەی کەسانی تر لەسەر مۆبایلی تۆ سەیڤ نەبێت ---
         async function searchUser() {
             if (!navigator.onLine) {
                  return Swal.fire('کێشەی هێڵ', 'مۆبایلەکەت هێڵی ئینتەرنێتی نییە!', 'error');
@@ -1672,7 +1670,7 @@
                 if(response.ok) {
                     let todayDateStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
                     let searchQrToken = btoa(result.phone + "|" + todayDateStr.replace(/-/g, ''));
-                    // تەنها پسوولەکە پیشان دەدات بێ ئەوەی لە localStorage سەیڤی بکات وەک پسوولەی تۆ
+                    // تەنها پیشان دەدات بێ ئەوەی لە localStorage سەیڤی بکات
                     Swal.fire({ html: generateTicketHTML(result.name, result.phone, result.rank, result.timeMessage, searchQrToken, result.Date), confirmButtonText: 'باشە', confirmButtonColor: '#0056b3' });
                 } else Swal.fire('نەدۆزرایەوە', result.message || 'ناو نەدۆزرایەوە!', 'error');
                 document.getElementById("searchInput").value = "";
