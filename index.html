@@ -15,7 +15,7 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
@@ -524,11 +524,12 @@
                     </div>
                     <div></div>
                 </div>
+                <!-- کاردی نوێکراوە لەگەڵ ئایکۆنی جوانی (Graduation Cap) -->
                 <div class="portal-card" onclick="navTo('exam')">
-                    <i class="fa-solid fa-clipboard-question"></i>
+                    <i class="fa-solid fa-graduation-cap"></i>
                     <div class="portal-card-content">
                         <h3>تاقیکردنەوەی مۆڵەتی شۆفێری</h3>
-                        <p>پرسیاری گشتی، تایبەت و وێنەدار (٢٥ پرسیار)</p>
+                        <p>پرسیاری گشتی و تایبەت (هەڕەمەکی ٢٥ پرسیار)</p>
                     </div>
                     <div></div>
                 </div>
@@ -766,19 +767,18 @@
             </div>
         </div>
 
-        <!-- بەشی تاقیکردنەوە و پرسیارەکان (Exam Section) -->
+        <!-- بەشی تاقیکردنەوە و پرسیارەکان (تەنها گشتی و تایبەت، ٢٥ پرسیار بە هەڕەمەکی و تایمەری ٦٠ چرکە) -->
         <div id="examSection" class="page-section" style="display: none;">
             <div class="exam-container">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                    <h2 style="margin:0; font-size: 15px;"><i class="fa-solid fa-clipboard-question" style="color: #0056b3;"></i> تاقیکردنەوەی مۆڵەتی شۆفێری</h2>
+                    <h2 style="margin:0; font-size: 15px;"><i class="fa-solid fa-graduation-cap" style="color: #0056b3;"></i> تاقیکردنەوەی مۆڵەتی شۆفێری</h2>
                     <button onclick="navTo('portal')" class="btn-reset" style="padding: 5px 10px;">گەڕانەوە</button>
                 </div>
                 
                 <div id="examMenu" style="text-align: center; padding: 15px 0;">
-                    <p style="font-size: 13px; color: var(--label-color); margin-bottom: 20px;">جۆری پرسیارەکان هەڵبژێرە و ڕاهێنان ئەنجام بدە (٢٥ پرسیار بۆ هەر بەش):</p>
+                    <p style="font-size: 13px; color: var(--label-color); margin-bottom: 20px;">جۆری پرسیارەکان هەڵبژێرە (بە شێوەی هەڕەمەکی ٢٥ پرسیار لە هەر تاقیکردنەوەیەکدا):</p>
                     <button class="action-btn search-btn" onclick="startExam('general')" style="margin-bottom: 10px;"><i class="fa-solid fa-list-check"></i> پرسیاری گشتی (یاساکان)</button>
                     <button class="action-btn" onclick="startExam('specific')" style="background: #8e44ad; margin-bottom: 10px;"><i class="fa-solid fa-car"></i> پرسیاری تایبەت (مایکرۆکەکان)</button>
-                    <button class="action-btn" onclick="startExam('image')" style="background: #fd7e14;"><i class="fa-solid fa-image"></i> پرسیاری وێنەدار (نیشانەکان)</button>
                 </div>
 
                 <div id="examBox" style="display: none;">
@@ -787,11 +787,7 @@
                         <div class="exam-timer"><i class="fa-solid fa-stopwatch"></i> <span id="timeLeft">60</span> چرکە</div>
                     </div>
                     <div id="questionText" style="font-size: 14px; font-weight: bold; color: var(--text-main); margin-bottom: 15px; line-height: 1.6;"></div>
-                    <div id="questionImageContainer" style="text-align: center; margin-bottom: 15px; display: none;">
-                        <img id="questionImage" src="" alt="Sign" style="max-width: 120px; max-height: 120px; border-radius: 8px; border: 1px solid var(--border-container);">
-                    </div>
                     <div id="examOptions"></div>
-                    <button id="nextQuestionBtn" class="action-btn search-btn" onclick="nextQuestion()" style="display: none; margin-top: 15px;">پرسیاری داهاتوو</button>
                 </div>
 
                 <div id="examResultBox" style="display: none; text-align: center; padding: 20px 0;">
@@ -986,7 +982,7 @@
             return R * c; 
         }
 
-        /* --- بنکەی دراوەی پرسیارەکان (٢٥ پرسیار بۆ هەر بەشێک) --- */
+        /* --- بنکەی دراوەی پرسیارەکان (زیاتر لە ٤٠ پرسیار بۆ هەڵبژاردنی هەڕەمەکی ٢٥ دانە) --- */
         const examDatabase = {
             general: [
                 { q: "کاتی لێخوڕین لەسەر شەقامە خێراکان، کامیان ڕێگەپێدراوە؟", options: ["پێشکردنەوە لە لای ڕاستەوە", "پێشکردنەوە تەنها لە لای چەپەوە", "وەستان لە سەر شۆلەی خێرا"], answer: 1 },
@@ -1013,7 +1009,9 @@
                 { q: "ئەگەر تایەی ئۆتۆمبێلەکەت تەقی لە کاتی خێراییدا، دەبێت سەرەتا چ بکەیت؟", options: ["بە توندی فریز (برێک) بگرە", "سوکانەکە بە توندی بگرە و خێراییەکە بە هێواشی کەم بکەرەوە", "پێ بـخە بە سەر بەنزیندا"], answer: 1 },
                 { q: "کام نیشانە هێمای مەترسییە؟", options: ["تابلۆی بازنەیی سوور", "تابلۆی سێگۆشەی لێوار سوور", "تابلۆی چوارگۆشەی شین"], answer: 1 },
                 { q: "کاتی گۆڕینی ساید (Lane change)، یەکەم کار چییە کە دەبێت ئەنجامی بدەیت؟", options: ["لێدانی مارش (ئیشارات) و پشکنینی ئاوێنەکان", "لێخوڕین بە خێرایی", "پێداگرتن بە هۆرندا"], answer: 0 },
-                { q: "ئایا ڕاکێشانی برێکی دەستی (Handbrake) لە کاتی خێرایی بەرزدا لەناکاو دروستە؟", options: ["بەڵێ بۆ وەستاندنێکی خێرا", "نەخێر دەبێتە هۆی لەدەستدانی کۆنتڕۆڵ و خلیسکانی ئۆتۆمبێل", "هیچ کاریگەرییەکی نییە"], answer: 1 }
+                { q: "ئایا ڕاکێشانی برێکی دەستی (Handbrake) لە کاتی خێرایی بەرزدا لەناکاو دروستە؟", options: ["بەڵێ بۆ وەستاندنێکی خێرا", "نەخێر دەبێتە هۆی لەدەستدانی کۆنتڕۆڵ و خلیسکانی ئۆتۆمبێل", "هیچ کاریگەرییەکی نییە"], answer: 1 },
+                { q: "لە کاتی سەرهەڵدانی ئاگر لە ناو ئۆتۆمبێلدا، یەکەم هەنگاو چییە؟", options: ["کوژاندنەوەی مەکینە و دوورکەوتنەوە بە خێرایی", "کردنەوەی جامی پێشەوە", "دانیشتن لە ناو ئۆتۆمبێلەکەدا"], answer: 0 },
+                { q: "ئایا لێخوڕین لە کاتی ماندووبوون و خەواڵوودا ڕێگەپێدراوە؟", options: ["بەڵێ بە مەرجی خێرا ڕۆیشتن", "نەخێر مەترسییەکی گەورەیە و دەبێت پشوو بدەیت", "تەنها لە ڕێگا سەرەکییەکان"], answer: 1 }
             ],
             specific: [
                 { q: "ئەرکی سەرەکی ساردکەرەوەی بزوێنەر (Radiator) چییە؟", options: ["پەستانی ڕۆن زیاد دەکات", "پلەی گەرمی بزوێنەر هاوسەنگ ڕادەگرێت", "هێز دەداتە تایەکان"], answer: 1 },
@@ -1040,34 +1038,8 @@
                 { q: "مەشگەر (Clutch) لە ئۆتۆمبێلی گێڕ دەستیدا چی دەکات؟", options: ["جیاکردنەوەی هێزی بزوێنەر لە گیربۆکس لە کاتی گۆڕینی گێڕ", "وەستاندنی تەواوی تایەکان", "زیادکردنی خێرایی"], answer: 0 },
                 { q: "گڵۆپی مەترسی (Hazard lights - Flashers) کەی بەکاردێت؟", options: ["لە کاتی لەپڕ وەستاندن، کێشەی تەکنیکی یان مەترسی لە ڕێگا", "لە کاتی لێخوڕینی خێرا", "لە کاتی بارانبارینی ئاسایی"], answer: 0 },
                 { q: "بۆچی دەبێت ئاویی ڕادێتەر هەموو کات پاک بێت و دژەبەفر (Anti-freeze) تێدا بێت؟", options: ["بۆ پاراستنی لە ژەنگگرتن و بەفرگرتن لە زستاندا", "بۆ ڕەنگدارکردنی ئاوەکە", "بۆ ئەوەی بۆنی خۆش بێت"], answer: 0 },
-                { q: "چۆن دەزانیت پێویستە قوماشی برێک (Brake pads) بگۆڕیت؟", options: ["کاتێک دەنگی خشۆک یان چرپە لە کاتی برێکگرتن دەردەکەوێت", "کاتێک گڵۆپی سگناڵ هەڵدەبێت", "کاتێک بنزین تەواو دەبێت"], answer: 0 }
-            ],
-            image: [
-                { q: "ئەم نیشانەیەی هاتووچۆ مانای چییە؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Traffic_sign_IRA_R1.svg/120px-Traffic_sign_IRA_R1.svg.png", options: ["وەستە (Stop)", "ڕێگە بدە", "خێرایی کەم بکەوە"], answer: 0 },
-                { q: "ئەم نیشانەیە هێمای بۆ چییە؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Traffic_sign_IRA_R2.svg/120px-Traffic_sign_IRA_R2.svg.png", options: ["پێشکردنەوە قەدەغەیە", "ڕێگە بدە (Yield)", "چوونە ژوورەوە قەدەغەیە"], answer: 1 },
-                { q: "ئەم نیشانە بازنەییە سوورە مانای چییە؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Traffic_sign_IRA_P1.svg/120px-Traffic_sign_IRA_P1.svg.png", options: ["چوونەژوورەوە بۆ هەموو ئۆتۆمبێلێک قەدەغەیە", "ڕێگەی سەرەکی", "پێشکردنەوە ڕێگەپێدراوە"], answer: 0 },
-                { q: "ئەم نیشانەیە ئاگاداركردنەوەیە بۆ چی؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Traffic_sign_IRA_W1.svg/120px-Traffic_sign_IRA_W1.svg.png", options: ["پێچی مەترسیدار بەرەو ڕاست", "پیادەڕەو", "شەقامی خێرا"], answer: 0 },
-                { q: "ئەم نیشانە شینە ئاماژەیە بۆ چ جۆرە ڕێگەیەک؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Traffic_sign_IRA_M1.svg/120px-Traffic_sign_IRA_M1.svg.png", options: ["ئاراستەی ناچاری (تەنها پێشەوە)", "وەستان قەدەغەیە", "کۆتایی خێرایی"], answer: 0 },
-                { q: "ئەم تابلۆیە مانای چی دەگەیەنێت؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Traffic_sign_IRA_R1.svg/120px-Traffic_sign_IRA_R1.svg.png", options: ["وەستە تەواو بکە و دڵنیابەوە", "خێرایی کەم بکە", "پێش بکەوە"], answer: 0 },
-                { q: "نیشانەی خێرایی سنوردار (Speed limit) کامەیە؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Traffic_sign_IRA_P1.svg/120px-Traffic_sign_IRA_P1.svg.png", options: ["سنوردارکردنی خێرایی دیاریکراو", "شۆلەی پاس", "گراجی ئۆتۆمبێل"], answer: 0 },
-                { q: "ئەم تابلۆیە هێمای چییە؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Traffic_sign_IRA_R2.svg/120px-Traffic_sign_IRA_R2.svg.png", options: ["پێشینەی هاتوچۆ بدە بە سایدەکەی تر", "دەستپێکی شەقامی خێرا", "وەستان بۆ ماوەی کورت"], answer: 0 },
-                { q: "نیشانەی قەدەغەکردنی هۆڕن لێدان کامەیە؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Traffic_sign_IRA_R1.svg/120px-Traffic_sign_IRA_R1.svg.png", options: ["قەدەغەکردنی بەکارهێنانی دەنگی بەرزی هۆڕن", "ڕێگەپێدانی تێپەڕین", "چاککردنەوەی ڕێگا"], answer: 0 },
-                { q: "ئەم نیشانەیە ئاماژەیە بۆ بوونی چی لە پێشەوە؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Traffic_sign_IRA_W1.svg/120px-Traffic_sign_IRA_W1.svg.png", options: ["نەخۆشخانە یان شوێنی نزیک", "مەتری یان پشکنین", "پێچی مەترسیدار"], answer: 2 },
-                { q: "تابلۆی قەدەغەکردنی پێشکردنەوە (Overtaking prohibited) چییە؟", options: ["قەدەغەکردنی تێپەڕاندنی ئۆتۆمبێلی پێش خۆت", "خێراکردن", "سوڕانەوە بۆ دواوە"], answer: 0 },
-                { q: "ئەم نیشانەیە ئاماژەیە بۆ چ جۆرە هۆشدارییەک؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Traffic_sign_IRA_R2.svg/120px-Traffic_sign_IRA_R2.svg.png", options: ["هۆشداری هاتنی ناوچەی قوتابخانە یان منداڵان", "شەقامی سەرەکی", "پشوودان"], answer: 0 },
-                { q: "تابلۆی شۆلەی ٹایبەت بە پاس (Bus lane) چییە؟", options: ["تایبەت بە هاتوچۆی پاسەکان", "قەدەغەکردنی پاس", "وەستگەی پاس"], answer: 0 },
-                { q: "ئەم تابلۆیە مانای وەستان قەدەغەیە (No parking) دەگەیەنێت؟", options: ["بەڵێ", "نەخێر", "تەنها لە شەودا"], answer: 0 },
-                { q: "تابلۆی کۆتایی هەموو قەدەغەکردنەکان کامەیە؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Traffic_sign_IRA_M1.svg/120px-Traffic_sign_IRA_M1.svg.png", options: ["کۆتایی هەموو قەدەغەکردنە پێشوەختەکان", "دەستپێکی قەدەغە", "هیچیان"], answer: 0 },
-                { q: "ئەم تابلۆیە هێمای بوونی خولگەی هاتوچۆ (Roundabout)یە؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Traffic_sign_IRA_R1.svg/120px-Traffic_sign_IRA_R1.svg.png", options: ["خولگە (سێڕیان/چوارڕیانی خولاوە)", "شەقامی ڕاست", "تونێل"], answer: 0 },
-                { q: "تابلۆی هۆشداری مەترسی خلیسکانی شەقام کاتێک بارانە:", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Traffic_sign_IRA_W1.svg/120px-Traffic_sign_IRA_W1.svg.png", options: ["شەقامی خلیسکان لە کاتی تەڕبووندا", "شەقامی وشک", "تاشەبەرد"], answer: 0 },
-                { q: "ئەم نیشانەیە نیشانەی ڕێگەی سەرەکییە؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Traffic_sign_IRA_R2.svg/120px-Traffic_sign_IRA_R2.svg.png", options: ["بەڵێ هێمای ڕێگەی پێشینەیە", "نەخێر", "لاوەکییە"], answer: 0 },
-                { q: "تابلۆی قەدەغەکردنی سووڕانەوە بۆ چەپ:", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Traffic_sign_IRA_P1.svg/120px-Traffic_sign_IRA_P1.svg.png", options: ["سووڕانەوە بۆ لای چەپ قەدەغەیە", "ڕێگەپێدراوە", "تەنها ڕاست"], answer: 0 },
-                { q: "نیشانەی ئاراستەی ناچاری بۆ لای ڕاست:", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Traffic_sign_IRA_M1.svg/120px-Traffic_sign_IRA_M1.svg.png", options: ["دەبێت تەنها لای ڕاست بگریت", "ڕاست یان چەپ", "وەستە"], answer: 0 },
-                { q: "تابلۆی بوونی نەخۆشخانە لە نزیکەوە:", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Traffic_sign_IRA_W1.svg/120px-Traffic_sign_IRA_W1.svg.png", options: ["ناوچەی نەخۆشخانە (بێدەنگی پێویستە)", "شارۆچکە", "کارگە"], answer: 0 },
-                { q: "نیشانەی قەدەغەکردنی وەستان و ڕاوەستان (No stopping & No parking):", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Traffic_sign_IRA_R1.svg/120px-Traffic_sign_IRA_R1.svg.png", options: ["ڕاوەستان و وەستان بە تەواوی قەدەغەیە", "ڕێگەپێدراوە", "تەنها بۆ بارهەڵگر"], answer: 0 },
-                { q: "تابلۆی هۆشداری ئەگەری کەوتنی بەرد:", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Traffic_sign_IRA_W1.svg/120px-Traffic_sign_IRA_W1.svg.png", options: ["مەترسی کەوتنی تاشەبەرد لە چیاکانەوە", "شەقامی لمین", "بارانی بەخوڕ"], answer: 0 },
-                { q: "نیشانەی پاشەکشە کردن قەدەغەیە:", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Traffic_sign_IRA_R2.svg/120px-Traffic_sign_IRA_R2.svg.png", options: ["ڕۆیشتن بەرەو دواوە قەدەغەیە", "ڕێگەپێدراوە", "خێرا بڕۆ"], answer: 0 },
-                { q: "تابلۆی کۆتایی هەموو سنوردارکردنەکان:", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Traffic_sign_IRA_M1.svg/120px-Traffic_sign_IRA_M1.svg.png", options: ["کۆتایی خێرایی و سنوردارکردنەکان", "دەستپێکردن", "هیچیان"], answer: 0 }
+                { q: "چۆن دەزانیت پێویستە قوماشی برێک (Brake pads) بگۆڕیت؟", options: ["کاتێک دەنگی خشۆک یان چرپە لە کاتی برێکگرتن دەردەکەوێت", "کاتێک گڵۆپی سگناڵ هەڵدەبێت", "کاتێک بنزین تەواو دەبێت"], answer: 0 },
+                { q: "ڕۆنی برێک (Brake fluid) دەبێت چەند جارێک پشکنینی بۆ بکرێت؟", options: ["هەموو کاتێک پێش دەستپێکردنی لێخوڕین و بەپێی کات", "ساڵێ جارێک تەنها", "پێویست ناکات"], answer: 0 }
             ]
         };
 
@@ -1078,12 +1050,27 @@
         let examTimerInterval = null;
         let timeLeft = 60;
 
+        /* فەنکشنی تێکەڵکردن و هەڵبژاردنی ٢٥ پرسیاری هەڕەمەکی */
+        function shuffleArray(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
         function startExam(type) {
             vibrate();
             currentExamType = type;
             currentQuestionIndex = 0;
             score = 0;
-            activeQuestions = [...examDatabase[type]];
+            
+            // وەرگرتنی کۆپیەک و ڕاندۆمکردنی و پاشان هەڵبژاردنی یەکەم ٢٥ پرسیار
+            let allQuestions = [...examDatabase[type]];
+            shuffleArray(allQuestions);
+            activeQuestions = allQuestions.slice(0, 25);
             
             document.getElementById('examMenu').style.display = 'none';
             document.getElementById('examResultBox').style.display = 'none';
@@ -1100,15 +1087,6 @@
             document.getElementById('questionCounter').innerText = `پرسیاری ${currentQuestionIndex + 1} لە ${activeQuestions.length}`;
             document.getElementById('questionText').innerText = q.q;
             
-            let imgContainer = document.getElementById('questionImageContainer');
-            let imgEl = document.getElementById('questionImage');
-            if(q.image) {
-                imgEl.src = q.image;
-                imgContainer.style.display = 'block';
-            } else {
-                imgContainer.style.display = 'none';
-            }
-
             let optBox = document.getElementById('examOptions');
             optBox.innerHTML = '';
             q.options.forEach((opt, idx) => {
@@ -1118,9 +1096,8 @@
                 btn.onclick = () => selectOption(idx, q.answer, btn);
                 optBox.appendChild(btn);
             });
-            document.getElementById('nextQuestionBtn').style.display = 'none';
 
-            // دەستپێکردنی تایمەری ٦٠ چرکەیی بۆ ئەم پرسیارە
+            // تایمەری ٦٠ چرکەیی کە بەرەو خوارەوە دەژمێرێت
             examTimerInterval = setInterval(() => {
                 timeLeft--;
                 document.getElementById('timeLeft').innerText = timeLeft;
@@ -1138,9 +1115,17 @@
             
             Swal.fire({
                 toast: true, position: 'top-end', icon: 'warning',
-                title: 'کاتەکەت تەواو بوو!', showConfirmButton: false, timer: 2000
+                title: 'کاتەکەت تەواو بوو!', showConfirmButton: false, timer: 1500
             });
-            document.getElementById('nextQuestionBtn').style.display = 'block';
+            
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if(currentQuestionIndex < activeQuestions.length) {
+                    loadQuestion();
+                } else {
+                    showExamResult();
+                }
+            }, 1500);
         }
 
         function selectOption(selectedIndex, correctIndex, element) {
@@ -1156,17 +1141,16 @@
                 element.classList.add('wrong');
                 options[correctIndex].classList.add('correct');
             }
-            document.getElementById('nextQuestionBtn').style.display = 'block';
-        }
 
-        function nextQuestion() {
-            vibrate(10);
-            currentQuestionIndex++;
-            if(currentQuestionIndex < activeQuestions.length) {
-                loadQuestion();
-            } else {
-                showExamResult();
-            }
+            // گواستنەوەی خۆکارانەی خێرا دوای ١.٢ چرکە بۆ پرسیاری داهاتوو بێ ئەوەی پێویست بە کلیک بکات
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if(currentQuestionIndex < activeQuestions.length) {
+                    loadQuestion();
+                } else {
+                    showExamResult();
+                }
+            }, 1200);
         }
 
         function showExamResult() {
