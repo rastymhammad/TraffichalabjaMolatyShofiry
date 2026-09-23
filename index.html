@@ -987,6 +987,7 @@
             return R * c; 
         }
 
+        /* --- بنکەی دراوەی پرسیارەکان بە بێ نووسینی [پرسیاری ژمارە] لە سەرەتای دەقەکەدا --- */
         const baseGeneralQuestions = [
             { q: "کاتی لێخوڕین لەسەر شەقامە خێراکان، کامیان ڕێگەپێدراوە؟", options: ["پێشکردنەوە لە لای ڕاستەوە", "پێشکردنەوە تەنها لە لای چەپەوە", "وەستان لە سەر شۆلەی خێرا"], answer: 1 },
             { q: "ئایا لێخوڕین بە خێراییەکی زیاتر لە سنوری دیاریکراو ڕێگەپێدراوە لە کاتی لەتاوی فریاکەوتندا؟", options: ["بەڵێ بە مەرجی ئاگادارکردنەوە", "نەخێر بە هیچ شێوەیەک", "تەنها لە شەواندا"], answer: 1 },
@@ -1020,16 +1021,14 @@
 
         function generateLargeQuestionPool(baseList, targetCount) {
             let pool = [];
-            let idCounter = 1;
             while(pool.length < targetCount) {
                 for(let item of baseList) {
                     if(pool.length >= targetCount) break;
                     pool.push({
-                        q: `[پرسیاری ${idCounter}] ` + item.q,
+                        q: item.q, // بێ زیادکردنی هیچ دەقێکی زیادە لە سەرەتادا
                         options: [...item.options],
                         answer: item.answer
                     });
-                    idCounter++;
                 }
             }
             return pool;
@@ -1227,7 +1226,7 @@
             vibrate(10);
             if (section !== 'exam') { clearInterval(examTimerInterval); }
 
-            // تەنها لە یەکەم جاردا (یان دوای داخستنی ئەپەکە) ئاگادارییەکە نیشان بدات
+            // تەنها لە یەکەم جەلسەدا (Session) کاتێک دەچێتە بەشی تاقیکردنەوە، ئاگادارییەکە نیشان دەدات
             if (section === 'exam' && !sessionStorage.getItem('exam_alert_shown')) {
                 Swal.fire({
                     title: 'ئاگاداری گرنگ ⚠️',
