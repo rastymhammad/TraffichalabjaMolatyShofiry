@@ -1672,10 +1672,7 @@
                 if(response.ok) {
                     let todayDateStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
                     let searchQrToken = btoa(result.phone + "|" + todayDateStr.replace(/-/g, ''));
-                    let oldTicket = JSON.parse(localStorage.getItem("my_daily_ticket") || "{}");
-                    let currentTimestamp = oldTicket.timestamp || new Date().getTime(); 
-                    localStorage.setItem("my_daily_ticket", JSON.stringify({ name: result.name, phone: result.phone, rank: result.rank, time: result.timeMessage, qrCode: searchQrToken, date: result.Date, savedAt: todayDateStr, timestamp: currentTimestamp }));
-                    checkSavedTicket();
+                    // تەنها پسوولەکە پیشان دەدات بێ ئەوەی لە localStorage سەیڤی بکات وەک پسوولەی تۆ
                     Swal.fire({ html: generateTicketHTML(result.name, result.phone, result.rank, result.timeMessage, searchQrToken, result.Date), confirmButtonText: 'باشە', confirmButtonColor: '#0056b3' });
                 } else Swal.fire('نەدۆزرایەوە', result.message || 'ناو نەدۆزرایەوە!', 'error');
                 document.getElementById("searchInput").value = "";
