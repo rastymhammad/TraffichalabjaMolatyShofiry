@@ -199,28 +199,23 @@
         .portal-card-content h3 { margin: 0 0 4px 0; font-size: 14px; color: var(--text-main); font-weight: bold; }
         .portal-card-content p { margin: 0; font-size: 11px; color: var(--label-color); }
 
-        /* ستايڵی بەشی هێماکانی هاتووچۆ */
+        /* ستايڵی بەشی هێماکانی هاتووچۆ (بێ نووسینی خوارەوە) */
         .signs-container { background: var(--bg-container); border-radius: 16px; padding: 18px; border: 1px solid var(--border-container); text-align: right; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         .signs-filter-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; direction: rtl; }
         .signs-filter-tab { background: var(--toggle-bg); border: 1px solid var(--toggle-border); padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; color: var(--text-main); cursor: pointer; white-space: nowrap; transition: 0.2s; }
         .signs-filter-tab.active { background: var(--primary-color); color: white; border-color: var(--primary-color); }
         
-        .signs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; max-height: 65vh; overflow-y: auto; padding: 5px; }
+        .signs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; max-height: 65vh; overflow-y: auto; padding: 5px; }
         .sign-card { 
             background: #ffffff !important; 
             border: 1px solid var(--border-container); 
-            border-radius: 12px; padding: 12px 8px; text-align: center; 
-            display: flex; flex-direction: column; align-items: center; justify-content: space-between; 
+            border-radius: 12px; padding: 10px; text-align: center; 
+            display: flex; align-items: center; justify-content: center; 
             box-shadow: 0 2px 8px rgba(0,0,0,0.05); cursor: pointer;
-            transition: 0.2s; 
+            transition: 0.2s; height: 110px;
         }
         .sign-card:hover { transform: translateY(-2px); border-color: var(--primary-color); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .sign-icon-box { 
-            width: 75px; height: 75px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; 
-            background: #ffffff !important; border-radius: 8px; border: 1px solid #e2e8f0; padding: 4px;
-        }
-        .sign-icon-box img { width: 100%; height: 100%; object-fit: contain; }
-        .sign-title { font-size: 11px; font-weight: bold; color: #333333 !important; line-height: 1.4; }
+        .sign-card img { width: 100%; height: 100%; object-fit: contain; }
 
         /* مۆداڵی پێشاندانی گەورەی هێماکان (Lightbox) */
         .sign-lightbox {
@@ -242,11 +237,10 @@
         }
         .lightbox-close:hover { background: #e2e8f0; }
         .lightbox-img-box {
-            width: 200px; height: 200px; margin: 15px auto; display: flex; align-items: center; justify-content: center;
+            width: 220px; height: 220px; margin: 15px auto; display: flex; align-items: center; justify-content: center;
             background: #ffffff; border-radius: 16px; border: 2px solid #e2e8f0; box-shadow: 0 4px 15px rgba(0,0,0,0.08); padding: 10px;
         }
         .lightbox-img-box img { width: 100%; height: 100%; object-fit: contain; }
-        .lightbox-title { font-size: 14px; font-weight: bold; color: #1e293b; line-height: 1.5; margin-top: 10px; }
         .lightbox-nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; gap: 10px; }
         .lightbox-btn { flex: 1; background: var(--primary-color); color: white; border: none; padding: 10px; border-radius: 10px; font-size: 13px; font-weight: bold; cursor: pointer; font-family: 'Rudaw', Tahoma, sans-serif; transition: 0.2s; }
         .lightbox-btn:hover { opacity: 0.9; }
@@ -854,7 +848,7 @@
             </div>
         </div>
 
-        <!-- بەشی هێماکانی هاتووچۆ (سەرجەم ۳٠٨ هێما لە فۆڵدەری images/) -->
+        <!-- بەشی هێماکانی هاتووچۆ (سەرجەم ۳٠٨ تابلۆ، تەنها وێنەی پەتی بەبێ نووسینی ژێرەوە) -->
         <div id="signsSection" class="page-section" style="display: none;">
             <div class="signs-container">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -872,7 +866,7 @@
                 </div>
 
                 <div class="signs-grid" id="signsGridContainer">
-                    <!-- وێنەکان لە فۆڵدەری images بار دەبن -->
+                    <!-- وێنەکان لە فۆڵدەری images/ بار دەبن بێ نووسینی خوارەوە -->
                 </div>
             </div>
         </div>
@@ -922,14 +916,13 @@
         </div>
     </div>
 
-    <!-- مۆداڵی پێشاندانی گەورەی هێماکان (Lightbox بۆ گۆڕینی یەک بە یەک) -->
+    <!-- مۆداڵی پێشاندانی گەورەی وێنەکان (Lightbox بۆ گۆڕینی یەک بە یەک) -->
     <div id="signLightbox" class="sign-lightbox" onclick="closeSignLightbox()">
         <div class="lightbox-content" onclick="event.stopPropagation()">
             <button class="lightbox-close" onclick="closeSignLightbox()"><i class="fa-solid fa-xmark"></i></button>
             <div class="lightbox-img-box">
                 <img id="lightboxImg" src="" alt="Sign">
             </div>
-            <div id="lightboxTitle" class="lightbox-title"></div>
             <div class="lightbox-nav-row">
                 <button class="lightbox-btn" onclick="changeSignModal(1)"><i class="fa-solid fa-arrow-right"></i> پێشوو</button>
                 <button class="lightbox-btn" onclick="changeSignModal(-1)">داهاتوو <i class="fa-solid fa-arrow-left"></i></button>
@@ -1037,37 +1030,15 @@
             }
         });
 
-        // بارکردنی سەرجەم ۳٠٨ هێماکە لە فۆڵدەری images/ لەگەڵ ناوی ڕەسەنی زانستی خۆیان
+        // دروستکردنی سەرجەم ۳٠٨ وێنەی تابلۆکان لە فۆڵدەری images/ بە بێ هیچ نووسینێکی خوارەوە
         const trafficSignsData = [];
         const signCategories = ['warning', 'prohibitory', 'mandatory', 'guide', 'dashboard'];
-        const officialNames = [
-            "به‌رده‌خزه (مه‌رسپینان) له‌ پێشه‌وه‌", "نه‌سپ سوار له‌ پێشه‌وه‌", "هاتووچۆی رووبه روو له‌ پێشه‌وه‌", 
-            "یه‌کتربری مه‌ترسیدار له‌ پێشه‌وه‌", "پابه‌ندبوونی دەسته راست به‌کاره", "ترافیک لایت له‌ پێشه‌وه‌", 
-            "ناژه‌ڵی کیوی له‌ پێشه‌وه‌", "قه‌راغ ریگه‌ی مه‌ترسیدار", "تاسه‌ی ده‌سکرد له‌ پێشه‌وه‌", "ناژه‌ڵی مالی له‌ پێشه‌وه‌", 
-            "مه‌ترسی ریزبه‌ستن له‌ پێشه‌وه‌", "چوارریانی مه‌ترسیدار له‌ پێشه‌وه‌", "رنرموی پاسکیل له‌ پێشه‌وه‌", 
-            "رنگه‌ی خلیسک له‌ پێشه‌وه‌", "رد گله (تاسه) له‌ پێشه‌وه‌", "شوینی په رینه وه ی پیاده له‌ پێشه‌وه‌", 
-            "مندال له‌ پێشه‌وه‌", "به‌رد یان زیخ په رین له‌ پێشه‌وه‌", "کارکردنی سه‌رشه قام له‌ پێشه‌وه‌", "ته‌سکبوونه‌وی شه‌قام لای چه‌په‌وه‌",
-            "هیڵی شه‌مه‌نده‌فه‌ر به‌ بن له‌ مه‌مپه‌ر", "پردی هه‌ڵدانه ‌وه‌ (پردی بزۆک)", "که‌نار ده‌ریا نزیکه‌", "په‌نج بۆ لای دەسته چه‌پ",
-            "ته‌سکبوونه‌وی شه‌قام لای راسته‌وه‌", "مه‌ترسی بای ته‌نیشت", "چه‌ند پێچیک یه‌که‌م بۆ دەسته راست", "تۆنیل له‌ پێشه‌وه‌",
-            "هیڵی شه‌مه‌نده‌فه‌ری یه‌ک ڕیره‌وه‌", "نه‌زمه‌ فریی فڕۆکه‌ له‌ پێشه‌وه‌", "چه‌ند پێچیک یه‌که‌م بۆ دەسته چه‌پ", "لیژی له‌ پێشه‌وه‌",
-            "نیشانه‌ی وریارکردنه‌وه‌ و مه‌ترسی", "هیڵی شه‌مه‌نده‌فه‌ری فره‌ زیره‌و", "ته‌سکبوونه‌وی شه‌قام له‌ هه‌ردولاوه‌", "هه‌وراز له‌ پێشه‌وه‌",
-            "لیخورینی پاس قه‌ده‌غه‌یه‌", "لیخورینی ماتور سکیل قه‌ده‌غه‌یه‌", "دوو ئاراده‌ی قورسایی له‌سه‌ر نه‌کسل", "پیچکردنه‌وه‌ بۆ دەسته راست قه‌ده‌غه‌یه‌",
-            "لیخورینی به‌هه‌ردوو ناراست قه‌ده‌غه‌یه‌", "لیخورینی باری مه‌ترسیدار قه‌ده‌غه‌یه‌", "نه‌سپ سواره‌ قه‌ده‌غه‌یه‌", "پیچکردنه‌وه‌ بۆ دەسته چه‌پ قه‌ده‌غه‌یه‌",
-            "لیخورینی ئوتومبیل و ماتور قه‌ده‌غه‌یه‌", "لیخورینی تراکتور قه‌ده‌غه‌یه‌", "پیاده‌ڕۆیشتن قه‌ده‌غه‌یه‌", "سووڕانه‌وه‌ قه‌ده‌غه‌یه‌",
-            "ڕێژەی قورسایی له‌سه‌ر سێکسل", "لیخورینی ماتور قه‌ده‌غه‌یه‌", "لیخورینی عه‌ره‌بانه‌ قه‌ده‌غه‌یه‌", "نه‌و پێری راده‌ی قورسایی",
-            "لیخورینی پاسکیل قه‌ده‌غه‌یه‌", "لیخورینی لوری قه‌ده‌غه‌یه‌", "عه‌ره‌بانه‌ی دستی قه‌ده‌غه‌یه‌", "دوارده‌ی قورسایی به‌ عه‌ره‌بانه‌وه‌",
-            "راوستان و پارک کردن قه‌ده‌غه‌یه‌", "تیپه‌ڕاندن قه‌ده‌غه‌یه‌", "تیپه‌ڕاندن بۆ لوری قه‌ده‌غه‌یه‌", "پارککردن قه‌ده‌غه‌یه‌",
-            "ڕێژەی قورسایی له‌سه‌ر جووت نه‌کسل", "تیپه‌ڕاندنی ریگه‌ی پیدراو", "ئاراسته‌ی پاسکیل لیخورین", "ڕێڕەوی دوو ئاراستەی پاسکیل",
-            "فرۆکه‌خانه‌", "وێستگەی شەمەندەفەر", "وێستگەی پاس", "بنکەی پوست (بەرید)", "فریاکەوتنی سەرەتایی", "ته‌والیت", "مزگه‌وت", "کڵێسا"
-        ];
 
         for (let i = 1; i <= 308; i++) {
             let cat = signCategories[(i - 1) % signCategories.length];
-            let titleIndex = (i - 1) % officialNames.length;
             trafficSignsData.push({
                 cat: cat,
-                img: `${i}.png`,
-                title: `${officialNames[titleIndex]} (تابلۆی ${i})`
+                img: `${i}.png`
             });
         }
 
@@ -1083,10 +1054,7 @@
             filtered.forEach((item, idx) => {
                 container.innerHTML += `
                     <div class="sign-card" onclick="openSignLightbox(${idx})">
-                        <div class="sign-icon-box">
-                            <img src="images/${item.img}" alt="${item.title}" loading="lazy" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'50\' height=\'50\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23ccc\' stroke-width=\'2\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><path d=\'M21 15l-5-5L5 21\'/></svg>'">
-                        </div>
-                        <div class="sign-title">${item.title}</div>
+                        <img src="images/${item.img}" alt="Traffic Sign ${idx + 1}" loading="lazy" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'50\' height=\'50\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23ccc\' stroke-width=\'2\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><path d=\'M21 15l-5-5L5 21\'/></svg>'">
                     </div>
                 `;
             });
@@ -1135,7 +1103,6 @@
             let filtered = getFilteredSigns();
             let item = filtered[currentLightboxIndex];
             document.getElementById('lightboxImg').src = `images/${item.img}`;
-            document.getElementById('lightboxTitle').innerText = item.title;
         }
 
         function setAccentColor(color) {
