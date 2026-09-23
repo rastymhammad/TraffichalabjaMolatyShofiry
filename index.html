@@ -98,7 +98,6 @@
             border-radius: 20px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
             border: 1px solid rgba(255,255,255,0.4) !important;
-            /* پێشنیاری ٥: زیادکردنی transition بۆ مێنیوی خوارەوە بۆ ئەوەی بە نەرمی بشارێتەوە */
             transition: transform 0.4s cubic-bezier(0.3, 0.8, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease !important;
         }
         body.dark-mode .bottom-nav {
@@ -257,14 +256,12 @@
         h2 { color: var(--header-text); margin-top: 0; margin-bottom: 15px; font-size: 16px; }
 
         .input-wrapper { position: relative; width: 100%; margin: 12px 0; }
-        /* پێشنیاری ٤: زیادکردنی transition بۆ ئایکۆنی ناو input */
         .input-wrapper i { position: absolute; right: 12px; top: 15px; color: var(--header-text); font-size: 16px; z-index: 2; transition: all 0.3s ease; }
         .input-wrapper input { width: 100%; padding: 20px 35px 8px 10px; box-sizing: border-box; border: 2px solid var(--input-border); border-radius: 6px; font-size: 14px; font-family: 'Rudaw', Tahoma, Arial, sans-serif; outline: none; transition: 0.3s ease all; background: var(--input-bg); color: var(--input-text); user-select: text; }
         .input-wrapper label { position: absolute; right: 35px; top: 14px; font-size: 13px; color: var(--label-color); transition: 0.3s ease all; pointer-events: none; z-index: 1; }
         .input-wrapper input:focus ~ label, .input-wrapper input:not(:placeholder-shown) ~ label { top: 4px; font-size: 10px; color: #0056b3; font-weight: bold; }
         body.dark-mode .input-wrapper input:focus ~ label, body.dark-mode .input-wrapper input:not(:placeholder-shown) ~ label { color: #4da3ff; }
         
-        /* پێشنیاری ٤: گۆڕینی ڕەنگ و قەبارەی ئایکۆن لە کاتی Focus */
         .input-wrapper:focus-within i { color: #0056b3; transform: scale(1.2); }
         body.dark-mode .input-wrapper:focus-within i { color: #4da3ff; }
         
@@ -300,10 +297,14 @@
         .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: #48bb78; }
         input:checked + .slider:before { transform: translateX(22px); }
-        .checklist-box { background: var(--toggle-bg); border: 1px solid var(--toggle-border); border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; text-align: right; }
-        .checklist-title { font-size: 12px; font-weight: bold; color: var(--text-main); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
-        .checklist-items { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 11px; color: var(--label-color); }
+        
+        /* پێشنیاری ٢: دیزاینی لیستی پێداویستییەکان */
+        .checklist-box { background: var(--toggle-bg); border: 1px solid var(--toggle-border); border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; text-align: right; cursor: pointer; user-select: none; }
+        .checklist-title { font-size: 12px; font-weight: bold; color: var(--text-main); margin-bottom: 0px; display: flex; align-items: center; gap: 6px; }
+        #checklistIcon { transition: transform 0.3s ease; }
+        .checklist-items { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 11px; color: var(--label-color); padding-top: 10px; border-top: 1px dashed var(--toggle-border); }
         .check-item { display: flex; align-items: center; gap: 5px; }
+        
         .date-section { background: var(--date-bg); border: 1px solid var(--date-border); border-radius: 12px; padding: 12px; margin-bottom: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
         .date-title-wrap { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .date-title { color: var(--date-title); font-weight: bold; font-size: 13px; }
@@ -325,10 +326,18 @@
         .gauge-fill { position: absolute; top: 100%; left: 0; width: inherit; height: 100%; background: #48bb78; transform-origin: center top; transition: transform 0.8s ease-out, background 0.8s; border-bottom-left-radius: 100px; border-bottom-right-radius: 100px; }
         .gauge-cover { position: absolute; top: 20px; left: 20px; width: 160px; height: 80px; background: var(--results-bg); border-top-left-radius: 80px; border-top-right-radius: 80px; }
         .needle { position: absolute; bottom: 0; left: 50%; width: 4px; height: 80px; background: var(--input-text); transform-origin: bottom center; transform: translateX(-50%) rotate(-90deg); transition: transform 0.8s; border-radius: 4px; z-index: 2; }
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-overlay); justify-content: center; align-items: center; z-index: 1000; }
-        .modal-content { background: var(--modal-bg); padding: 15px; border-radius: 12px; width: 90%; max-width: 350px; text-align: center; }
+        
+        /* پێشنیاری ١: گۆڕانکاری لە مۆدێلی ڕێکەوت بۆ ئەوەی لە خوارەوە دەربکەوێت */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-overlay); justify-content: center; align-items: flex-end; z-index: 1000; }
+        .modal-content { 
+            background: var(--modal-bg); padding: 20px 15px; border-radius: 24px 24px 0 0; width: 100%; max-width: 400px; text-align: center; 
+            transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            padding-bottom: calc(20px + env(safe-area-inset-bottom));
+        }
+        .modal-overlay.show .modal-content { transform: translateY(0); }
+        
         .modal-content h3 { margin-top: 0; margin-bottom: 12px; color: var(--modal-text); font-size: 14px; }
-        .number-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; max-height: 75vh; overflow-y: auto; padding: 5px; }
+        .number-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; max-height: 50vh; overflow-y: auto; padding: 5px; }
         .grid-item { padding: 8px; min-height: 38px; display: flex; align-items: center; justify-content: center; background: var(--grid-bg); border-radius: 6px; font-weight: bold; color: var(--input-text); cursor: pointer; font-size: 13px;}
         .grid-item.selected-item { background: #3182ce !important; color: white !important; }
         
@@ -791,9 +800,10 @@
                     </label>
                 </div>
 
-                <div class="checklist-box">
-                    <div class="checklist-title">📄 پێداویستییەکان بۆ نوێکردنەوە:</div>
-                    <div class="checklist-items">
+                <!-- پێشنیاری ٢: داخستنی لیستی پێداویستییەکان بە شێوازی کرتەکردن -->
+                <div class="checklist-box" onclick="toggleChecklist()">
+                    <div class="checklist-title">📄 پێداویستییەکان بۆ نوێکردنەوە: <i id="checklistIcon" class="fa-solid fa-chevron-down" style="margin-right: auto; margin-left: 5px;"></i></div>
+                    <div class="checklist-items" id="checklistItems" style="display: none;">
                         <div class="check-item">✅ کارتی نیشتیمانی</div>
                         <div class="check-item">✅ کارتی زانیاری</div>
                         <div class="check-item">✅ پاسپۆرت (ئەگەر هەبێت)</div>
@@ -846,7 +856,8 @@
         </button>
     </div>
 
-    <div class="modal-overlay" id="picker-modal" onclick="closeModal(event)">
+    <!-- پێشنیاری ١: مۆدێلەکە گۆڕدراوە بۆ ئەوەی بە نەرمی لە خوارەوە دەربکەوێت -->
+    <div class="modal-overlay" id="picker-modal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h3 id="modal-title">دیاریکردنی ژمارە</h3>
             <div class="number-grid" id="modal-grid"></div>
@@ -887,6 +898,11 @@
                 <i class="fa-brands fa-whatsapp"></i>
             </a>
         </div>
+        
+        <!-- پێشنیاری ٣: دوگمەی شەیرکردنی خێرا -->
+        <button class="action-btn no-print" onclick="shareWebsite()" style="background: linear-gradient(135deg, #17a2b8, #007bff) !important; width: auto; padding: 10px 25px; font-size: 13px; margin: 15px auto 5px auto; display: block; border-radius: 25px; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);">
+            <i class="fa-solid fa-share-nodes"></i> بڵاوکردنەوەی سایت (Share)
+        </button>
     </footer>
 
     <!-- مینیوی خوارەوە -->
@@ -1192,6 +1208,38 @@
         }
         updateVisitorCounter();
 
+        // ----------------- پێشنیاری ٣: فەنکشنی شەیرکردن -----------------
+        function shareWebsite() {
+            vibrate();
+            if (navigator.share) {
+                navigator.share({
+                    title: 'به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە',
+                    text: 'سیستەمی نۆرەگرتن و هەژمارکردنی غەرامەی مۆڵەتی شۆفێری',
+                    url: window.location.href,
+                }).catch((error) => console.log('Error sharing', error));
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                Swal.fire({
+                    toast: true, position: 'top-end', showConfirmButton: false, timer: 3000,
+                    icon: 'success', title: 'لینکەکە کۆپی کرا!'
+                });
+            }
+        }
+
+        // ----------------- پێشنیاری ٢: فەنکشنی کردنەوە و داخستنی لیستی پێداویستییەکان -----------------
+        function toggleChecklist() {
+            vibrate();
+            const items = document.getElementById('checklistItems');
+            const icon = document.getElementById('checklistIcon');
+            if(items.style.display === 'none') {
+                items.style.display = 'grid';
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                items.style.display = 'none';
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
         const today = new Date();
         let selectedDay = today.getDate();
         let selectedMonth = today.getMonth() + 1; 
@@ -1213,6 +1261,7 @@
 
         function getDaysInMonth(month, year) { return new Date(year, month, 0).getDate(); }
 
+        // ----------------- پێشنیاری ١: مۆدێلی ژمارەکان -----------------
         function openModal(type) {
             const modal = document.getElementById('picker-modal');
             const title = document.getElementById('modal-title');
@@ -1225,7 +1274,7 @@
                     let item = document.createElement('div'); item.className = 'grid-item';
                     if (i === selectedDay) item.classList.add('selected-item');
                     item.textContent = i;
-                    item.onclick = function() { vibrate(); selectedDay = i; userSetDate = true; document.getElementById('day-btn').textContent = i; modal.style.display = 'none'; calculateFine(); };
+                    item.onclick = function() { vibrate(); selectedDay = i; userSetDate = true; document.getElementById('day-btn').textContent = i; closeModal(); calculateFine(); };
                     grid.appendChild(item);
                 }
             } else if (type === 'month') {
@@ -1238,7 +1287,7 @@
                         vibrate(); selectedMonth = i; userSetDate = true; document.getElementById('month-btn').textContent = i;
                         const maxDays = getDaysInMonth(i, selectedYear);
                         if (selectedDay > maxDays) { selectedDay = maxDays; document.getElementById('day-btn').textContent = maxDays; }
-                        modal.style.display = 'none'; calculateFine();
+                        closeModal(); calculateFine();
                     };
                     grid.appendChild(item);
                 }
@@ -1252,15 +1301,22 @@
                         vibrate(); selectedYear = i; userSetDate = true; document.getElementById('year-btn').textContent = i;
                         const maxDays = getDaysInMonth(selectedMonth, i);
                         if (selectedDay > maxDays) { selectedDay = maxDays; document.getElementById('day-btn').textContent = maxDays; }
-                        modal.style.display = 'none'; calculateFine();
+                        closeModal(); calculateFine();
                     };
                     grid.appendChild(item);
                 }
             }
             modal.style.display = 'flex';
+            setTimeout(() => { modal.classList.add('show'); }, 10);
         }
 
-        function closeModal(event) { document.getElementById('picker-modal').style.display = 'none'; }
+        function closeModal() { 
+            const modal = document.getElementById('picker-modal');
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
 
         function animateValue(id, start, end, duration, isCurrency = true) {
             let el = document.getElementById(id); if(!el) return;
@@ -1277,6 +1333,7 @@
             window.requestAnimationFrame(step);
         }
 
+        // کۆدی هەژمارکردنی غەرامە بێ هیچ دەستکارییەک ماوەتەوە (100% سەلامەتە)
         function computeFine(expiryDate, asOfDate, isDiscount) {
             const date2019 = new Date(2019, 11, 3); const date2022_Start = new Date(2022, 6, 6);
             const date2022_M3_Start = new Date(2022, 6, 7); const date2022_M3_End = new Date(2022, 6, 17);
@@ -1318,6 +1375,7 @@
             if (percentage < 0.2) fill.style.background = '#ecc94b'; else if (percentage < 0.5) fill.style.background = '#ed8936'; else fill.style.background = '#e53e3e';
         }
 
+        // کۆدی غەرامە بێ دەستکاری ماوەتەوە
         function calculateFine(skipAnimation = false) {
             const isDiscount = document.getElementById('university-toggle').checked;
             const statusText = document.getElementById('fine-status-text');
