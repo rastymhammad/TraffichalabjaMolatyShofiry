@@ -903,7 +903,7 @@
         </div>
     </div>
 
-    <!-- مۆداڵی پێشاندانی گەورەی وێنەکان (Lightbox گەورەتر بۆ خوێندنەوەی دەقەکانی سەر وێنەکان) -->
+    <!-- مۆداڵی پێشاندانی گەورەی وێنەکان (Lightbox) -->
     <div id="signLightbox" class="sign-lightbox" onclick="closeSignLightbox()">
         <div class="lightbox-content" onclick="event.stopPropagation()">
             <button class="lightbox-close" onclick="closeSignLightbox()"><i class="fa-solid fa-xmark"></i></button>
@@ -930,24 +930,21 @@
         </div>
     </div>
 
-    <!-- مۆداڵی گۆڕینی ڕەنگی سەرەکی ئەپەکە (بە ١٢ ڕەنگی جوان و پڕ) -->
+    <!-- مۆداڵی گۆڕینی ڕەنگی سەرەکی ئەپەکە (۹ ڕەنگە تایبەتەکەی داواکراو) -->
     <div class="modal-overlay" id="color-modal" onclick="closeColorPicker(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h3 style="color: var(--modal-text);">🎨 هەڵبژاردنی ڕەنگی سەرەکی ئەپەکە</h3>
             <p style="font-size: 11px; color: var(--label-color); margin-bottom: 15px;">ڕەنگی دڵخوازی خۆت بۆ دوگمە و سەردێڕەکان هەڵبژێرە:</p>
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 15px; justify-items: center;">
-                <div onclick="setAccentColor('#0056b3')" style="width: 38px; height: 38px; border-radius: 50%; background: #0056b3; cursor: pointer; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" title="شینی کلاسیک"></div>
-                <div onclick="setAccentColor('#28a745')" style="width: 38px; height: 38px; border-radius: 50%; background: #28a745; cursor: pointer; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" title="سەوزی سەلامەتی"></div>
-                <div onclick="setAccentColor('#8e44ad')" style="width: 38px; height: 38px; border-radius: 50%; background: #8e44ad; cursor: pointer; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" title="مۆری شاهانە"></div>
-                <div onclick="setAccentColor('#e67e22')" style="width: 38px; height: 38px; border-radius: 50%; background: #e67e22; cursor: pointer; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" title="نارنجی گەرم"></div>
-                <div onclick="setAccentColor('#e74c3c')" style="width: 38px; height: 38px; border-radius: 50%; background: #e74c3c; cursor: pointer; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" title="سووری تۆخ"></div>
-                <div onclick="setAccentColor('#16a085')" style="width: 38px; height: 38px; border-radius: 50%; background: #16a085; cursor: pointer; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" title="سەوزی دەریایی"></div>
-                <div onclick="setAccentColor('#2c3e50')" style="width: 38px; height: 38px; border-radius: 50%; background: #2c3e50; cursor: pointer; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" title="خۆڵەمێشی تاریک"></div>
-                <div onclick="setAccentColor('#2980b9')" style="width: 38px; height: 38px; border-radius: 50%; background: #2980b9; cursor: pointer; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" title="شینی ئاسمانی"></div>
-                <div onclick="setAccentColor('#27ae60')" style="width: 38px; height: 38px; border-radius: 50%; background: #27ae60; cursor: pointer; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" title="سەوزی کاڵ"></div>
-                <div onclick="setAccentColor('#d35400')" style="width: 38px; height: 38px; border-radius: 50%; background: #d35400; cursor: pointer; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" title="قاوەیی زەردباو"></div>
-                <div onclick="setAccentColor('#c0392b')" style="width: 38px; height: 38px; border-radius: 50%; background: #c0392b; cursor: pointer; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" title="ناری تۆخ"></div>
-                <div onclick="setAccentColor('#f39c12')" style="width: 38px; height: 38px; border-radius: 50%; background: #f39c12; cursor: pointer; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" title="زێڕین"></div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 15px; justify-items: center;">
+                <div onclick="setAccentColor('#ffffff')" style="width: 38px; height: 38px; border-radius: 50%; background: #ffffff; cursor: pointer; border: 2px solid #ccc; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" title="سپی"></div>
+                <div onclick="setAccentColor('#000000')" style="width: 38px; height: 38px; border-radius: 50%; background: #000000; cursor: pointer; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" title="ڕەش"></div>
+                <div onclick="setAccentColor('#e74c3c')" style="width: 38px; height: 38px; border-radius: 50%; background: #e74c3c; cursor: pointer; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" title="سوور"></div>
+                <div onclick="setAccentColor('#f1c40f')" style="width: 38px; height: 38px; border-radius: 50%; background: #f1c40f; cursor: pointer; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" title="زەرد"></div>
+                <div onclick="setAccentColor('#003366')" style="width: 38px; height: 38px; border-radius: 50%; background: #003366; cursor: pointer; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" title="شینی تۆخ"></div>
+                <div onclick="setAccentColor('#3498db')" style="width: 38px; height: 38px; border-radius: 50%; background: #3498db; cursor: pointer; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" title="شینی کاڵ"></div>
+                <div onclick="setAccentColor('#ff69b4')" style="width: 38px; height: 38px; border-radius: 50%; background: #ff69b4; cursor: pointer; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" title="پەمەیی"></div>
+                <div onclick="setAccentColor('#800000')" style="width: 38px; height: 38px; border-radius: 50%; background: #800000; cursor: pointer; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" title="جەرگی"></div>
+                <div onclick="setAccentColor('#d35400')" style="width: 38px; height: 38px; border-radius: 50%; background: #d35400; cursor: pointer; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" title="پرتەقاڵی تۆخ"></div>
             </div>
             <button class="action-btn" onclick="closeColorPicker()" style="background: var(--primary-color);">داخستن</button>
         </div>
