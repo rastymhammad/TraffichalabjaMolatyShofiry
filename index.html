@@ -155,26 +155,52 @@
         .nav-item.active i, .nav-item.active span { color: #0056b3 !important; }
         body.dark-mode .nav-item.active i, body.dark-mode .nav-item.active span { color: #4da3ff !important; }
 
+        /* دیزاینی نوێ و رێکوپێکی کاردەکان بە شێوازی Grid بۆ ئەوەی ئایکۆنەکان لە ناو بۆکسەکەدا بن و قایسیان وەک یەک بێت[cite: 10, 11] */
+        .portal-cards { display: flex; flex-direction: column; gap: 12px; width: 100%; align-items: center; }
         .portal-card {
-            border: none !important;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.04), inset 0 0 0 1.5px rgba(0,86,179,0.1) !important;
+            background: var(--header-bg);
+            border: 1px solid var(--border-container);
+            border-radius: 16px;
+            padding: 14px 18px;
+            cursor: pointer;
+            display: grid;
+            grid-template-columns: 35px 1fr 35px;
+            align-items: center;
+            width: 100%;
+            max-width: 380px;
+            margin: 0 auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            min-height: 75px;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease !important;
         }
         .portal-card:hover {
-            box-shadow: 0 12px 25px rgba(0,86,179,0.12), inset 0 0 0 1.5px rgba(0,86,179,0.3) !important;
+            transform: translateY(-4px) scale(1.03);
+            border-color: #0056b3;
+            box-shadow: 0 8px 20px rgba(0,86,179,0.15);
         }
-        body.dark-mode .portal-card {
-            background: linear-gradient(145deg, #242424, #1e1e1e) !important;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2), inset 0 0 0 1px rgba(77,163,255,0.1) !important;
+        body.dark-mode .portal-card:hover {
+            border-color: #4da3ff;
+            box-shadow: 0 8px 20px rgba(77,163,255,0.15);
         }
+        .portal-card i {
+            font-size: 26px;
+            color: #dc3545;
+            justify-self: start;
+        }
+        body.dark-mode .portal-card i { color: #f87171; }
 
-        /* لێرەدا کێشەی ئایکۆنەکان چاککراوەتەوە بۆ لای ڕاست */
-        .portal-card i { position: absolute; right: 20px; font-size: 30px; color: #8b0000; }
-        body.dark-mode .portal-card i { color: #d93838; } 
+        .portal-card-content {
+            text-align: center;
+            grid-column: 2;
+            padding: 0 5px;
+        }
+        .portal-card-content h3 { margin: 0 0 4px 0; font-size: 14px; color: var(--text-main); font-weight: bold; }
+        .portal-card-content p { margin: 0; font-size: 11px; color: var(--label-color); }
 
-        button.action-btn, .start-quiz-btn, .portal-card, .date-box {
+        button.action-btn, .start-quiz-btn, .date-box {
             transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.3s ease !important;
         }
-        button.action-btn:active:not(:disabled), .start-quiz-btn:active, .portal-card:active, .date-box:active {
+        button.action-btn:active:not(:disabled), .start-quiz-btn:active, .date-box:active {
             transform: scale(0.96) !important;
         }
         
@@ -277,11 +303,6 @@
         .notice-scroll-container.horizontal marquee { font-size: 12px; color: var(--text-main); font-weight: bold; width: 100%; text-align: center; }
         .notice-scroll-container.vertical { width: 100%; height: 75px; overflow: hidden; position: relative; text-align: center; }
         .notice-scroll-container.vertical marquee { font-size: 12px; color: var(--text-main); line-height: 1.6; white-space: pre-line; text-align: center; width: 100%; height: 100%; }
-        
-        .portal-cards { display: flex; flex-direction: column; gap: 10px; width: 100%; align-items: center; }
-        .portal-card-content { text-align: center; width: 100%; padding: 0 35px; }
-        .portal-card-content h3 { margin: 0 0 4px 0; font-size: 14px; color: var(--text-main); font-weight: bold; }
-        .portal-card-content p { margin: 0; font-size: 11px; color: var(--label-color); }
         
         .status-badge { display: inline-flex; align-items: center; gap: 8px; margin: 0 auto 12px auto; padding: 6px 14px; font-size: 12px; font-weight: bold; border-radius: 20px; width: fit-content; text-align: center; }
         .status-open { background: #d4edda; color: #155724; }
@@ -483,6 +504,7 @@
                         <h3>سیستەمی نۆرەگرتنی مۆڵەتی شۆفێری</h3>
                         <p>بۆ نوێکردنەوەی مۆڵەت و مامەڵەکان</p>
                     </div>
+                    <div></div>
                 </div>
                 <div class="portal-card" onclick="navTo('fine')">
                     <i class="fa-solid fa-calculator"></i>
@@ -490,6 +512,7 @@
                         <h3>هەژمارکردنی غەرامە</h3>
                         <p>بزانە مۆڵەتەکەت چەند غەرامەی هەیە</p>
                     </div>
+                    <div></div>
                 </div>
             </div>
         </div>
@@ -1667,7 +1690,6 @@
             }
         }
 
-        /* --- سکانی دەموچاو / پەنجەمۆر لە کاتی چوونەژوورەوەی ئەدمین --- */
         async function showAdminPanel() {
             let savedBioPwd = localStorage.getItem("admin_biometric_pwd");
             
