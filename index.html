@@ -558,7 +558,7 @@
                     <i class="fa-solid fa-graduation-cap"></i>
                     <div class="portal-card-content">
                         <h3>تاقیکردنەوەی مۆڵەتی شۆفێری</h3>
-                        <p>پرسیاری گشتی و تایبەت (هەڕەمەکی ٢٥ پرسیار)</p>
+                        <p>پرسیاری گشتی، تایبەت و هێماکانی هاتووچۆ</p>
                     </div>
                     <div></div>
                 </div>
@@ -566,7 +566,7 @@
                     <i class="fa-solid fa-signs-post"></i>
                     <div class="portal-card-content">
                         <h3>هێماکانی هاتووچۆ</h3>
-                        <p></p>
+                        <p>فەرهەنگی ۳٠٨ تابلۆی ڕەسەنی هاتووچۆ</p>
                     </div>
                     <div></div>
                 </div>
@@ -812,7 +812,7 @@
             </div>
         </div>
 
-        <!-- بەشی تاقیکردنەوە و پرسیارەکان بێ دووبارەبوونەوە -->
+        <!-- بەشی تاقیکردنەوە و پرسیارەکان (گشتی، تایبەت، و هێماکانی هاتووچۆ) -->
         <div id="examSection" class="page-section" style="display: none;">
             <div class="exam-container">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -821,9 +821,10 @@
                 </div>
                 
                 <div id="examMenu" style="text-align: center; padding: 15px 0;">
-                    <p style="font-size: 13px; color: var(--label-color); margin-bottom: 20px;">جۆری پرسیارەکان هەڵبژێرە (زیاتر لە ٤٠٠ پرسیاری هەمەجۆر، ٢٥ پرسیاری تەواو جیاواز و بێ دووبارەبوونەوە):</p>
+                    <p style="font-size: 13px; color: var(--label-color); margin-bottom: 20px;">جۆری پرسیارەکان هەڵبژێرە (هەر جارێک ٢٥ پرسیاری هەڕەمەکی بێ دووبارەبوونەوە):</p>
                     <button class="action-btn search-btn" onclick="startExam('general')" style="margin-bottom: 10px;"><i class="fa-solid fa-list-check"></i> پرسیاری گشتی (یاساکان)</button>
-                    <button class="action-btn" onclick="startExam('specific')" style="background: #8e44ad; margin-bottom: 10px;"><i class="fa-solid fa-car"></i> پرسیاری تایبەت به‌ (ئۆتۆمبێل)</button>
+                    <button class="action-btn" onclick="startExam('specific')" style="background: #8e44ad; margin-bottom: 10px;"><i class="fa-solid fa-car"></i> پرسیاری تایبەت (ئۆتۆمبێل)</button>
+                    <button class="action-btn" onclick="startExam('signs')" style="background: #e67e22; margin-bottom: 10px;"><i class="fa-solid fa-signs-post"></i> تاقیکردنەوەی هێماکانی هاتووچۆ</button>
                 </div>
 
                 <div id="examBox" style="display: none;">
@@ -831,6 +832,12 @@
                         <span id="questionCounter">پرسیاری 1 لە 25</span>
                         <div class="exam-timer"><i class="fa-solid fa-stopwatch"></i> <span id="timeLeft">60</span> چرکە</div>
                     </div>
+                    
+                    <!-- وێنەی هێماکان کاتێک بەشی تاقیکردنەوەی هێماکان هەڵدەبژێردرێت -->
+                    <div id="examImageContainer" style="text-align: center; margin-bottom: 15px; display: none;">
+                        <img id="examSignImg" src="" style="max-height: 140px; object-fit: contain; border-radius: 8px; border: 1px solid var(--border-container); padding: 5px; background: white;" alt="Traffic Sign">
+                    </div>
+
                     <div id="questionText" style="font-size: 14px; font-weight: bold; color: var(--text-main); margin-bottom: 15px; line-height: 1.6;"></div>
                     <div id="examOptions"></div>
                 </div>
@@ -848,7 +855,7 @@
         <div id="signsSection" class="page-section" style="display: none;">
             <div class="signs-container">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                    <h2 style="margin:0; font-size: 15px;"><i class="fa-solid fa-signs-post" style="color: var(--primary-color);"></i> هێماکــانـی هــاتــووچــۆ </h2>
+                    <h2 style="margin:0; font-size: 15px;"><i class="fa-solid fa-signs-post" style="color: var(--primary-color);"></i> هێماکانی هاتووچۆ (سەرجەم ۳٠٨ تابلۆ)</h2>
                     <button onclick="navTo('portal')" class="btn-reset" style="padding: 5px 10px;">گەڕانەوە</button>
                 </div>
 
@@ -1200,7 +1207,6 @@
             return R * c; 
         }
 
-        /* --- بنکەی فراوانی پرسیارەکان بە بێ دووبارەبوونەوەی ناوەکی بۆ مسۆگەرکردنی ٢٥ پرسیاری تەواو جیاواز --- */
         const baseGeneralQuestions = [
             { q: "کاتی لێخوڕین لەسەر شەقامە خێراکان، کامیان ڕێگەپێدراوە؟", options: ["پێشکردنەوە لە لای ڕاستەوە", "پێشکردنەوە تەنها لە لای چەپەوە", "وەستان لە سەر شۆلەی خێرا"], answer: 1 },
             { q: "ئایا لێخوڕین بە خێراییەکی زیاتر لە سنوری دیاریکراو ڕێگەپێدراوە لە کاتی لەتاوی فریاکەوتندا؟", options: ["بەڵێ بە مەرجی ئاگادارکردنەوە", "نەخێر بە هیچ شێوەیەک", "تەنها لە شەواندا"], answer: 1 },
@@ -1228,7 +1234,7 @@
             { q: "ئایا ڕاگرتنی ئۆتۆمبێل (Parking) لەسەر هێڵی پیادەڕۆ قەدەغەیە؟", options: ["بەڵێ بە تەواوی قەدەغەیە", "تەنها بۆ کاتی کورت", "نەخێر ئاساییە"], answer: 0 },
             { q: "کاتێک شۆفێر تووشی ڕووداوێکی هاتووچۆ دەبێت و زیانی گیانی هەیە، یەکەم هەنگاو چییە؟", options: ["هەڵاتن لە شوێنی ڕووداو", "پەیوەندیکردن بە فریاکەوتن و هاتووچۆ و یارمەتیدان", "وەستان و وێنەگرتن بۆ تۆڕە کۆمەڵایەتییەکان"], answer: 1 },
             { q: "ئایا لێخوڕین لە کاتی ماندووێتی توند و بێهۆشیدا دروستە؟", options: ["بەڵێ ئەگەر نزیک بوویتەوە", "نەخێر مەترسی خەوتن لەسەر سوکان دروست دەکات", "تەنها دەنگی مۆزیک بەرز بکەرەوە"], answer: 1 },
-            { q: "کاریگەری تیژڕەوی لەسەر بەکاربەرانی تری ڕێگا چۆنە؟", options: ["مەترسی ڕووداو و پێکدادان زۆر زیاد دەکات", "هیچ کاریگەری نییە", "کات پاشەکەوت دەکات"], answer: 0 },
+            { q: "کاریگەری تیژڕەوی لەسەر بەکاربەرانی تری ڕێگا چۆنە؟", options: ["مەترسی ڕووداو و پێکدادان زیاد دەکات", "هیچ کاریگەری نییە", "کات پاشەکەوت دەکات"], answer: 0 },
             { q: "ئایا لێخوڕینی ئۆتۆمبێل بە دواوە (Reverse) لەسەر شەقامی خێرا ڕێگەپێدراوە؟", options: ["بەڵێ ئەگەر ڕێگاکە هەڵە بێت", "تەنها لە بەیانیان", "نەخێر تاوانێکی مەترسیدارە"], answer: 2 },
             { q: "چرا چوارگۆشە شینەکان لە هێماکانی هاتووچۆدا بۆ چ مەبەستێکن؟", options: ["ڕێنمایی و زانیاری پێویست", "قەدەغەکردن", "ئاگادارکردنەوە لە مەترسی"], answer: 0 },
             { q: "ئایا بەکارهێنانی سگناڵ (Indicator) پێش پێچکردنەوە پێویستە؟", options: ["بەڵێ بۆ ئاگادارکردنەوەی شۆفێرانی تر", "پێویست نییە", "تەنها لە شەواندا"], answer: 0 }
@@ -1252,7 +1258,52 @@
             { q: "شمعات (Spark Plugs) لە بزوێنەری بنزیندا چ کارێک دەکات؟", options: ["پڕووشکی کارەبایی دروست دەکات بۆ سوتاندنی تێکەڵەی بنزین و هەوا", "ڕۆن دەگوازێتەوە", "پاتری بارگاوی دەکات"], answer: 0 }
         ];
 
-        /* فەنکشنی دڵنیابوونەوە لەوەی هیچ پرسیارێک لە ناو 25 دانەکەدا دووبارە نەبێتەوە */
+        /* generator for 308 traffic signs exam questions */
+        function generateSignsExamQuestions() {
+            let pool = [];
+            let numbers = [];
+            for(let i=1; i<=308; i++) numbers.push(i);
+            shuffleArray(numbers);
+            let selectedNumbers = numbers.slice(0, 25);
+
+            selectedNumbers.forEach(num => {
+                let correctText = "";
+                let fakes = [];
+
+                if (num <= 100) {
+                    correctText = "تابلۆی هۆشداری و ئاگادارکردنەوەی مەترسی لە ڕێگادا";
+                    fakes = ["تابلۆی قەدەغەکردن و سنووردارکردن", "تابلۆی ئیجباری و ڕێڕەوی دیاریکراو", "تابلۆی ڕێنمایی و زانیاری گشتی"];
+                } else if (num <= 180) {
+                    correctText = "تابلۆی قەدەغەکردنی کارێک یان خێراییەکی دیاریکراو";
+                    fakes = ["تابلۆی ئاگادارکردنەوەی مەترسی", "تابلۆی ئیجباری هاتوچۆ", "تابلۆی ڕێنمایی پیادە"];
+                } else if (num <= 230) {
+                    correctText = "تابلۆی ئیجباری (پێویستە شۆفێر بەو ئاراستەیە بڕۆن)";
+                    fakes = ["تابلۆی قەدەغەکردنی تێپەڕین", "تابلۆی هۆشداری مەترسی", "تابلۆی زانیاری پشوو"];
+                } else {
+                    correctText = "تابلۆی ڕێنمایی و زانیاری گشتی ڕێگەوبان";
+                    fakes = ["تابلۆی قەدەغەکردنی وەستان", "تابلۆی ئاگاداری پێچکردنەوە", "تابلۆی ئیجباری خێرایی"];
+                }
+
+                let options = [correctText, fakes[0], fakes[1]];
+                shuffleArray(options);
+                let correctIndex = options.indexOf(correctText);
+
+                pool.push({
+                    q: `ئەم هێمایەی هاتووچۆ (تابلۆی ژمارە ${num}) نوێنەرایەتی چ جۆرە تابلۆیەک دەکات؟`,
+                    img: `images/${num}.png`,
+                    options: options,
+                    answer: correctIndex
+                });
+            });
+            return pool;
+        }
+
+        const examDatabase = {
+            general: baseGeneralQuestions,
+            specific: baseSpecificQuestions,
+            signs: [] // generated dynamically
+        };
+
         function getUniqueRandomQuestions(sourceArray, count) {
             let uniqueMap = new Map();
             sourceArray.forEach(item => uniqueMap.set(item.q, item));
@@ -1284,8 +1335,12 @@
             currentQuestionIndex = 0;
             score = 0;
             
-            // هەڵبژاردنی ٢٥ پرسیاری ١٠٪ تەواو جیاواز بێ هیچ دووبارەبوونەوەیەک
-            activeQuestions = getUniqueRandomQuestions(examDatabase[type], 25);
+            if (type === 'signs') {
+                activeQuestions = generateSignsExamQuestions();
+            } else {
+                let allQuestions = [...examDatabase[type]];
+                activeQuestions = getUniqueRandomQuestions(allQuestions, 25);
+            }
             
             document.getElementById('examMenu').style.display = 'none';
             document.getElementById('examResultBox').style.display = 'none';
@@ -1302,6 +1357,15 @@
             document.getElementById('questionCounter').innerText = `پرسیاری ${currentQuestionIndex + 1} لە ${activeQuestions.length}`;
             document.getElementById('questionText').innerText = q.q;
             
+            let imgContainer = document.getElementById('examImageContainer');
+            let signImg = document.getElementById('examSignImg');
+            if (currentExamType === 'signs' && q.img) {
+                signImg.src = q.img;
+                imgContainer.style.display = 'block';
+            } else {
+                imgContainer.style.display = 'none';
+            }
+
             let optBox = document.getElementById('examOptions');
             optBox.innerHTML = '';
             q.options.forEach((opt, idx) => {
@@ -1385,11 +1449,6 @@
             document.getElementById('examResultBox').style.display = 'none';
             document.getElementById('examMenu').style.display = 'block';
         }
-
-        const examDatabase = {
-            general: baseGeneralQuestions,
-            specific: baseSpecificQuestions
-        };
 
         async function loadNoticeText() {
             let wrapper = document.getElementById('noticeScrollWrapper');
