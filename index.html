@@ -6,7 +6,6 @@
     <title>به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە</title>
     
     <link rel="manifest" href="manifest.json">
-    <!-- پێشنیاری ١: ئایدی درایە ئەم میتایە بۆ ئەوەی ڕەنگەکەی بگۆڕدرێت لەگەڵ دۆخی تاریک -->
     <meta name="theme-color" id="meta-theme-color" content="#0056b3">
     
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -26,6 +25,14 @@
             font-weight: normal; 
             font-style: normal;
             font-display: swap;
+        }
+
+        /* چارەسەری شریتی سەرەوەی ئایفۆن */
+        html {
+            background-color: #f0f8ff;
+        }
+        html.dark-mode {
+            background-color: #121212;
         }
 
         @keyframes pulseRotate {
@@ -848,6 +855,7 @@
         </div>
     </div>
 
+    <!-- پێشنیاری ٤: ئایدی ئەم بۆکسە ماوەتەوە بۆ بەکارهێنان لە سکریپتەکەدا -->
     <div id="installAppContainer" style="display: none; text-align: center; margin-bottom: 15px;" class="no-print">
         <button id="installAppBtn" class="action-btn" style="background: #28a745; width: auto; padding: 10px 25px; border-radius: 25px; box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);">
             <i class="fa-solid fa-download"></i> دابەزاندنی ئەپڵیکەیشن (Install)
@@ -897,7 +905,7 @@
         </div>
         
         <button class="action-btn no-print" onclick="shareWebsite()" style="background: linear-gradient(135deg, #17a2b8, #007bff) !important; width: auto; padding: 10px 25px; font-size: 13px; margin: 15px auto 5px auto; display: block; border-radius: 25px; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);">
-            <i class="fa-solid fa-share-nodes"></i> بڵاوکردنەوەی سایت (Share)
+            <i class="fa-solid fa-share-nodes"></i> ناردنی بۆ هاوڕێكه‌ت (Share)
         </button>
     </footer>
 
@@ -1154,29 +1162,35 @@
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        /* پێشنیاری ١: گۆڕینی ڕەنگی theme-color لەکاتی گۆڕینی دۆخی ڕووناکی/تاریکی */
+        /* --- پێشنیاری ١: جێبەجێکردنی گۆڕینی ڕەنگی شریتی سەرەوەی ئایفۆن لەگەڵ هەڵگرتنی لەکاتی چوونەژوورەوەی یەکەمجار --- */
         let metaThemeColor = document.getElementById("meta-theme-color");
         let currentTheme = localStorage.getItem("theme");
+        
         if (!currentTheme) currentTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? "dark" : "light";
+        
         if (currentTheme === "dark") { 
-            document.body.classList.add("dark-mode"); 
+            document.body.classList.add("dark-mode");
+            document.documentElement.classList.add("dark-mode");
             document.getElementById("themeToggleBtn").innerText = "☀️"; 
-            if(metaThemeColor) metaThemeColor.setAttribute("content", "#1e1e1e");
+            if(metaThemeColor) metaThemeColor.setAttribute("content", "#121212");
+        } else {
+            if(metaThemeColor) metaThemeColor.setAttribute("content", "#f0f8ff");
         }
 
         function toggleTheme() {
             vibrate();
             document.body.classList.toggle("dark-mode");
+            document.documentElement.classList.toggle("dark-mode");
             let metaTheme = document.getElementById("meta-theme-color");
             
             if (document.body.classList.contains("dark-mode")) {
                 document.getElementById("themeToggleBtn").innerText = "☀️"; 
                 localStorage.setItem("theme", "dark");
-                if(metaTheme) metaTheme.setAttribute("content", "#1e1e1e");
+                if(metaTheme) metaTheme.setAttribute("content", "#121212");
             } else {
                 document.getElementById("themeToggleBtn").innerText = "🌙"; 
                 localStorage.setItem("theme", "light");
-                if(metaTheme) metaTheme.setAttribute("content", "#0056b3");
+                if(metaTheme) metaTheme.setAttribute("content", "#f0f8ff");
             }
         }
         function vibrate(ms = 15) { if (navigator.vibrate) navigator.vibrate(ms); }
@@ -2310,7 +2324,7 @@
         const installAppContainer = document.getElementById('installAppContainer');
         const installAppBtn = document.getElementById('installAppBtn');
 
-        // پێشنیاری ٤: کۆدی دیاریکردنی جۆری مۆبایل و پیشاندانی دوگمەی دابەزاندن بەتایبەت بۆ ئایفۆن
+        /* پێشنیاری ٤: کۆدی دیاریکردنی جۆری مۆبایل و پیشاندانی دوگمەی دابەزاندن بەتایبەت بۆ ئایفۆن */
         const isIos = () => {
             const userAgent = window.navigator.userAgent.toLowerCase();
             return /iphone|ipad|ipod/.test(userAgent);
