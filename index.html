@@ -6,7 +6,8 @@
     <title>به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە</title>
     
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0056b3">
+    <!-- پێشنیاری ١: ئایدی درایە ئەم میتایە بۆ ئەوەی ڕەنگەکەی بگۆڕدرێت لەگەڵ دۆخی تاریک -->
+    <meta name="theme-color" id="meta-theme-color" content="#0056b3">
     
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -298,7 +299,6 @@
         input:checked + .slider { background-color: #48bb78; }
         input:checked + .slider:before { transform: translateX(22px); }
         
-        /* پێشنیاری ٢: دیزاینی لیستی پێداویستییەکان */
         .checklist-box { background: var(--toggle-bg); border: 1px solid var(--toggle-border); border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; text-align: right; cursor: pointer; user-select: none; }
         .checklist-title { font-size: 12px; font-weight: bold; color: var(--text-main); margin-bottom: 0px; display: flex; align-items: center; gap: 6px; }
         #checklistIcon { transition: transform 0.3s ease; }
@@ -327,7 +327,6 @@
         .gauge-cover { position: absolute; top: 20px; left: 20px; width: 160px; height: 80px; background: var(--results-bg); border-top-left-radius: 80px; border-top-right-radius: 80px; }
         .needle { position: absolute; bottom: 0; left: 50%; width: 4px; height: 80px; background: var(--input-text); transform-origin: bottom center; transform: translateX(-50%) rotate(-90deg); transition: transform 0.8s; border-radius: 4px; z-index: 2; }
         
-        /* پێشنیاری ١: گۆڕانکاری لە مۆدێلی ڕێکەوت بۆ ئەوەی لە خوارەوە دەربکەوێت */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-overlay); justify-content: center; align-items: flex-end; z-index: 1000; }
         .modal-content { 
             background: var(--modal-bg); padding: 20px 15px; border-radius: 24px 24px 0 0; width: 100%; max-width: 400px; text-align: center; 
@@ -800,7 +799,6 @@
                     </label>
                 </div>
 
-                <!-- پێشنیاری ٢: داخستنی لیستی پێداویستییەکان بە شێوازی کرتەکردن -->
                 <div class="checklist-box" onclick="toggleChecklist()">
                     <div class="checklist-title">📄 پێداویستییەکان بۆ نوێکردنەوە: <i id="checklistIcon" class="fa-solid fa-chevron-down" style="margin-right: auto; margin-left: 5px;"></i></div>
                     <div class="checklist-items" id="checklistItems" style="display: none;">
@@ -856,7 +854,6 @@
         </button>
     </div>
 
-    <!-- پێشنیاری ١: مۆدێلەکە گۆڕدراوە بۆ ئەوەی بە نەرمی لە خوارەوە دەربکەوێت -->
     <div class="modal-overlay" id="picker-modal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h3 id="modal-title">دیاریکردنی ژمارە</h3>
@@ -899,7 +896,6 @@
             </a>
         </div>
         
-        <!-- پێشنیاری ٣: دوگمەی شەیرکردنی خێرا -->
         <button class="action-btn no-print" onclick="shareWebsite()" style="background: linear-gradient(135deg, #17a2b8, #007bff) !important; width: auto; padding: 10px 25px; font-size: 13px; margin: 15px auto 5px auto; display: block; border-radius: 25px; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);">
             <i class="fa-solid fa-share-nodes"></i> بڵاوکردنەوەی سایت (Share)
         </button>
@@ -929,24 +925,19 @@
             }
         });
 
-        // ----------------- پێشنیاری ٥: شاردنەوەی زیرەکی مێنیوی خوارەوە -----------------
         let lastScrollTop = 0;
         const bottomNavBar = document.getElementById('bottomNav');
         
         window.addEventListener('scroll', function() {
             let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             if (scrollTop > lastScrollTop && scrollTop > 60) {
-                // کاتێک سکڕۆڵ دەکرێتە خوارەوە مێنیوەکە بشارەوە
                 bottomNavBar.style.transform = 'translateY(150%)';
             } else {
-                // کاتێک سکڕۆڵ دەکرێتە سەرەوە مێنیوەکە پیشان بدەرەوە
                 bottomNavBar.style.transform = 'translateY(0)';
             }
             lastScrollTop = scrollTop;
         }, { passive: true });
 
-
-        // ----------------- کۆدی پشکنینی ئینتەرنێت -----------------
         const offlineBanner = document.getElementById('offlineBanner');
         
         function updateOnlineStatus() {
@@ -966,7 +957,6 @@
         window.addEventListener('online', updateOnlineStatus);
         window.addEventListener('offline', updateOnlineStatus);
         
-        // ----------------- سیستەمی ڕاکێشان بۆ خوارەوە (Pull-to-Refresh) -----------------
         let pullStartY = 0;
         let pullMoveY = 0;
         let isPulling = false;
@@ -1050,20 +1040,17 @@
             let wrapper = document.getElementById('noticeScrollWrapper');
             let noticeElement = document.getElementById('noticeTextContainer');
             
-            // سەرەتا، ئەگەر پێشتر ئاگادارییەکی خەزنکراو هەبێت لە مۆبایلەکەیدا، ئەوە پیشان دەدەین
             let savedNotice = localStorage.getItem("saved_notice_text");
             if (savedNotice && wrapper && noticeElement) {
                 applyNoticeToUI(savedNotice, wrapper);
             }
 
             try {
-                // ئێستا هەوڵدەدەین لە سێرڤەرەوە نوێترین ئاگاداری بهێنین
                 let res = await fetch(`${baseUrl}/api/notice`);
                 if(res.ok) {
                     let data = await res.json();
                     let text = data.notice || "";
                     
-                    // ئاگادارییە نوێیەکە سەیڤ دەکەین بۆ کاتی بێ ئینتەرنێتی
                     localStorage.setItem("saved_notice_text", text);
                     
                     if(wrapper) {
@@ -1074,7 +1061,6 @@
                     if(adminInput) adminInput.value = text;
                 }
             } catch(e) {
-                // ئەگەر ئینتەرنێت نەبوو، و هیچ شتێکی خەزنکراویشمان نەبوو
                 if (!savedNotice && noticeElement) {
                     noticeElement.innerText = "بەهۆی نەبوونی هێڵی ئینتەرنێتەوە ناتوانرێت تێبینییەکان بهێنرێت.";
                 }
@@ -1122,7 +1108,6 @@
         function navTo(section) {
             vibrate(10);
             
-            // ئەگەر ئینتەرنێت نەبوو وە بەکارهێنەر کلیکی لە بەشی 'نۆرەگرتن' کرد
             if (!navigator.onLine && section === 'queue') {
                  Swal.fire({
                     icon: 'warning',
@@ -1131,17 +1116,14 @@
                     confirmButtonText: 'باشە',
                     confirmButtonColor: '#dc3545'
                 });
-                return; // لێرەدا دەوەستێت و ناچێتە پەڕەی نۆرەگرتن
+                return; 
             }
 
-            // --- پێشنیاری ٦: پیشاندانی لۆدینگی نێوان پەڕەکان ---
             const pageLoader = document.getElementById('pageTransitionLoader');
             pageLoader.classList.add('active');
             
-            // ڕاگرتنی بۆ ماوەیەکی زۆر کورت بۆ ئەوەی ئەنیمەیشنەکە دەربکەوێت و ئەزموونەکە نەرمتر بێت
             setTimeout(() => {
                 openSection(section);
-                // لابردنی لۆدینگەکە پاش کردنەوەی بەشەکە
                 setTimeout(() => {
                     pageLoader.classList.remove('active');
                 }, 200); 
@@ -1172,17 +1154,29 @@
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
+        /* پێشنیاری ١: گۆڕینی ڕەنگی theme-color لەکاتی گۆڕینی دۆخی ڕووناکی/تاریکی */
+        let metaThemeColor = document.getElementById("meta-theme-color");
         let currentTheme = localStorage.getItem("theme");
         if (!currentTheme) currentTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? "dark" : "light";
-        if (currentTheme === "dark") { document.body.classList.add("dark-mode"); document.getElementById("themeToggleBtn").innerText = "☀️"; }
+        if (currentTheme === "dark") { 
+            document.body.classList.add("dark-mode"); 
+            document.getElementById("themeToggleBtn").innerText = "☀️"; 
+            if(metaThemeColor) metaThemeColor.setAttribute("content", "#1e1e1e");
+        }
 
         function toggleTheme() {
             vibrate();
             document.body.classList.toggle("dark-mode");
+            let metaTheme = document.getElementById("meta-theme-color");
+            
             if (document.body.classList.contains("dark-mode")) {
-                document.getElementById("themeToggleBtn").innerText = "☀️"; localStorage.setItem("theme", "dark");
+                document.getElementById("themeToggleBtn").innerText = "☀️"; 
+                localStorage.setItem("theme", "dark");
+                if(metaTheme) metaTheme.setAttribute("content", "#1e1e1e");
             } else {
-                document.getElementById("themeToggleBtn").innerText = "🌙"; localStorage.setItem("theme", "light");
+                document.getElementById("themeToggleBtn").innerText = "🌙"; 
+                localStorage.setItem("theme", "light");
+                if(metaTheme) metaTheme.setAttribute("content", "#0056b3");
             }
         }
         function vibrate(ms = 15) { if (navigator.vibrate) navigator.vibrate(ms); }
@@ -1208,7 +1202,6 @@
         }
         updateVisitorCounter();
 
-        // ----------------- پێشنیاری ٣: فەنکشنی شەیرکردن -----------------
         function shareWebsite() {
             vibrate();
             if (navigator.share) {
@@ -1226,7 +1219,6 @@
             }
         }
 
-        // ----------------- پێشنیاری ٢: فەنکشنی کردنەوە و داخستنی لیستی پێداویستییەکان -----------------
         function toggleChecklist() {
             vibrate();
             const items = document.getElementById('checklistItems');
@@ -1261,7 +1253,6 @@
 
         function getDaysInMonth(month, year) { return new Date(year, month, 0).getDate(); }
 
-        // ----------------- پێشنیاری ١: مۆدێلی ژمارەکان -----------------
         function openModal(type) {
             const modal = document.getElementById('picker-modal');
             const title = document.getElementById('modal-title');
@@ -1333,7 +1324,6 @@
             window.requestAnimationFrame(step);
         }
 
-        // کۆدی هەژمارکردنی غەرامە بێ هیچ دەستکارییەک ماوەتەوە (100% سەلامەتە)
         function computeFine(expiryDate, asOfDate, isDiscount) {
             const date2019 = new Date(2019, 11, 3); const date2022_Start = new Date(2022, 6, 6);
             const date2022_M3_Start = new Date(2022, 6, 7); const date2022_M3_End = new Date(2022, 6, 17);
@@ -1375,7 +1365,6 @@
             if (percentage < 0.2) fill.style.background = '#ecc94b'; else if (percentage < 0.5) fill.style.background = '#ed8936'; else fill.style.background = '#e53e3e';
         }
 
-        // کۆدی غەرامە بێ دەستکاری ماوەتەوە
         function calculateFine(skipAnimation = false) {
             const isDiscount = document.getElementById('university-toggle').checked;
             const statusText = document.getElementById('fine-status-text');
@@ -2321,6 +2310,18 @@
         const installAppContainer = document.getElementById('installAppContainer');
         const installAppBtn = document.getElementById('installAppBtn');
 
+        // پێشنیاری ٤: کۆدی دیاریکردنی جۆری مۆبایل و پیشاندانی دوگمەی دابەزاندن بەتایبەت بۆ ئایفۆن
+        const isIos = () => {
+            const userAgent = window.navigator.userAgent.toLowerCase();
+            return /iphone|ipad|ipod/.test(userAgent);
+        };
+        const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
+
+        // ئەگەر بەکارهێنەر لەسەر ئایفۆن بوو و لەناو براوسەر بوو (نەک ئەپەکە)، دوگمەکە پیشان بدە
+        if (isIos() && !isInStandaloneMode() && !window.matchMedia('(display-mode: standalone)').matches) {
+            installAppContainer.style.display = 'block';
+        }
+
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
@@ -2337,6 +2338,15 @@
                     console.log('User accepted the install prompt');
                 }
                 deferredPrompt = null;
+            } else if (isIos()) {
+                // پێشنیاری ٤: پەیامی تایبەت بە دابەزاندن بۆ ئایفۆن
+                Swal.fire({
+                    title: 'دابەزاندنی ئەپڵیکەیشن بۆ ئایفۆن',
+                    html: 'بۆ دابەزاندنی ئەپەکە بۆ سەر شاشەی مۆبایلەکەت، لە خوارەوەی شاشەکە پەنجە بنێ بە ئایکۆنی <b>(Share <i class="fa-solid fa-arrow-up-from-bracket"></i>)</b>، پاشان لە لیستەکەدا <b>(Add to Home Screen <i class="fa-regular fa-square-plus"></i>)</b> هەڵبژێرە.',
+                    icon: 'info',
+                    confirmButtonText: 'باشە تێگەیشتم',
+                    confirmButtonColor: '#0056b3'
+                });
             } else {
                 Swal.fire({
                     title: 'دابەزاندنی ئەپڵیکەیشن',
