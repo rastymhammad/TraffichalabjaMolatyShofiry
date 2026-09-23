@@ -105,7 +105,6 @@
             border-radius: 20px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
             border: 1px solid rgba(255,255,255,0.4) !important;
-            transition: transform 0.4s cubic-bezier(0.3, 0.8, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease !important;
         }
         body.dark-mode .bottom-nav {
             box-shadow: 0 10px 25px rgba(0,0,0,0.4) !important;
@@ -263,14 +262,11 @@
         h2 { color: var(--header-text); margin-top: 0; margin-bottom: 15px; font-size: 16px; }
 
         .input-wrapper { position: relative; width: 100%; margin: 12px 0; }
-        .input-wrapper i { position: absolute; right: 12px; top: 15px; color: var(--header-text); font-size: 16px; z-index: 2; transition: all 0.3s ease; }
+        .input-wrapper i { position: absolute; right: 12px; top: 15px; color: var(--header-text); font-size: 16px; z-index: 2; }
         .input-wrapper input { width: 100%; padding: 20px 35px 8px 10px; box-sizing: border-box; border: 2px solid var(--input-border); border-radius: 6px; font-size: 14px; font-family: 'Rudaw', Tahoma, Arial, sans-serif; outline: none; transition: 0.3s ease all; background: var(--input-bg); color: var(--input-text); user-select: text; }
         .input-wrapper label { position: absolute; right: 35px; top: 14px; font-size: 13px; color: var(--label-color); transition: 0.3s ease all; pointer-events: none; z-index: 1; }
         .input-wrapper input:focus ~ label, .input-wrapper input:not(:placeholder-shown) ~ label { top: 4px; font-size: 10px; color: #0056b3; font-weight: bold; }
         body.dark-mode .input-wrapper input:focus ~ label, body.dark-mode .input-wrapper input:not(:placeholder-shown) ~ label { color: #4da3ff; }
-        
-        .input-wrapper:focus-within i { color: #0056b3; transform: scale(1.2); }
-        body.dark-mode .input-wrapper:focus-within i { color: #4da3ff; }
         
         .input-wrapper input:disabled { background-color: #e9ecef; cursor: not-allowed; opacity: 0.7; }
         .input-wrapper input.valid-input { border-color: #28a745 !important; box-shadow: 0 0 5px rgba(40, 167, 69, 0.3); }
@@ -304,13 +300,10 @@
         .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: #48bb78; }
         input:checked + .slider:before { transform: translateX(22px); }
-        
-        .checklist-box { background: var(--toggle-bg); border: 1px solid var(--toggle-border); border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; text-align: right; cursor: pointer; user-select: none; }
-        .checklist-title { font-size: 12px; font-weight: bold; color: var(--text-main); margin-bottom: 0px; display: flex; align-items: center; gap: 6px; }
-        #checklistIcon { transition: transform 0.3s ease; }
-        .checklist-items { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 11px; color: var(--label-color); padding-top: 10px; border-top: 1px dashed var(--toggle-border); }
+        .checklist-box { background: var(--toggle-bg); border: 1px solid var(--toggle-border); border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; text-align: right; }
+        .checklist-title { font-size: 12px; font-weight: bold; color: var(--text-main); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+        .checklist-items { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 11px; color: var(--label-color); }
         .check-item { display: flex; align-items: center; gap: 5px; }
-        
         .date-section { background: var(--date-bg); border: 1px solid var(--date-border); border-radius: 12px; padding: 12px; margin-bottom: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
         .date-title-wrap { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .date-title { color: var(--date-title); font-weight: bold; font-size: 13px; }
@@ -332,17 +325,10 @@
         .gauge-fill { position: absolute; top: 100%; left: 0; width: inherit; height: 100%; background: #48bb78; transform-origin: center top; transition: transform 0.8s ease-out, background 0.8s; border-bottom-left-radius: 100px; border-bottom-right-radius: 100px; }
         .gauge-cover { position: absolute; top: 20px; left: 20px; width: 160px; height: 80px; background: var(--results-bg); border-top-left-radius: 80px; border-top-right-radius: 80px; }
         .needle { position: absolute; bottom: 0; left: 50%; width: 4px; height: 80px; background: var(--input-text); transform-origin: bottom center; transform: translateX(-50%) rotate(-90deg); transition: transform 0.8s; border-radius: 4px; z-index: 2; }
-        
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-overlay); justify-content: center; align-items: flex-end; z-index: 1000; }
-        .modal-content { 
-            background: var(--modal-bg); padding: 20px 15px; border-radius: 24px 24px 0 0; width: 100%; max-width: 400px; text-align: center; 
-            transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            padding-bottom: calc(20px + env(safe-area-inset-bottom));
-        }
-        .modal-overlay.show .modal-content { transform: translateY(0); }
-        
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-overlay); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: var(--modal-bg); padding: 15px; border-radius: 12px; width: 90%; max-width: 350px; text-align: center; }
         .modal-content h3 { margin-top: 0; margin-bottom: 12px; color: var(--modal-text); font-size: 14px; }
-        .number-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; max-height: 50vh; overflow-y: auto; padding: 5px; }
+        .number-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; max-height: 75vh; overflow-y: auto; padding: 5px; }
         .grid-item { padding: 8px; min-height: 38px; display: flex; align-items: center; justify-content: center; background: var(--grid-bg); border-radius: 6px; font-weight: bold; color: var(--input-text); cursor: pointer; font-size: 13px;}
         .grid-item.selected-item { background: #3182ce !important; color: white !important; }
         
@@ -511,61 +497,9 @@
         body.dark-mode ::-webkit-scrollbar-thumb:hover {
             background: #475569;
         }
-
-        .offline-banner {
-            position: fixed;
-            top: 0; left: 0; width: 100%;
-            background: #dc3545; color: white;
-            text-align: center; padding: 8px;
-            font-size: 13px; font-weight: bold;
-            z-index: 100000;
-            transform: translateY(-100%);
-            transition: transform 0.4s ease, background 0.4s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-        .offline-banner.show { transform: translateY(0); }
-        .offline-banner.online-again { background: #28a745; }
-
-        .page-transition-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255,255,255,0.7);
-            backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
-            z-index: 9999;
-            display: flex; justify-content: center; align-items: center;
-            opacity: 0; visibility: hidden;
-            transition: opacity 0.2s ease, visibility 0.2s ease;
-        }
-        body.dark-mode .page-transition-overlay {
-            background: rgba(18,18,18,0.7);
-        }
-        .page-transition-overlay.active {
-            opacity: 1; visibility: visible;
-        }
-        .spinner {
-            width: 40px; height: 40px;
-            border: 4px solid rgba(0, 86, 179, 0.2);
-            border-top-color: #0056b3;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        body.dark-mode .spinner {
-            border-color: rgba(77, 163, 255, 0.2);
-            border-top-color: #4da3ff;
-        }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
     </style>
 </head>
 <body>
-    <div id="offlineBanner" class="offline-banner no-print">
-        <i class="fa-solid fa-wifi"></i> هێڵی ئینتەرنێت پچڕاوە. تکایە هێڵەکەت بپشکنە.
-    </div>
-
-    <div id="pageTransitionLoader" class="page-transition-overlay no-print">
-        <div class="spinner"></div>
-    </div>
-
     <div id="splash-screen" class="splash-screen no-print">
         <div class="splash-logo">
             <img src="icon-192.png">
@@ -805,9 +739,9 @@
                     </label>
                 </div>
 
-                <div class="checklist-box" onclick="toggleChecklist()">
-                    <div class="checklist-title">📄 پێداویستییەکان بۆ نوێکردنەوە: <i id="checklistIcon" class="fa-solid fa-chevron-down" style="margin-right: auto; margin-left: 5px;"></i></div>
-                    <div class="checklist-items" id="checklistItems" style="display: none;">
+                <div class="checklist-box">
+                    <div class="checklist-title">📄 پێداویستییەکان بۆ نوێکردنەوە:</div>
+                    <div class="checklist-items">
                         <div class="check-item">✅ کارتی نیشتیمانی</div>
                         <div class="check-item">✅ کارتی زانیاری</div>
                         <div class="check-item">✅ پاسپۆرت (ئەگەر هەبێت)</div>
@@ -860,7 +794,7 @@
         </button>
     </div>
 
-    <div class="modal-overlay" id="picker-modal" onclick="closeModal()">
+    <div class="modal-overlay" id="picker-modal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h3 id="modal-title">دیاریکردنی ژمارە</h3>
             <div class="number-grid" id="modal-grid"></div>
@@ -901,10 +835,6 @@
                 <i class="fa-brands fa-whatsapp"></i>
             </a>
         </div>
-        
-        <button class="action-btn no-print" onclick="shareWebsite()" style="background: linear-gradient(135deg, #17a2b8, #007bff) !important; width: auto; padding: 10px 25px; font-size: 13px; margin: 15px auto 5px auto; display: block; border-radius: 25px; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);">
-            <i class="fa-solid fa-share-nodes"></i> بڵاوکردنەوەی سایت (Share)
-        </button>
     </footer>
 
     <!-- مینیوی خوارەوە -->
@@ -931,38 +861,6 @@
             }
         });
 
-        let lastScrollTop = 0;
-        const bottomNavBar = document.getElementById('bottomNav');
-        
-        window.addEventListener('scroll', function() {
-            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            if (scrollTop > lastScrollTop && scrollTop > 60) {
-                bottomNavBar.style.transform = 'translateY(150%)';
-            } else {
-                bottomNavBar.style.transform = 'translateY(0)';
-            }
-            lastScrollTop = scrollTop;
-        }, { passive: true });
-
-        const offlineBanner = document.getElementById('offlineBanner');
-        
-        function updateOnlineStatus() {
-            if (navigator.onLine) {
-                offlineBanner.innerHTML = '<i class="fa-solid fa-check-circle"></i> هێڵی ئینتەرنێت گەڕایەوە.';
-                offlineBanner.classList.add('online-again');
-                setTimeout(() => {
-                    offlineBanner.classList.remove('show');
-                }, 3000);
-            } else {
-                offlineBanner.innerHTML = '<i class="fa-solid fa-wifi"></i> هێڵی ئینتەرنێت پچڕاوە. تکایە هێڵەکەت بپشکنە.';
-                offlineBanner.classList.remove('online-again');
-                offlineBanner.classList.add('show');
-            }
-        }
-        
-        window.addEventListener('online', updateOnlineStatus);
-        window.addEventListener('offline', updateOnlineStatus);
-        
         let pullStartY = 0;
         let pullMoveY = 0;
         let isPulling = false;
@@ -1125,15 +1023,7 @@
                 return; 
             }
 
-            const pageLoader = document.getElementById('pageTransitionLoader');
-            pageLoader.classList.add('active');
-            
-            setTimeout(() => {
-                openSection(section);
-                setTimeout(() => {
-                    pageLoader.classList.remove('active');
-                }, 200); 
-            }, 100);
+            openSection(section);
         }
 
         function openSection(section) {
@@ -1160,6 +1050,39 @@
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
+        /* --- پێشنیاری ١: گۆڕینی ڕەنگی theme-color بۆ شریتی سەرەوەی ئایفۆن و ئەندرۆید --- */
+        let metaThemeColor = document.getElementById("meta-theme-color");
+        let currentTheme = localStorage.getItem("theme");
+        
+        if (!currentTheme) currentTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? "dark" : "light";
+        
+        if (currentTheme === "dark") { 
+            document.body.classList.add("dark-mode");
+            document.documentElement.classList.add("dark-mode");
+            document.getElementById("themeToggleBtn").innerText = "☀️"; 
+            if(metaThemeColor) metaThemeColor.setAttribute("content", "#121212");
+        } else {
+            if(metaThemeColor) metaThemeColor.setAttribute("content", "#f0f8ff");
+        }
+
+        function toggleTheme() {
+            vibrate();
+            document.body.classList.toggle("dark-mode");
+            document.documentElement.classList.toggle("dark-mode");
+            let metaTheme = document.getElementById("meta-theme-color");
+            
+            if (document.body.classList.contains("dark-mode")) {
+                document.getElementById("themeToggleBtn").innerText = "☀️"; 
+                localStorage.setItem("theme", "dark");
+                if(metaTheme) metaTheme.setAttribute("content", "#121212");
+            } else {
+                document.getElementById("themeToggleBtn").innerText = "🌙"; 
+                localStorage.setItem("theme", "light");
+                if(metaTheme) metaTheme.setAttribute("content", "#f0f8ff");
+            }
+        }
+        function vibrate(ms = 15) { if (navigator.vibrate) navigator.vibrate(ms); }
+
         function updateVisitorCounter() {
             const elements = document.querySelectorAll('.visitor-count-text');
             if (elements.length === 0) return;
@@ -1180,36 +1103,6 @@
             });
         }
         updateVisitorCounter();
-
-        function shareWebsite() {
-            vibrate();
-            if (navigator.share) {
-                navigator.share({
-                    title: 'به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە',
-                    text: 'سیستەمی نۆرەگرتن و هەژمارکردنی غەرامەی مۆڵەتی شۆفێری',
-                    url: window.location.href,
-                }).catch((error) => console.log('Error sharing', error));
-            } else {
-                navigator.clipboard.writeText(window.location.href);
-                Swal.fire({
-                    toast: true, position: 'top-end', showConfirmButton: false, timer: 3000,
-                    icon: 'success', title: 'لینکەکە کۆپی کرا!'
-                });
-            }
-        }
-
-        function toggleChecklist() {
-            vibrate();
-            const items = document.getElementById('checklistItems');
-            const icon = document.getElementById('checklistIcon');
-            if(items.style.display === 'none') {
-                items.style.display = 'grid';
-                icon.style.transform = 'rotate(180deg)';
-            } else {
-                items.style.display = 'none';
-                icon.style.transform = 'rotate(0deg)';
-            }
-        }
 
         const today = new Date();
         let selectedDay = today.getDate();
@@ -1244,7 +1137,7 @@
                     let item = document.createElement('div'); item.className = 'grid-item';
                     if (i === selectedDay) item.classList.add('selected-item');
                     item.textContent = i;
-                    item.onclick = function() { vibrate(); selectedDay = i; userSetDate = true; document.getElementById('day-btn').textContent = i; closeModal(); calculateFine(); };
+                    item.onclick = function() { vibrate(); selectedDay = i; userSetDate = true; document.getElementById('day-btn').textContent = i; modal.style.display = 'none'; calculateFine(); };
                     grid.appendChild(item);
                 }
             } else if (type === 'month') {
@@ -1257,7 +1150,7 @@
                         vibrate(); selectedMonth = i; userSetDate = true; document.getElementById('month-btn').textContent = i;
                         const maxDays = getDaysInMonth(i, selectedYear);
                         if (selectedDay > maxDays) { selectedDay = maxDays; document.getElementById('day-btn').textContent = maxDays; }
-                        closeModal(); calculateFine();
+                        modal.style.display = 'none'; calculateFine();
                     };
                     grid.appendChild(item);
                 }
@@ -1271,22 +1164,15 @@
                         vibrate(); selectedYear = i; userSetDate = true; document.getElementById('year-btn').textContent = i;
                         const maxDays = getDaysInMonth(selectedMonth, i);
                         if (selectedDay > maxDays) { selectedDay = maxDays; document.getElementById('day-btn').textContent = maxDays; }
-                        closeModal(); calculateFine();
+                        modal.style.display = 'none'; calculateFine();
                     };
                     grid.appendChild(item);
                 }
             }
             modal.style.display = 'flex';
-            setTimeout(() => { modal.classList.add('show'); }, 10);
         }
 
-        function closeModal() { 
-            const modal = document.getElementById('picker-modal');
-            modal.classList.remove('show');
-            setTimeout(() => {
-                modal.style.display = 'none';
-            }, 300);
-        }
+        function closeModal(event) { document.getElementById('picker-modal').style.display = 'none'; }
 
         function animateValue(id, start, end, duration, isCurrency = true) {
             let el = document.getElementById(id); if(!el) return;
@@ -1762,12 +1648,10 @@
 
         /* --- پێشنیاری نوێ: تێکەڵکردنی سکانی دەموچاو / پەنجەمۆر لە کاتی چوونەژوورەوەی ئەدمین --- */
         async function showAdminPanel() {
-            // یەکەم جار پشکنین دەکەین بزانین پێشتر Face ID چالاک کراوە بۆ ئەدمین؟
             let savedBioPwd = localStorage.getItem("admin_biometric_pwd");
             
             if (savedBioPwd && window.PublicKeyCredential) {
                 try {
-                    // داواکردنی سکانی دەموچاو یان پەنجەمۆر لە سیستەمی مۆبایلەکە
                     const publicKeyCredentialRequestOptions = {
                         challenge: new Uint8Array(32), 
                         timeout: 60000,
@@ -1778,16 +1662,13 @@
                     });
                     
                     if (credential) {
-                        // گەر سکانەکە سەرکەوتوو بوو، ڕاستەوخۆ دەچێتە ژوورەوە
                         return await proceedWithAdminLogin(savedBioPwd, false);
                     }
                 } catch (err) {
                     console.log("Biometric auth canceled or failed", err);
-                    // ئەگەر هاووڵاتی پەنجەی نا بە Cancel یان نەیناسییەوە، با بەردەوام بێت بۆ پاسوۆردی ئاسایی
                 }
             }
 
-            // گەر Face ID چالاک نەکرابوو، پاسوۆردی ئاسایی داوا دەکات
             const { value: pwd } = await Swal.fire({
                 title: 'تایبه‌ت به‌ ئه‌دمین', 
                 input: 'password', 
@@ -1819,7 +1700,6 @@
                     window.adminRole = resData.role; 
                     window.adminPwd = normalizedPwd; 
 
-                    // ئەگەر بە پاسوۆرد چووە ژوورەوە و مۆبایلەکەشی پشتگیری دەکرد، لێی دەپرسێت بۆ چالاککردنی Face ID
                     if (isManualLogin && window.PublicKeyCredential && !localStorage.getItem("admin_biometric_pwd")) {
                         Swal.close();
                         const enableBio = await Swal.fire({
@@ -1849,12 +1729,10 @@
                                     timeout: 60000
                                 };
                                 
-                                // کردنەوەی سکانەری مۆبایلەکە بۆ جێگیرکردنی
                                 await navigator.credentials.create({
                                     publicKey: publicKeyCredentialCreationOptions
                                 });
                                 
-                                // پاشەکەوتکردنی پاسوۆردەکە تەنها پاش سەرکەوتنی سکانەکە
                                 localStorage.setItem("admin_biometric_pwd", normalizedPwd);
                                 await Swal.fire({
                                     toast: true, position: 'top-end', icon: 'success', 
@@ -1862,7 +1740,6 @@
                                 });
                             } catch(err) {
                                 console.log("Bio setup failed", err);
-                                // ئەگەر هەڵوەشێندرایەوە هیچ ناکات
                             }
                         }
                     } else {
