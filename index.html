@@ -767,7 +767,7 @@
             </div>
         </div>
 
-        <!-- بەشی تاقیکردنەوە و پرسیارەکان (زیاتر لە ٤٠٠ پرسیار بە هەڕەمەکی ٢٥ دەنک، بێ وێنە، گواستنەوەی خۆکار) -->
+        <!-- بەشی تاقیکردنەوە و پرسیارەکان (لەگەڵ تێبینی ناوخۆیی و بێ پۆپ-ئەپی بێزارکەر) -->
         <div id="examSection" class="page-section" style="display: none;">
             <div class="exam-container">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -775,7 +775,11 @@
                     <button onclick="navTo('portal')" class="btn-reset" style="padding: 5px 10px;">گەڕانەوە</button>
                 </div>
                 
-                <div id="examMenu" style="text-align: center; padding: 15px 0;">
+                <div id="examMenu" style="text-align: center; padding: 10px 0;">
+                    <!-- تێبینی بچووک و ڕوون لەسەرەتاوە بێ پۆپ-ئەپ -->
+                    <div style="background: rgba(0, 86, 179, 0.08); border: 1px solid rgba(0, 86, 179, 0.2); border-radius: 10px; padding: 10px; margin-bottom: 15px; font-size: 11px; color: var(--header-text); text-align: right; line-height: 1.5;">
+                        <i class="fa-solid fa-circle-info"></i> تێبینی: ئەم تاقیکردنەوەیە هیچ کات پەیوەندی بە ئیمتیحانی نەزەری فەرمی هاتووچۆوە نییە، تەنها بۆ خۆشی و کات بەسەربردن و زیادکردنی زانیاری شۆفێرە.
+                    </div>
                     <p style="font-size: 13px; color: var(--label-color); margin-bottom: 20px;">جۆری پرسیارەکان هەڵبژێرە (زیاتر لە ٤٠٠ پرسیاری جۆراوجۆر، هەموو جارێک ٢٥ پرسیاری هەڕەمەکی):</p>
                     <button class="action-btn search-btn" onclick="startExam('general')" style="margin-bottom: 10px;"><i class="fa-solid fa-list-check"></i> پرسیاری گشتی (یاساکان)</button>
                     <button class="action-btn" onclick="startExam('specific')" style="background: #8e44ad; margin-bottom: 10px;"><i class="fa-solid fa-car"></i> پرسیاری تایبەت (مایکرۆکەکان)</button>
@@ -987,7 +991,7 @@
             return R * c; 
         }
 
-        /* --- بنکەی دراوەی فراوانی پرسیارەکان (زیاتر لە ٤٠٠ پرسیار دروستکراوە بە شێوازێکی زانستی و پێشکەوتووی سیستەمەکە) --- */
+        /* --- بنکەی دراوەی فراوانی پرسیارەکان (زیاتر لە ٤٠٠ پرسیار بە شێوازی زیرەک) --- */
         const baseGeneralQuestions = [
             { q: "کاتی لێخوڕین لەسەر شەقامە خێراکان، کامیان ڕێگەپێدراوە؟", options: ["پێشکردنەوە لە لای ڕاستەوە", "پێشکردنەوە تەنها لە لای چەپەوە", "وەستان لە سەر شۆلەی خێرا"], answer: 1 },
             { q: "ئایا لێخوڕین بە خێراییەکی زیاتر لە سنوری دیاریکراو ڕێگەپێدراوە لە کاتی لەتاوی فریاکەوتندا؟", options: ["بەڵێ بە مەرجی ئاگادارکردنەوە", "نەخێر بە هیچ شێوەیەک", "تەنها لە شەواندا"], answer: 1 },
@@ -1019,7 +1023,6 @@
             { q: "کارەی دینەمۆ (Alternator) چییە لە ئۆتۆمبێلدا؟", options: ["بەکارخستنی بزوێنەر لە سەرەتاوە", "بارگاویکردنەوەی بەتری و دابینکردنی کارەبا لە کاتی کارکردندا", "ساردکردنەوەی ڕۆن"], answer: 1 }
         ];
 
-        /* دروستکردنی کۆمەڵە پرسیاری گەورە (زیاتر لە ٤٠٠ پرسیار بە دووبارەکردنەوەی زیرەک و تێکەڵکردن بۆ ئەوەی هەمیشە فرەچەشن بێت) */
         function generateLargeQuestionPool(baseList, targetCount) {
             let pool = [];
             let idCounter = 1;
@@ -1049,7 +1052,6 @@
         let examTimerInterval = null;
         let timeLeft = 60;
 
-        /* فەنکشنی تێکەڵکردنی هەڕەمەکی (Random Shuffle) */
         function shuffleArray(array) {
             let currentIndex = array.length, randomIndex;
             while (currentIndex != 0) {
@@ -1062,29 +1064,18 @@
 
         function startExam(type) {
             vibrate();
-            // تێبینی: پشکنین و ئاگادارکردنەوەی پێش دەستپێکردن
-            Swal.fire({
-                title: 'ئاگاداری گرنگ ⚠️',
-                text: 'ئەم تاقیکردنەوەیە هیچ کات پەیوەندی بە ئیمتیحانی نەزەری فەرمی هاتووچۆوە نییە، تەنها بۆ خۆشی و کات بەسەربردن و زیادکردنی زانیاری شۆفێرە.',
-                icon: 'info',
-                confirmButtonText: 'تێگەیشتم، دەست پێبکە',
-                confirmButtonColor: '#0056b3'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    currentExamType = type;
-                    currentQuestionIndex = 0;
-                    score = 0;
-                    
-                    let allQuestions = [...examDatabase[type]];
-                    shuffleArray(allQuestions);
-                    activeQuestions = allQuestions.slice(0, 25);
-                    
-                    document.getElementById('examMenu').style.display = 'none';
-                    document.getElementById('examResultBox').style.display = 'none';
-                    document.getElementById('examBox').style.display = 'block';
-                    loadQuestion();
-                }
-            });
+            currentExamType = type;
+            currentQuestionIndex = 0;
+            score = 0;
+            
+            let allQuestions = [...examDatabase[type]];
+            shuffleArray(allQuestions);
+            activeQuestions = allQuestions.slice(0, 25);
+            
+            document.getElementById('examMenu').style.display = 'none';
+            document.getElementById('examResultBox').style.display = 'none';
+            document.getElementById('examBox').style.display = 'block';
+            loadQuestion();
         }
 
         function loadQuestion() {
@@ -1106,7 +1097,6 @@
                 optBox.appendChild(btn);
             });
 
-            // تایمەری ٦٠ چرکەیی
             examTimerInterval = setInterval(() => {
                 timeLeft--;
                 document.getElementById('timeLeft').innerText = timeLeft;
@@ -1151,7 +1141,6 @@
                 options[correctIndex].classList.add('correct');
             }
 
-            // گواستنەوەی خۆکارانە دوای ١.٢ چرکە بۆ پرسیاری داهاتوو بێ ئەوەی پێویست بە کلیک بکات
             setTimeout(() => {
                 currentQuestionIndex++;
                 if(currentQuestionIndex < activeQuestions.length) {
@@ -1243,22 +1232,6 @@
             vibrate(10);
             if (section !== 'exam') { clearInterval(examTimerInterval); }
 
-            // ئەگەر بۆ بەشی تاقیکردنەوە چوو، ڕاستەوخۆ ئاگادارییەکە نیشان بدە یان دەست پێبکە
-            if (section === 'exam') {
-                Swal.fire({
-                    title: 'ئاگاداری گرنگ ⚠️',
-                    text: 'ئەم تاقیکردنەوەیە هیچ کات پەیوەندی بە ئیمتیحانی نەزەری فەرمی هاتووچۆوە نییە، تەنها بۆ خۆشی و کات بەسەربردن و زیادکردنی زانیاری شۆفێرە.',
-                    icon: 'info',
-                    confirmButtonText: 'تێگەیشتم، چوونە ژوورەوە',
-                    confirmButtonColor: '#0056b3'
-                }).then((res) => {
-                    if (res.isConfirmed) {
-                        proceedNav(section);
-                    }
-                });
-                return;
-            }
-
             if (!navigator.onLine && section === 'queue') {
                  Swal.fire({
                     icon: 'warning', title: 'هێڵی ئینتەرنێتت پچڕاوە!',
@@ -1268,10 +1241,6 @@
                 return; 
             }
 
-            proceedNav(section);
-        }
-
-        function proceedNav(section) {
             const pageLoader = document.getElementById('pageTransitionLoader');
             pageLoader.classList.add('active');
             
