@@ -854,7 +854,7 @@
             </div>
         </div>
 
-        <!-- بەشی هێماکانی هاتووچۆ (سەرجەم ۳٠٨ هێما بە وێنەی فەرمی و ناوی زانستی لەسەر خودی وێنەکە) -->
+        <!-- بەشی هێماکانی هاتووچۆ (سەرجەم ۳٠٨ هێما لە فۆڵدەری images/) -->
         <div id="signsSection" class="page-section" style="display: none;">
             <div class="signs-container">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -872,7 +872,7 @@
                 </div>
 
                 <div class="signs-grid" id="signsGridContainer">
-                    <!-- وێنەکان ڕاستەوخۆ لە فۆڵدەری signs/ بار دەبن -->
+                    <!-- وێنەکان لە فۆڵدەری images بار دەبن -->
                 </div>
             </div>
         </div>
@@ -922,7 +922,7 @@
         </div>
     </div>
 
-    <!-- مۆداڵی پیشاندانی گەورەی هێماکان (Lightbox بۆ گۆڕینی یەک بە یەک) -->
+    <!-- مۆداڵی پێشاندانی گەورەی هێماکان (Lightbox بۆ گۆڕینی یەک بە یەک) -->
     <div id="signLightbox" class="sign-lightbox" onclick="closeSignLightbox()">
         <div class="lightbox-content" onclick="event.stopPropagation()">
             <button class="lightbox-close" onclick="closeSignLightbox()"><i class="fa-solid fa-xmark"></i></button>
@@ -1037,7 +1037,7 @@
             }
         });
 
-        // بارهێنانی سەرجەم ۳٠٨ وێنەی تابلۆکان لە فۆڵدەری signs/ بە ناوە زانستییەکان و پۆلێنەکانیان
+        // بارکردنی سەرجەم ۳٠٨ هێماکە لە فۆڵدەری images/ لەگەڵ ناوی ڕەسەنی زانستی خۆیان
         const trafficSignsData = [];
         const signCategories = ['warning', 'prohibitory', 'mandatory', 'guide', 'dashboard'];
         const officialNames = [
@@ -1084,7 +1084,7 @@
                 container.innerHTML += `
                     <div class="sign-card" onclick="openSignLightbox(${idx})">
                         <div class="sign-icon-box">
-                            <img src="signs/${item.img}" alt="${item.title}" loading="lazy" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'50\' height=\'50\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23ccc\' stroke-width=\'2\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><path d=\'M21 15l-5-5L5 21\'/></svg>'">
+                            <img src="images/${item.img}" alt="${item.title}" loading="lazy" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'50\' height=\'50\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23ccc\' stroke-width=\'2\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><path d=\'M21 15l-5-5L5 21\'/></svg>'">
                         </div>
                         <div class="sign-title">${item.title}</div>
                     </div>
@@ -1134,7 +1134,7 @@
         function updateLightboxContent() {
             let filtered = getFilteredSigns();
             let item = filtered[currentLightboxIndex];
-            document.getElementById('lightboxImg').src = `signs/${item.img}`;
+            document.getElementById('lightboxImg').src = `images/${item.img}`;
             document.getElementById('lightboxTitle').innerText = item.title;
         }
 
