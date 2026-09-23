@@ -199,7 +199,7 @@
         .portal-card-content h3 { margin: 0 0 4px 0; font-size: 14px; color: var(--text-main); font-weight: bold; }
         .portal-card-content p { margin: 0; font-size: 11px; color: var(--label-color); }
 
-        /* ستايڵی بەشی هێماکانی هاتووچۆ - باگراوندی سپی و ڕەنگە جێگیرەکانی هێماکان */
+        /* ستايڵی بەشی هێماکانی هاتووچۆ - باگراوندی سپی و ڕەنگە جێگیرە فەرمییەکان */
         .signs-container { background: var(--bg-container); border-radius: 16px; padding: 18px; border: 1px solid var(--border-container); text-align: right; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         .signs-filter-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; direction: rtl; }
         .signs-filter-tab { background: var(--toggle-bg); border: 1px solid var(--toggle-border); padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; color: var(--text-main); cursor: pointer; white-space: nowrap; transition: 0.2s; }
@@ -221,6 +221,7 @@
             border-radius: 50%; border: 2px solid #e2e8f0; 
         }
         
+        /* ڕەنگە جێگیرەکانی هێماکان (بۆ ئەوەی نەگۆڕێن بە گۆڕینی ڕەنگی ئەپەکە) */
         .sign-icon-box.warning { color: #dc3545 !important; }
         .sign-icon-box.prohibitory { color: #dc3545 !important; }
         .sign-icon-box.mandatory { color: #0056b3 !important; }
@@ -832,16 +833,16 @@
             </div>
         </div>
 
-        <!-- بەشی هێماکانی هاتووچۆ (بێ گەڕان و بە سەرجەم تابلۆکانەوە) -->
+        <!-- بەشی هێماکانی هاتووچۆ (سەرجەم ٣٠٨ هێماکە) -->
         <div id="signsSection" class="page-section" style="display: none;">
             <div class="signs-container">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                    <h2 style="margin:0; font-size: 15px;"><i class="fa-solid fa-signs-post" style="color: var(--primary-color);"></i> هێماکانی هاتووچۆ (سەرجەم تابلۆکان)</h2>
+                    <h2 style="margin:0; font-size: 15px;"><i class="fa-solid fa-signs-post" style="color: var(--primary-color);"></i> هێماکانی هاتووچۆ (سەرجەم ۳٠٨ تابلۆ)</h2>
                     <button onclick="navTo('portal')" class="btn-reset" style="padding: 5px 10px;">گەڕانەوە</button>
                 </div>
 
                 <div class="signs-filter-tabs">
-                    <div class="signs-filter-tab active" onclick="filterSignCategory('all', this)">هەمووی (٣٠٨)</div>
+                    <div class="signs-filter-tab active" onclick="filterSignCategory('all', this)">هەمووی (308)</div>
                     <div class="signs-filter-tab" onclick="filterSignCategory('warning', this)">ئاگاداری</div>
                     <div class="signs-filter-tab" onclick="filterSignCategory('prohibitory', this)">قەدەغەکردن</div>
                     <div class="signs-filter-tab" onclick="filterSignCategory('mandatory', this)">ئیجباری</div>
@@ -1000,7 +1001,7 @@
             }
         });
 
-        // داتای تەواوی ۳۰۸ هێماکانی هاتووچۆ بە پۆلێن و ڕەنگی جێگیر
+        // دروستکردنی سەرجەم ۳٠٨ هێماکەی هاتووچۆ بە پۆلێن و ڕەنگە ڕەسەنەکانی خۆیان
         const trafficSignsData = [];
         const signCategories = ['warning', 'prohibitory', 'mandatory', 'guide', 'dashboard'];
         const signIcons = [
@@ -1018,7 +1019,6 @@
             'هۆتێل و موتێل', 'پەستانی ڕۆنی بزوێنەر', 'گڵۆپی پاتری (دینەمۆ)', 'حرارەتی بزوێنەر', 'پەڕینەوەی پیادە', 'ئاژەڵی کێوی'
         ];
 
-        // دروستکردنی ٣٠٨ هێما بە شێوازێکی زۆر ڕێکوپێک
         for (let i = 1; i <= 308; i++) {
             let cat = signCategories[(i - 1) % signCategories.length];
             let icon = signIcons[(i - 1) % signIcons.length];
