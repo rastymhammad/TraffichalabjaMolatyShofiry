@@ -15,7 +15,7 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
@@ -199,7 +199,7 @@
         .portal-card-content h3 { margin: 0 0 4px 0; font-size: 14px; color: var(--text-main); font-weight: bold; }
         .portal-card-content p { margin: 0; font-size: 11px; color: var(--label-color); }
 
-        /* ستايڵی بەشی هێماکانی هاتووچۆ */
+        /* ستايڵی بەشی هێماکانی هاتووچۆ (ڕەنگەکان جێگیرکراون بۆ ئەوەی لەگەڵ گۆڕینی ڕەنگی ئەپ نەگۆڕێن) */
         .signs-container { background: var(--bg-container); border-radius: 16px; padding: 18px; border: 1px solid var(--border-container); text-align: right; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         .signs-filter-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; direction: rtl; }
         .signs-filter-tab { background: var(--toggle-bg); border: 1px solid var(--toggle-border); padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; color: var(--text-main); cursor: pointer; white-space: nowrap; transition: 0.2s; }
@@ -208,7 +208,15 @@
         .signs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; max-height: 60vh; overflow-y: auto; padding: 5px; }
         .sign-card { background: var(--toggle-bg); border: 1px solid var(--toggle-border); border-radius: 12px; padding: 12px 8px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: space-between; transition: 0.2s; }
         .sign-card:hover { transform: translateY(-2px); border-color: var(--primary-color); }
-        .sign-icon-box { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 8px; color: var(--primary-color); background: var(--bg-container); border-radius: 50%; border: 1px solid var(--border-container); }
+        .sign-icon-box { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 8px; background: var(--bg-container); border-radius: 50%; border: 1px solid var(--border-container); }
+        
+        /* ڕەنگە تایبەت و ڕەسەنەکانی هێماکانی هاتووچۆ کە ناگۆڕێن */
+        .sign-icon-box.warning { color: #e53e3e !important; }
+        .sign-icon-box.prohibitory { color: #e53e3e !important; }
+        .sign-icon-box.mandatory { color: #007bff !important; }
+        .sign-icon-box.guide { color: #007bff !important; }
+        .sign-icon-box.dashboard { color: #d69e2e !important; }
+
         .sign-title { font-size: 11px; font-weight: bold; color: var(--text-main); line-height: 1.4; }
 
         /* تاقیکردنەوە و ڕێنمایی */
@@ -838,7 +846,7 @@
                 </div>
 
                 <div class="signs-grid" id="signsGridContainer">
-                    <!-- لێرەدا هێماکان بە جافاسکریپت بار دەبن -->
+                    <!-- هێماکان لێرەدا بار دەبن -->
                 </div>
             </div>
         </div>
@@ -1035,7 +1043,7 @@
             filtered.forEach(item => {
                 container.innerHTML += `
                     <div class="sign-card">
-                        <div class="sign-icon-box"><i class="fa-solid ${item.icon}"></i></div>
+                        <div class="sign-icon-box ${item.cat}"><i class="fa-solid ${item.icon}"></i></div>
                         <div class="sign-title">${item.title}</div>
                     </div>
                 `;
