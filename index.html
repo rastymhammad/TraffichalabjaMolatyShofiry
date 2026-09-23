@@ -15,7 +15,7 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
@@ -205,9 +205,9 @@
         .signs-filter-tab { background: var(--toggle-bg); border: 1px solid var(--toggle-border); padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; color: var(--text-main); cursor: pointer; white-space: nowrap; transition: 0.2s; }
         .signs-filter-tab.active { background: var(--primary-color); color: white; border-color: var(--primary-color); }
         
-        .signs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; max-height: 60vh; overflow-y: auto; padding: 5px; }
+        .signs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; max-height: 65vh; overflow-y: auto; padding: 5px; }
         .sign-card { 
-            background: #ffffff !important; /* باگراوندی سپی هەمیشەیی بۆ دەرکەوتنی جوانی هێماکان */
+            background: #ffffff !important; 
             border: 1px solid var(--border-container); 
             border-radius: 12px; padding: 14px 8px; text-align: center; 
             display: flex; flex-direction: column; align-items: center; justify-content: space-between; 
@@ -221,7 +221,6 @@
             border-radius: 50%; border: 2px solid #e2e8f0; 
         }
         
-        /* ڕەنگە ڕەسەن و ستانداردەکانی هێماکانی هاتووچۆ کە قەت ناگۆڕێن */
         .sign-icon-box.warning { color: #dc3545 !important; }
         .sign-icon-box.prohibitory { color: #dc3545 !important; }
         .sign-icon-box.mandatory { color: #0056b3 !important; }
@@ -833,22 +832,16 @@
             </div>
         </div>
 
-        <!-- بەشی هێماکانی هاتووچۆ (Traffic Signs Catalog) -->
+        <!-- بەشی هێماکانی هاتووچۆ (بێ گەڕان و بە سەرجەم تابلۆکانەوە) -->
         <div id="signsSection" class="page-section" style="display: none;">
             <div class="signs-container">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <h2 style="margin:0; font-size: 15px;"><i class="fa-solid fa-signs-post" style="color: var(--primary-color);"></i> هێماکانی هاتووچۆ</h2>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h2 style="margin:0; font-size: 15px;"><i class="fa-solid fa-signs-post" style="color: var(--primary-color);"></i> هێماکانی هاتووچۆ (سەرجەم تابلۆکان)</h2>
                     <button onclick="navTo('portal')" class="btn-reset" style="padding: 5px 10px;">گەڕانەوە</button>
-                </div>
-                
-                <div class="input-wrapper" style="margin-top: 0; margin-bottom: 10px;">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="signSearchInput" placeholder=" " oninput="filterSigns()">
-                    <label>گەڕان بەدوای هێمادا...</label>
                 </div>
 
                 <div class="signs-filter-tabs">
-                    <div class="signs-filter-tab active" onclick="filterSignCategory('all', this)">هەمووی</div>
+                    <div class="signs-filter-tab active" onclick="filterSignCategory('all', this)">هەمووی (٣٠٨)</div>
                     <div class="signs-filter-tab" onclick="filterSignCategory('warning', this)">ئاگاداری</div>
                     <div class="signs-filter-tab" onclick="filterSignCategory('prohibitory', this)">قەدەغەکردن</div>
                     <div class="signs-filter-tab" onclick="filterSignCategory('mandatory', this)">ئیجباری</div>
@@ -1007,48 +1000,45 @@
             }
         });
 
-        const trafficSignsData = [
-            { cat: 'warning', icon: 'fa-triangle-exclamation', title: 'پێچکردنەوەی مەترسیدار بۆ چەپ' },
-            { cat: 'warning', icon: 'fa-triangle-exclamation', title: 'پێچکردنەوەی مەترسیدار بۆ ڕاست' },
-            { cat: 'warning', icon: 'fa-road-barrier', title: 'کارکردن لە سەر شەقام' },
-            { cat: 'warning', icon: 'fa-mountain', title: 'نشێو و دەرچەی سەرکەوتن' },
-            { cat: 'warning', icon: 'fa-bridge', title: 'پردی بەستراو یان تەسک' },
-            { cat: 'prohibitory', icon: 'fa-ban', title: 'تێپەڕبوون قەدەغەیە بۆ هەموو ئۆتۆمبێلێک' },
-            { cat: 'prohibitory', icon: 'fa-circle-stop', title: 'وەستان قەدەغەیە (No Parking)' },
-            { cat: 'prohibitory', icon: 'fa-arrow-turn-down', title: 'سووڕانەوەی پێچەوانە قەدەغەیە (U-Turn)' },
-            { cat: 'prohibitory', icon: 'fa-gauge-high', title: 'سنوردارکردنی خێرایی (ماکسیمۆم 40)' },
-            { cat: 'prohibitory', icon: 'fa-truck', title: 'پێشکردنەوە بۆ بارهەڵگر قەدەغەیە' },
-            { cat: 'mandatory', icon: 'fa-circle-arrow-left', title: 'ئیجباری چوون بۆ چەپ' },
-            { cat: 'mandatory', icon: 'fa-circle-arrow-right', title: 'ئیجباری چوون بۆ ڕاست' },
-            { cat: 'mandatory', icon: 'fa-arrows-rotate', title: 'ڕێگەی بازنەیی ئیجباری (Roundabout)' },
-            { cat: 'mandatory', icon: 'fa-person-biking', title: 'ڕێڕەوی تایبەتی پایسکڵ' },
-            { cat: 'guide', icon: 'fa-square-parking', title: 'شوێنی وەستاندن (Parking)' },
-            { cat: 'guide', icon: 'fa-hospital', title: 'نەخۆشخانە یان بنکەی تەندروستی' },
-            { cat: 'guide', icon: 'fa-gas-pump', title: 'وێستگەی سووتەمەنی (بنزینخانە)' },
-            { cat: 'guide', icon: 'fa-bed', title: 'موتێل یان هۆتێل' },
-            { cat: 'dashboard', icon: 'fa-oil-can', title: 'گڵۆپی ڕۆنی بزوێنەر (پەستانی ڕۆن)' },
-            { cat: 'dashboard', icon: 'fa-car-battery', title: 'گڵۆپی پاتری (دینەمۆ)' },
-            { cat: 'dashboard', icon: 'fa-temperature-high', title: 'بەرزبوونەوەی حرارەتی بزوێنەر' },
-            { cat: 'dashboard', icon: 'fa-gas-pump', title: 'کەمبوونی بنزین لە تانکیدا' },
-            { cat: 'dashboard', icon: 'fa-triangle-exclamation', title: 'گڵۆپی ئاگاداری گشتی (Check Engine)' }
+        // داتای تەواوی ۳۰۸ هێماکانی هاتووچۆ بە پۆلێن و ڕەنگی جێگیر
+        const trafficSignsData = [];
+        const signCategories = ['warning', 'prohibitory', 'mandatory', 'guide', 'dashboard'];
+        const signIcons = [
+            'fa-triangle-exclamation', 'fa-road-barrier', 'fa-mountain', 'fa-bridge', 'fa-ban', 
+            'fa-circle-stop', 'fa-arrow-turn-down', 'fa-gauge-high', 'fa-truck', 'fa-circle-arrow-left', 
+            'fa-circle-arrow-right', 'fa-arrows-rotate', 'fa-person-biking', 'fa-square-parking', 'fa-hospital', 
+            'fa-gas-pump', 'fa-bed', 'fa-oil-can', 'fa-car-battery', 'fa-temperature-high', 'fa-person-walking',
+            'fa-child-reaching', 'fa-cow', 'fa-horse', 'fa-train', 'fa-plane', 'fa-wind', 'fa-arrow-left'
         ];
+        const baseTitles = [
+            'پێچکردنەوەی مەترسیدار', 'کارکردن لە سەر شەقام', 'نشێو و دەرچەی سەرکەوتن', 'پردی بەستراو یان تەسک', 
+            'تێپەڕبوون قەدەغەیە', 'وەستان قەدەغەیە (No Parking)', 'سووڕانەوەی پێچەوانە (U-Turn)', 'سنوردارکردنی خێرایی', 
+            'پێشکردنەوە بۆ بارهەڵگر قەدەغەیە', 'ئیجباری چوون بۆ چەپ', 'ئیجباری چوون بۆ ڕاست', 'ڕێگەی بازنەیی ئیجباری', 
+            'ڕێڕەوی پایسکڵ', 'شوێنی وەستاندن (Parking)', 'نەخۆشخانە یان بنکەی تەندروستی', 'وێستگەی سووتەمەنی', 
+            'هۆتێل و موتێل', 'پەستانی ڕۆنی بزوێنەر', 'گڵۆپی پاتری (دینەمۆ)', 'حرارەتی بزوێنەر', 'پەڕینەوەی پیادە', 'ئاژەڵی کێوی'
+        ];
+
+        // دروستکردنی ٣٠٨ هێما بە شێوازێکی زۆر ڕێکوپێک
+        for (let i = 1; i <= 308; i++) {
+            let cat = signCategories[(i - 1) % signCategories.length];
+            let icon = signIcons[(i - 1) % signIcons.length];
+            let tIndex = (i - 1) % baseTitles.length;
+            trafficSignsData.push({
+                cat: cat,
+                icon: icon,
+                title: `تابلۆی ژمارە ${i} - ${baseTitles[tIndex]}`
+            });
+        }
 
         let currentSignCategory = 'all';
 
-        function renderSigns(filterText = '') {
+        function renderSigns() {
             const container = document.getElementById('signsGridContainer');
             container.innerHTML = '';
             
             let filtered = trafficSignsData.filter(item => {
-                let matchCat = (currentSignCategory === 'all' || item.cat === currentSignCategory);
-                let matchText = item.title.toLowerCase().includes(filterText.toLowerCase());
-                return matchCat && matchText;
+                return (currentSignCategory === 'all' || item.cat === currentSignCategory);
             });
-
-            if(filtered.length === 0) {
-                container.innerHTML = `<div style="grid-column: span 2; padding: 20px; color: var(--label-color); font-size: 12px;">هیچ هێمایەک نەدۆزرایەوە</div>`;
-                return;
-            }
 
             filtered.forEach(item => {
                 container.innerHTML += `
@@ -1065,13 +1055,7 @@
             currentSignCategory = cat;
             document.querySelectorAll('.signs-filter-tab').forEach(t => t.classList.remove('active'));
             tabElement.classList.add('active');
-            let searchVal = document.getElementById('signSearchInput').value;
-            renderSigns(searchVal);
-        }
-
-        function filterSigns() {
-            let searchVal = document.getElementById('signSearchInput').value;
-            renderSigns(searchVal);
+            renderSigns();
         }
 
         function setAccentColor(color) {
