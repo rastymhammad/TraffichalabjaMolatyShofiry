@@ -196,12 +196,15 @@
         .portal-card-content h3 { margin: 0 0 4px 0; font-size: 14px; color: var(--text-main); font-weight: bold; }
         .portal-card-content p { margin: 0; font-size: 11px; color: var(--label-color); }
 
-        /* ستايڵی بەشی پرسیارەکان (Exam Section) */
+        /* ستايڵی بەشی پرسیارەکان */
         .exam-container { background: var(--bg-container); border-radius: 16px; padding: 18px; border: 1px solid var(--border-container); text-align: right; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         .exam-option { background: var(--toggle-bg); border: 2px solid var(--toggle-border); border-radius: 10px; padding: 12px; margin: 8px 0; cursor: pointer; text-align: right; font-size: 13px; color: var(--text-main); transition: 0.2s; }
         .exam-option:hover { border-color: #0056b3; background: var(--info-bg); }
         .exam-option.correct { background: #d4edda !important; border-color: #28a745 !important; color: #155724 !important; font-weight: bold; }
         .exam-option.wrong { background: #f8d7da !important; border-color: #dc3545 !important; color: #721c24 !important; font-weight: bold; }
+
+        /* تایمەر */
+        .exam-timer { display: inline-flex; align-items: center; gap: 5px; background: rgba(220, 53, 69, 0.1); color: #dc3545; padding: 4px 10px; border-radius: 20px; font-weight: bold; font-size: 12px; }
 
         button.action-btn, .start-quiz-btn, .date-box {
             transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.3s ease !important;
@@ -488,7 +491,7 @@
             </h1>
         </div>
 
-        <!-- پەڕەی سەرەتا (پۆرتاڵ) لەگەڵ کاردی نوێی پرسیارەکان -->
+        <!-- پەڕەی سەرەتا (پۆرتاڵ) -->
         <div id="portalSection" class="page-section">
             <div class="visitor-counter no-print">
                 👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b>
@@ -521,12 +524,11 @@
                     </div>
                     <div></div>
                 </div>
-                <!-- کاردی بەشی تاقیکردنەوە و پرسیارەکان -->
                 <div class="portal-card" onclick="navTo('exam')">
                     <i class="fa-solid fa-clipboard-question"></i>
                     <div class="portal-card-content">
                         <h3>تاقیکردنەوەی مۆڵەتی شۆفێری</h3>
-                        <p>پرسیاری گشتی، تایبەت و وێنەدار</p>
+                        <p>پرسیاری گشتی، تایبەت و وێنەدار (٢٥ پرسیار)</p>
                     </div>
                     <div></div>
                 </div>
@@ -764,7 +766,7 @@
             </div>
         </div>
 
-        <!-- بەشی نوێی تاقیکردنەوە و پرسیارەکان (Exam Section) -->
+        <!-- بەشی تاقیکردنەوە و پرسیارەکان (Exam Section) -->
         <div id="examSection" class="page-section" style="display: none;">
             <div class="exam-container">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -773,15 +775,16 @@
                 </div>
                 
                 <div id="examMenu" style="text-align: center; padding: 15px 0;">
-                    <p style="font-size: 13px; color: var(--label-color); margin-bottom: 20px;">جۆری پرسیارەکان هەڵبژێرە و ڕاهێنان ئەنجام بدە:</p>
-                    <button class="action-btn search-btn" onclick="startExam('general')" style="margin-bottom: 10px;"><i class="fa-solid fa-list-check"></i> پرسیاری گشتی (یاساکانی هاتووچۆ)</button>
-                    <button class="action-btn" onclick="startExam('specific')" style="background: #8e44ad; margin-bottom: 10px;"><i class="fa-solid fa-car"></i> پرسیاری تایبەت (مایکرۆکەکان و ئامێرەکان)</button>
-                    <button class="action-btn" onclick="startExam('image')" style="background: #fd7e14;"><i class="fa-solid fa-image"></i> پرسیاری وێنەدار (نیشانەکانی هاتووچۆ)</button>
+                    <p style="font-size: 13px; color: var(--label-color); margin-bottom: 20px;">جۆری پرسیارەکان هەڵبژێرە و ڕاهێنان ئەنجام بدە (٢٥ پرسیار بۆ هەر بەش):</p>
+                    <button class="action-btn search-btn" onclick="startExam('general')" style="margin-bottom: 10px;"><i class="fa-solid fa-list-check"></i> پرسیاری گشتی (یاساکان)</button>
+                    <button class="action-btn" onclick="startExam('specific')" style="background: #8e44ad; margin-bottom: 10px;"><i class="fa-solid fa-car"></i> پرسیاری تایبەت (مایکرۆکەکان)</button>
+                    <button class="action-btn" onclick="startExam('image')" style="background: #fd7e14;"><i class="fa-solid fa-image"></i> پرسیاری وێنەدار (نیشانەکان)</button>
                 </div>
 
                 <div id="examBox" style="display: none;">
-                    <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--label-color); margin-bottom: 10px;">
-                        <span id="questionCounter">پرسیاری 1 لە 3</span>
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--label-color); margin-bottom: 10px;">
+                        <span id="questionCounter">پرسیاری 1 لە 25</span>
+                        <div class="exam-timer"><i class="fa-solid fa-stopwatch"></i> <span id="timeLeft">60</span> چرکە</div>
                     </div>
                     <div id="questionText" style="font-size: 14px; font-weight: bold; color: var(--text-main); margin-bottom: 15px; line-height: 1.6;"></div>
                     <div id="questionImageContainer" style="text-align: center; margin-bottom: 15px; display: none;">
@@ -896,9 +899,7 @@
             if (navigator.onLine) {
                 offlineBanner.innerHTML = '<i class="fa-solid fa-check-circle"></i> هێڵی ئینتەرنێت گەڕایەوە.';
                 offlineBanner.classList.add('online-again');
-                setTimeout(() => {
-                    offlineBanner.classList.remove('show');
-                }, 3000);
+                setTimeout(() => { offlineBanner.classList.remove('show'); }, 3000);
             } else {
                 offlineBanner.innerHTML = '<i class="fa-solid fa-wifi"></i> هێڵی ئینتەرنێت پچڕاوە. تکایە هێڵەکەت بپشکنە.';
                 offlineBanner.classList.remove('online-again');
@@ -909,9 +910,7 @@
         window.addEventListener('online', updateOnlineStatus);
         window.addEventListener('offline', updateOnlineStatus);
         
-        let pullStartY = 0;
-        let pullMoveY = 0;
-        let isPulling = false;
+        let pullStartY = 0, pullMoveY = 0, isPulling = false;
         const ptrIndicator = document.getElementById('ptr-indicator');
         const ptrIcon = document.getElementById('ptr-icon');
         const ptrText = document.getElementById('ptr-text');
@@ -951,8 +950,7 @@
             } else {
                 ptrIndicator.style.height = '0px';
             }
-            pullStartY = 0;
-            pullMoveY = 0;
+            pullStartY = 0; pullMoveY = 0;
         });
 
         function toEnglishDigits(str) {
@@ -967,8 +965,8 @@
         let globalSystemIsActive = true; 
         let statChart = null;
         let globalUsersData = [];
-
         let isGpsRequired = false; 
+
         const allowedZones = [
             { name: "بەڕێوەبەرایەتی هەڵەبجە", lat: 35.1877797, lng: 46.0072475, radius: 15 },
             { name: "تەوێڵە", lat: 35.207216, lng: 46.185475, radius: 8 },
@@ -988,20 +986,88 @@
             return R * c; 
         }
 
-        /* --- لۆجیکی تاقیکردنەوە و پرسیارەکان (Exam Logic) --- */
+        /* --- بنکەی دراوەی پرسیارەکان (٢٥ پرسیار بۆ هەر بەشێک) --- */
         const examDatabase = {
             general: [
                 { q: "کاتی لێخوڕین لەسەر شەقامە خێراکان، کامیان ڕێگەپێدراوە؟", options: ["پێشکردنەوە لە لای ڕاستەوە", "پێشکردنەوە تەنها لە لای چەپەوە", "وەستان لە سەر شۆلەی خێرا"], answer: 1 },
                 { q: "ئایا لێخوڕین بە خێراییەکی زیاتر لە سنوری دیاریکراو ڕێگەپێدراوە لە کاتی لەتاوی فریاکەوتندا؟", options: ["بەڵێ بە مەرجی ئاگادارکردنەوە", "نەخێر بە هیچ شێوەیەک", "تەنها لە شەواندا"], answer: 1 },
-                { q: "ڕۆشنایی گڵۆپی سەرەکی (High beam) دەبێت کەی بەکاربهێنرێت؟", options: ["لە ناو شاردا کاتی قەرەباڵغی", "لە شوێنە تاریکەکان کە ئۆتۆمبێلی تر لە پێشەوە نییە", "لە کاتی تەمومژ لە نزیک ئۆتۆمبێلی تردا"], answer: 1 }
+                { q: "ڕۆشنایی گڵۆپی سەرەکی (High beam) دەبێت کەی بەکاربهێنرێت؟", options: ["لە ناو شاردا کاتی قەرەباڵغی", "لە شوێنە تاریکەکان کە ئۆتۆمبێلی تر لە پێشەوە نییە", "لە کاتی تەمومژ لە نزیک ئۆتۆمبێلی تردا"], answer: 1 },
+                { q: "ئایا وەستان لەسەر پردەکان و لە ناو تونێلەکاندا ڕێگەپێدراوە؟", options: ["بەڵێ بۆ ماوەی کورت", "بەڵێ ئەگەر پێویست بکات", "نەخێر بە هیچ شێوەیەک قەدەغەیە"], answer: 2 },
+                { q: "کاتێک گڵۆپی زەردی ترافیک لایت دەبێتە چالاك، مانای چییە؟", options: ["خێرا تێپەڕە پێش سووربوون", "ئامادەبە بۆ وەستان یان تێپەڕین بە وریایی", "ڕێگە کراوەیە بە تەواوی"], answer: 1 },
+                { q: "کێن ئەو کەسانەی کە دەبێت هەمیشە پشتێنەی سەلامەتی ببەستن؟", options: ["تەنها شۆفێر", "شۆفێر و سەرنشینی پێشەوە", "هەموو سەرنشینەکانی ناو ئۆتۆمبێل"], answer: 2 },
+                { q: "ئایا بەکارهێنانی مۆبایل لە کاتی لێخوڕیندا بە دەست ڕێگەپێدراوە؟", options: ["بەڵێ بۆ کاتی کورت", "تەنها لە کاتی وەستاندا لە ترافیک", "نەخێر بە هیچ شێوەیەک قەدەغەیە"], answer: 2 },
+                { q: "کام ڕەفتار لە کاتی لێخوڕیندا لە حاڵەتی بارانبارینی بەخوڕدا دروستە؟", options: ["زیادکردنی خێرایی", "کەمکردنەوەی خێرایی و جێهێشتنی مەودای سەلامەت", "کوژاندانەوەی چراکان"], answer: 1 },
+                { q: "پێشینەی تێپەڕبوون لە چوارڕیانێکی بێ نیشانە بۆ کێیە؟", options: ["ئۆتۆمبێلی لای ڕاست", "ئۆتۆمبێلی گەورەتر", "ئۆتۆمبێلی خێرا"], answer: 0 },
+                { q: "ئایا لێخوڕین لە لای پێچەوانەی شەقام (عەکسە سەیر) ڕێگەپێدراوە؟", options: ["بەڵێ بۆ مەودای کورت", "تەنها لە شەواندا", "نەخێر تاوانێکی گەورەیە و قەدەغەیە"], answer: 2 },
+                { q: "کاتێک ئۆتۆمبێلی فریاکەوتن (آمبولانس) سارینگی لێدا، دەبێت چۆن بکەیت؟", options: ["خێراییەکەت زیاد بکەیت پێش ئەو", "لا بدەیت بۆ لای راست و ڕێگەی پێ بدەیت", "گوێی پێ مەدە"], answer: 1 },
+                { q: "سنوری خێرایی ڕێگەپێدراو لە ناو شارەکاندا بە بێ تابلۆ چەندە؟", options: ["40 کم/ژ", "60 کم/ژ", "100 کم/ژ"], answer: 1 },
+                { q: "ئایا لێخوڕین لە ژێر کاریگەری ماددە هۆشبەرەکان یان کحول ڕێگەپێدراوە؟", options: ["بەڵێ بە کەمتر لە نیوە", "تەنها لە ڕێگاوبانە لاوەکییەکان", "نەخێر بە توندی قەدەغەیە و سزای هەیە"], answer: 2 },
+                { q: "کاتی لێخوڕینی شەو، دەبێت گڵۆپی لایتەکان کەی بگۆڕیت بۆ نزیک (Low beam)؟", options: ["کاتێک ئۆتۆمبێل لە پێشەوەتەوە دێت یان لە دواوە نزیک دەبێتەوە", "تەنها لە ناو شاردا", "هەرگیز پێویست ناکات"], answer: 0 },
+                { q: "ئایا وەستان لەبەردەم دەرچەی ئاگرکوژێنەوە (گراجی فریاکەوتن) ڕێگەپێدراوە؟", options: ["بەڵێ بۆ ٥ خولەک", "تەنها لە ڕۆژانی پشوودا", "نەخێر بە هیچ شێوەیەک قەدەغەیە"], answer: 2 },
+                { q: "شۆفێری ئۆتۆمبێل دەبێت چەند مەودا جێبهێڵێت لەگەڵ ئۆتۆمبێلی پێش خۆیدا؟", options: ["مەودایەکی گونجاو و سەلامەت بەپێی خێرایی", "تەنها یەک مەتر", "هیچ مەرجێک نییە"], answer: 0 },
+                { q: "ئایا لێخوڕینی ئۆتۆمبێل بە تەکەی بێ مۆڵەتی شۆفێری ڕێگەپێدراوە؟", options: ["بەڵێ لە گەڕەکەکاندا", "تەنها لەگەڵ کەسێکی شارەزا", "نەخێر تاوانە و سزای یاسایی هەیە"], answer: 2 },
+                { q: "ئاماژەی دەستی شۆفێر بۆ لای چەپ مانای چییە؟", options: ["وەستان", "پێچکردنەوە بۆ چەپ یان دەرچوون بۆ سایدی چەپ", "خێراکردن"], answer: 1 },
+                { q: "ئایا لێخوڕین بە پێچەوانەی ئاراستەی هێڵی یەک ئاراستە (One way) ڕێگەپێدراوە؟", options: ["بەڵێ", "نەخێر بە هیچ شێوەیەک", "تەنها لە بەیانیاندا"], answer: 1 },
+                { q: "بۆچی دەبێت چەرخەکان (Tires) هەمیشە هەوای تێدا بێت بە پێی پێویست؟", options: ["بۆ ئەوەی نەرم بڕۆن", "بۆ کۆنتڕۆڵکردنی باشتری ئۆتۆمبێل و پاراستنی سەلامەتی", "بۆ جوانکاری"], answer: 1 },
+                { q: "ئایا لێخوڕین لەسەر شۆلەی پیادە (Pavement) ڕێگەپێدراوە؟", options: ["بەڵێ لە کاتی قەرەباڵغیدا", "تەنها ماتۆڕسکیل دەتوانێت", "نەخێر بە هیچ شێوەیەک"], answer: 2 },
+                { q: "ئەگەر تایەی ئۆتۆمبێلەکەت تەقی لە کاتی خێراییدا، دەبێت سەرەتا چ بکەیت؟", options: ["بە توندی فریز (برێک) بگرە", "سوکانەکە بە توندی بگرە و خێراییەکە بە هێواشی کەم بکەرەوە", "پێ بـخە بە سەر بەنزیندا"], answer: 1 },
+                { q: "کام نیشانە هێمای مەترسییە؟", options: ["تابلۆی بازنەیی سوور", "تابلۆی سێگۆشەی لێوار سوور", "تابلۆی چوارگۆشەی شین"], answer: 1 },
+                { q: "کاتی گۆڕینی ساید (Lane change)، یەکەم کار چییە کە دەبێت ئەنجامی بدەیت؟", options: ["لێدانی مارش (ئیشارات) و پشکنینی ئاوێنەکان", "لێخوڕین بە خێرایی", "پێداگرتن بە هۆرندا"], answer: 0 },
+                { q: "ئایا ڕاکێشانی برێکی دەستی (Handbrake) لە کاتی خێرایی بەرزدا لەناکاو دروستە؟", options: ["بەڵێ بۆ وەستاندنێکی خێرا", "نەخێر دەبێتە هۆی لەدەستدانی کۆنتڕۆڵ و خلیسکانی ئۆتۆمبێل", "هیچ کاریگەرییەکی نییە"], answer: 1 }
             ],
             specific: [
                 { q: "ئەرکی سەرەکی ساردکەرەوەی بزوێنەر (Radiator) چییە؟", options: ["پەستانی ڕۆن زیاد دەکات", "پلەی گەرمی بزوێنەر هاوسەنگ ڕادەگرێت", "هێز دەداتە تایەکان"], answer: 1 },
-                { q: "سیستەمی (ABS) لە ئۆتۆمبێلدا بۆ چی بەکاردێت؟", options: ["بۆ خێراکردنی ئۆتۆمبێل", "بۆ پێشگرتن لە خلیسکانی تایەکان لە کاتی لەبڕینی پڕشک", "بۆ زیادکردنی دەنگی بزوێنەر"], answer: 1 }
+                { q: "سیستەمی (ABS) لە ئۆتۆمبێلدا بۆ چی بەکاردێت؟", options: ["بۆ خێراکردنی ئۆتۆمبێل", "بۆ پێشگرتن لە خلیسکانی تایەکان لە کاتی لەبڕینی پڕشک", "بۆ زیادکردنی دەنگی بزوێنەر"], answer: 1 },
+                { q: "ڕۆنی بزوێنەر (Engine Oil) دەبێت چەند جارێک پشکنینی بۆ بکرێت؟", options: ["ساڵجارێک", "پێش هەر گەشتێکی دوور یان بە بەردەوامی هەفتانە", "تەنها کاتی فرۆشتنی ئۆتۆمبێل"], answer: 1 },
+                { q: "بەتری ئۆتۆمبێل چ کارێکی سەرەکی ئەنجام دەدات؟", options: ["دەنگ دەرکردن لە سەکۆ", "پێدانی کارەبا بۆ هەڵکردنی بزوێنەر (Stater) و ئامێرەکان", "ساردکردنەوەی هەوا"], answer: 1 },
+                { q: "کارەی فلتر هەوا (Air Filter) لە بزوێنەردا چییە؟", options: ["پاشماوەی سوتەمەنی دەگرێت", "پاکی هەوای چوو ناو بزوێنەر ڕادەگرێت لە تۆز و خۆڵ", "ڕۆن دەگوازێتەوە"], answer: 1 },
+                { q: "سیستەمی وزەی پەرژین (Exhaust system) بەرپرسە لە چی؟", options: ["دەرکردنی گازە سوتوەکان و کەمکردنەوەی دەنگ", "گۆڕینی گێڕەکان", "پاتری بارگاوی کردنەوە"], answer: 0 },
+                { q: "ئەگەر گڵۆپی ڕۆن لە داشبۆرد بەرزبووەوە یان هەڵبوو، مانای چییە؟", options: ["بڕی ڕۆنی بزوێنەر کەمە یان پەستانی ڕۆن کێشەی هەیە", "بنزین تەواو بووە", "لایتەکان پیسن"], answer: 0 },
+                { q: "سووربوونەوەی گڵۆپی حرارەت (Temperature) لە داشبۆرد نیشانەی چییە؟", options: ["بزوێنەر گەرم بووە و مەترسی سوتانی هەیە", "ئۆتۆمبێل ساردە", "هەواگۆڕکێ کار دەکات"], answer: 0 },
+                { q: "کام بەش بەرپرسە لە وەستاندنی ئۆتۆمبێل بە شێوازێکی میکانیکی؟", options: ["سیستەمی برێک (Brakes)", "تایەکان", "سوکان"], answer: 0 },
+                { q: "کارەی دینەمۆ (Alternator) چییە لە ئۆتۆمبێلدا؟", options: ["بەکارخستنی بزوێنەر لە سەرەتاوە", "بارگاویکردنەوەی بەتری و دابینکردنی کارەبا لە کاتی کارکردندا", "ساردکردنەوەی ڕۆن"], answer: 1 },
+                { q: "ئەگەر سوکان لە کاتی لێخوڕیندا لەرزا، نیشانەی کێشەیە لە چ بەشێکدا؟", options: ["باڵانسی تایەکان یان جۆزەکان", "تەنگەی تەلەفۆن", "شوشەی پێشەوە"], answer: 0 },
+                { q: "گرنگی گۆڕینی شەممەکان (Spark plugs) لە کاتی خۆیدا چییە؟", options: ["سوتاندنی دروستی تێکەڵەی بنزین و هەوا لە بزوێنەردا", "زیادکردنی کێشی ئۆتۆمبێل", "پاککردنەوەی شوشە"], answer: 0 },
+                { q: "ڕۆنی گیربۆکس (Transmission fluid) کۆن بێت چی دەبێت؟", options: ["گۆڕینی گێڕەکان قورس دەبێت و زەبر دەبینێت", "تایەکان دەتوێنەوە", "گڵۆپی سگناڵ دەکوژێتەوە"], answer: 0 },
+                { q: "سیستەمی هەڵواسین (Suspension system) چی دەکات؟", options: ["لەرینەوە و ڕکێفی شەقام کەم دەکاتەوە بۆ ئارامی سەرنشین", "خێرایی ئۆتۆمبێل زیاد دەکات", "بنزین خەرج دەکات"], answer: 0 },
+                { q: "بۆچی دەبێت جلی پیوەندیکردنی شوشە (Wiper blades) بگۆڕدرێن؟", options: ["بۆ ئەوەی لە کاتی باراندا شوشە بە تەواوی پاک بکەنەوە", "بۆ جوانی دەرەوەی ئۆتۆمبێل", "هیچ گرنگییەکی نییە"], answer: 0 },
+                { q: "فلتەری بنزین (Fuel filter) بەرپرسە لە چی؟", options: ["پشکنی پاکی بنزین پێش چوونە ناو مەکینە", "ساردکردنەوەی بەنزین", "پڕکردنەوەی تانکی"], answer: 0 },
+                { q: "سیستەمی هۆڕن (Horn) دەبێت چۆن بێت؟", options: ["دەنگی ڕوون و گونجاوی هەبێت بۆ ئاگادارکردنەوە", "دەنگی گۆرانی بێت", "پێویست بە هۆڕن ناکات"], answer: 0 },
+                { q: "ئەگەر بلوکی بزوێنەر بشکێت، چی بەسەر ئۆتۆمبێلدا دێت؟", options: ["مەکینە لە کار دەکەوێت و ڕۆن و ئاو تێکەڵ دەبن", "تایەکان دەوەستن", "هیچ ناشێت"], answer: 0 },
+                { q: "گرنگی گڵۆپی پشتەوەی پێچکردنەوە (Reverse light) چییە؟", options: ["ئاگادارکردنەوەی شۆفێرانی دواوە کاتێک دەچیتە دواوە", "بۆ ڕۆشنکردنی پێشەوە", "هیچ مانایەکی نییە"], answer: 0 },
+                { q: "پەستانی هەوای تایەکان (Tire pressure) کاریگەری لەسەر چی هەیە؟", options: ["خەرجکردنی بنزین و سەلامەتی کۆنتڕۆڵ", "ڕەنگی ئۆتۆمبێل", "گۆرانییەکانی ڕادیۆ"], answer: 0 },
+                { q: "سیستەمی گەرمکەرەوەی شوشەی دواوە (Defroster) بۆچییە؟", options: ["لابردنی هەڵم و سەهۆڵ لەسەر شوشەی دواوە", "ساردکردنەوەی ناو ئۆتۆمبێل", "پارسەنگی شوشە"], answer: 0 },
+                { q: "مەشگەر (Clutch) لە ئۆتۆمبێلی گێڕ دەستیدا چی دەکات؟", options: ["جیاکردنەوەی هێزی بزوێنەر لە گیربۆکس لە کاتی گۆڕینی گێڕ", "وەستاندنی تەواوی تایەکان", "زیادکردنی خێرایی"], answer: 0 },
+                { q: "گڵۆپی مەترسی (Hazard lights - Flashers) کەی بەکاردێت؟", options: ["لە کاتی لەپڕ وەستاندن، کێشەی تەکنیکی یان مەترسی لە ڕێگا", "لە کاتی لێخوڕینی خێرا", "لە کاتی بارانبارینی ئاسایی"], answer: 0 },
+                { q: "بۆچی دەبێت ئاویی ڕادێتەر هەموو کات پاک بێت و دژەبەفر (Anti-freeze) تێدا بێت؟", options: ["بۆ پاراستنی لە ژەنگگرتن و بەفرگرتن لە زستاندا", "بۆ ڕەنگدارکردنی ئاوەکە", "بۆ ئەوەی بۆنی خۆش بێت"], answer: 0 },
+                { q: "چۆن دەزانیت پێویستە قوماشی برێک (Brake pads) بگۆڕیت؟", options: ["کاتێک دەنگی خشۆک یان چرپە لە کاتی برێکگرتن دەردەکەوێت", "کاتێک گڵۆپی سگناڵ هەڵدەبێت", "کاتێک بنزین تەواو دەبێت"], answer: 0 }
             ],
             image: [
                 { q: "ئەم نیشانەیەی هاتووچۆ مانای چییە؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Traffic_sign_IRA_R1.svg/120px-Traffic_sign_IRA_R1.svg.png", options: ["وەستە (Stop)", "ڕێگە بدە", "خێرایی کەم بکەوە"], answer: 0 },
-                { q: "ئەم نیشانەیە هێمای بۆ چییە؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Traffic_sign_IRA_R2.svg/120px-Traffic_sign_IRA_R2.svg.png", options: ["پێشکردنەوە قەدەغەیە", "ڕێگە بدە (Yield)", "چوونە ژوورەوە قەدەغەیە"], answer: 1 }
+                { q: "ئەم نیشانەیە هێمای بۆ چییە؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Traffic_sign_IRA_R2.svg/120px-Traffic_sign_IRA_R2.svg.png", options: ["پێشکردنەوە قەدەغەیە", "ڕێگە بدە (Yield)", "چوونە ژوورەوە قەدەغەیە"], answer: 1 },
+                { q: "ئەم نیشانە بازنەییە سوورە مانای چییە؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Traffic_sign_IRA_P1.svg/120px-Traffic_sign_IRA_P1.svg.png", options: ["چوونەژوورەوە بۆ هەموو ئۆتۆمبێلێک قەدەغەیە", "ڕێگەی سەرەکی", "پێشکردنەوە ڕێگەپێدراوە"], answer: 0 },
+                { q: "ئەم نیشانەیە ئاگاداركردنەوەیە بۆ چی؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Traffic_sign_IRA_W1.svg/120px-Traffic_sign_IRA_W1.svg.png", options: ["پێچی مەترسیدار بەرەو ڕاست", "پیادەڕەو", "شەقامی خێرا"], answer: 0 },
+                { q: "ئەم نیشانە شینە ئاماژەیە بۆ چ جۆرە ڕێگەیەک؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Traffic_sign_IRA_M1.svg/120px-Traffic_sign_IRA_M1.svg.png", options: ["ئاراستەی ناچاری (تەنها پێشەوە)", "وەستان قەدەغەیە", "کۆتایی خێرایی"], answer: 0 },
+                { q: "ئەم تابلۆیە مانای چی دەگەیەنێت؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Traffic_sign_IRA_R1.svg/120px-Traffic_sign_IRA_R1.svg.png", options: ["وەستە تەواو بکە و دڵنیابەوە", "خێرایی کەم بکە", "پێش بکەوە"], answer: 0 },
+                { q: "نیشانەی خێرایی سنوردار (Speed limit) کامەیە؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Traffic_sign_IRA_P1.svg/120px-Traffic_sign_IRA_P1.svg.png", options: ["سنوردارکردنی خێرایی دیاریکراو", "شۆلەی پاس", "گراجی ئۆتۆمبێل"], answer: 0 },
+                { q: "ئەم تابلۆیە هێمای چییە؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Traffic_sign_IRA_R2.svg/120px-Traffic_sign_IRA_R2.svg.png", options: ["پێشینەی هاتوچۆ بدە بە سایدەکەی تر", "دەستپێکی شەقامی خێرا", "وەستان بۆ ماوەی کورت"], answer: 0 },
+                { q: "نیشانەی قەدەغەکردنی هۆڕن لێدان کامەیە؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Traffic_sign_IRA_R1.svg/120px-Traffic_sign_IRA_R1.svg.png", options: ["قەدەغەکردنی بەکارهێنانی دەنگی بەرزی هۆڕن", "ڕێگەپێدانی تێپەڕین", "چاککردنەوەی ڕێگا"], answer: 0 },
+                { q: "ئەم نیشانەیە ئاماژەیە بۆ بوونی چی لە پێشەوە؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Traffic_sign_IRA_W1.svg/120px-Traffic_sign_IRA_W1.svg.png", options: ["نەخۆشخانە یان شوێنی نزیک", "مەتری یان پشکنین", "پێچی مەترسیدار"], answer: 2 },
+                { q: "تابلۆی قەدەغەکردنی پێشکردنەوە (Overtaking prohibited) چییە؟", options: ["قەدەغەکردنی تێپەڕاندنی ئۆتۆمبێلی پێش خۆت", "خێراکردن", "سوڕانەوە بۆ دواوە"], answer: 0 },
+                { q: "ئەم نیشانەیە ئاماژەیە بۆ چ جۆرە هۆشدارییەک؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Traffic_sign_IRA_R2.svg/120px-Traffic_sign_IRA_R2.svg.png", options: ["هۆشداری هاتنی ناوچەی قوتابخانە یان منداڵان", "شەقامی سەرەکی", "پشوودان"], answer: 0 },
+                { q: "تابلۆی شۆلەی ٹایبەت بە پاس (Bus lane) چییە؟", options: ["تایبەت بە هاتوچۆی پاسەکان", "قەدەغەکردنی پاس", "وەستگەی پاس"], answer: 0 },
+                { q: "ئەم تابلۆیە مانای وەستان قەدەغەیە (No parking) دەگەیەنێت؟", options: ["بەڵێ", "نەخێر", "تەنها لە شەودا"], answer: 0 },
+                { q: "تابلۆی کۆتایی هەموو قەدەغەکردنەکان کامەیە؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Traffic_sign_IRA_M1.svg/120px-Traffic_sign_IRA_M1.svg.png", options: ["کۆتایی هەموو قەدەغەکردنە پێشوەختەکان", "دەستپێکی قەدەغە", "هیچیان"], answer: 0 },
+                { q: "ئەم تابلۆیە هێمای بوونی خولگەی هاتوچۆ (Roundabout)یە؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Traffic_sign_IRA_R1.svg/120px-Traffic_sign_IRA_R1.svg.png", options: ["خولگە (سێڕیان/چوارڕیانی خولاوە)", "شەقامی ڕاست", "تونێل"], answer: 0 },
+                { q: "تابلۆی هۆشداری مەترسی خلیسکانی شەقام کاتێک بارانە:", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Traffic_sign_IRA_W1.svg/120px-Traffic_sign_IRA_W1.svg.png", options: ["شەقامی خلیسکان لە کاتی تەڕبووندا", "شەقامی وشک", "تاشەبەرد"], answer: 0 },
+                { q: "ئەم نیشانەیە نیشانەی ڕێگەی سەرەکییە؟", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Traffic_sign_IRA_R2.svg/120px-Traffic_sign_IRA_R2.svg.png", options: ["بەڵێ هێمای ڕێگەی پێشینەیە", "نەخێر", "لاوەکییە"], answer: 0 },
+                { q: "تابلۆی قەدەغەکردنی سووڕانەوە بۆ چەپ:", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Traffic_sign_IRA_P1.svg/120px-Traffic_sign_IRA_P1.svg.png", options: ["سووڕانەوە بۆ لای چەپ قەدەغەیە", "ڕێگەپێدراوە", "تەنها ڕاست"], answer: 0 },
+                { q: "نیشانەی ئاراستەی ناچاری بۆ لای ڕاست:", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Traffic_sign_IRA_M1.svg/120px-Traffic_sign_IRA_M1.svg.png", options: ["دەبێت تەنها لای ڕاست بگریت", "ڕاست یان چەپ", "وەستە"], answer: 0 },
+                { q: "تابلۆی بوونی نەخۆشخانە لە نزیکەوە:", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Traffic_sign_IRA_W1.svg/120px-Traffic_sign_IRA_W1.svg.png", options: ["ناوچەی نەخۆشخانە (بێدەنگی پێویستە)", "شارۆچکە", "کارگە"], answer: 0 },
+                { q: "نیشانەی قەدەغەکردنی وەستان و ڕاوەستان (No stopping & No parking):", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Traffic_sign_IRA_R1.svg/120px-Traffic_sign_IRA_R1.svg.png", options: ["ڕاوەستان و وەستان بە تەواوی قەدەغەیە", "ڕێگەپێدراوە", "تەنها بۆ بارهەڵگر"], answer: 0 },
+                { q: "تابلۆی هۆشداری ئەگەری کەوتنی بەرد:", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Traffic_sign_IRA_W1.svg/120px-Traffic_sign_IRA_W1.svg.png", options: ["مەترسی کەوتنی تاشەبەرد لە چیاکانەوە", "شەقامی لمین", "بارانی بەخوڕ"], answer: 0 },
+                { q: "نیشانەی پاشەکشە کردن قەدەغەیە:", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Traffic_sign_IRA_R2.svg/120px-Traffic_sign_IRA_R2.svg.png", options: ["ڕۆیشتن بەرەو دواوە قەدەغەیە", "ڕێگەپێدراوە", "خێرا بڕۆ"], answer: 0 },
+                { q: "تابلۆی کۆتایی هەموو سنوردارکردنەکان:", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Traffic_sign_IRA_M1.svg/120px-Traffic_sign_IRA_M1.svg.png", options: ["کۆتایی خێرایی و سنوردارکردنەکان", "دەستپێکردن", "هیچیان"], answer: 0 }
             ]
         };
 
@@ -1009,6 +1075,8 @@
         let currentQuestionIndex = 0;
         let score = 0;
         let activeQuestions = [];
+        let examTimerInterval = null;
+        let timeLeft = 60;
 
         function startExam(type) {
             vibrate();
@@ -1024,6 +1092,10 @@
         }
 
         function loadQuestion() {
+            clearInterval(examTimerInterval);
+            timeLeft = 60;
+            document.getElementById('timeLeft').innerText = timeLeft;
+
             let q = activeQuestions[currentQuestionIndex];
             document.getElementById('questionCounter').innerText = `پرسیاری ${currentQuestionIndex + 1} لە ${activeQuestions.length}`;
             document.getElementById('questionText').innerText = q.q;
@@ -1047,12 +1119,35 @@
                 optBox.appendChild(btn);
             });
             document.getElementById('nextQuestionBtn').style.display = 'none';
+
+            // دەستپێکردنی تایمەری ٦٠ چرکەیی بۆ ئەم پرسیارە
+            examTimerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timeLeft').innerText = timeLeft;
+                if(timeLeft <= 0) {
+                    clearInterval(examTimerInterval);
+                    handleTimeOut(q.answer);
+                }
+            }, 1000);
+        }
+
+        function handleTimeOut(correctIndex) {
+            let options = document.querySelectorAll('.exam-option');
+            options.forEach(opt => opt.style.pointerEvents = 'none');
+            options[correctIndex].classList.add('correct');
+            
+            Swal.fire({
+                toast: true, position: 'top-end', icon: 'warning',
+                title: 'کاتەکەت تەواو بوو!', showConfirmButton: false, timer: 2000
+            });
+            document.getElementById('nextQuestionBtn').style.display = 'block';
         }
 
         function selectOption(selectedIndex, correctIndex, element) {
+            clearInterval(examTimerInterval);
             vibrate(20);
             let options = document.querySelectorAll('.exam-option');
-            options.forEach(opt => opt.style.pointerEvents = 'none'); // ڕێگری لە دووبارە کلیک کردن
+            options.forEach(opt => opt.style.pointerEvents = 'none');
 
             if(selectedIndex === correctIndex) {
                 element.classList.add('correct');
@@ -1075,6 +1170,7 @@
         }
 
         function showExamResult() {
+            clearInterval(examTimerInterval);
             document.getElementById('examBox').style.display = 'none';
             document.getElementById('examResultBox').style.display = 'block';
             let percentage = Math.round((score / activeQuestions.length) * 100);
@@ -1088,6 +1184,7 @@
 
         function resetExamMenu() {
             vibrate();
+            clearInterval(examTimerInterval);
             document.getElementById('examResultBox').style.display = 'none';
             document.getElementById('examMenu').style.display = 'block';
         }
@@ -1095,11 +1192,8 @@
         async function loadNoticeText() {
             let wrapper = document.getElementById('noticeScrollWrapper');
             let noticeElement = document.getElementById('noticeTextContainer');
-            
             let savedNotice = localStorage.getItem("saved_notice_text");
-            if (savedNotice && wrapper && noticeElement) {
-                applyNoticeToUI(savedNotice, wrapper);
-            }
+            if (savedNotice && wrapper && noticeElement) { applyNoticeToUI(savedNotice, wrapper); }
 
             try {
                 let res = await fetch(`${baseUrl}/api/notice`);
@@ -1154,13 +1248,13 @@
 
         function navTo(section) {
             vibrate(10);
+            if (section !== 'exam') { clearInterval(examTimerInterval); }
+
             if (!navigator.onLine && section === 'queue') {
                  Swal.fire({
-                    icon: 'warning',
-                    title: 'هێڵی ئینتەرنێتت پچڕاوە!',
+                    icon: 'warning', title: 'هێڵی ئینتەرنێتت پچڕاوە!',
                     text: 'تکایە دڵنیابە لەوەی مۆبایلەکەت ئینتەرنێتی هەیە بۆ ئەوەی بتوانیت نۆرە بگریت.',
-                    confirmButtonText: 'باشە',
-                    confirmButtonColor: '#dc3545'
+                    confirmButtonText: 'باشە', confirmButtonColor: '#dc3545'
                 });
                 return; 
             }
@@ -1357,9 +1451,7 @@
 
             const modal = document.getElementById('picker-modal');
             modal.classList.remove('show');
-            setTimeout(() => {
-                modal.style.display = 'none';
-            }, 300);
+            setTimeout(() => { modal.style.display = 'none'; }, 300);
         }
 
         function animateValue(id, start, end, duration, isCurrency = true) {
@@ -1582,7 +1674,6 @@
                     let isFriday = (dayOfWeek === 5);
                     let isSaturdayBeforeEvening = (dayOfWeek === 6 && iraqHour < 18);
                     let isWeekendBlocked = isThursdayAfterTwo || isFriday || isSaturdayBeforeEvening;
-                    
                     let isDailyBlocked = (iraqHour >= 14 && iraqHour < 18);
                     
                     if (isWeekendBlocked || isDailyBlocked || count >= maxQuota) {
@@ -1620,7 +1711,6 @@
                         if (nameInput) nameInput.disabled = false;
                         if (phoneInput) phoneInput.disabled = false;
                         validateFormInputs();
-                        
                         document.getElementById("countdownTimer").style.display = "none";
                         if(timerInterval) clearInterval(timerInterval);
                     }
@@ -1642,26 +1732,19 @@
                     target.setDate(now.getDate() + (day === 4 ? (hour < 6 ? 2 : 1) : 3));
                     target.setHours(18, 0, 0, 0);
                 } else if (day === 4) { 
-                    target.setDate(now.getDate() + 2); 
-                    target.setHours(18, 0, 0, 0);
+                    target.setDate(now.getDate() + 2); target.setHours(18, 0, 0, 0);
                 } else if (day === 5) { 
-                    target.setDate(now.getDate() + 1); 
-                    target.setHours(18, 0, 0, 0);
+                    target.setDate(now.getDate() + 1); target.setHours(18, 0, 0, 0);
                 } else if (day === 6 && hour >= 18) { 
-                    target.setDate(now.getDate() + 7); 
-                    target.setHours(18, 0, 0, 0);
+                    target.setDate(now.getDate() + 7); target.setHours(18, 0, 0, 0);
                 } else if (hour >= 18 || (day === 3 && hour >= 14)) { 
-                    if (now >= target) {
-                        target.setDate(now.getDate() + 1);
-                    }
+                    if (now >= target) { target.setDate(now.getDate() + 1); }
                 }
 
                 let diff = Math.max(target - now, 0);
-                
                 let totalHours = Math.floor(diff / (1000 * 60 * 60));
                 let m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 let s = Math.floor((diff % (1000 * 60)) / 1000);
-                
                 let timeString = `${totalHours.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
 
                 document.getElementById("timerValue").innerHTML = ` کاتی ماوە بۆ کردنەوەی سیستەم: <span dir="ltr"><i class="fa-solid fa-hourglass-half"></i> ${timeString}</span>`;
@@ -1689,7 +1772,6 @@
                         hash = ((hash << 5) - hash) + char;
                         hash = hash & hash;
                     }
-                    
                     let screenInfo = screen.width + "x" + screen.height + "_" + navigator.hardwareConcurrency;
                     resolve(hash.toString() + "_" + screenInfo);
                 } catch (e) {
@@ -1727,15 +1809,11 @@
 
                     for (let zone of allowedZones) {
                         let distance = getDistanceFromLatLonInKm(zone.lat, zone.lng, userLat, userLng);
-                        if (distance <= zone.radius) {
-                            isUserInAllowedZone = true;
-                            break; 
-                        }
+                        if (distance <= zone.radius) { isUserInAllowedZone = true; break; }
                     }
 
                     if (!isUserInAllowedZone) {
-                        regBtn.innerHTML = origBtnHtml;
-                        regBtn.disabled = false;
+                        regBtn.innerHTML = origBtnHtml; regBtn.disabled = false;
                         return Swal.fire(
                             'لە دەرەوەی بازنەیت!', 
                             'بەپێی سیستەمی GPS، تۆ لە دەرەوەی پارێزگای هەڵەبجە و ناحیەکانی دەوروبەریتی. نۆرەگرتن تەنها بۆ دانیشتووانی ناوچەکە ڕێگەپێدراوە.', 
@@ -1743,13 +1821,10 @@
                         );
                     }
                 } catch (error) {
-                    regBtn.innerHTML = origBtnHtml;
-                    regBtn.disabled = false;
+                    regBtn.innerHTML = origBtnHtml; regBtn.disabled = false;
                     return Swal.fire('ئاگاداری', 'تکایە ئیزنی (Location) بدە بە وێبسایتەکە بۆ ئەوەی بتوانیت نۆرە بگریت.', 'warning');
                 }
-                
-                regBtn.innerHTML = origBtnHtml;
-                regBtn.disabled = false;
+                regBtn.innerHTML = origBtnHtml; regBtn.disabled = false;
             }
 
             const confirmation = await Swal.fire({
@@ -1783,10 +1858,7 @@
                     let deviceFp = await getDeviceFingerprint();
                     let response = await fetch(apiUrl, { 
                         method: "POST", 
-                        headers: { 
-                            "Content-Type": "application/json",
-                            "X-Device-Id": deviceFp 
-                        }, 
+                        headers: { "Content-Type": "application/json", "X-Device-Id": deviceFp }, 
                         body: JSON.stringify({ name: finalName, phone: finalPhone }) 
                     });
                     
@@ -1836,28 +1908,15 @@
             if (savedBioPwd && window.PublicKeyCredential) {
                 try {
                     const publicKeyCredentialRequestOptions = {
-                        challenge: new Uint8Array(32), 
-                        timeout: 60000,
-                        userVerification: "required"
+                        challenge: new Uint8Array(32), timeout: 60000, userVerification: "required"
                     };
-                    const credential = await navigator.credentials.get({
-                        publicKey: publicKeyCredentialRequestOptions
-                    });
-                    
-                    if (credential) {
-                        return await proceedWithAdminLogin(savedBioPwd, false);
-                    }
-                } catch (err) {
-                    console.log("Biometric auth canceled or failed", err);
-                }
+                    const credential = await navigator.credentials.get({ publicKey: publicKeyCredentialRequestOptions });
+                    if (credential) { return await proceedWithAdminLogin(savedBioPwd, false); }
+                } catch (err) { console.log("Biometric auth canceled or failed", err); }
             }
 
             const { value: pwd } = await Swal.fire({
-                title: 'تایبه‌ت به‌ ئه‌دمین', 
-                input: 'password', 
-                confirmButtonText: 'چوونەژوورەوە', 
-                cancelButtonText: 'داخستن', 
-                showCancelButton: true
+                title: 'تایبه‌ت به‌ ئه‌دمین', input: 'password', confirmButtonText: 'چوونەژوورەوە', cancelButtonText: 'داخستن', showCancelButton: true
             });
 
             if (pwd) {
@@ -1888,10 +1947,7 @@
                         const enableBio = await Swal.fire({
                             title: '<i class="fa-solid fa-face-viewfinder" style="font-size: 40px; color: #0056b3;"></i>',
                             html: '<b>دەتەوێت Face ID / Touch ID چالاک بکەیت؟</b><br><br><span style="font-size:13px; color:#555;">بۆ ئەوەی جارێکی تر پێویست بە نووسینی پاسوۆرد نەکات و ڕاستەوخۆ بە سکانکردنی دەموچاو یان پەنجەمۆر بچیتە ژوورەوە.</span>',
-                            showCancelButton: true,
-                            confirmButtonText: 'بەڵێ، چالاکی بکە',
-                            cancelButtonText: 'نەخێر، سوپاس',
-                            confirmButtonColor: '#28a745'
+                            showCancelButton: true, confirmButtonText: 'بەڵێ، چالاکی بکە', cancelButtonText: 'نەخێر، سوپاس', confirmButtonColor: '#28a745'
                         });
                         
                         if (enableBio.isConfirmed) {
@@ -1899,31 +1955,15 @@
                                 const publicKeyCredentialCreationOptions = {
                                     challenge: new Uint8Array(32),
                                     rp: { name: "هاتووچۆی هەڵەبجە", id: window.location.hostname },
-                                    user: {
-                                        id: new Uint8Array(16),
-                                        name: "admin",
-                                        displayName: "ئەدمین"
-                                    },
+                                    user: { id: new Uint8Array(16), name: "admin", displayName: "ئەدمین" },
                                     pubKeyCredParams: [{alg: -7, type: "public-key"}, {alg: -257, type: "public-key"}],
-                                    authenticatorSelection: {
-                                        authenticatorAttachment: "platform",
-                                        userVerification: "required"
-                                    },
+                                    authenticatorSelection: { authenticatorAttachment: "platform", userVerification: "required" },
                                     timeout: 60000
                                 };
-                                
-                                await navigator.credentials.create({
-                                    publicKey: publicKeyCredentialCreationOptions
-                                });
-                                
+                                await navigator.credentials.create({ publicKey: publicKeyCredentialCreationOptions });
                                 localStorage.setItem("admin_biometric_pwd", normalizedPwd);
-                                await Swal.fire({
-                                    toast: true, position: 'top-end', icon: 'success', 
-                                    title: 'بە سەرکەوتوویی چالاک کرا!', showConfirmButton: false, timer: 3000
-                                });
-                            } catch(err) {
-                                console.log("Bio setup failed", err);
-                            }
+                                await Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'بە سەرکەوتوویی چالاک کرا!', showConfirmButton: false, timer: 3000 });
+                            } catch(err) { console.log("Bio setup failed", err); }
                         }
                     } else {
                         Swal.close();
@@ -1976,8 +2016,7 @@
             let openPreRegBtn = document.getElementById("openPreRegBtn");
             if(preRegForm) preRegForm.style.display = "none";
             if(openPreRegBtn) openPreRegBtn.style.display = "inline-block";
-            window.adminPwd = ""; adminClickCount = 0;
-            window.adminRole = "";
+            window.adminPwd = ""; adminClickCount = 0; window.adminRole = "";
         }
 
         async function loadAdminStats() {
@@ -2064,9 +2103,7 @@
                 let response = await fetch(`${baseUrl}/api/admin/blacklist`, { headers: { "Admin-Password": window.adminPwd } });
                 if(response.ok) {
                     let data = await response.json();
-                    if(data.length === 0) {
-                        return Swal.fire('زانیاری', 'هیچ ژمارەیەک لە لیستی ڕەشدا نییە', 'info');
-                    }
+                    if(data.length === 0) { return Swal.fire('زانیاری', 'هیچ ژمارەیەک لە لیستی ڕەشدا نییە', 'info'); }
                     let html = '<div style="max-height:300px; overflow-y:auto;"><table style="width:100%; border-collapse:collapse; text-align:center; font-size:12px;" border="1"><tr><th style="padding:5px;">ژمارە</th><th style="padding:5px;">کاتی کردنەوە</th><th style="padding:5px;">لابردن</th></tr>';
                     data.forEach(item => {
                         html += `<tr><td style="padding:5px;" dir="ltr">${item.phone}</td><td style="padding:5px;">${item.blockedUntil}</td><td style="padding:5px;"><button onclick="unblockPhone('${item.phone}')" style="background:#28a745;color:white;border:none;padding:5px;border-radius:4px;cursor:pointer;">لابردن</button></td></tr>`;
@@ -2089,9 +2126,8 @@
                 try {
                     let res = await fetch(`${baseUrl}/api/admin/blacklist/${phone}`, { method: "DELETE", headers: { "Admin-Password": window.adminPwd } });
                     let data = await res.json().catch(() => ({}));
-                    if(res.ok) {
-                        Swal.fire('سەرکەوتوو', data.message || 'ژمارەکە لابرا', 'success');
-                    } else Swal.fire('هەڵە', data.message || 'کێشەیەک ڕوویدا', 'error');
+                    if(res.ok) { Swal.fire('سەرکەوتوو', data.message || 'ژمارەکە لابرا', 'success'); }
+                    else Swal.fire('هەڵە', data.message || 'کێشەیەک ڕوویدا', 'error');
                 } catch(e) { Swal.fire('کێشە', 'کێشەی هێڵ هەیە', 'error'); }
             }
         }
@@ -2307,15 +2343,10 @@
             star.addEventListener('click', function() {
                 vibrate();
                 currentRating = parseInt(this.getAttribute('data-value'));
-                
                 ratingStars.forEach(s => {
-                    if (parseInt(s.getAttribute('data-value')) <= currentRating) {
-                        s.classList.add('active');
-                    } else {
-                        s.classList.remove('active');
-                    }
+                    if (parseInt(s.getAttribute('data-value')) <= currentRating) { s.classList.add('active'); }
+                    else { s.classList.remove('active'); }
                 });
-                
                 feedbackInput.style.display = 'block';
                 submitRatingBtn.style.display = 'block';
             });
@@ -2324,26 +2355,21 @@
         async function submitRating() {
             if(currentRating === 0) return;
             let feedback = feedbackInput.value.trim();
-            let originalText = submitRatingBtn.innerHTML;
-            
             submitRatingBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
             submitRatingBtn.disabled = true;
 
             try {
                 await fetch(`${baseUrl}/api/feedback`, { 
-                    method: "POST", 
-                    headers: { "Content-Type": "application/json" }, 
+                    method: "POST", headers: { "Content-Type": "application/json" }, 
                     body: JSON.stringify({ rating: currentRating, text: feedback }) 
                 });
             } catch(e) {}
 
             localStorage.setItem('user_has_rated', 'true');
-            
             document.getElementById('starContainer').style.display = 'none';
             feedbackInput.style.display = 'none';
             submitRatingBtn.style.display = 'none';
             document.querySelector('.rating-title').style.display = 'none';
-            
             ratingThanks.style.display = 'block';
             vibrate(30);
             
@@ -2357,21 +2383,15 @@
             if (!window.adminPwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە!', 'warning');
             
             let listDiv = document.getElementById("feedbacksList");
-            listDiv.innerHTML = `
-                <div class='skeleton'></div>
-                <div class='skeleton'></div>
-                <div class='skeleton'></div>
-            `;
+            listDiv.innerHTML = `<div class='skeleton'></div><div class='skeleton'></div><div class='skeleton'></div>`;
             document.getElementById("feedbacksContainer").style.display = "block";
             document.getElementById("usersTable").style.display = "none";
             
             try {
                 let response = await fetch(`${baseUrl}/api/admin/feedback`, { headers: { "Admin-Password": window.adminPwd } });
-                
                 if (response.ok) {
                     let feedbacks = await response.json();
                     listDiv.innerHTML = "";
-                    
                     if (!feedbacks || feedbacks.length === 0) {
                         listDiv.innerHTML = "<p style='text-align:center; color: var(--label-color);'>هیچ فیدباکێک نییە</p>";
                     } else {
@@ -2401,9 +2421,7 @@
         window.addEventListener('load', function() {
             setTimeout(function() {
                 let splash = document.getElementById('splash-screen');
-                if(splash) {
-                    splash.classList.add('splash-hidden');
-                }
+                if(splash) { splash.classList.add('splash-hidden'); }
             }, 3000); 
 
             calculateFine(true);
@@ -2447,25 +2465,19 @@
             if (deferredPrompt) {
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    console.log('User accepted the install prompt');
-                }
+                if (outcome === 'accepted') { console.log('User accepted the install prompt'); }
                 deferredPrompt = null;
             } else if (isIos()) {
                 Swal.fire({
                     title: 'دابەزاندنی ئەپڵیکەیشن بۆ ئایفۆن',
                     html: 'بۆ دابەزاندنی ئەپەکە بۆ سەر شاشەی مۆبایلەکەت، لە خوارەوەی شاشەکە پەنجە بنێ بە ئایکۆنی <b>(Share <i class="fa-solid fa-arrow-up-from-bracket"></i>)</b>، پاشان لە لیستەکەدا <b>(Add to Home Screen <i class="fa-regular fa-square-plus"></i>)</b> هەڵبژێرە.',
-                    icon: 'info',
-                    confirmButtonText: 'باشە تێگەیشتم',
-                    confirmButtonColor: '#0056b3'
+                    icon: 'info', confirmButtonText: 'باشە تێگەیشتم', confirmButtonColor: '#0056b3'
                 });
             } else {
                 Swal.fire({
                     title: 'دابەزاندنی ئەپڵیکەیشن',
                     text: 'بۆ دابەزاندنی ئەپەکە بۆ سەر شاشەی مۆبایلەکەت، لە منوی برۆسەرەکەتەوە (سێ خاڵەکەی سەرەوە یان خوارەوە) هەڵبژاردەی "Add to Home Screen" یان "Install app" دابگرە.',
-                    icon: 'info',
-                    confirmButtonText: 'باشە تێگەیشتم',
-                    confirmButtonColor: '#28a745'
+                    icon: 'info', confirmButtonText: 'باشە تێگەیشتم', confirmButtonColor: '#28a745'
                 });
             }
         });
