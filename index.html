@@ -812,7 +812,7 @@
             </div>
         </div>
 
-        <!-- بەشی تاقیکردنەوە و پرسیارەکان -->
+        <!-- بەشی تاقیکردنەوە و پرسیارەکان بێ دووبارەبوونەوە -->
         <div id="examSection" class="page-section" style="display: none;">
             <div class="exam-container">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -821,7 +821,7 @@
                 </div>
                 
                 <div id="examMenu" style="text-align: center; padding: 15px 0;">
-                    <p style="font-size: 13px; color: var(--label-color); margin-bottom: 20px;">جۆری پرسیارەکان هەڵبژێرە (زیاتر لە ٤٠٠ پرسیاری جۆراوجۆر، هەموو جارێک ٢٥ پرسیاری هەڕەمەکی):</p>
+                    <p style="font-size: 13px; color: var(--label-color); margin-bottom: 20px;">جۆری پرسیارەکان هەڵبژێرە (زیاتر لە ٤٠٠ پرسیاری هەمەجۆر، ٢٥ پرسیاری تەواو جیاواز و بێ دووبارەبوونەوە):</p>
                     <button class="action-btn search-btn" onclick="startExam('general')" style="margin-bottom: 10px;"><i class="fa-solid fa-list-check"></i> پرسیاری گشتی (یاساکان)</button>
                     <button class="action-btn" onclick="startExam('specific')" style="background: #8e44ad; margin-bottom: 10px;"><i class="fa-solid fa-car"></i> پرسیاری تایبەت (مایکرۆکەکان)</button>
                 </div>
@@ -844,7 +844,7 @@
             </div>
         </div>
 
-        <!-- بەشی هێماکانی هاتووچۆ (سەرجەم ۳٠٨ هێما بە وێنەی پاک و قەبارەی گەورە لە مۆداڵدا) -->
+        <!-- بەشی هێماکانی هاتووچۆ -->
         <div id="signsSection" class="page-section" style="display: none;">
             <div class="signs-container">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -853,7 +853,7 @@
                 </div>
 
                 <div class="signs-grid" id="signsGridContainer">
-                    <!-- وێنەکان ڕاستەوخۆ لە فۆڵدەری images/ بار دەبن بێ هیچ نووسینێکی خوارەوە -->
+                    <!-- وێنەکان ڕاستەوخۆ لە فۆڵدەری images/ بار دەبن -->
                 </div>
             </div>
         </div>
@@ -930,7 +930,7 @@
         </div>
     </div>
 
-    <!-- مۆداڵی گۆڕینی ڕەنگی سەرەکی ئەپەکە (۹ ڕەنگە تایبەتەکەی داواکراو) -->
+    <!-- مۆداڵی گۆڕینی ڕەنگی سەرەکی ئەپەکە (٩ ڕەنگە ڕەسەنەکەی داواکراو) -->
     <div class="modal-overlay" id="color-modal" onclick="closeColorPicker(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h3 style="color: var(--modal-text);">🎨 هەڵبژاردنی ڕەنگی سەرەکی ئەپەکە</h3>
@@ -1022,7 +1022,6 @@
             }
         });
 
-        // دروستکردنی سەرجەم ۳٠٨ هێماکە لە ١ تا ٣٠٨ ڕاستەوخۆ بێ نووسین
         const trafficSignsData = [];
         for (let i = 1; i <= 308; i++) {
             trafficSignsData.push({ img: `${i}.png` });
@@ -1201,6 +1200,7 @@
             return R * c; 
         }
 
+        /* --- بنکەی فراوانی پرسیارەکان بە بێ دووبارەبوونەوەی ناوەکی بۆ مسۆگەرکردنی ٢٥ پرسیاری تەواو جیاواز --- */
         const baseGeneralQuestions = [
             { q: "کاتی لێخوڕین لەسەر شەقامە خێراکان، کامیان ڕێگەپێدراوە؟", options: ["پێشکردنەوە لە لای ڕاستەوە", "پێشکردنەوە تەنها لە لای چەپەوە", "وەستان لە سەر شۆلەی خێرا"], answer: 1 },
             { q: "ئایا لێخوڕین بە خێراییەکی زیاتر لە سنوری دیاریکراو ڕێگەپێدراوە لە کاتی لەتاوی فریاکەوتندا؟", options: ["بەڵێ بە مەرجی ئاگادارکردنەوە", "نەخێر بە هیچ شێوەیەک", "تەنها لە شەواندا"], answer: 1 },
@@ -1216,7 +1216,22 @@
             { q: "سنوری خێرایی ڕێگەپێدراو لە ناو شارەکاندا بە بێ تابلۆ چەندە؟", options: ["40 کم/ژ", "60 کم/ژ", "100 کم/ژ"], answer: 1 },
             { q: "ئایا لێخوڕین لە ژێر کاریگەری ماددە هۆشبەرەکان یان کحول ڕێگەپێدراوە؟", options: ["بەڵێ بە کەمتر لە نیوە", "تەنها لە ڕێگاوبانە لاوەکییەکان", "نەخێر بە توندی قەدەغەیە و سزای هەیە"], answer: 2 },
             { q: "کاتی لێخوڕینی شەو، دەبێت گڵۆپی لایتەکان کەی بگۆڕیت بۆ نزیک (Low beam)؟", options: ["کاتێک ئۆتۆمبێل لە پێشەوەتەوە دێت یان لە دواوە نزیک دەبێتەوە", "تەنها لە ناو شاردا", "هەرگیز پێویست ناکات"], answer: 0 },
-            { q: "ئایا وەستان لەبەردەم دەرچەی ئاگرکوژێنەوە (گراجی فریاکەوتن) ڕێگەپێدراوە؟", options: ["بەڵێ بۆ ٥ خولەک", "تەنها لە ڕۆژانی پشوودا", "نەخێر بە هیچ شێوەیەک قەدەغەیە"], answer: 2 }
+            { q: "ئایا وەستان لەبەردەم دەرچەی ئاگرکوژێنەوە (گراجی فریاکەوتن) ڕێگەپێدراوە؟", options: ["بەڵێ بۆ ٥ خولەک", "تەنها لە ڕۆژانی پشوودا", "نەخێر بە هیچ شێوەیەک قەدەغەیە"], answer: 2 },
+            { q: "ئامانجی سەرەکی هێماکانی هۆشداریدان چییە؟", options: ["ئاگادارکردنەوەی شۆفێر لە مەترسی نزیک", "پێدانی سزای دارایی", "دیاریکردنی خێرایی کۆتایی"], answer: 0 },
+            { q: "کاتێک ماتۆرسکیل لێدەخوڕیت، پۆشینی کڵاوی سەلامەتی (Helmet) چۆنە؟", options: ["ئارەزوومەندانەیە", "تەنها لە دەرەوەی شار", "مەرجێکی یاسایی توندە بۆ پاراستنی گیان"], answer: 2 },
+            { q: "پێشینەی تێپەڕبوون لە بازنەکاندا (Roundabout) بۆ کێیە؟", options: ["ئەو ئۆتۆمبێلەی دەیەوێت بچێتە ناو بازنە", "ئەو ئۆتۆمبێلەی کە پێشتر لە ناو بازنەکەدایە", "ئۆتۆمبێلی گەورەتر"], answer: 1 },
+            { q: "ئایا لێخوڕینی بێ مۆڵەتی شۆفێری ڕێگەپێدراوە؟", options: ["بەڵێ لە شەقامە لاوەکییەکان", "بەڵێ ئەگەر شۆفێری شارەزا بێت", "نەخێر بە هیچ شێوەیەک قەدەغەیە و سزای یاسایی هەیە"], answer: 2 },
+            { q: "کاتێک تابلۆی قەدەغەی پێشکردنەوە هەیە، ئایا دەتوانیت ئۆتۆمبێلی بارهەڵگری گەورە تێپەڕێنیت؟", options: ["بەڵێ ئەگەر خێرا بێت", "نەخێر بە هیچ شێوەیەک قەدەغەیە", "تەنها لە شەواندا"], answer: 1 },
+            { q: "گرنگترین مەرجی سەلامەتی بۆ گواستنەوەی منداڵ لە ئۆتۆمبێلدا چییە؟", options: ["دانیشتن لە باوەشی دایک", "بەکارهێنانی کورسی تایبەتی منداڵ لە دواوە", "کردنەوەی پەنجەرە"], answer: 1 },
+            { q: "ئایا لێخوڕین لە لای ڕاستەوە لە شەقامی دوو سایدی بێ خەت دەبێت چۆن بێت؟", options: ["هەمیشە لە لای ڕاستی شەقام بڕۆ", "لە ناوەڕاست بڕۆ", "بە حەزی خۆت"], answer: 0 },
+            { q: "کاتی لێخوڕین لە ناوچەی نیشتەجێبووندا (مساکن)، خێرایی دەبێت چەند بێت؟", options: ["زۆر نزم و لەسەرخۆ بە وریایی", "وەک شەقامی خێرا", "بێ سنور"], answer: 0 },
+            { q: "ئایا ڕاگرتنی ئۆتۆمبێل (Parking) لەسەر هێڵی پیادەڕۆ قەدەغەیە؟", options: ["بەڵێ بە تەواوی قەدەغەیە", "تەنها بۆ کاتی کورت", "نەخێر ئاساییە"], answer: 0 },
+            { q: "کاتێک شۆفێر تووشی ڕووداوێکی هاتووچۆ دەبێت و زیانی گیانی هەیە، یەکەم هەنگاو چییە؟", options: ["هەڵاتن لە شوێنی ڕووداو", "پەیوەندیکردن بە فریاکەوتن و هاتووچۆ و یارمەتیدان", "وەستان و وێنەگرتن بۆ تۆڕە کۆمەڵایەتییەکان"], answer: 1 },
+            { q: "ئایا لێخوڕین لە کاتی ماندووێتی توند و بێهۆشیدا دروستە؟", options: ["بەڵێ ئەگەر نزیک بوویتەوە", "نەخێر مەترسی خەوتن لەسەر سوکان دروست دەکات", "تەنها دەنگی مۆزیک بەرز بکەرەوە"], answer: 1 },
+            { q: "کاریگەری تیژڕەوی لەسەر بەکاربەرانی تری ڕێگا چۆنە؟", options: ["مەترسی ڕووداو و پێکدادان زۆر زیاد دەکات", "هیچ کاریگەری نییە", "کات پاشەکەوت دەکات"], answer: 0 },
+            { q: "ئایا لێخوڕینی ئۆتۆمبێل بە دواوە (Reverse) لەسەر شەقامی خێرا ڕێگەپێدراوە؟", options: ["بەڵێ ئەگەر ڕێگاکە هەڵە بێت", "تەنها لە بەیانیان", "نەخێر تاوانێکی مەترسیدارە"], answer: 2 },
+            { q: "چرا چوارگۆشە شینەکان لە هێماکانی هاتووچۆدا بۆ چ مەبەستێکن؟", options: ["ڕێنمایی و زانیاری پێویست", "قەدەغەکردن", "ئاگادارکردنەوە لە مەترسی"], answer: 0 },
+            { q: "ئایا بەکارهێنانی سگناڵ (Indicator) پێش پێچکردنەوە پێویستە؟", options: ["بەڵێ بۆ ئاگادارکردنەوەی شۆفێرانی تر", "پێویست نییە", "تەنها لە شەواندا"], answer: 0 }
         ];
 
         const baseSpecificQuestions = [
@@ -1229,28 +1244,22 @@
             { q: "ئەگەر گڵۆپی ڕۆن لە داشبۆرد بەرزبووەوە یان هەڵبوو، مانای چییە؟", options: ["بڕی ڕۆنی بزوێنەر کەمە یان پەستانی ڕۆن کێشەی هەیە", "بنزین تەواو بووە", "لایتەکان پیسن"], answer: 0 },
             { q: "سووربوونەوەی گڵۆپی حرارەت (Temperature) لە داشبۆرد نیشانەی چییە؟", options: ["بزوێنەر گەرم بووە و مەترسی سوتانی هەیە", "ئۆتۆمبێل ساردە", "هەواگۆڕکێ کار دەکات"], answer: 0 },
             { q: "کام بەش بەرپرسە لە وەستاندنی ئۆتۆمبێل بە شێوازێکی میکانیکی؟", options: ["سیستەمی برێک (Brakes)", "تایەکان", "سوکان"], answer: 0 },
-            { q: "کارەی دینەمۆ (Alternator) چییە لە ئۆتۆمبێلدا؟", options: ["بەکارخستنی بزوێنەر لە سەرەتاوە", "بارگاویکردنەوەی بەتری و دابینکردنی کارەبا لە کاتی کارکردندا", "ساردکردنەوەی ڕۆن"], answer: 1 }
+            { q: "کارەی دینەمۆ (Alternator) چییە لە ئۆتۆمبێلدا؟", options: ["بەکارخستنی بزوێنەر لە سەرەتاوە", "بارگاویکردنەوەی بەتری و دابینکردنی کارەبا لە کاتی کارکردندا", "ساردکردنەوەی ڕۆن"], answer: 1 },
+            { q: "پشکنینی پەستانی هەوای تایەکان چ گرنگییەکی هەیە؟", options: ["سەلامەتی ڕێگەپێوان و کەمکردنەوەی خەرجی سووتەمەنی", "هیچ گرنگی نییە", "خێراکردنی ئۆتۆمبێل"], answer: 0 },
+            { q: "ئەرکی سەرەکی مۆچی (Gearbox) چییە لە ئۆتۆمبێلدا؟", options: ["گواستنەوەی هێز و کۆنتڕۆڵکردنی خێرایی و خولانەوەی بزوێنەر", "ساردکردنەوەی ئاو", "هەڵکردنی پاتری"], answer: 0 },
+            { q: "بۆچی گۆڕینی ڕۆنی بزوێنەر لە کاتی خۆیدا گرنگە؟", options: ["بۆ پاراستنی پارچە ناوخۆییەکان لە خورانی توند", "بۆ جوانکردنی دەنگی ئۆتۆمبێل", "بۆ سپیکردنی تایەکان"], answer: 0 },
+            { q: "سیستەمی هێلکاری سوکان (Power Steering) چی دەکات؟", options: ["سوکانەکە نەرم و ئاسان دەکات بۆ کۆنتڕۆڵکردن", "خێرایی ئۆتۆمبێل زیاد دەکات", "برێک بەهێز دەکات"], answer: 0 },
+            { q: "شمعات (Spark Plugs) لە بزوێنەری بنزیندا چ کارێک دەکات؟", options: ["پڕووشکی کارەبایی دروست دەکات بۆ سوتاندنی تێکەڵەی بنزین و هەوا", "ڕۆن دەگوازێتەوە", "پاتری بارگاوی دەکات"], answer: 0 }
         ];
 
-        function generateLargeQuestionPool(baseList, targetCount) {
-            let pool = [];
-            while(pool.length < targetCount) {
-                for(let item of baseList) {
-                    if(pool.length >= targetCount) break;
-                    pool.push({
-                        q: item.q,
-                        options: [...item.options],
-                        answer: item.answer
-                    });
-                }
-            }
-            return pool;
+        /* فەنکشنی دڵنیابوونەوە لەوەی هیچ پرسیارێک لە ناو 25 دانەکەدا دووبارە نەبێتەوە */
+        function getUniqueRandomQuestions(sourceArray, count) {
+            let uniqueMap = new Map();
+            sourceArray.forEach(item => uniqueMap.set(item.q, item));
+            let uniqueList = Array.from(uniqueMap.values());
+            shuffleArray(uniqueList);
+            return uniqueList.slice(0, Math.min(count, uniqueList.length));
         }
-
-        const examDatabase = {
-            general: generateLargeQuestionPool(baseGeneralQuestions, 400),
-            specific: generateLargeQuestionPool(baseSpecificQuestions, 400)
-        };
 
         let currentExamType = '';
         let currentQuestionIndex = 0;
@@ -1275,9 +1284,8 @@
             currentQuestionIndex = 0;
             score = 0;
             
-            let allQuestions = [...examDatabase[type]];
-            shuffleArray(allQuestions);
-            activeQuestions = allQuestions.slice(0, 25);
+            // هەڵبژاردنی ٢٥ پرسیاری ١٠٪ تەواو جیاواز بێ هیچ دووبارەبوونەوەیەک
+            activeQuestions = getUniqueRandomQuestions(examDatabase[type], 25);
             
             document.getElementById('examMenu').style.display = 'none';
             document.getElementById('examResultBox').style.display = 'none';
@@ -1377,6 +1385,11 @@
             document.getElementById('examResultBox').style.display = 'none';
             document.getElementById('examMenu').style.display = 'block';
         }
+
+        const examDatabase = {
+            general: baseGeneralQuestions,
+            specific: baseSpecificQuestions
+        };
 
         async function loadNoticeText() {
             let wrapper = document.getElementById('noticeScrollWrapper');
