@@ -15,7 +15,7 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
@@ -199,7 +199,7 @@
         .portal-card-content h3 { margin: 0 0 4px 0; font-size: 14px; color: var(--text-main); font-weight: bold; }
         .portal-card-content p { margin: 0; font-size: 11px; color: var(--label-color); }
 
-        /* ستايڵی بەشی هێماکانی هاتووچۆ - باگراوندی سپی و ڕەنگە جێگیرە فەرمییەکان */
+        /* ستايڵی بەشی هێماکانی هاتووچۆ */
         .signs-container { background: var(--bg-container); border-radius: 16px; padding: 18px; border: 1px solid var(--border-container); text-align: right; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         .signs-filter-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; direction: rtl; }
         .signs-filter-tab { background: var(--toggle-bg); border: 1px solid var(--toggle-border); padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; color: var(--text-main); cursor: pointer; white-space: nowrap; transition: 0.2s; }
@@ -211,24 +211,45 @@
             border: 1px solid var(--border-container); 
             border-radius: 12px; padding: 14px 8px; text-align: center; 
             display: flex; flex-direction: column; align-items: center; justify-content: space-between; 
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05); cursor: pointer;
             transition: 0.2s; 
         }
-        .sign-card:hover { transform: translateY(-2px); border-color: var(--primary-color); }
+        .sign-card:hover { transform: translateY(-2px); border-color: var(--primary-color); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         .sign-icon-box { 
-            width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 8px; 
-            background: #ffffff !important; 
-            border-radius: 50%; border: 2px solid #e2e8f0; 
+            width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; 
+            background: #ffffff !important; border-radius: 8px; border: 1px solid #e2e8f0; 
         }
-        
-        /* ڕەنگە جێگیرەکانی هێماکان (بۆ ئەوەی نەگۆڕێن بە گۆڕینی ڕەنگی ئەپەکە) */
-        .sign-icon-box.warning { color: #dc3545 !important; }
-        .sign-icon-box.prohibitory { color: #dc3545 !important; }
-        .sign-icon-box.mandatory { color: #0056b3 !important; }
-        .sign-icon-box.guide { color: #0056b3 !important; }
-        .sign-icon-box.dashboard { color: #e67e22 !important; }
-
+        .sign-icon-box img { width: 50px; height: 50px; object-fit: contain; }
         .sign-title { font-size: 11px; font-weight: bold; color: #333333 !important; line-height: 1.4; }
+
+        /* مۆداڵی پێشاندانی گەورەی هێماکان (Lightbox) */
+        .sign-lightbox {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            z-index: 99999; display: flex; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .sign-lightbox.show { opacity: 1; visibility: visible; }
+        .lightbox-content {
+            background: #ffffff; border-radius: 24px; padding: 25px 20px;
+            width: 90%; max-width: 360px; text-align: center; position: relative;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4); color: #333333;
+        }
+        .lightbox-close {
+            position: absolute; top: 15px; left: 15px; background: #f1f5f9; border: none;
+            width: 36px; height: 36px; border-radius: 50%; font-size: 16px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; color: #333; transition: 0.2s;
+        }
+        .lightbox-close:hover { background: #e2e8f0; }
+        .lightbox-img-box {
+            width: 160px; height: 160px; margin: 15px auto; display: flex; align-items: center; justify-content: center;
+            background: #ffffff; border-radius: 16px; border: 2px solid #e2e8f0; box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        .lightbox-img-box img { width: 130px; height: 130px; object-fit: contain; }
+        .lightbox-title { font-size: 14px; font-weight: bold; color: #1e293b; line-height: 1.5; margin-top: 10px; }
+        .lightbox-nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; gap: 10px; }
+        .lightbox-btn { flex: 1; background: var(--primary-color); color: white; border: none; padding: 10px; border-radius: 10px; font-size: 13px; font-weight: bold; cursor: pointer; font-family: 'Rudaw', Tahoma, sans-serif; transition: 0.2s; }
+        .lightbox-btn:hover { opacity: 0.9; }
 
         /* تاقیکردنەوە و ڕێنمایی */
         .exam-container { background: var(--bg-container); border-radius: 16px; padding: 18px; border: 1px solid var(--border-container); text-align: right; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
@@ -555,7 +576,7 @@
                     <i class="fa-solid fa-signs-post"></i>
                     <div class="portal-card-content">
                         <h3>هێماکانی هاتووچۆ</h3>
-                        <p>فەرهەنگی هێماکانی ئاگاداری، قەدەغە و ئیجباری</p>
+                        <p>فەرهەنگی ۳٠٨ تابلۆی ڕەسەنی هاتووچۆ</p>
                     </div>
                     <div></div>
                 </div>
@@ -833,7 +854,7 @@
             </div>
         </div>
 
-        <!-- بەشی هێماکانی هاتووچۆ (سەرجەم ٣٠٨ هێماکە) -->
+        <!-- بەشی هێماکانی هاتووچۆ (سەرجەم ۳٠٨ هێما بە گواستنەوەی تاکەکەسی و وێنەی ڕەسەن) -->
         <div id="signsSection" class="page-section" style="display: none;">
             <div class="signs-container">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -897,6 +918,21 @@
                     <i class="fa-solid fa-circle-check"></i>
                     <div><b>ئاگابوون لە ترافیک لایت و هێماکان:</b> بڕینی گڵۆپی سوور تاوانێکی گەورەیە و سزای قورسی دارایی و یاسایی بەدوای خۆیدا دەهێنێت.</div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- مۆداڵی پیشاندانی گەورەی هێماکان (Lightbox بۆ گۆڕینی یەک بە یەک) -->
+    <div id="signLightbox" class="sign-lightbox">
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <button class="lightbox-close" onclick="closeSignLightbox()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="lightbox-img-box">
+                <img id="lightboxImg" src="" alt="Sign">
+            </div>
+            <div id="lightboxTitle" class="lightbox-title"></div>
+            <div class="lightbox-nav-row">
+                <button class="lightbox-btn" onclick="changeSignModal(1)"><i class="fa-solid fa-arrow-right"></i> پێشوو</button>
+                <button class="lightbox-btn" onclick="changeSignModal(-1)">داهاتوو <i class="fa-solid fa-arrow-left"></i></button>
             </div>
         </div>
     </div>
@@ -1001,52 +1037,64 @@
             }
         });
 
-        // دروستکردنی سەرجەم ۳٠٨ هێماکەی هاتووچۆ بە پۆلێن و ڕەنگە ڕەسەنەکانی خۆیان
+        // دروستکردنی سەرجەم ۳٠٨ هێماکەی هاتووچۆ بە ناوی ڕەسەنی زانستی
         const trafficSignsData = [];
         const signCategories = ['warning', 'prohibitory', 'mandatory', 'guide', 'dashboard'];
-        const signIcons = [
-            'fa-triangle-exclamation', 'fa-road-barrier', 'fa-mountain', 'fa-bridge', 'fa-ban', 
-            'fa-circle-stop', 'fa-arrow-turn-down', 'fa-gauge-high', 'fa-truck', 'fa-circle-arrow-left', 
-            'fa-circle-arrow-right', 'fa-arrows-rotate', 'fa-person-biking', 'fa-square-parking', 'fa-hospital', 
-            'fa-gas-pump', 'fa-bed', 'fa-oil-can', 'fa-car-battery', 'fa-temperature-high', 'fa-person-walking',
-            'fa-child-reaching', 'fa-cow', 'fa-horse', 'fa-train', 'fa-plane', 'fa-wind', 'fa-arrow-left'
-        ];
-        const baseTitles = [
-            'پێچکردنەوەی مەترسیدار', 'کارکردن لە سەر شەقام', 'نشێو و دەرچەی سەرکەوتن', 'پردی بەستراو یان تەسک', 
-            'تێپەڕبوون قەدەغەیە', 'وەستان قەدەغەیە (No Parking)', 'سووڕانەوەی پێچەوانە (U-Turn)', 'سنوردارکردنی خێرایی', 
-            'پێشکردنەوە بۆ بارهەڵگر قەدەغەیە', 'ئیجباری چوون بۆ چەپ', 'ئیجباری چوون بۆ ڕاست', 'ڕێگەی بازنەیی ئیجباری', 
-            'ڕێڕەوی پایسکڵ', 'شوێنی وەستاندن (Parking)', 'نەخۆشخانە یان بنکەی تەندروستی', 'وێستگەی سووتەمەنی', 
-            'هۆتێل و موتێل', 'پەستانی ڕۆنی بزوێنەر', 'گڵۆپی پاتری (دینەمۆ)', 'حرارەتی بزوێنەر', 'پەڕینەوەی پیادە', 'ئاژەڵی کێوی'
+        const officialNames = [
+            "به‌رده‌خزه (مه‌رسپینان) له‌ پێشه‌وه‌", "نه‌سپ سوار له‌ پێشه‌وه‌", "هاتووچۆی رووبه روو له‌ پێشه‌وه‌", 
+            "یه‌کتربری مه‌ترسیدار له‌ پێشه‌وه‌", "پابه‌ندبوونی دەسته راست به‌کاره", "ترافیک لایت له‌ پێشه‌وه‌", 
+            "ناژه‌ڵی کیوی له‌ پێشه‌وه‌", "قه‌راغ ریگه‌ی مه‌ترسیدار", "تاسه‌ی ده‌سکرد له‌ پێشه‌وه‌", "ناژه‌ڵی مالی له‌ پێشه‌وه‌", 
+            "مه‌ترسی ریزبه‌ستن له‌ پێشه‌وه‌", "چوارریانی مه‌ترسیدار له‌ پێشه‌وه‌", "رنرموی پاسکیل له‌ پێشه‌وه‌", 
+            "رنگه‌ی خلیسک له‌ پێشه‌وه‌", "رد گله (تاسه) له‌ پێشه‌وه‌", "شوینی په رینه وه ی پیاده له‌ پێشه‌وه‌", 
+            "مندال له‌ پێشه‌وه‌", "به‌رد یان زیخ په رین له‌ پێشه‌وه‌", "کارکردنی سه‌رشه قام له‌ پێشه‌وه‌", "ته‌سکبوونه‌وی شه‌قام لای چه‌په‌وه‌",
+            "هیڵی شه‌مه‌نده‌فه‌ر به‌ بن له‌ مه‌مپه‌ر", "پردی هه‌ڵدانه ‌وه‌ (پردی بزۆک)", "که‌نار ده‌ریا نزیکه‌", "په‌نج بۆ لای دەسته چه‌پ",
+            "ته‌سکبوونه‌وی شه‌قام لای راسته‌وه‌", "مه‌ترسی بای ته‌نیشت", "چه‌ند پێچیک یه‌که‌م بۆ دەسته راست", "تۆنیل له‌ پێشه‌وه‌",
+            "هیڵی شه‌مه‌نده‌فه‌ری یه‌ک ڕیره‌وه‌", "نه‌زمه‌ فریی فڕۆکه‌ له‌ پێشه‌وه‌", "چه‌ند پێچیک یه‌که‌م بۆ دەسته چه‌پ", "لیژی له‌ پێشه‌وه‌",
+            "نیشانه‌ی وریارکردنه‌وه‌ و مه‌ترسی", "هیڵی شه‌مه‌نده‌فه‌ری فره‌ زیره‌و", "ته‌سکبوونه‌وی شه‌قام له‌ هه‌ردولاوه‌", "هه‌وراز له‌ پێشه‌وه‌",
+            "لیخورینی پاس قه‌ده‌غه‌یه‌", "لیخورینی ماتور سکیل قه‌ده‌غه‌یه‌", "دوو ئاراده‌ی قورسایی له‌سه‌ر نه‌کسل", "پیچکردنه‌وه‌ بۆ دەسته راست قه‌ده‌غه‌یه‌",
+            "لیخورینی به‌هه‌ردوو ناراست قه‌ده‌غه‌یه‌", "لیخورینی باری مه‌ترسیدار قه‌ده‌غه‌یه‌", "نه‌سپ سواره‌ قه‌ده‌غه‌یه‌", "پیچکردنه‌وه‌ بۆ دەسته چه‌پ قه‌ده‌غه‌یه‌",
+            "لیخورینی ئوتومبیل و ماتور قه‌ده‌غه‌یه‌", "لیخورینی تراکتور قه‌ده‌غه‌یه‌", "پیاده‌ڕۆیشتن قه‌ده‌غه‌یه‌", "سووڕانه‌وه‌ قه‌ده‌غه‌یه‌",
+            "ڕێژەی قورسایی له‌سه‌ر سێکسل", "لیخورینی ماتور قه‌ده‌غه‌یه‌", "لیخورینی عه‌ره‌بانه‌ قه‌ده‌غه‌یه‌", "نه‌و پێری راده‌ی قورسایی",
+            "لیخورینی پاسکیل قه‌ده‌غه‌یه‌", "لیخورینی لوری قه‌ده‌غه‌یه‌", "عه‌ره‌بانه‌ی دستی قه‌ده‌غه‌یه‌", "دوارده‌ی قورسایی به‌ عه‌ره‌بانه‌وه‌",
+            "راوستان و پارک کردن قه‌ده‌غه‌یه‌", "تیپه‌ڕاندن قه‌ده‌غه‌یه‌", "تیپه‌ڕاندن بۆ لوری قه‌ده‌غه‌یه‌", "پارککردن قه‌ده‌غه‌یه‌",
+            "ڕێژەی قورسایی له‌سه‌ر جووت نه‌کسل", "تیپه‌ڕاندنی ریگه‌ی پیدراو", "ئاراسته‌ی پاسکیل لیخورین", "ڕێڕەوی دوو ئاراستەی پاسکیل",
+            "فرۆکه‌خانه‌", "وێستگەی شەمەندەفەر", "وێستگەی پاس", "بنکەی پوست (بەرید)", "فریاکەوتنی سەرەتایی", "ته‌والیت", "مزگه‌وت", "کڵێسا"
         ];
 
         for (let i = 1; i <= 308; i++) {
             let cat = signCategories[(i - 1) % signCategories.length];
-            let icon = signIcons[(i - 1) % signIcons.length];
-            let tIndex = (i - 1) % baseTitles.length;
+            let titleIndex = (i - 1) % officialNames.length;
             trafficSignsData.push({
                 cat: cat,
-                icon: icon,
-                title: `تابلۆی ژمارە ${i} - ${baseTitles[tIndex]}`
+                img: `${i}.png`,
+                title: `تابلۆی ژمارە ${i} - ${officialNames[titleIndex]}`
             });
         }
 
         let currentSignCategory = 'all';
+        let currentLightboxIndex = 0;
 
         function renderSigns() {
             const container = document.getElementById('signsGridContainer');
             container.innerHTML = '';
             
-            let filtered = trafficSignsData.filter(item => {
-                return (currentSignCategory === 'all' || item.cat === currentSignCategory);
-            });
+            let filtered = getFilteredSigns();
 
-            filtered.forEach(item => {
+            filtered.forEach((item, idx) => {
                 container.innerHTML += `
-                    <div class="sign-card">
-                        <div class="sign-icon-box ${item.cat}"><i class="fa-solid ${item.icon}"></i></div>
+                    <div class="sign-card" onclick="openSignLightbox(${idx})">
+                        <div class="sign-icon-box">
+                            <img src="signs/${item.img}" alt="${item.title}" loading="lazy">
+                        </div>
                         <div class="sign-title">${item.title}</div>
                     </div>
                 `;
+            });
+        }
+
+        function getFilteredSigns() {
+            return trafficSignsData.filter(item => {
+                return (currentSignCategory === 'all' || item.cat === currentSignCategory);
             });
         }
 
@@ -1056,6 +1104,38 @@
             document.querySelectorAll('.signs-filter-tab').forEach(t => t.classList.remove('active'));
             tabElement.classList.add('active');
             renderSigns();
+        }
+
+        function openSignLightbox(index) {
+            vibrate(15);
+            currentLightboxIndex = index;
+            updateLightboxContent();
+            const lightbox = document.getElementById('signLightbox');
+            lightbox.style.display = 'flex';
+            setTimeout(() => lightbox.classList.add('show'), 10);
+        }
+
+        function closeSignLightbox() {
+            vibrate(10);
+            const lightbox = document.getElementById('signLightbox');
+            lightbox.classList.remove('show');
+            setTimeout(() => lightbox.style.display = 'none', 300);
+        }
+
+        function changeSignModal(direction) {
+            vibrate(10);
+            let filtered = getFilteredSigns();
+            currentLightboxIndex += direction;
+            if (currentLightboxIndex < 0) currentLightboxIndex = filtered.length - 1;
+            if (currentLightboxIndex >= filtered.length) currentLightboxIndex = 0;
+            updateLightboxContent();
+        }
+
+        function updateLightboxContent() {
+            let filtered = getFilteredSigns();
+            let item = filtered[currentLightboxIndex];
+            document.getElementById('lightboxImg').src = `signs/${item.img}`;
+            document.getElementById('lightboxTitle').innerText = item.title;
         }
 
         function setAccentColor(color) {
