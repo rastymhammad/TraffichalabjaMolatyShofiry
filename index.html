@@ -490,9 +490,65 @@
         body.dark-mode ::-webkit-scrollbar-thumb:hover {
             background: #475569;
         }
+
+        /* --- پێشنیاری ٤: دیزاینی دۆخی بێ هێڵی (Offline Banner) --- */
+        .offline-banner {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            background: #dc3545; color: white;
+            text-align: center; padding: 8px;
+            font-size: 13px; font-weight: bold;
+            z-index: 100000;
+            transform: translateY(-100%);
+            transition: transform 0.4s ease, background 0.4s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .offline-banner.show { transform: translateY(0); }
+        .offline-banner.online-again { background: #28a745; }
+
+        /* --- پێشنیاری ٦: پیشاندانی لۆدینگی نێوان پەڕەکان (Page Transition Spinner) --- */
+        .page-transition-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+            z-index: 9999;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+        }
+        body.dark-mode .page-transition-overlay {
+            background: rgba(18,18,18,0.7);
+        }
+        .page-transition-overlay.active {
+            opacity: 1; visibility: visible;
+        }
+        .spinner {
+            width: 40px; height: 40px;
+            border: 4px solid rgba(0, 86, 179, 0.2);
+            border-top-color: #0056b3;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        body.dark-mode .spinner {
+            border-color: rgba(77, 163, 255, 0.2);
+            border-top-color: #4da3ff;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
     </style>
 </head>
 <body>
+    <!-- پێشنیاری ٤: بڕگەی HTML بۆ دۆخی ئۆفلاین -->
+    <div id="offlineBanner" class="offline-banner no-print">
+        <i class="fa-solid fa-wifi"></i> هێڵی ئینتەرنێت پچڕاوە. تکایە هێڵەکەت بپشکنە.
+    </div>
+
+    <!-- پێشنیاری ٦: بڕگەی HTML بۆ لۆدینگی نێوان پەڕەکان -->
+    <div id="pageTransitionLoader" class="page-transition-overlay no-print">
+        <div class="spinner"></div>
+    </div>
+
     <div id="splash-screen" class="splash-screen no-print">
         <div class="splash-logo">
             <img src="icon-192.png">
@@ -854,6 +910,28 @@
             }
         });
 
+        // ----------------- پێشنیاری ٤: کۆدی JavaScript بۆ پشکنینی ئینتەرنێت -----------------
+        const offlineBanner = document.getElementById('offlineBanner');
+        
+        function updateOnlineStatus() {
+            if (navigator.onLine) {
+                offlineBanner.innerHTML = '<i class="fa-solid fa-check-circle"></i> هێڵی ئینتەرنێت گەڕایەوە.';
+                offlineBanner.classList.add('online-again');
+                setTimeout(() => {
+                    offlineBanner.classList.remove('show');
+                }, 3000);
+            } else {
+                offlineBanner.innerHTML = '<i class="fa-solid fa-wifi"></i> هێڵی ئینتەرنێت پچڕاوە. تکایە هێڵەکەت بپشکنە.';
+                offlineBanner.classList.remove('online-again');
+                offlineBanner.classList.add('show');
+            }
+        }
+        
+        window.addEventListener('online', updateOnlineStatus);
+        window.addEventListener('offline', updateOnlineStatus);
+        
+        // ----------------- کۆتایی کۆدی پێشنیاری ٤ -----------------
+
         // ----------------- سیستەمی ڕاکێشان بۆ خوارەوە (Pull-to-Refresh) -----------------
         let pullStartY = 0;
         let pullMoveY = 0;
@@ -1022,8 +1100,18 @@
                 return; // لێرەدا دەوەستێت و ناچێتە پەڕەی نۆرەگرتن
             }
 
-            // ئەگەر ئینتەرنێت هەبوو، یان پەڕەیەکی تر بوو (وەک سەرەتا یان غەرامە)، ئەوا پەڕەکە دەکاتەوە بێ کێشە
-            openSection(section);
+            // --- پێشنیاری ٦: پیشاندانی لۆدینگی نێوان پەڕەکان ---
+            const pageLoader = document.getElementById('pageTransitionLoader');
+            pageLoader.classList.add('active');
+            
+            // ڕاگرتنی بۆ ماوەیەکی زۆر کورت بۆ ئەوەی ئەنیمەیشنەکە دەربکەوێت و ئەزموونەکە نەرمتر بێت
+            setTimeout(() => {
+                openSection(section);
+                // لابردنی لۆدینگەکە پاش کردنەوەی بەشەکە
+                setTimeout(() => {
+                    pageLoader.classList.remove('active');
+                }, 200); 
+            }, 100);
         }
 
         function openSection(section) {
