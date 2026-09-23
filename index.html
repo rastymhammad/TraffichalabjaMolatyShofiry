@@ -987,7 +987,6 @@
             return R * c; 
         }
 
-        /* --- بنکەی دراوەی پرسیارەکان بە بێ نووسینی [پرسیاری ژمارە] لە سەرەتای دەقەکەدا --- */
         const baseGeneralQuestions = [
             { q: "کاتی لێخوڕین لەسەر شەقامە خێراکان، کامیان ڕێگەپێدراوە؟", options: ["پێشکردنەوە لە لای ڕاستەوە", "پێشکردنەوە تەنها لە لای چەپەوە", "وەستان لە سەر شۆلەی خێرا"], answer: 1 },
             { q: "ئایا لێخوڕین بە خێراییەکی زیاتر لە سنوری دیاریکراو ڕێگەپێدراوە لە کاتی لەتاوی فریاکەوتندا؟", options: ["بەڵێ بە مەرجی ئاگادارکردنەوە", "نەخێر بە هیچ شێوەیەک", "تەنها لە شەواندا"], answer: 1 },
@@ -1025,7 +1024,7 @@
                 for(let item of baseList) {
                     if(pool.length >= targetCount) break;
                     pool.push({
-                        q: item.q, // بێ زیادکردنی هیچ دەقێکی زیادە لە سەرەتادا
+                        q: item.q,
                         options: [...item.options],
                         answer: item.answer
                     });
@@ -1226,7 +1225,7 @@
             vibrate(10);
             if (section !== 'exam') { clearInterval(examTimerInterval); }
 
-            // تەنها لە یەکەم جەلسەدا (Session) کاتێک دەچێتە بەشی تاقیکردنەوە، ئاگادارییەکە نیشان دەدات
+            // تەنها ئەگەر یەکەمجار بێت لەم سێشنەدا (Session)، ئاگادارییەکە نیشان دەدات
             if (section === 'exam' && !sessionStorage.getItem('exam_alert_shown')) {
                 Swal.fire({
                     title: 'ئاگاداری گرنگ ⚠️',
@@ -1287,10 +1286,17 @@
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
+        /* --- سیستەمی خۆکاری گۆڕینی دۆخی تاریک بەپێی کات (Auto Sunset Dark Mode) --- */
         let metaThemeColor = document.getElementById("meta-theme-color");
         let currentTheme = localStorage.getItem("theme");
         
-        if (!currentTheme) currentTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? "dark" : "light";
+        if (!currentTheme) {
+            // ئەگەر بەکارهێنەر بە دەست خۆی ڕەنگی نەگۆڕیبێت، بەپێی کاتی عێراق (بغداد) هەڵسوکەوت دەکات
+            const nowIraq = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Baghdad" }));
+            const hour = nowIraq.getHours();
+            // لە کاتژمێر 7ی ئێوارە (19:00) تا 6ی بەیانی (06:00) دەبێتە تاریک
+            currentTheme = (hour >= 19 || hour < 6) ? "dark" : "light";
+        }
         
         if (currentTheme === "dark") { 
             document.body.classList.add("dark-mode");
