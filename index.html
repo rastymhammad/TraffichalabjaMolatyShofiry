@@ -15,7 +15,7 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
@@ -767,7 +767,7 @@
             </div>
         </div>
 
-        <!-- بەشی تاقیکردنەوە و پرسیارەکان (لەگەڵ تێبینی ناوخۆیی و بێ پۆپ-ئەپی بێزارکەر) -->
+        <!-- بەشی تاقیکردنەوە و پرسیارەکان -->
         <div id="examSection" class="page-section" style="display: none;">
             <div class="exam-container">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -775,11 +775,7 @@
                     <button onclick="navTo('portal')" class="btn-reset" style="padding: 5px 10px;">گەڕانەوە</button>
                 </div>
                 
-                <div id="examMenu" style="text-align: center; padding: 10px 0;">
-                    <!-- تێبینی بچووک و ڕوون لەسەرەتاوە بێ پۆپ-ئەپ -->
-                    <div style="background: rgba(0, 86, 179, 0.08); border: 1px solid rgba(0, 86, 179, 0.2); border-radius: 10px; padding: 10px; margin-bottom: 15px; font-size: 11px; color: var(--header-text); text-align: right; line-height: 1.5;">
-                        <i class="fa-solid fa-circle-info"></i> تێبینی: ئەم تاقیکردنەوەیە هیچ کات پەیوەندی بە ئیمتیحانی نەزەری فەرمی هاتووچۆوە نییە، تەنها بۆ خۆشی و کات بەسەربردن و زیادکردنی زانیاری شۆفێرە.
-                    </div>
+                <div id="examMenu" style="text-align: center; padding: 15px 0;">
                     <p style="font-size: 13px; color: var(--label-color); margin-bottom: 20px;">جۆری پرسیارەکان هەڵبژێرە (زیاتر لە ٤٠٠ پرسیاری جۆراوجۆر، هەموو جارێک ٢٥ پرسیاری هەڕەمەکی):</p>
                     <button class="action-btn search-btn" onclick="startExam('general')" style="margin-bottom: 10px;"><i class="fa-solid fa-list-check"></i> پرسیاری گشتی (یاساکان)</button>
                     <button class="action-btn" onclick="startExam('specific')" style="background: #8e44ad; margin-bottom: 10px;"><i class="fa-solid fa-car"></i> پرسیاری تایبەت (مایکرۆکەکان)</button>
@@ -857,7 +853,7 @@
         </button>
     </footer>
 
-    <!-- مینیوی خوارەوە (ئایکۆنی تاقیکردنەوە لە دەستە چەپ تەنیشت غەرامە) -->
+    <!-- مینیوی خوارەوە -->
     <nav class="bottom-nav no-print" id="bottomNav">
         <div class="nav-item active" onclick="navTo('portal')" id="nav-portal">
             <i class="fa-solid fa-house"></i>
@@ -991,7 +987,6 @@
             return R * c; 
         }
 
-        /* --- بنکەی دراوەی فراوانی پرسیارەکان (زیاتر لە ٤٠٠ پرسیار بە شێوازی زیرەک) --- */
         const baseGeneralQuestions = [
             { q: "کاتی لێخوڕین لەسەر شەقامە خێراکان، کامیان ڕێگەپێدراوە؟", options: ["پێشکردنەوە لە لای ڕاستەوە", "پێشکردنەوە تەنها لە لای چەپەوە", "وەستان لە سەر شۆلەی خێرا"], answer: 1 },
             { q: "ئایا لێخوڕین بە خێراییەکی زیاتر لە سنوری دیاریکراو ڕێگەپێدراوە لە کاتی لەتاوی فریاکەوتندا؟", options: ["بەڵێ بە مەرجی ئاگادارکردنەوە", "نەخێر بە هیچ شێوەیەک", "تەنها لە شەواندا"], answer: 1 },
@@ -1232,6 +1227,23 @@
             vibrate(10);
             if (section !== 'exam') { clearInterval(examTimerInterval); }
 
+            // تەنها لە یەکەم جاردا (یان دوای داخستنی ئەپەکە) ئاگادارییەکە نیشان بدات
+            if (section === 'exam' && !sessionStorage.getItem('exam_alert_shown')) {
+                Swal.fire({
+                    title: 'ئاگاداری گرنگ ⚠️',
+                    text: 'ئەم تاقیکردنەوەیە هیچ کات پەیوەندی بە ئیمتیحانی نەزەری فەرمی هاتووچۆوە نییە، تەنها بۆ خۆشی و کات بەسەربردن و زیادکردنی زانیاری شۆفێرە.',
+                    icon: 'info',
+                    confirmButtonText: 'تێگەیشتم، چوونە ژوورەوە',
+                    confirmButtonColor: '#0056b3'
+                }).then((res) => {
+                    if (res.isConfirmed) {
+                        sessionStorage.setItem('exam_alert_shown', 'true');
+                        proceedNav(section);
+                    }
+                });
+                return;
+            }
+
             if (!navigator.onLine && section === 'queue') {
                  Swal.fire({
                     icon: 'warning', title: 'هێڵی ئینتەرنێتت پچڕاوە!',
@@ -1241,6 +1253,10 @@
                 return; 
             }
 
+            proceedNav(section);
+        }
+
+        function proceedNav(section) {
             const pageLoader = document.getElementById('pageTransitionLoader');
             pageLoader.classList.add('active');
             
