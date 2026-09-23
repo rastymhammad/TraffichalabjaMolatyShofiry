@@ -98,6 +98,8 @@
             border-radius: 20px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
             border: 1px solid rgba(255,255,255,0.4) !important;
+            /* پێشنیاری ٥: زیادکردنی transition بۆ مێنیوی خوارەوە بۆ ئەوەی بە نەرمی بشارێتەوە */
+            transition: transform 0.4s cubic-bezier(0.3, 0.8, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease !important;
         }
         body.dark-mode .bottom-nav {
             box-shadow: 0 10px 25px rgba(0,0,0,0.4) !important;
@@ -255,11 +257,16 @@
         h2 { color: var(--header-text); margin-top: 0; margin-bottom: 15px; font-size: 16px; }
 
         .input-wrapper { position: relative; width: 100%; margin: 12px 0; }
-        .input-wrapper i { position: absolute; right: 12px; top: 15px; color: var(--header-text); font-size: 16px; z-index: 2; }
+        /* پێشنیاری ٤: زیادکردنی transition بۆ ئایکۆنی ناو input */
+        .input-wrapper i { position: absolute; right: 12px; top: 15px; color: var(--header-text); font-size: 16px; z-index: 2; transition: all 0.3s ease; }
         .input-wrapper input { width: 100%; padding: 20px 35px 8px 10px; box-sizing: border-box; border: 2px solid var(--input-border); border-radius: 6px; font-size: 14px; font-family: 'Rudaw', Tahoma, Arial, sans-serif; outline: none; transition: 0.3s ease all; background: var(--input-bg); color: var(--input-text); user-select: text; }
         .input-wrapper label { position: absolute; right: 35px; top: 14px; font-size: 13px; color: var(--label-color); transition: 0.3s ease all; pointer-events: none; z-index: 1; }
         .input-wrapper input:focus ~ label, .input-wrapper input:not(:placeholder-shown) ~ label { top: 4px; font-size: 10px; color: #0056b3; font-weight: bold; }
         body.dark-mode .input-wrapper input:focus ~ label, body.dark-mode .input-wrapper input:not(:placeholder-shown) ~ label { color: #4da3ff; }
+        
+        /* پێشنیاری ٤: گۆڕینی ڕەنگ و قەبارەی ئایکۆن لە کاتی Focus */
+        .input-wrapper:focus-within i { color: #0056b3; transform: scale(1.2); }
+        body.dark-mode .input-wrapper:focus-within i { color: #4da3ff; }
         
         .input-wrapper input:disabled { background-color: #e9ecef; cursor: not-allowed; opacity: 0.7; }
         .input-wrapper input.valid-input { border-color: #28a745 !important; box-shadow: 0 0 5px rgba(40, 167, 69, 0.3); }
@@ -491,7 +498,6 @@
             background: #475569;
         }
 
-        /* --- پێشنیاری ٤: دیزاینی دۆخی بێ هێڵی (Offline Banner) --- */
         .offline-banner {
             position: fixed;
             top: 0; left: 0; width: 100%;
@@ -506,7 +512,6 @@
         .offline-banner.show { transform: translateY(0); }
         .offline-banner.online-again { background: #28a745; }
 
-        /* --- پێشنیاری ٦: پیشاندانی لۆدینگی نێوان پەڕەکان (Page Transition Spinner) --- */
         .page-transition-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -539,12 +544,10 @@
     </style>
 </head>
 <body>
-    <!-- پێشنیاری ٤: بڕگەی HTML بۆ دۆخی ئۆفلاین -->
     <div id="offlineBanner" class="offline-banner no-print">
         <i class="fa-solid fa-wifi"></i> هێڵی ئینتەرنێت پچڕاوە. تکایە هێڵەکەت بپشکنە.
     </div>
 
-    <!-- پێشنیاری ٦: بڕگەی HTML بۆ لۆدینگی نێوان پەڕەکان -->
     <div id="pageTransitionLoader" class="page-transition-overlay no-print">
         <div class="spinner"></div>
     </div>
@@ -910,7 +913,24 @@
             }
         });
 
-        // ----------------- پێشنیاری ٤: کۆدی JavaScript بۆ پشکنینی ئینتەرنێت -----------------
+        // ----------------- پێشنیاری ٥: شاردنەوەی زیرەکی مێنیوی خوارەوە -----------------
+        let lastScrollTop = 0;
+        const bottomNavBar = document.getElementById('bottomNav');
+        
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop && scrollTop > 60) {
+                // کاتێک سکڕۆڵ دەکرێتە خوارەوە مێنیوەکە بشارەوە
+                bottomNavBar.style.transform = 'translateY(150%)';
+            } else {
+                // کاتێک سکڕۆڵ دەکرێتە سەرەوە مێنیوەکە پیشان بدەرەوە
+                bottomNavBar.style.transform = 'translateY(0)';
+            }
+            lastScrollTop = scrollTop;
+        }, { passive: true });
+
+
+        // ----------------- کۆدی پشکنینی ئینتەرنێت -----------------
         const offlineBanner = document.getElementById('offlineBanner');
         
         function updateOnlineStatus() {
@@ -930,8 +950,6 @@
         window.addEventListener('online', updateOnlineStatus);
         window.addEventListener('offline', updateOnlineStatus);
         
-        // ----------------- کۆتایی کۆدی پێشنیاری ٤ -----------------
-
         // ----------------- سیستەمی ڕاکێشان بۆ خوارەوە (Pull-to-Refresh) -----------------
         let pullStartY = 0;
         let pullMoveY = 0;
