@@ -199,7 +199,7 @@
         .portal-card-content h3 { margin: 0 0 4px 0; font-size: 14px; color: var(--text-main); font-weight: bold; }
         .portal-card-content p { margin: 0; font-size: 11px; color: var(--label-color); }
 
-        /* ستايڵی بەشی هێماکانی هاتووچۆ (بێ نووسینی خوارەوە) */
+        /* ستايڵی بەشی هێماکانی هاتووچۆ */
         .signs-container { background: var(--bg-container); border-radius: 16px; padding: 18px; border: 1px solid var(--border-container); text-align: right; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         .signs-filter-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; direction: rtl; }
         .signs-filter-tab { background: var(--toggle-bg); border: 1px solid var(--toggle-border); padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; color: var(--text-main); cursor: pointer; white-space: nowrap; transition: 0.2s; }
@@ -217,7 +217,7 @@
         .sign-card:hover { transform: translateY(-2px); border-color: var(--primary-color); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         .sign-card img { width: 100%; height: 100%; object-fit: contain; }
 
-        /* مۆداڵی پێشاندانی گەورەی هێماکان (Lightbox) */
+        /* مۆداڵی پێشاندانی گەورەی هێماکان (Lightbox گەورەتر بۆ خوێندنەوەی نوسینەکان) */
         .sign-lightbox {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
@@ -226,23 +226,23 @@
         }
         .sign-lightbox.show { opacity: 1; visibility: visible; }
         .lightbox-content {
-            background: #ffffff; border-radius: 24px; padding: 25px 20px;
-            width: 90%; max-width: 360px; text-align: center; position: relative;
+            background: #ffffff; border-radius: 24px; padding: 25px 15px;
+            width: 95%; max-width: 420px; text-align: center; position: relative;
             box-shadow: 0 15px 40px rgba(0,0,0,0.4); color: #333333;
         }
         .lightbox-close {
-            position: absolute; top: 15px; left: 15px; background: #f1f5f9; border: none;
+            position: absolute; top: 12px; left: 12px; background: #f1f5f9; border: none;
             width: 36px; height: 36px; border-radius: 50%; font-size: 16px; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; color: #333; transition: 0.2s;
+            display: flex; align-items: center; justify-content: center; color: #333; transition: 0.2s; z-index: 10;
         }
         .lightbox-close:hover { background: #e2e8f0; }
         .lightbox-img-box {
-            width: 220px; height: 220px; margin: 15px auto; display: flex; align-items: center; justify-content: center;
-            background: #ffffff; border-radius: 16px; border: 2px solid #e2e8f0; box-shadow: 0 4px 15px rgba(0,0,0,0.08); padding: 10px;
+            width: 100%; height: 320px; margin: 10px auto; display: flex; align-items: center; justify-content: center;
+            background: #ffffff; border-radius: 16px; border: 2px solid #e2e8f0; box-shadow: 0 4px 15px rgba(0,0,0,0.08); padding: 5px;
         }
         .lightbox-img-box img { width: 100%; height: 100%; object-fit: contain; }
-        .lightbox-nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; gap: 10px; }
-        .lightbox-btn { flex: 1; background: var(--primary-color); color: white; border: none; padding: 10px; border-radius: 10px; font-size: 13px; font-weight: bold; cursor: pointer; font-family: 'Rudaw', Tahoma, sans-serif; transition: 0.2s; }
+        .lightbox-nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; gap: 10px; }
+        .lightbox-btn { flex: 1; background: var(--primary-color); color: white; border: none; padding: 12px; border-radius: 12px; font-size: 13px; font-weight: bold; cursor: pointer; font-family: 'Rudaw', Tahoma, sans-serif; transition: 0.2s; }
         .lightbox-btn:hover { opacity: 0.9; }
 
         /* تاقیکردنەوە و ڕێنمایی */
@@ -848,7 +848,7 @@
             </div>
         </div>
 
-        <!-- بەشی هێماکانی هاتووچۆ (سەرجەم ۳٠٨ تابلۆ، تەنها وێنەی پەتی بەبێ نووسینی ژێرەوە) -->
+        <!-- بەشی هێماکانی هاتووچۆ (سەرجەم ۳٠٨ هێما بە وێنەی پاک و پڕکردنەوەی تابلۆکە لە ناو بۆکسەکەدا) -->
         <div id="signsSection" class="page-section" style="display: none;">
             <div class="signs-container">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -866,7 +866,7 @@
                 </div>
 
                 <div class="signs-grid" id="signsGridContainer">
-                    <!-- وێنەکان لە فۆڵدەری images/ بار دەبن بێ نووسینی خوارەوە -->
+                    <!-- وێنەکان بە قەد باگراوند و بە بێ نووسینی ژێرەوە بار دەبن -->
                 </div>
             </div>
         </div>
@@ -916,7 +916,7 @@
         </div>
     </div>
 
-    <!-- مۆداڵی پێشاندانی گەورەی وێنەکان (Lightbox بۆ گۆڕینی یەک بە یەک) -->
+    <!-- مۆداڵی پێشاندانی گەورەی وێنەکان (Lightbox گەورەتر بۆ خوێندنەوەی نوسینەکان) -->
     <div id="signLightbox" class="sign-lightbox" onclick="closeSignLightbox()">
         <div class="lightbox-content" onclick="event.stopPropagation()">
             <button class="lightbox-close" onclick="closeSignLightbox()"><i class="fa-solid fa-xmark"></i></button>
@@ -1030,7 +1030,7 @@
             }
         });
 
-        // دروستکردنی سەرجەم ۳٠٨ وێنەی تابلۆکان لە فۆڵدەری images/ بە بێ هیچ نووسینێکی خوارەوە
+        // بارکردنی سەرجەم ۳٠٨ هێماکە ڕاستەوخۆ لە فۆڵدەری images/ بێ نووسینی خوارەوە
         const trafficSignsData = [];
         const signCategories = ['warning', 'prohibitory', 'mandatory', 'guide', 'dashboard'];
 
