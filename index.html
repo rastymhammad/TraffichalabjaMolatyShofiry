@@ -201,11 +201,7 @@
 
         /* ستايڵی بەشی هێماکانی هاتووچۆ */
         .signs-container { background: var(--bg-container); border-radius: 16px; padding: 18px; border: 1px solid var(--border-container); text-align: right; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .signs-filter-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; direction: rtl; }
-        .signs-filter-tab { background: var(--toggle-bg); border: 1px solid var(--toggle-border); padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; color: var(--text-main); cursor: pointer; white-space: nowrap; transition: 0.2s; }
-        .signs-filter-tab.active { background: var(--primary-color); color: white; border-color: var(--primary-color); }
-        
-        .signs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; max-height: 65vh; overflow-y: auto; padding: 5px; }
+        .signs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; max-height: 70vh; overflow-y: auto; padding: 5px; margin-top: 10px; }
         .sign-card { 
             background: #ffffff !important; 
             border: 1px solid var(--border-container); 
@@ -217,7 +213,7 @@
         .sign-card:hover { transform: translateY(-2px); border-color: var(--primary-color); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         .sign-card img { width: 100%; height: 100%; object-fit: contain; }
 
-        /* مۆداڵی پێشاندانی گەورەی هێماکان (Lightbox گەورەتر بۆ خوێندنەوەی نوسینەکان) */
+        /* مۆداڵی پێشاندانی گەورەی هێماکان (Lightbox) */
         .sign-lightbox {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
@@ -848,7 +844,7 @@
             </div>
         </div>
 
-        <!-- بەشی هێماکانی هاتووچۆ (سەرجەم ۳٠٨ هێما بە وێنەی پاک و پڕکردنەوەی تابلۆکە لە ناو بۆکسەکەدا) -->
+        <!-- بەشی هێماکانی هاتووچۆ (سەرجەم ۳٠٨ هێما بە وێنەی پاک و پڕکردنەوەی تابلۆکە لە ناو بۆکسەکەدا - بێ فلتەر و بێ نووسینی خوارەوە) -->
         <div id="signsSection" class="page-section" style="display: none;">
             <div class="signs-container">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -856,17 +852,8 @@
                     <button onclick="navTo('portal')" class="btn-reset" style="padding: 5px 10px;">گەڕانەوە</button>
                 </div>
 
-                <div class="signs-filter-tabs">
-                    <div class="signs-filter-tab active" onclick="filterSignCategory('all', this)">هەمووی (308)</div>
-                    <div class="signs-filter-tab" onclick="filterSignCategory('warning', this)">ئاگاداری</div>
-                    <div class="signs-filter-tab" onclick="filterSignCategory('prohibitory', this)">قەدەغەکردن</div>
-                    <div class="signs-filter-tab" onclick="filterSignCategory('mandatory', this)">ئیجباری</div>
-                    <div class="signs-filter-tab" onclick="filterSignCategory('guide', this)">رێنمایی</div>
-                    <div class="signs-filter-tab" onclick="filterSignCategory('dashboard', this)">داشبۆرد</div>
-                </div>
-
                 <div class="signs-grid" id="signsGridContainer">
-                    <!-- وێنەکان بە قەد باگراوند و بە بێ نووسینی ژێرەوە بار دەبن -->
+                    <!-- وێنەکان ڕاستەوخۆ لە فۆڵدەری images/ بار دەبن -->
                 </div>
             </div>
         </div>
@@ -916,7 +903,7 @@
         </div>
     </div>
 
-    <!-- مۆداڵی پێشاندانی گەورەی وێنەکان (Lightbox گەورەتر بۆ خوێندنەوەی نوسینەکان) -->
+    <!-- مۆداڵی پێشاندانی گەورەی وێنەکان (Lightbox گەورەتر بە قەبارەی باگراوند) -->
     <div id="signLightbox" class="sign-lightbox" onclick="closeSignLightbox()">
         <div class="lightbox-content" onclick="event.stopPropagation()">
             <button class="lightbox-close" onclick="closeSignLightbox()"><i class="fa-solid fa-xmark"></i></button>
@@ -1030,48 +1017,25 @@
             }
         });
 
-        // بارکردنی سەرجەم ۳٠٨ هێماکە ڕاستەوخۆ لە فۆڵدەری images/ بێ نووسینی خوارەوە
+        // دروستکردنی سەرجەم ۳٠٨ هێماکە لە ١ تا ٣٠٨ ڕاستەوخۆ بێ نووسین
         const trafficSignsData = [];
-        const signCategories = ['warning', 'prohibitory', 'mandatory', 'guide', 'dashboard'];
-
         for (let i = 1; i <= 308; i++) {
-            let cat = signCategories[(i - 1) % signCategories.length];
-            trafficSignsData.push({
-                cat: cat,
-                img: `${i}.png`
-            });
+            trafficSignsData.push({ img: `${i}.png` });
         }
 
-        let currentSignCategory = 'all';
         let currentLightboxIndex = 0;
 
         function renderSigns() {
             const container = document.getElementById('signsGridContainer');
             container.innerHTML = '';
             
-            let filtered = getFilteredSigns();
-
-            filtered.forEach((item, idx) => {
+            trafficSignsData.forEach((item, idx) => {
                 container.innerHTML += `
                     <div class="sign-card" onclick="openSignLightbox(${idx})">
                         <img src="images/${item.img}" alt="Traffic Sign ${idx + 1}" loading="lazy" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'50\' height=\'50\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23ccc\' stroke-width=\'2\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><path d=\'M21 15l-5-5L5 21\'/></svg>'">
                     </div>
                 `;
             });
-        }
-
-        function getFilteredSigns() {
-            return trafficSignsData.filter(item => {
-                return (currentSignCategory === 'all' || item.cat === currentSignCategory);
-            });
-        }
-
-        function filterSignCategory(cat, tabElement) {
-            vibrate(10);
-            currentSignCategory = cat;
-            document.querySelectorAll('.signs-filter-tab').forEach(t => t.classList.remove('active'));
-            tabElement.classList.add('active');
-            renderSigns();
         }
 
         function openSignLightbox(index) {
@@ -1092,16 +1056,14 @@
 
         function changeSignModal(direction) {
             vibrate(10);
-            let filtered = getFilteredSigns();
             currentLightboxIndex += direction;
-            if (currentLightboxIndex < 0) currentLightboxIndex = filtered.length - 1;
-            if (currentLightboxIndex >= filtered.length) currentLightboxIndex = 0;
+            if (currentLightboxIndex < 0) currentLightboxIndex = trafficSignsData.length - 1;
+            if (currentLightboxIndex >= trafficSignsData.length) currentLightboxIndex = 0;
             updateLightboxContent();
         }
 
         function updateLightboxContent() {
-            let filtered = getFilteredSigns();
-            let item = filtered[currentLightboxIndex];
+            let item = trafficSignsData[currentLightboxIndex];
             document.getElementById('lightboxImg').src = `images/${item.img}`;
         }
 
