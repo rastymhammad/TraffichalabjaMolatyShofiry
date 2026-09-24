@@ -1029,7 +1029,7 @@
             }
         });
 
-        // گالەری هێماکان وێنەکانی لە signs دەهێنێت یان images (گالەری دەتوانێت لە images بمێنێت)
+        // گالەری هێماکان لە فۆڵدەری images بار دەبێت بە ناوەوە
         const trafficSignsData = [];
         for (let i = 1; i <= 217; i++) {
             trafficSignsData.push({ img: `${i}.png` });
@@ -1259,9 +1259,9 @@
             { q: "شمعات (Spark Plugs) لە بزوێنەری بنزیندا چ کارێک دەکات؟", options: ["پڕووشکی کارەبایی دروست دەکات بۆ سوتاندنی تێکەڵەی بنزین و هەوا", "ڕۆن دەگوازێتەوە", "پاتری بارگاوی دەکات"], answer: 0 }
         ];
 
-        /* بنکەی پرسیارەکانی هێماکان بەپێی تابلۆی ژمارە 1 کە ڕێنماییت کرد و هی تریش بە شێوەی زانستی */
+        /* بنکەی پرسیارەکانی هێماکان کە وێنەکەی (1_2.png) لە فۆڵدەری signs تێدایە */
         const baseSignsQuestions = [
-            { img: "1.png", q: "ئەم هێمایەی هاتووچۆ چی دەگەیەنێت؟", options: ["یەکتربڕی مەترسی‌دار لە پێشەوە", "پابەندبوونی دەستە ڕاست بەکارە؟", "وەستان لێره‌دا قەدەغەیە"], answer: 0 },
+            { img: "1_2.png", q: "ئەم هێمایە چییە؟", options: ["یەکتربڕی مەترسی‌دار لە پێشەوەیە", "پابەند بوونی دەستە ڕاست بەکارە", "لەم شوێنەدا وەستان قەدەغەیە - ڕێگاەکە بەستراوە"], answer: 0 },
             { img: "2.png", q: "ئەم هێمایەی هاتووچۆ چی دەگەیەنێت؟", options: ["پێچکردنەوەی مەترسی‌دار بۆ چەپ", "شەقامی سەرەکی لە پێشەوەیە", "ڕێگەی سەرەکی و لاوەکی"], answer: 0 },
             { img: "3.png", q: "ئەم هێمایەی هاتووچۆ چی دەگەیەنێت؟", options: ["سەرەتای شەقامی دوو سایدی", "پێچی توند بۆ ڕاست", "کۆتایی قەدەغەکردن"], answer: 0 },
             { img: "4.png", q: "ئەم هێمایەی هاتووچۆ چی دەگەیەنێت؟", options: ["شەقامی سەرەکی و تێپەڕبوون بە وریایی", "هۆشداری بوونی چاڵ لە پێشەوە", "پێشکردنەوە قەدەغەیە"], answer: 0 },
@@ -1300,7 +1300,6 @@
             score = 0;
             
             if (type === 'signs') {
-                // تاقیکردنەوەی هێماکان لە فۆڵدەری signs دێنێت کە بێ نووسینن
                 activeQuestions = getUniqueRandomQuestions(baseSignsQuestions, Math.min(baseSignsQuestions.length, 25));
             } else {
                 let allQuestions = [...examDatabase[type]];
@@ -1325,7 +1324,7 @@
             let imgContainer = document.getElementById('examImageContainer');
             let signImg = document.getElementById('examSignImg');
             if (currentExamType === 'signs' && q.img) {
-                signImg.src = `signs/${q.img}`; // وێنەکان لە فۆڵدەری signs (بێ نووسین)
+                signImg.src = `signs/${q.img}`; // وێنەکان ڕاستەوخۆ لە فۆڵدەری signs بار دەبن بێ نووسین
                 imgContainer.style.display = 'block';
             } else {
                 imgContainer.style.display = 'none';
