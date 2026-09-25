@@ -252,6 +252,15 @@
         .safety-item { background: var(--toggle-bg); border: 1px solid var(--toggle-border); border-radius: 10px; padding: 12px; margin-bottom: 10px; font-size: 12px; line-height: 1.6; color: var(--text-main); display: flex; align-items: flex-start; gap: 10px; }
         .safety-item i { color: var(--primary-color); font-size: 16px; margin-top: 2px; flex-shrink: 0; }
 
+        /* ستايڵی بەشی نووسینگەکانی شۆفێری */
+        .offices-container { background: var(--bg-container); border-radius: 16px; padding: 18px; border: 1px solid var(--border-container); text-align: right; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .office-card { background: var(--toggle-bg); border: 1px solid var(--toggle-border); border-radius: 12px; padding: 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; }
+        .office-card:hover { border-color: var(--primary-color); transform: translateY(-2px); }
+        .office-info h4 { margin: 0 0 4px 0; font-size: 14px; color: var(--text-main); font-weight: bold; }
+        .office-info p { margin: 0; font-size: 11px; color: var(--label-color); }
+        .map-btn { background: #e74c3c; color: white; border: none; padding: 8px 14px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
+        .map-btn:hover { opacity: 0.9; color: white; }
+
         .exam-timer { display: inline-flex; align-items: center; gap: 5px; background: rgba(220, 53, 69, 0.1); color: #dc3545; padding: 4px 10px; border-radius: 20px; font-weight: bold; font-size: 12px; }
 
         button.action-btn, .start-quiz-btn, .date-box {
@@ -348,7 +357,7 @@
         #ptr-indicator { width: 100%; height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: bold; color: var(--header-text); transition: height 0.2s ease-out; }
         
         .main-content { flex: 1; width: 100%; max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
-        #portalSection, #queueSection, #fineSection, #examSection, #safetySection, #signsSection { width: 100%; }
+        #portalSection, #queueSection, #fineSection, #examSection, #safetySection, #signsSection, #officesSection { width: 100%; }
         #queueSection #adminSection { max-width: 700px; width: 100%; margin: 0 auto; }
         
         .visitor-counter { text-align: center; font-size: 12px; color: var(--label-color); margin-bottom: 8px; font-weight: bold; }
@@ -570,6 +579,14 @@
                     </div>
                     <div></div>
                 </div>
+                <div class="portal-card" onclick="navTo('offices')">
+                    <i class="fa-solid fa-building-user"></i>
+                    <div class="portal-card-content">
+                        <h3>نووسینگەکانی مۆڵەتی شۆفێری</h3>
+                        <p>ناونیشان و لۆکەیشنی نووسینگەکان</p>
+                    </div>
+                    <div></div>
+                </div>
                 <div class="portal-card" onclick="navTo('safety')">
                     <i class="fa-solid fa-shield-halved"></i>
                     <div class="portal-card-content">
@@ -643,6 +660,24 @@
                     <div style="background: var(--bg-container); padding: 6px; border-radius: 8px; border: 1px solid var(--border-container);">
                         <div class="chart-container"><canvas id="myChart"></canvas></div>
                     </div>
+                </div>
+
+                <!-- بەڕێوەبردنی نووسینگەکان لەلایەن ئەدمینەوە -->
+                <div style="background: rgba(0, 86, 179, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(0, 86, 179, 0.2);" class="no-print">
+                    <h3 style="margin-top: 0; font-size: 14px; color: var(--primary-color);"><i class="fa-solid fa-building-user"></i> بەڕێوەبردنی نووسینگەکانی شۆفێری</h3>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-building"></i>
+                        <input type="text" id="adminOfficeName" placeholder=" ">
+                        <label>ناوی نووسینگە (نموونە: نووسینگەی هەڵەبجە)</label>
+                    </div>
+                    <div class="input-wrapper" style="margin-top: 8px;">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                        <input type="text" id="adminOfficeMapUrl" placeholder=" ">
+                        <label>لینکی گوگڵ ماپ (Google Maps URL)</label>
+                    </div>
+                    <button class="action-btn" style="background: var(--primary-color); padding: 10px; margin-top: 8px;" onclick="addNewOfficeAdmin()">زیادکردنی نووسینگە</button>
+                    
+                    <div id="adminOfficesList" style="margin-top: 15px; max-height: 150px; overflow-y: auto; text-align: right;"></div>
                 </div>
 
                 <div id="quotaAdminBlock" style="background: rgba(40, 167, 69, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(40, 167, 69, 0.2);" class="no-print">
@@ -864,6 +899,18 @@
             </div>
         </div>
 
+        <!-- بەشی نووسینگەکانی شۆفێری -->
+        <div id="officesSection" class="page-section" style="display: none;">
+            <div class="offices-container">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h2 style="margin:0; font-size: 15px;"><i class="fa-solid fa-building-user" style="color: var(--primary-color);"></i> نووسینگەکانی مۆڵەتی شۆفێری</h2>
+                    <button onclick="navTo('portal')" class="btn-reset" style="padding: 5px 10px;">گەڕانەوە</button>
+                </div>
+                <p style="font-size: 12px; color: var(--label-color); margin-bottom: 15px; text-align: center;">لیستی نووسингەکانی فەرمی و لۆکەیشنیان لە گوگڵ ماپ:</p>
+                <div id="officesListContainer"></div>
+            </div>
+        </div>
+
         <!-- بەشی ڕێنماییەکانی سەلامەتی هاتووچۆ -->
         <div id="safetySection" class="page-section" style="display: none;">
             <div class="safety-container">
@@ -1028,8 +1075,87 @@
             }
         });
 
+        // سیستەمی بەڕێوەبردنی نووسینگەکان (به‌یارمه‌تی LocalStorage بۆ ئه‌دمین)
+        const defaultOffices = [
+            { name: "نووسینگەی فێرکاری شۆفێری هەڵەبجە", mapUrl: "https://maps.app.goo.gl/iV7Ly21Rkx7ikreFA" },
+            { name: "نووسینگەی شەهید عوسمان", mapUrl: "https://maps.app.goo.gl/iV7Ly21Rkx7ikreFA" }
+        ];
+
+        function getOffices() {
+            let saved = localStorage.getItem('traffic_driving_offices');
+            if (!saved) {
+                localStorage.setItem('traffic_driving_offices', JSON.stringify(defaultOffices));
+                return defaultOffices;
+            }
+            try { return JSON.parse(saved); } catch(e) { return defaultOffices; }
+        }
+
+        function renderOfficesUser() {
+            const container = document.getElementById('officesListContainer');
+            if(!container) return;
+            let list = getOffices();
+            container.innerHTML = '';
+            if(list.length === 0) {
+                container.innerHTML = '<p style="color:var(--label-color); font-size:12px;">هیچ نووسینگەیەک تۆمار نەکراوە.</p>';
+                return;
+            }
+            list.forEach(item => {
+                container.innerHTML += `
+                    <div class="office-card">
+                        <div class="office-info">
+                            <h4><i class="fa-solid fa-building"></i> ${item.name}</h4>
+                            <p>بۆ بینینی شوێن لەسەر نه‌خشه‌ کلیک بکە</p>
+                        </div>
+                        <a href="${item.mapUrl}" target="_blank" class="map-btn"><i class="fa-solid fa-location-dot"></i> لۆکەیشن</a>
+                    </div>
+                `;
+            });
+        }
+
+        function renderAdminOfficesManager() {
+            const container = document.getElementById('adminOfficesList');
+            if(!container) return;
+            let list = getOffices();
+            container.innerHTML = '';
+            if(list.length === 0) {
+                container.innerHTML = '<span style="font-size:11px; color:var(--label-color);">هیچ نووسینگەیەک نییە.</span>';
+                return;
+            }
+            list.forEach((item, index) => {
+                container.innerHTML += `
+                    <div style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-container); padding:6px 10px; border-radius:6px; margin-bottom:5px; border:1px solid var(--border-container);">
+                        <span style="font-size:12px; font-weight:bold;">${item.name}</span>
+                        <button onclick="deleteOfficeAdmin(${index})" style="background:#dc3545; color:white; border:none; padding:3px 8px; border-radius:4px; font-size:11px; cursor:pointer;"><i class="fa-solid fa-trash"></i> لابردن</button>
+                    </div>
+                `;
+            });
+        }
+
+        function addNewOfficeAdmin() {
+            let name = document.getElementById('adminOfficeName').value.trim();
+            let mapUrl = document.getElementById('adminOfficeMapUrl').value.trim();
+            if(!name || !mapUrl) return Swal.fire('ئاگاداری', 'تکایە ناو و لینکی ماپ پڕبکەرەوە', 'warning');
+            
+            let list = getOffices();
+            list.push({ name: name, mapUrl: mapUrl });
+            localStorage.setItem('traffic_driving_offices', JSON.stringify(list));
+            
+            document.getElementById('adminOfficeName').value = '';
+            document.getElementById('adminOfficeMapUrl').value = '';
+            renderAdminOfficesManager();
+            Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'نووسینگە زیاد کرا!', showConfirmButton: false, timer: 2000 });
+        }
+
+        function deleteOfficeAdmin(index) {
+            let list = getOffices();
+            list.splice(index, 1);
+            localStorage.setItem('traffic_driving_offices', JSON.stringify(list));
+            renderAdminOfficesManager();
+            Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'نووسینگە سڕایەوە!', showConfirmButton: false, timer: 2000 });
+        }
+
         const trafficSignsData = [];
-        for (let i = 1; i <= 217; i++) {
+        for (let i = 1; i <= 50; i++) {
             trafficSignsData.push({ img: `${i}.png` });
         }
 
@@ -1238,7 +1364,6 @@
             { q: "کارەی دینەمۆ (Alternator) چییە لە ئۆتۆمبێلدا؟", options: ["بەکارخستنی بزوێنەر لە سەرەتاوە", "بارگاویکردنەوەی بەتری و دابینکردنی کارەبا لە کاتی کارکردندا", "ساردکردنەوەی ڕۆن"], answer: 1 }
         ];
 
-        /* بنکەی پرسیارەکانی هێماکان (کە دەتوانیت ڕۆژانە پرسیاری تری بۆ زیاد بکەیت تا دەگاتە ٢٠٠) */
         const baseSignsQuestions = [
             { img: "1.png", q: "ئەم هێمایەی ئاماژەیە بۆ چی؟", options: ["یەکتربڕی مەترسی‌دار لە پێشەوەیە", "ڕێگاكه‌ كاری تێدا ده‌كرێت", "لەم شوێنەدا وەستان قەدەغەیە"], answer: 0 },
             { img: "2.png", q: "کاتێک ئەم هێمایه‌ لە سەر ڕێگا دەبینیت، مانای چییە؟", options: ["چوارڕیانی ئازاد له‌ پێشته‌وه‌یه‌", "ڕێگەی سەرەکییە مه‌ترسیداره‌", "چوارڕیانی مه‌ترسیدار له‌ پێشته‌وه‌یه‌"], answer: 2 },
@@ -1288,7 +1413,7 @@
             { img: "47.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["وه‌ستان قه‌ده‌غه‌یه‌  ", " لێخوڕن به‌هه‌ردوو ئاڕاسته‌ قه‌ده‌غه‌یه‌ ", "‌‌ وه‌ستانی كاتی ڕێگه‌ پێداروه‌ "], answer: 1 },
             { img: "48.png", q: " ئەم هێمایە چی بۆ شۆفێر قەدەغە دەکات ؟", options: ["لێخوڕینی ئۆتۆمبێل و ماتۆڕ بۆ ناو ئه‌م شه‌قامه‌ قه‌ده‌غه‌یه‌  ", " هاتووچۆی ماتۆڕسکیل قەدەغەیە ", "‌‌ وه‌ستانی ئۆتۆمبێل و ماتۆرسكیل ڕێگه‌پێدراوه‌ "], answer: 0 },
             { img: "49.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["وه‌ستانی پاسكیل قه‌ده‌غه‌یه‌  ", " وه‌ستانی ئۆتۆمبێل قه‌ده‌غه‌یه‌ ", "‌‌ ‌لێخوڕینی ماتۆڕ قه‌ده‌غه‌یه‌ "], answer: 2 },
-            { img: "50.png", q: " ئەم تابلۆیە قەدەغەکردنە بۆ چ جۆرە ئۆتۆمبێلێک ؟", options: ["لێخوڕینی لۆری قه‌ده‌غه‌یه‌  ", " وه‌ستانی ئۆتۆمبێل قه‌ده‌غه‌یه‌ ", "‌‌ ‌لێخوڕینی ماتۆڕ قه‌ده‌غه‌یه‌ "], answer: 0 },
+            { img: "50.png", q: " ئەم تابلۆیە قەدەغەکردنە بۆ چ جۆرە ئۆتۆمبێلێک ؟", options: ["لێخوڕینی لۆری قه‌ده‌غه‌یه‌  ", " وه‌ستانی ئۆتۆمبێل قه‌ده‌غه‌یه‌ ", "‌‌ ‌لێخوڕینی ماتۆڕ قه‌ده‌غه‌یه‌ "], answer: 0 }
         ];
 
         const examDatabase = {
@@ -1322,7 +1447,6 @@
             return array;
         }
 
-        /* --- لێرەدا ئاگادارییەکە ڕاستەوخۆ دەردەکەوێت لە کاتی کلیککردن لەسەر تاقیکردنەوە --- */
         function startExam(type) {
             vibrate();
             currentExamType = type;
@@ -1381,18 +1505,12 @@
             options.forEach(opt => opt.style.pointerEvents = 'none');
             options[correctIndex].classList.add('correct');
             
-            Swal.fire({
-                toast: true, position: 'top-end', icon: 'warning',
-                title: 'کاتەکەت تەواو بوو!', showConfirmButton: false, timer: 1500
-            });
+            Swal.fire({ toast: true, position: 'top-end', icon: 'warning', title: 'کاتەکەت تەواو بوو!', showConfirmButton: false, timer: 1500 });
             
             setTimeout(() => {
                 currentQuestionIndex++;
-                if(currentQuestionIndex < activeQuestions.length) {
-                    loadQuestion();
-                } else {
-                    showExamResult();
-                }
+                if(currentQuestionIndex < activeQuestions.length) { loadQuestion(); }
+                else { showExamResult(); }
             }, 1500);
         }
 
@@ -1412,11 +1530,8 @@
 
             setTimeout(() => {
                 currentQuestionIndex++;
-                if(currentQuestionIndex < activeQuestions.length) {
-                    loadQuestion();
-                } else {
-                    showExamResult();
-                }
+                if(currentQuestionIndex < activeQuestions.length) { loadQuestion(); }
+                else { showExamResult(); }
             }, 1200);
         }
 
@@ -1481,8 +1596,7 @@
             Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
             try {
                 let response = await fetch(`${baseUrl}/api/admin/notice`, {
-                    method: "PUT",
-                    headers: { "Content-Type": "application/json", "Admin-Password": window.adminPwd },
+                    method: "PUT", headers: { "Content-Type": "application/json", "Admin-Password": window.adminPwd },
                     body: JSON.stringify({ text: newText })
                 });
                 let result = await response.json().catch(() => ({}));
@@ -1492,16 +1606,14 @@
                 } else {
                     Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان دەسەڵاتت نییە!', 'error');
                 }
-            } catch(e) {
-                Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە', 'error');
-            }
+            } catch(e) { Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە', 'error'); }
         }
 
+        /* --- لێرەدا ئاگادارییەکە ڕاستەوخۆ دەردەکەوێت پێش چوونە ژوورەوە بۆ تاقیکردنەوە --- */
         function navTo(section) {
             vibrate(10);
             if (section !== 'exam') { clearInterval(examTimerInterval); }
 
-            /* --- پیشاندانی ئاگاداری ڕاستەوخۆ لە کاتی کلیککردن لەسەر تاقیکردنەوە --- */
             if (section === 'exam' && !sessionStorage.getItem('exam_alert_shown')) {
                 Swal.fire({
                     title: 'ئاگاداری گرنگ ⚠️',
@@ -1537,25 +1649,20 @@
             setTimeout(() => {
                 openSection(section);
                 if(section === 'signs') { renderSigns(); }
-                setTimeout(() => {
-                    pageLoader.classList.remove('active');
-                }, 200); 
+                if(section === 'offices') { renderOfficesUser(); }
+                setTimeout(() => { pageLoader.classList.remove('active'); }, 200); 
             }, 100);
         }
 
         function openSection(section) {
-            document.querySelectorAll('.page-section').forEach(el => {
-                el.style.display = 'none';
-            });
+            document.querySelectorAll('.page-section').forEach(el => { el.style.display = 'none'; });
 
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             let activeNav = document.getElementById('nav-' + section);
             if(activeNav) activeNav.classList.add('active');
 
             let targetSection = document.getElementById(section + 'Section');
-            if(targetSection) {
-                targetSection.style.display = 'block';
-            }
+            if(targetSection) { targetSection.style.display = 'block'; }
 
             if(section === 'portal') { loadNoticeText(); }
             else if(section === 'queue') { checkQuotaAndTimer(); checkSavedTicket(); }
@@ -2134,8 +2241,7 @@
                 try {
                     let deviceFp = await getDeviceFingerprint();
                     let response = await fetch(apiUrl, { 
-                        method: "POST", 
-                        headers: { "Content-Type": "application/json", "X-Device-Id": deviceFp }, 
+                        method: "POST", headers: { "Content-Type": "application/json", "X-Device-Id": deviceFp }, 
                         body: JSON.stringify({ name: finalName, phone: finalPhone }) 
                     });
                     
@@ -2263,6 +2369,8 @@
                         document.getElementById('blacklistAdminBlock').style.display = 'block';
                         document.getElementById('gpsAdminBlock').style.display = 'block';
                     }
+
+                    renderAdminOfficesManager();
 
                     fetch(`${baseUrl}/api/users/count`)
                         .then(r => r.json())
