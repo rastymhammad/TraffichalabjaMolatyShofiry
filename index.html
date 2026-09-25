@@ -671,13 +671,23 @@
                         <label>ناوی نووسینگە (نموونە: نووسینگەی هەڵەبجە)</label>
                     </div>
                     <div class="input-wrapper" style="margin-top: 8px;">
+                        <i class="fa-solid fa-phone"></i>
+                        <input type="tel" id="adminOfficePhone1" placeholder=" " maxlength="11">
+                        <label>ژمارەی تەلەفۆنی یەکەم...</label>
+                    </div>
+                    <div class="input-wrapper" style="margin-top: 8px;">
+                        <i class="fa-solid fa-phone"></i>
+                        <input type="tel" id="adminOfficePhone2" placeholder=" " maxlength="11">
+                        <label>ژمارەی تەلەفۆنی دووەم (ئارەزوومەندانە)...</label>
+                    </div>
+                    <div class="input-wrapper" style="margin-top: 8px;">
                         <i class="fa-solid fa-map-location-dot"></i>
                         <input type="text" id="adminOfficeMapUrl" placeholder=" ">
                         <label>لینکی گوگڵ ماپ (Google Maps URL)</label>
                     </div>
                     <button class="action-btn" style="background: var(--primary-color); padding: 10px; margin-top: 8px;" onclick="addNewOfficeAdmin()">زیادکردنی نووسینگە</button>
                     
-                    <div id="adminOfficesList" style="margin-top: 15px; max-height: 150px; overflow-y: auto; text-align: right;"></div>
+                    <div id="adminOfficesList" style="margin-top: 15px; max-height: 180px; overflow-y: auto; text-align: right;"></div>
                 </div>
 
                 <div id="quotaAdminBlock" style="background: rgba(40, 167, 69, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(40, 167, 69, 0.2);" class="no-print">
@@ -1077,8 +1087,8 @@
 
         // سیستەمی بەڕێوەبردنی نووسینگەکان (به‌یارمه‌تی LocalStorage بۆ ئه‌دمین)
         const defaultOffices = [
-            { name: "نووسینگەی فێرکاری شۆفێری هەڵەبجە", mapUrl: "https://maps.app.goo.gl/iV7Ly21Rkx7ikreFA" },
-            { name: "نووسینگەی شەهید عوسمان", mapUrl: "https://maps.app.goo.gl/iV7Ly21Rkx7ikreFA" }
+            { name: "نووسینگەی فێرکاری شۆفێری هەڵەبجە", phone1: "07501116212", phone2: "07701116212", mapUrl: "https://maps.app.goo.gl/iV7Ly21Rkx7ikreFA" },
+            { name: "نووسینگەی شەهید عوسمان", phone1: "07502223344", phone2: "", mapUrl: "https://maps.app.goo.gl/iV7Ly21Rkx7ikreFA" }
         ];
 
         function getOffices() {
@@ -1087,7 +1097,10 @@
                 localStorage.setItem('traffic_driving_offices', JSON.stringify(defaultOffices));
                 return defaultOffices;
             }
-            try { return JSON.parse(saved); } catch(e) { return defaultOffices; }
+            try { 
+                let parsed = JSON.parse(saved);
+                return Array.isArray(parsed) ? parsed : defaultOffices;
+            } catch(e) { return defaultOffices; }
         }
 
         function renderOfficesUser() {
@@ -1100,11 +1113,19 @@
                 return;
             }
             list.forEach(item => {
+                let phonesHtml = '';
+                if(item.phone1 || item.phone2) {
+                    phonesHtml = `<p style="margin: 3px 0 0 0; font-size: 11px; color: var(--label-color);" dir="ltr">`;
+                    if(item.phone1) phonesHtml += `<i class="fa-solid fa-phone" style="font-size:10px;"></i> ${item.phone1} `;
+                    if(item.phone2) phonesHtml += `&nbsp;|&nbsp; <i class="fa-solid fa-phone" style="font-size:10px;"></i> ${item.phone2}`;
+                    phonesHtml += `</p>`;
+                }
+
                 container.innerHTML += `
                     <div class="office-card">
                         <div class="office-info">
                             <h4><i class="fa-solid fa-building"></i> ${item.name}</h4>
-                            <p>بۆ بینینی شوێن لەسەر نه‌خشه‌ کلیک بکە</p>
+                            ${phonesHtml}
                         </div>
                         <a href="${item.mapUrl}" target="_blank" class="map-btn"><i class="fa-solid fa-location-dot"></i> لۆکەیشن</a>
                     </div>
@@ -1124,8 +1145,11 @@
             list.forEach((item, index) => {
                 container.innerHTML += `
                     <div style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-container); padding:6px 10px; border-radius:6px; margin-bottom:5px; border:1px solid var(--border-container);">
-                        <span style="font-size:12px; font-weight:bold;">${item.name}</span>
-                        <button onclick="deleteOfficeAdmin(${index})" style="background:#dc3545; color:white; border:none; padding:3px 8px; border-radius:4px; font-size:11px; cursor:pointer;"><i class="fa-solid fa-trash"></i> لابردن</button>
+                        <div style="text-align:right;">
+                            <span style="font-size:12px; font-weight:bold; display:block;">${item.name}</span>
+                            <span style="font-size:10px; color:var(--label-color);" dir="ltr">${item.phone1 || ''} ${item.phone2 ? '- ' + item.phone2 : ''}</span>
+                        </div>
+                        <button onclick="deleteOfficeAdmin(${index})" style="background:#dc3545; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:11px; cursor:pointer;"><i class="fa-solid fa-trash"></i> لابردن</button>
                     </div>
                 `;
             });
@@ -1133,14 +1157,18 @@
 
         function addNewOfficeAdmin() {
             let name = document.getElementById('adminOfficeName').value.trim();
+            let phone1 = document.getElementById('adminOfficePhone1').value.trim();
+            let phone2 = document.getElementById('adminOfficePhone2').value.trim();
             let mapUrl = document.getElementById('adminOfficeMapUrl').value.trim();
-            if(!name || !mapUrl) return Swal.fire('ئاگاداری', 'تکایە ناو و لینکی ماپ پڕبکەرەوە', 'warning');
+            if(!name || !mapUrl) return Swal.fire('ئاگاداری', 'تکایە ناوی نووسینگە و لینکی ماپ پڕبکەرەوە', 'warning');
             
             let list = getOffices();
-            list.push({ name: name, mapUrl: mapUrl });
+            list.push({ name: name, phone1: phone1, phone2: phone2, mapUrl: mapUrl });
             localStorage.setItem('traffic_driving_offices', JSON.stringify(list));
             
             document.getElementById('adminOfficeName').value = '';
+            document.getElementById('adminOfficePhone1').value = '';
+            document.getElementById('adminOfficePhone2').value = '';
             document.getElementById('adminOfficeMapUrl').value = '';
             renderAdminOfficesManager();
             Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'نووسینگە زیاد کرا!', showConfirmButton: false, timer: 2000 });
@@ -1389,7 +1417,7 @@
             { img: "22.png", q: " ئاگاداری لەسەر بوونی چی دەدات ئەم تابلۆیە ؟", options: ["شەقامی یەک ئاراستە  ", " ته‌سكبوونه‌وه‌ی شه‌قام لای چه‌پ له‌ پێشه‌وه‌ ", "‌‌ ‌‌‌‌ته‌سكبوونه‌وه‌ی شه‌قام لای ڕاسته‌وه‌ له‌ پێشه‌وه‌‌ "], answer: 2 },
             { img: "23.png", q: " کاتێک ئەم هێمایە دەبینیت، نیشانەی چییە ؟", options: ["هێڵی شه‌مه‌نده‌فه‌ر له‌پ  ", " ته‌سكبوونه‌وه‌ی شه‌قام له‌ هه‌ردوولاوه‌ له‌ پێشه‌وه‌ ", "‌‌ ‌‌‌‌شەقامەکە فراوان دەبێت "], answer: 1 },
             { img: "24.png", q: " ئەم تابڵۆیە هۆشداری دەدات لەسەر چ جۆرە پێچێک ؟", options: ["پێچكردنه‌وه‌ بۆ لای ده‌سته‌ ڕاست له‌پێشه‌وه‌   ", "پێچكردنه‌وه‌ بۆلای چه‌پ قه‌ده‌قه‌یه‌ ", "‌‌ ‌‌‌‌پێچكردنه‌وه‌ بۆ لای ده‌سته‌ چه‌پ له‌ پێشه‌وه‌ "], answer: 2 },
-            { img: "25.png", q: " ئەم هێمایەی ئاماژەیە بۆ چ حاڵەتێک ؟", options: ["پێچكردنه‌وه‌ بۆ لای ده‌سته‌ ڕاست له‌پێشه‌وه‌  ", " پێچكردنه‌وه‌ بۆ لای ده‌سته‌ ڕاست قه‌دەغەیە ", "‌‌ ‌‌‌‌پێچكردنه‌وه‌ بۆلای چه‌پ قه‌ده‌قه‌یه‌ "], answer: 0 },
+            { img: "25.png", q: " ئەم هێمایەی ئاماژەیە بۆ چ حاڵەتێک ؟", options: ["پێچكردنه‌وه‌ بۆ لای ده‌سته‌ ڕاست له‌پێشه‌وه‌  ", " پێچكردنه‌وه‌ بۆ لای ده‌سته‌ ڕاست قه‌دەغەیە ", "‌‌ ‌‌‌‌پێچكردنه‌وه‌ بۆلای چه‌پ قه‌دەغەیە "], answer: 0 },
             { img: "26.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["شه‌قامه‌كه‌ پێچاو پێچه‌  ", " چه‌ند پێچێك یه‌كه‌م بۆلای ده‌سته‌چه‌پ ", "‌‌ ‌‌‌‌چه‌ند پێچێك یه‌كه‌م بۆلای ده‌سته‌ڕاست "], answer: 2 },
             { img: "27.png", q: " ئاگاداری لەسەر بوونی چی دەدات ئەم تابلۆیە ؟", options: ["شه‌قامه‌كه‌ پێچاو پێچه‌  ", " چه‌ند پێچێك یه‌كه‌م بۆلای ده‌سته‌چه‌پ ", "‌‌ ‌‌‌‌چه‌ند پێچێك یه‌كه‌م بۆلای ده‌سته‌ڕاست "], answer: 1 },
             { img: "28.png", q: " کاتێک ئەم هێمایە دەبینیت، نیشانەی چییە ؟", options: ["لێژیی له‌ پێشه‌وه‌یه‌  ", " هەوراز له‌پێشه‌وه‌یه‌ ", "‌‌ ‌‌‌‌ڕێگاكه‌ كاری تێدا ده‌كرێت به‌و ڕێژه‌یه‌ "], answer: 0 },
@@ -1609,7 +1637,6 @@
             } catch(e) { Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە', 'error'); }
         }
 
-        /* --- لێرەدا ئاگادارییەکە ڕاستەوخۆ دەردەکەوێت پێش چوونە ژوورەوە بۆ تاقیکردنەوە --- */
         function navTo(section) {
             vibrate(10);
             if (section !== 'exam') { clearInterval(examTimerInterval); }
