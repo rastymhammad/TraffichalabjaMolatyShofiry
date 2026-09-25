@@ -1318,9 +1318,13 @@
         const ptrText = document.getElementById('ptr-text');
 
         document.addEventListener('touchstart', e => {
-            if (window.scrollY === 0) {
+            // تەنها کاتێک ڕێگە بە ڕاکێشان بدە کە لە سەرەتای پەڕەی سەرەکی (portal)دا بێت
+            let portalSec = document.getElementById('portalSection');
+            if (window.scrollY === 0 && portalSec && portalSec.style.display !== 'none') {
                 pullStartY = e.touches[0].clientY;
                 isPulling = true;
+            } else {
+                isPulling = false;
             }
         }, {passive: true});
 
