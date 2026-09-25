@@ -15,7 +15,7 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
@@ -911,10 +911,10 @@
         <div id="officesSection" class="page-section" style="display: none;">
             <div class="offices-container">
                 <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 15px;">
-                    <h2 style="margin:0; font-size: 15px;"><i class="fa-solid fa-building-user" style="color: var(--primary-color);"></i> نووسینگەکانی مۆڵەتی شۆفێری</h2>
+                    <h2 style="margin:0; font-size: 15px;"><i class="fa-solid fa-building-user" style="color: var(--primary-color);"></i> به‌ڕێوه‌به‌رایه‌تیه‌كانی هاتووچۆ و نوسینگه‌كانی شۆفێری</h2>
                     <button onclick="navTo('portal')" class="btn-reset" style="padding: 4px 10px; font-size: 12px;"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە</button>
                 </div>
-                <p style="font-size: 12px; color: var(--label-color); margin-bottom: 15px; text-align: center;">لیستی نووسینگەکانی فەرمی و لۆکەیشنیان لە گوگڵ ماپ:</p>
+                <p style="font-size: 12px; color: var(--label-color); margin-bottom: 15px; text-align: center;">:</p>
                 <div id="officesListContainer"></div>
             </div>
         </div>
@@ -1209,8 +1209,9 @@
             }
         }
 
+        // اصلاح تعداد تصاویر به ۲۲۳ عدد مطابق با پوشه images
         const trafficSignsData = [];
-        for (let i = 1; i <= 50; i++) {
+        for (let i = 1; i <= 223; i++) {
             trafficSignsData.push({ img: `${i}.png` });
         }
 
@@ -1466,8 +1467,8 @@
             { img: "46.png", q: " ئەم هێمایە ئاماژەیە بۆ چی ؟", options: ["وه‌ستان قه‌ده‌غه‌یه‌  ", " وه‌ستان ڕێگه‌ پێدراوه‌ ", "‌‌لێخوڕین بۆ ناو ئه‌م شه‌قامه‌ قه‌ده‌غه‌یه‌ "], answer: 2 },
             { img: "47.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["وه‌ستان قه‌ده‌غه‌یه‌  ", " لێخوڕن به‌هه‌ردوو ئاڕاسته‌ قه‌ده‌غه‌یه‌ ", "‌‌ وه‌ستانی كاتی ڕێگه‌ پێداروه‌ "], answer: 1 },
             { img: "48.png", q: " ئەم هێمایە چی بۆ شۆفێر قەدەغە دەکات ؟", options: ["لێخوڕینی ئۆتۆمبێل و ماتۆڕ بۆ ناو ئه‌م شه‌قامه‌ قه‌ده‌غه‌یه‌  ", " هاتووچۆی ماتۆڕسکیل قەدەغەیە ", "‌‌ وه‌ستانی ئۆتۆمبێل و ماتۆرسكیل ڕێگه‌پێدراوه‌ "], answer: 0 },
-            { img: "49.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["وه‌ستانی پاسكیل قه‌ده‌غه‌یه‌  ", " وه‌ستانی ئۆتۆمبێل قه‌ده‌غه‌یه‌ ", "‌‌ ‌لێخوڕینی ماتۆڕ قه‌ده‌غه‌یه‌ "], answer: 2 },
-            { img: "50.png", q: " ئەم تابلۆیە قەدەغەکردنە بۆ چ جۆرە ئۆتۆمبێلێک ؟", options: ["لێخوڕینی لۆری قه‌ده‌غه‌یه‌  ", " وه‌ستانی ئۆتۆمبێل قه‌ده‌غه‌یه‌ ", "‌‌ ‌لێخوڕینی ماتۆڕ قه‌ده‌غه‌یه‌ "], answer: 0 }
+            { img: "49.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["وه‌ستانی پاسكیل قه‌ده‌غه‌یه‌  ", " وه‌ستانی ئۆتۆمبێل قه‌ده‌غەیە ", "‌‌ ‌لێخوڕینی ماتۆڕ قه‌ده‌غه‌یه‌ "], answer: 2 },
+            { img: "50.png", q: " ئەم تابلۆیە قەدەغەکردنە بۆ چ جۆرە ئۆتۆمبێلێک ؟", options: ["لێخوڕینی لۆری قه‌ده‌غه‌یه‌  ", " وه‌ستانی ئۆتۆمبێل قه‌ده‌غەیە ", "‌‌ ‌لێخوڕینی ماتۆڕ قه‌ده‌غه‌یه‌ "], answer: 0 }
         ];
 
         const examDatabase = {
