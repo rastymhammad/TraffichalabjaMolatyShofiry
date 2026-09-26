@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە</title>
+    <title>تـــرافـیـك</title>
     
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" id="meta-theme-color" content="#0056b3">
     
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە">
+    <meta name="apple-mobile-web-app-title" content="تـــرافـیـك">
     <link rel="apple-touch-icon" href="icon-192.png.png">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -524,9 +524,9 @@
                 <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="گۆڕینی ڕەنگ">🌙</button>
             </div>
             <h1>
-                <a href="https://maps.app.goo.gl/iV7Ly21Rkx7ikreFA" target="_blank" title="کردنەوەی ناونیشان لە گوگڵ ماپ">
+                <span>
                     <i class="fa-solid fa-location-dot" style="font-size: 15px; color: #dc3545;"></i> به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە
-                </a>
+                </span>
             </h1>
         </div>
 
@@ -1794,7 +1794,7 @@
             if (elements.length === 0) return;
             const BASE_COUNT = 9000; 
             const updateKey = '2026-08-05'; 
-            const namespace = 'traffic-halabja-app';
+            const namespace = 'Traffic-app';
             const countedFlag = 'counted_' + updateKey;
             const alreadyCounted = sessionStorage.getItem(countedFlag);
             const endpoint = alreadyCounted ? 'get' : 'hit';
@@ -2228,9 +2228,9 @@
                     ctx.fillStyle = "#f60";
                     ctx.fillRect(125, 1, 62, 20);
                     ctx.fillStyle = "#069";
-                    ctx.fillText("HalabjaTraffic_" + navigator.userAgent.length, 2, 15);
+                    ctx.fillText("Traffic_" + navigator.userAgent.length, 2, 15);
                     ctx.fillStyle = "rgba(102, 204, 0, 0.7)";
-                    ctx.fillText("HalabjaTraffic", 4, 17);
+                    ctx.fillText("Traffic", 4, 17);
                     
                     let dataUrl = canvas.toDataURL();
                     let hash = 0;
