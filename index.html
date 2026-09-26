@@ -1521,7 +1521,7 @@
             { img: "61.png", q: " ئەم نیشانەیە مانای چییە لەسەر ڕێگا ؟", options: [" ئه‌وپه‌ڕی ڕاده‌ی به‌رزی ", " دوا ڕاده‌ی قورسایی به‌عه‌ره‌بانه‌وه‌ ", "‌‌ ‌لێخوڕینی بار هه‌ڵگر ڕێپگه‌پێدراوه‌ "], answer: 1 },
             { img: "62.png", q: " ئەم تابلۆیە هۆشداری دەدات لەسەر سنووردارکردنی چی ؟", options: [" ئه‌وپه‌ڕی ڕاده‌ی به‌رزی ", " دوا ڕاده‌ی قورسایی به‌عه‌ره‌بانه‌وه‌ ", "‌‌ ‌دوا ڕاده‌ی قورسایی له‌سه‌ر ئه‌كسل "], answer: 2 },
             { img: "63.png", q: " مانای ئەم هێمایەی هاتووچۆ چییە ؟", options: [" ئه‌وپه‌ڕی ڕاده‌ی به‌رزی ", " دوا ڕاده‌ی قورسایی له‌سه‌ر جووت ئه‌كسل ", "‌‌ ‌دوا ڕاده‌ی قورسایی له‌سه‌ر تاك ئه‌كسل "], answer: 1 },
-            { img: "64.png", q: " ئەم هێمایە چی بۆ شۆفێر دیاری دەکات ؟", options: [" ئه‌و په‌ڕی پانی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ ", " ئه‌وپه‌ڕی به‌رزی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ ", "‌‌ ‌ئه‌و په‌ڕی قورسایی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ "], answer: 0 },
+            { img: "64.png", q: " ئەم هێمایە چی بۆ شۆفێر دیاری دەکات ؟", options: [" ئه‌و په‌ڕی پانی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ ", " ئه‌وپه‌ڕی به‌رزی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ ", "‌‌ ‌ئه‌و په‌ڕی قورسایی مۆڵه‌ت پێدراو به‌باره‌وه‌ "], answer: 0 },
             { img: "65.png", q: " کاتێک ئەم تابلۆیە دەبینیت، مانای چییە ؟", options: [" ئه‌و په‌ڕی پانی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ ", " ئه‌و په‌ڕی قورسایی مۆڵه‌ت پێداروه‌ به‌باره‌وه‌ ", "‌ ‌ئه‌وپه‌ڕی به‌رزی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ "], answer: 2 },
             { img: "66.png", q: " ئەم نیشانەیە ئاماژەیە بۆ قەدەغەکردنی چی ؟", options: [" ئه‌و په‌ڕی پانی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ ", " ئه‌و په‌ڕی درێژی مۆڵه‌ت پێداروه‌ به‌باره‌وه‌ ", "‌ ‌ئه‌وپه‌ڕی به‌رزی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ "], answer: 1 },
             { img: "67.png", q: " ئەم هێمایەی قەدەغەکردن مانای چی دەگەیەنێت ؟", options: [" تێپه‌ڕاندن قه‌ده‌غه‌یه‌ ", " وه‌ستان قه‌ده‌غه‌یه‌ ", "‌ ‌ڕێگه‌ی یه‌ك ئاڕاسته‌ "], answer: 0 },
@@ -2051,7 +2051,7 @@
             if (charCode > 31 && (charCode < 48 || charCode > 57)) return false; return true;
         }
 
-        // फەنکشنی شوێنی کرتەکردن بۆ کردنەوەی بەشی ئەدمین (٥ جار تاپ کردن)
+        // بەستنەوەی چوونەژوورەوەی ئەدمین بە ٥ جار تاپ کردن لەسەر ناوی گەشەپێدەر
         function handleAdminClick() {
             adminClickCount++;
             if (adminClickCount >= 5) {
@@ -2072,6 +2072,69 @@
             if (pwd) {
                 let normalizedPwd = toEnglishDigits(pwd);
                 await proceedWithAdminLogin(normalizedPwd, true);
+            }
+        }
+
+        async function proceedWithAdminLogin(normalizedPwd, isManualLogin) {
+            Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
+
+            try {
+                let response = await fetch(`${baseUrl}/api/admin/verify?type=admin`, {
+                    method: "POST", 
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "Admin-Password": normalizedPwd 
+                    }
+                });
+                
+                let resData = await response.json().catch(() => ({}));
+                
+                if (response.status === 429) {
+                    return Swal.fire('سزادراویت!', 'بەهۆی زۆر تاقیکردنەوەی هەڵە، ئایپییەکەت بۆ ١٥ خولەک سزادراوە.', 'error');
+                }
+                
+                if (response.ok) {
+                    window.adminRole = resData.role || 'superadmin'; 
+                    window.adminPwd = normalizedPwd; 
+                    Swal.close();
+
+                    navTo('queue');
+
+                    if (window.adminRole === 'admin') {
+                        document.getElementById('quotaAdminBlock').style.display = 'none';
+                        document.getElementById('noticeAdminBlock').style.display = 'none';
+                        document.getElementById('preRegAdminBlock').style.display = 'none';
+                        document.getElementById('toggleStatusBtn').style.display = 'none';
+                        document.getElementById('blacklistAdminBlock').style.display = 'none'; 
+                        document.getElementById('gpsAdminBlock').style.display = 'none';
+                    } else {
+                        document.getElementById('quotaAdminBlock').style.display = 'block';
+                        document.getElementById('noticeAdminBlock').style.display = 'block';
+                        document.getElementById('preRegAdminBlock').style.display = 'block';
+                        document.getElementById('toggleStatusBtn').style.display = 'inline-block';
+                        document.getElementById('blacklistAdminBlock').style.display = 'block';
+                        document.getElementById('gpsAdminBlock').style.display = 'block';
+                    }
+
+                    renderAdminOfficesManager();
+
+                    fetch(`${baseUrl}/api/users/count`)
+                        .then(r => r.json())
+                        .then(data => {
+                            if (data && data.maxQuota) {
+                                document.getElementById('currentQuotaDisplay').textContent = `(پشکی ئێستا: ${data.maxQuota})`;
+                            }
+                        }).catch(() => {});
+
+                    document.getElementById("adminSection").style.display = "block";
+                    document.getElementById("adminSection").scrollIntoView({ behavior: 'smooth' });
+                    loadAdminStats();
+                    loadNoticeText();
+                } else {
+                    Swal.fire('هەڵە', resData.message || 'پاسوۆردەکە هەڵەیە یان دەسەڵاتت نییە!', 'error');
+                }
+            } catch(e) { 
+                Swal.fire('کێشە', 'سێرڤەرەکە وەڵام ناداتەوە یان هێڵی ئینتەرنێت کێشەی هەیە: ' + e.message, 'error'); 
             }
         }
 
