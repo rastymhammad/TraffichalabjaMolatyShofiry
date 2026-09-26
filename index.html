@@ -950,19 +950,33 @@
         let adminClickCount = 0; let timerInterval = null; let globalSystemIsActive = true; 
         let statChart = null; let globalUsersData = []; let isGpsRequired = false; 
 
-        // ----- بەشی نوێ بۆ شاردنەوەی نۆرەگرتن -----
-        let isQueueFeatureHidden = localStorage.getItem('hide_queue_feature') === 'true';
+        // گۆڕراوەی شاردنەوەی نۆرەگرتن بە شێوەی دیفاڵت
+        let isQueueFeatureHidden = false;
 
-        function toggleQueueFeature() {
+        async function toggleQueueFeature() {
             if (!window.adminPwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە', 'warning');
-            isQueueFeatureHidden = document.getElementById("queueFeatureToggleBtn").checked;
-            localStorage.setItem('hide_queue_feature', isQueueFeatureHidden);
-            applyQueueFeatureVisibility();
-            Swal.fire({
-                toast: true, position: 'top-end', icon: 'success',
-                title: `بەشی نۆرەگرتن ${isQueueFeatureHidden ? 'شاردرایەوە' : 'پیشاندرا'}`,
-                showConfirmButton: false, timer: 2000
-            });
+            let isChecked = document.getElementById("queueFeatureToggleBtn").checked;
+
+            Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
+            try {
+                // ناردنی داواکاری بۆ سێرڤەر بۆ گۆڕینی دۆخی شاردنەوەکە
+                let response = await fetch(`${baseUrl}/api/admin/toggle-queue?hidden=${isChecked}`, { 
+                    method: "POST", headers: { "Admin-Password": window.adminPwd } 
+                });
+                let result = await response.json().catch(() => ({}));
+                
+                if(response.ok) {
+                    Swal.fire('سەرکەوتوو', `بەشی نۆرەگرتن بە سەرکەوتوویی ${isChecked ? 'شاردرایەوە' : 'پیشاندرا'}`, 'success');
+                    isQueueFeatureHidden = isChecked;
+                    applyQueueFeatureVisibility();
+                } else {
+                    document.getElementById("queueFeatureToggleBtn").checked = !isChecked; 
+                    Swal.fire('هەڵە', result.message || 'نەتوانرا دۆخەکە بگۆڕدرێت!', 'error');
+                }
+            } catch (error) {
+                document.getElementById("queueFeatureToggleBtn").checked = !isChecked;
+                Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن بە سێرڤەرەوە هەیە', 'error');
+            }
         }
 
         function applyQueueFeatureVisibility() {
@@ -976,7 +990,6 @@
                 if(navQueue) navQueue.style.display = 'flex';
             }
         }
-        // ------------------------------------------
 
         const allowedZones = [
             { name: "بەڕێوەبەرایەتی هەڵەبجە", lat: 35.1877797, lng: 46.0072475, radius: 15 },
@@ -1421,6 +1434,10 @@
                 if (response.ok) {
                     let result = await response.json(); let count = result.count; let maxQuota = result.maxQuota || 40;
                     globalSystemIsActive = (result.isActive !== false); isGpsRequired = result.isGpsRequired === true; 
+                    
+                    isQueueFeatureHidden = result.isQueueHidden === true;
+                    applyQueueFeatureVisibility();
+
                     let gpsToggle = document.getElementById("gpsToggleBtn"); if(gpsToggle) gpsToggle.checked = isGpsRequired;
                     let badge = document.getElementById("statusBadge"); let dot = document.getElementById("statusDot"); let statusText = document.getElementById("statusText");
                     let regBtn = document.getElementById("registerBtn"); let nameInput = document.getElementById("nameInput"); let phoneInput = document.getElementById("phoneInput");
@@ -1837,9 +1854,7 @@
         }
 
         window.addEventListener('load', function() {
-            // ----- بەشی نوێ بۆ کارپێکردنی ڕاستەوخۆی شاردنەوەکە لەسەرەتاوە -----
-            applyQueueFeatureVisibility();
-            // ------------------------------------------------------------------
+            checkQuotaAndTimer(); // زانیارییەکان لە سێرڤەرەوە دەخوێنێتەوە بۆ شاردنەوە
             setTimeout(function() { let splash = document.getElementById('splash-screen'); if(splash) { splash.classList.add('splash-hidden'); } }, 3000); 
             calculateFine(true); loadNoticeText();
             const urlParams = new URLSearchParams(window.location.search); const verifyToken = urlParams.get('verify');
