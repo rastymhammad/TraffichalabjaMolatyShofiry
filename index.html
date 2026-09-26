@@ -107,7 +107,7 @@
             border-color: rgba(255,255,255,0.1);
             box-shadow: 0 8px 20px rgba(0,0,0,0.3) !important;
         }
-        .header-title h1 { color: var(--primary-color); font-size: 16px; margin: 0; font-weight: bold; text-align: center; }
+        .header-title h1 { color: var(--primary-color); font-size: 18px; margin: 0; font-weight: bold; text-align: center; letter-spacing: 1px; }
         .header-title h1 a { color: inherit; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; }
         .header-title h1 a:hover { opacity: 0.8; }
         
@@ -485,7 +485,7 @@
 
         .splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-body); z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.6s ease-out, visibility 0.6s ease-out; }
         .splash-logo img { width: 140px; height: auto; animation: pulseSplash 1.2s infinite alternate; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.15)); }
-        .splash-text { margin-top: 20px; font-size: 18px; font-weight: bold; color: var(--primary-color); animation: fadeInUpSplash 0.8s ease-out forwards; }
+        .splash-text { margin-top: 20px; font-size: 20px; font-weight: bold; color: var(--primary-color); animation: fadeInUpSplash 0.8s ease-out forwards; letter-spacing: 1px; }
         .splash-loader { width: 180px; height: 4px; background: rgba(0, 86, 179, 0.2); border-radius: 4px; margin-top: 25px; position: relative; overflow: hidden; animation: fadeInUpSplash 0.8s ease-out forwards; }
         .splash-loader::after { content: ''; position: absolute; left: -50px; top: 0; height: 100%; width: 50px; background: var(--primary-color); border-radius: 4px; animation: loadingBar 1.5s ease-in-out infinite; }
         
@@ -508,7 +508,7 @@
         <div class="splash-logo">
             <img src="icon-192.png">
         </div>
-        <h2 class="splash-text">ترافیک</h2>
+        <h2 class="splash-text">تـــرافـیـك</h2>
         <div class="splash-loader"></div>
     </div>
 
@@ -525,7 +525,7 @@
             </div>
             <h1>
                 <span>
-                    ترافیک
+                    تـــرافـیـك
                 </span>
             </h1>
         </div>
@@ -1462,7 +1462,7 @@
             { img: "38.png", q: " کاتێک ئەم هێمایە لەسەر ڕێگا دەبینیت، نیشانەی چییە ؟", options: ["شوێنی وەستاندنی هەلیکۆپتەر  ", " نزمه‌فڕه‌ی فڕۆكه‌ له‌پێشه‌وه‌ ", "‌‌ ‌‌‌‌مه‌تاڕ له‌پێشه‌وه‌ "], answer: 1 },
             { img: "39.png", q: " ئەم هێمایەی هۆشدارییە گشتییە ئاماژەیە بۆ چی ؟", options: ["کۆتایی ڕێگەی خێرا  ", " نیشانه‌ی ووریاكردنه‌وه‌ی مه‌ترسی له‌پێشه‌وه‌ ", "‌‌ ‌‌‌‌وەستانی ناچاری "], answer: 1 },
             { img: "40.png", q: " ئەم تابلۆ تیشکییانە (هێڵە لارییەکان) ئاماژەن بۆ چی ؟", options: ["هێڵی شه‌مه‌نده‌فه‌ر به‌ له‌مپه‌ره‌وه‌ له‌پێشه‌وه‌  ", " ڕێگەی خلیسکێنەر ", "‌‌ ‌‌‌‌ماوه‌ی دووریی له‌ هێڵی شه‌نده‌فه‌ره‌وه‌ "], answer: 2 },
-            { img: "41.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["به‌رزترین خێرای به‌رپرسیارانه‌  ", " خێراییه‌كه‌ت كه‌مبكه‌ره‌وه‌ ", "‌‌ ‌‌‌‌‌(40) كیلۆمه‌تری تر ڕێگاكه‌ كۆتایی دێت "], answer: 0 },
+            { img: "41.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["به‌رزترین خێرای به‌رپرسیارانه‌  ", " خێراییه‌كه‌ت كه‌مبكه‌ره‌وه‌ ", "‌‌ ‌‌‌‌‌(40) كیلۆمه‌تری تر ڕێگاكه‌ کۆتایی دێت "], answer: 0 },
             { img: "43.png", q: " ئەم هێمایەی قەدەغەکردن ئاماژەیە بۆ چی ؟", options: ["پێچكردنه‌وه‌ بۆ ده‌سته‌ڕاست ڕێگه‌ پێدراوه‌  ", " پێچكردنه‌وه‌ بۆ ده‌سته‌چه‌پ قه‌دەغەیە ", "‌‌پێچكردنه‌وه‌ بۆ ده‌سته‌ڕاست قه‌دەغەیە "], answer: 2 },
             { img: "44.png", q: " کاتێک ئەم تابلۆیە لەسەر ڕێگا دەبینیت، مانای چییە ؟", options: ["پێچكردنه‌وه‌ بۆ ده‌سته‌ڕاست ڕێگه‌ پێدراوه‌  ", " پێچكردنه‌وه‌ بۆ ده‌سته‌چه‌پ قه‌دەغەیە ", "‌‌پێچكردنه‌وه‌ بۆ ده‌سته‌ڕاست قه‌دەغەیە "], answer: 1 },
             { img: "45.png", q: " ئەم هێمایە چی بۆ شۆفێر قەدەغە دەکات ؟", options: ["سوڕانه‌وه‌ قه‌ده‌قه‌یه‌  ", " پێچكردنه‌وه‌ بۆ ده‌سته‌چه‌پ قه‌دەغەیە ", "‌‌پێچكردنه‌وه‌ بۆ ده‌سته‌ڕاست قه‌دەغەیە "], answer: 0 },
@@ -1470,7 +1470,7 @@
             { img: "47.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["وه‌ستان قه‌ده‌غه‌یه‌  ", " لێخوڕن به‌هه‌ردوو ئاڕاسته‌ قه‌ده‌غه‌یه‌ ", "‌‌ وه‌ستانی كاتی ڕێگه‌ پێداروه‌ "], answer: 1 },
             { img: "48.png", q: " ئەم هێمایە چی بۆ شۆفێر قەدەغە دەکات ؟", options: ["لێخوڕینی ئۆتۆمبێل و ماتۆڕ بۆ ناو ئه‌م شه‌قامه‌ قه‌ده‌غه‌یه‌  ", " هاتووچۆی ماتۆڕسکیل قەدەغەیە ", "‌‌ وه‌ستانی ئۆتۆمبێل و ماتۆرسكیل ڕێگه‌پێدراوه‌ "], answer: 0 },
             { img: "49.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["وه‌ستانی پاسكیل قه‌ده‌غه‌یه‌  ", " وه‌ستانی ئۆتۆمبێل قه‌دەغەیە ", "‌‌ ‌لێخوڕینی ماتۆڕ قه‌ده‌غه‌یه‌ "], answer: 2 },
-            { img: "50.png", q: " ئەم تابلۆیە قەدەغەکردنە بۆ چ جۆرە ئۆتۆمبێلێک ؟", options: ["لێخوڕینی لۆری قه‌ده‌غه‌یه‌  ", " وه‌ستانی ئۆتۆمبێل قه‌ده‌غەیە ", "‌‌ ‌لێخوڕینی ماتۆڕ قه‌ده‌غه‌یه‌ "], answer: 0 },
+            { img: "50.png", q: " ئەم تابلۆیە قەدەغەکردنە بۆ چ جۆرە ئۆتۆمبێلێک ؟", options: ["لێخوڕینی لۆری قه‌ده‌غه‌یه‌  ", " وه‌ستانی ئۆتۆمبێل قه‌دەغەیە ", "‌‌ ‌لێخوڕینی ماتۆڕ قه‌ده‌غه‌یه‌ "], answer: 0 },
             { img: "51.png", q: " مانای ئەم هێمایە چییە لەسەر ڕێگەوبانەکان ؟", options: ["وه‌ستانی پاس قه‌ده‌غه‌یه‌  ", " لێخوڕینی پاس قه‌ده‌غه‌یه‌ ", "‌‌ ‌لێخوڕینی ماتۆڕ پاس ڕێگه‌پێدراوه‌ "], answer: 1 },
             { img: "52.png", q: " ئەم تابلۆیە هۆشداری دەدات لە قەدەغەکردنی هاتووچۆ بۆ کۆمەڵێک ئامێر، کامیانە ؟", options: ["لێخوڕینی تراكتۆر قه‌ده‌غه‌یه‌  ", " وه‌ستانی تراكتۆر قه‌ده‌غه‌یه‌ ", "‌‌ ‌لێخوڕینی تراكتۆر ڕێگه‌پێدراوه‌ "], answer: 0 },
             { img: "53.png", q: " ئەم هێمایەی قەدەغەکردن ئاماژەیە بۆ هاتووچۆی چ جۆرێك ؟", options: ["ڕێڕه‌وی ئه‌سپسوار له‌پێشه‌وه‌  ", " ئه‌سپسواری قه‌ده‌غه‌یه‌ ", "‌‌ ‌لێخوڕینی عه‌ره‌بانه‌ قه‌ده‌غه‌یه‌ "], answer: 2 },
