@@ -347,11 +347,7 @@
                 <button class="color-picker-btn" onclick="openColorPicker()" title="گۆڕینی ڕەنگی سەرەکی">🎨</button>
                 <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="گۆڕینی ڕەنگ">🌙</button>
             </div>
-            <h1>
-                <a href="https://maps.app.goo.gl/iV7Ly21Rkx7ikreFA" target="_blank" title="کردنەوەی ناونیشان لە گوگڵ ماپ">
-                    <i class="fa-solid fa-location-dot" style="font-size: 15px; color: #dc3545;"></i> تـــرافــیـك
-                </a>
-            </h1>
+            <h1>تـــرافــیـك</h1>
         </div>
 
         <div id="portalSection" class="page-section">
@@ -950,7 +946,6 @@
         let adminClickCount = 0; let timerInterval = null; let globalSystemIsActive = true; 
         let statChart = null; let globalUsersData = []; let isGpsRequired = false; 
 
-        // گۆڕراوەی شاردنەوەی نۆرەگرتن بە شێوەی دیفاڵت
         let isQueueFeatureHidden = false;
 
         async function toggleQueueFeature() {
@@ -959,7 +954,6 @@
 
             Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
             try {
-                // ناردنی داواکاری بۆ سێرڤەر بۆ گۆڕینی دۆخی شاردنەوەکە
                 let response = await fetch(`${baseUrl}/api/admin/toggle-queue?hidden=${isChecked}`, { 
                     method: "POST", headers: { "Admin-Password": window.adminPwd } 
                 });
@@ -1854,7 +1848,7 @@
         }
 
         window.addEventListener('load', function() {
-            checkQuotaAndTimer(); // زانیارییەکان لە سێرڤەرەوە دەخوێنێتەوە بۆ شاردنەوە
+            checkQuotaAndTimer();
             setTimeout(function() { let splash = document.getElementById('splash-screen'); if(splash) { splash.classList.add('splash-hidden'); } }, 3000); 
             calculateFine(true); loadNoticeText();
             const urlParams = new URLSearchParams(window.location.search); const verifyToken = urlParams.get('verify');
