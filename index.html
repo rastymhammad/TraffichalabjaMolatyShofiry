@@ -508,7 +508,7 @@
         <div class="splash-logo">
             <img src="icon-192.png">
         </div>
-        <h2 class="splash-text">به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە</h2>
+        <h2 class="splash-text">ترافیک</h2>
         <div class="splash-loader"></div>
     </div>
 
@@ -525,7 +525,7 @@
             </div>
             <h1>
                 <span>
-                    <i class="fa-solid fa-location-dot" style="font-size: 15px; color: #dc3545;"></i> به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە
+                    ترافیک
                 </span>
             </h1>
         </div>
@@ -1209,7 +1209,6 @@
             }
         }
 
-        // اصلاح تعداد تصاویر به ۲۲۳ عدد مطابق با پوشه images
         const trafficSignsData = [];
         for (let i = 1; i <= 223; i++) {
             trafficSignsData.push({ img: `${i}.png` });
@@ -1318,7 +1317,6 @@
         const ptrText = document.getElementById('ptr-text');
 
         document.addEventListener('touchstart', e => {
-            // تەنها کاتێک ڕێگە بە ڕاکێشان بدە کە لە سەرەتای پەڕەی سەرەکی (portal)دا بێت
             let portalSec = document.getElementById('portalSection');
             if (window.scrollY === 0 && portalSec && portalSec.style.display !== 'none') {
                 pullStartY = e.touches[0].clientY;
@@ -1471,7 +1469,7 @@
             { img: "46.png", q: " ئەم هێمایە ئاماژەیە بۆ چی ؟", options: ["وه‌ستان قه‌ده‌غه‌یه‌  ", " وه‌ستان ڕێگه‌ پێدراوه‌ ", "‌‌لێخوڕین بۆ ناو ئه‌م شه‌قامه‌ قه‌ده‌غه‌یه‌ "], answer: 2 },
             { img: "47.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["وه‌ستان قه‌ده‌غه‌یه‌  ", " لێخوڕن به‌هه‌ردوو ئاڕاسته‌ قه‌ده‌غه‌یه‌ ", "‌‌ وه‌ستانی كاتی ڕێگه‌ پێداروه‌ "], answer: 1 },
             { img: "48.png", q: " ئەم هێمایە چی بۆ شۆفێر قەدەغە دەکات ؟", options: ["لێخوڕینی ئۆتۆمبێل و ماتۆڕ بۆ ناو ئه‌م شه‌قامه‌ قه‌ده‌غه‌یه‌  ", " هاتووچۆی ماتۆڕسکیل قەدەغەیە ", "‌‌ وه‌ستانی ئۆتۆمبێل و ماتۆرسكیل ڕێگه‌پێدراوه‌ "], answer: 0 },
-            { img: "49.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["وه‌ستانی پاسكیل قه‌ده‌غه‌یه‌  ", " وه‌ستانی ئۆتۆمبێل قه‌ده‌غەیە ", "‌‌ ‌لێخوڕینی ماتۆڕ قه‌ده‌غه‌یه‌ "], answer: 2 },
+            { img: "49.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["وه‌ستانی پاسكیل قه‌ده‌غه‌یه‌  ", " وه‌ستانی ئۆتۆمبێل قه‌دەغەیە ", "‌‌ ‌لێخوڕینی ماتۆڕ قه‌ده‌غه‌یه‌ "], answer: 2 },
             { img: "50.png", q: " ئەم تابلۆیە قەدەغەکردنە بۆ چ جۆرە ئۆتۆمبێلێک ؟", options: ["لێخوڕینی لۆری قه‌ده‌غه‌یه‌  ", " وه‌ستانی ئۆتۆمبێل قه‌ده‌غەیە ", "‌‌ ‌لێخوڕینی ماتۆڕ قه‌ده‌غه‌یه‌ "], answer: 0 },
             { img: "51.png", q: " مانای ئەم هێمایە چییە لەسەر ڕێگەوبانەکان ؟", options: ["وه‌ستانی پاس قه‌ده‌غه‌یه‌  ", " لێخوڕینی پاس قه‌ده‌غه‌یه‌ ", "‌‌ ‌لێخوڕینی ماتۆڕ پاس ڕێگه‌پێدراوه‌ "], answer: 1 },
             { img: "52.png", q: " ئەم تابلۆیە هۆشداری دەدات لە قەدەغەکردنی هاتووچۆ بۆ کۆمەڵێک ئامێر، کامیانە ؟", options: ["لێخوڕینی تراكتۆر قه‌ده‌غه‌یه‌  ", " وه‌ستانی تراكتۆر قه‌ده‌غه‌یه‌ ", "‌‌ ‌لێخوڕینی تراكتۆر ڕێگه‌پێدراوه‌ "], answer: 0 },
@@ -1814,7 +1812,7 @@
             vibrate();
             if (navigator.share) {
                 navigator.share({
-                    title: 'به‌ڕێوه‌به‌رایه‌تی هاتووچۆی هەڵەبجە',
+                    title: 'ترافیک',
                     text: 'سیستەمی نۆرەگرتن و هەژمارکردنی غەرامەی مۆڵەتی شۆفێری',
                     url: window.location.href,
                 }).catch((error) => console.log('Error sharing', error));
@@ -2090,7 +2088,7 @@
             return `
                 <div style="border: 2px dashed var(--primary-color); padding: 20px; border-radius: 10px; background: #f0f8ff; text-align: center;">
                     <i class="fa-solid fa-address-card" style="font-size: 40px; color: var(--primary-color); margin-bottom: 10px;"></i>
-                    <h3 style="margin: 0 0 15px 0; color: var(--primary-color); font-size: 18px;">هاتووچۆی هەڵەبجە</h3>
+                    <h3 style="margin: 0 0 15px 0; color: var(--primary-color); font-size: 18px;">ترافیک</h3>
                     <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #cce5ff; text-align: right;">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <div><p style="margin: 5px 0; font-size: 15px; color: #000000;"><strong>ناو:</strong> ${name}</p><p style="margin: 5px 0; font-size: 15px; color: #000000;"><strong>مۆبایل:</strong> ${phone}</p></div>
@@ -2283,7 +2281,7 @@
                         regBtn.innerHTML = origBtnHtml; regBtn.disabled = false;
                         return Swal.fire(
                             'لە دەرەوەی بازنەیت!', 
-                            'بەپێی سیستەمی GPS، تۆ لە دەرەوەی پارێزگای هەڵەبجە و ناحیەکانی دەوروبەریتی. نۆرەگرتن تەنها بۆ دانیشتووانی ناوچەکە ڕێگەپێدراوە.', 
+                            'بەپێی سیستەمی GPS، تۆ لە دەرەوەی ناوچە ڕێگەپێدراوەکانی. نۆرەگرتن تەنها بۆ دانیشتووانی ناوچەکە ڕێگەپێدراوە.', 
                             'warning'
                         );
                     }
@@ -2420,7 +2418,7 @@
                             try {
                                 const publicKeyCredentialCreationOptions = {
                                     challenge: new Uint8Array(32),
-                                    rp: { name: "هاتووچۆی هەڵەبجە", id: window.location.hostname },
+                                    rp: { name: "ترافیک", id: window.location.hostname },
                                     user: { id: new Uint8Array(16), name: "admin", displayName: "ئەدمین" },
                                     pubKeyCredParams: [{alg: -7, type: "public-key"}, {alg: -257, type: "public-key"}],
                                     authenticatorSelection: { authenticatorAttachment: "platform", userVerification: "required" },
