@@ -15,7 +15,7 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
@@ -1523,6 +1523,25 @@
                     console.log('ServiceWorker registration failed: ', err);
                 });
             });
+        }
+
+        let currentRating = 0; const ratingStars = document.querySelectorAll('#starContainer i'); const feedbackInput = document.getElementById('feedbackText'); const submitRatingBtn = document.getElementById('submitRatingBtn'); const ratingThanks = document.getElementById('ratingThanks'); const ratingSystem = document.getElementById('ratingSystem');
+
+        if (localStorage.getItem('user_has_rated')) { ratingSystem.style.display = 'none'; }
+
+        ratingStars.forEach(star => {
+            star.addEventListener('click', function() {
+                vibrate(); currentRating = parseInt(this.getAttribute('data-value'));
+                ratingStars.forEach(s => { if (parseInt(s.getAttribute('data-value')) <= currentRating) { s.classList.add('active'); } else { s.classList.remove('active'); } });
+                feedbackInput.style.display = 'block'; submitRatingBtn.style.display = 'block';
+            });
+        });
+
+        async function submitRating() {
+            if(currentRating === 0) return; let feedback = feedbackInput.value.trim(); submitRatingBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; submitRatingBtn.disabled = true;
+            try { await fetch(`${baseUrl}/api/feedback`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ rating: currentRating, text: feedback }) }); } catch(e) {}
+            localStorage.setItem('user_has_rated', 'true'); document.getElementById('starContainer').style.display = 'none'; feedbackInput.style.display = 'none'; submitRatingBtn.style.display = 'none'; document.querySelector('.rating-title').style.display = 'none'; ratingThanks.style.display = 'block'; vibrate(30);
+            setTimeout(() => { ratingSystem.style.opacity = '0'; setTimeout(() => ratingSystem.style.display = 'none', 300); }, 4000);
         }
     </script>
 </body>
