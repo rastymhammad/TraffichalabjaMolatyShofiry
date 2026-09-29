@@ -63,6 +63,9 @@
         }
         .page-section { display: none; animation: slideFade 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; }
 
+        .skeleton { background: linear-gradient(90deg, var(--bg-container) 25%, var(--info-bg) 50%, var(--bg-container) 75%); background-size: 200% 100%; animation: skeletonLoading 1.5s infinite; border-radius: 6px; height: 20px; width: 100%; margin: 5px 0; }
+        @keyframes skeletonLoading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
         .swal2-popup { border-radius: 20px !important; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); background: rgba(255, 255, 255, 0.85) !important; box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important; border: 1px solid rgba(255,255,255,0.6) !important; font-family: 'Rudaw', Tahoma, sans-serif !important; }
         body.dark-mode .swal2-popup { background: rgba(30, 30, 30, 0.85) !important; border-color: rgba(255,255,255,0.1) !important; color: #e0e0e0 !important; }
         body.dark-mode .swal2-title, body.dark-mode .swal2-html-container { color: #e0e0e0 !important; }
@@ -179,6 +182,8 @@
             --fee-color: #60a5fa; --info-bg: #0f172a; --info-text: #94a3b8; --modal-overlay: rgba(15, 23, 42, 0.6);
             --modal-bg: #1e293b; --modal-text: #f8fafc; --grid-bg: #334155;
         }
+
+        @media all and (display-mode: standalone) { #installAppContainer { display: none !important; } }
 
         body { font-family: 'Rudaw', Tahoma, Arial, sans-serif; background-color: var(--bg-body); color: var(--text-main); padding: 0 10px 80px 10px; margin: 0; text-align: center; transition: background-color 0.4s, color 0.4s; display: flex; flex-direction: column; align-items: center; min-height: 100vh; user-select: none; }
         
@@ -484,20 +489,6 @@
             <button class="action-btn" onclick="closeColorPicker()" style="background: var(--primary-color);">داخستن</button>
         </div>
     </div>
-
-    <footer>
-        <p style="margin: 0 0 5px 0;">هەموو مافێکی پارێزراوە بۆ تـــرافــیـك &copy; 2026</p>
-        <p class="dev-name" style="margin: 0;">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووچۆ ( ڕاستی محمد شێخ حیدر )</p>
-        
-        <div class="social-icons no-print">
-            <a href="https://facebook.com/share/19ChSYyAyM?mibextid=wwXIfr" target="_blank" title="فەیسبووکی گەشەپێدەر"><i class="fa-brands fa-facebook"></i></a>
-            <a href="https://wa.me/9647501116212" target="_blank" title="وەتسئەپی گەشەپێدەر"><i class="fa-brands fa-whatsapp"></i></a>
-        </div>
-        
-        <button class="action-btn no-print" onclick="shareWebsite()" style="background: linear-gradient(135deg, #17a2b8, #007bff) !important; width: auto; padding: 10px 25px; font-size: 13px; margin: 15px auto 5px auto; display: block; border-radius: 25px; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);">
-            <i class="fa-solid fa-share-nodes"></i> نــاردنی بــۆ هــاوڕێكه‌ت
-        </button>
-    </footer>
 
     <!-- مینیوی خوارەوە -->
     <nav class="bottom-nav no-print" id="bottomNav">
@@ -917,7 +908,6 @@
                 const total = (BASE_COUNT + (data.value || 0)).toLocaleString(); elements.forEach(el => el.textContent = total);
             }).catch(() => { elements.forEach(el => el.textContent = BASE_COUNT.toLocaleString()); });
         }
-        updateVisitorCounter();
 
         function shareWebsite() {
             vibrate();
@@ -1042,17 +1032,34 @@
             setTimeout(() => { ratingSystem.style.opacity = '0'; setTimeout(() => ratingSystem.style.display = 'none', 300); }, 4000);
         }
 
-        window.addEventListener('load', function() {
-            setTimeout(function() { let splash = document.getElementById('splash-screen'); if(splash) { splash.classList.add('splash-hidden'); } }, 3000); 
-            calculateFine(true); 
-            
-            // ئاگادارییەکان ڕاستەوخۆ دیاری بکە بۆ ئەوەی پێویستی بە سێرڤەر نەبێت
-            let staticNotice = "بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە\nتکایە ئەو کەسانەی سەردانی بەڕێوەبەرایەتی دەکەن بۆ نوێکردنەوەی مۆڵەتی شۆفێری، ئەم پێداویستیانە لەگەڵ خۆیان بێنن:\n1_پشکنینی چاو\n2_کارتی نیشتیمانی\n3_کارتی زانیاری\n4_پەساپۆرت ئەگەر هەبوو\n\nسەبارەت بەو هاووڵاتیانەش لە ترایەی دەرچوون، دەبێت سەرجەم ئەو پێداویستیانەیان پێبێت لەگەڵ ئەو باجەی لە نوسینگەی شۆفێری پێیان دراوە.";
-            let wrapper = document.getElementById('noticeScrollWrapper');
-            if(wrapper) { applyNoticeToUI(staticNotice, wrapper); }
-            
-            navTo('portal');
+        function handleAdminClick() {
+            // ئەم بەشە لابرا چونکە سایتەکە سێرڤەری نەماوە بۆ داهاتوو
+        }
+
+        // --- گۆڕانکاری سەرەکی بۆ چاککردنی کێشەی گیرخواردنی لۆگۆکە ---
+        document.addEventListener('DOMContentLoaded', function() {
+            updateVisitorCounter();
+
+            setTimeout(function() { 
+                let splash = document.getElementById('splash-screen'); 
+                if(splash) splash.classList.add('splash-hidden'); 
+            }, 1000); 
+
+            try {
+                calculateFine(true); 
+                
+                let staticNotice = "بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە\nتکایە ئەو کەسانەی سەردانی بەڕێوەبەرایەتی دەکەن بۆ نوێکردنەوەی مۆڵەتی شۆفێری، ئەم پێداویستیانە لەگەڵ خۆیان بێنن:\n1_پشکنینی چاو\n2_کارتی نیشتیمانی\n3_کارتی زانیاری\n4_پەساپۆرت ئەگەر هەبوو\n\nسەبارەت بەو هاووڵاتیانەش لە ترایەی دەرچوون، دەبێت سەرجەم ئەو پێداویستیانەیان پێبێت لەگەڵ ئەو باجەی لە نوسینگەی شۆفێری پێیان دراوە.";
+                let wrapper = document.getElementById('noticeScrollWrapper');
+                if(wrapper) { applyNoticeToUI(staticNotice, wrapper); }
+                
+                navTo('portal');
+            } catch (error) {
+                console.error("Initialization error: ", error);
+                let splash = document.getElementById('splash-screen'); 
+                if(splash) splash.classList.add('splash-hidden');
+            }
         });
+        // --------------------------------------------------------------
 
         let deferredPrompt; const installAppContainer = document.getElementById('installAppContainer'); const installAppBtn = document.getElementById('installAppBtn');
         const isIos = () => { const userAgent = window.navigator.userAgent.toLowerCase(); return /iphone|ipad|ipod/.test(userAgent); };
@@ -1088,7 +1095,7 @@
 
         // ------------------ Service Worker Registration ------------------
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
+            document.addEventListener('DOMContentLoaded', () => {
                 navigator.serviceWorker.register('sw.js').then(registration => {
                     console.log('ServiceWorker registration successful');
                 }, err => {
