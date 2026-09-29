@@ -84,8 +84,6 @@
         }
         body.dark-mode .header-title { background: rgba(30, 30, 30, 0.85) !important; border-color: rgba(255,255,255,0.1); box-shadow: 0 8px 20px rgba(0,0,0,0.3) !important; }
         .header-title h1 { color: var(--primary-color); font-size: 16px; margin: 0; font-weight: bold; text-align: center; }
-        .header-title h1 a { color: inherit; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; }
-        .header-title h1 a:hover { opacity: 0.8; }
         
         .header-btns { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); display: flex; gap: 8px; align-items: center; z-index: 10; }
         .theme-toggle-btn, .color-picker-btn { background: transparent; border: none; font-size: 18px; cursor: pointer; padding: 0; margin: 0; transition: transform 0.2s; }
@@ -105,8 +103,8 @@
         .nav-item i { font-size: 20px; margin-bottom: 3px; transition: transform 0.2s; }
         .nav-item span { font-size: 10px; font-weight: bold; }
         
-        #nav-portal i, #nav-queue i, #nav-fine i, #nav-exam i, #nav-signs i, .nav-item span { color: #333333 !important; filter: none !important; }
-        body.dark-mode #nav-portal i, body.dark-mode #nav-queue i, body.dark-mode #nav-fine i, body.dark-mode #nav-exam i, body.dark-mode #nav-signs i, body.dark-mode .nav-item span { color: #ffffff !important; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5)) !important; }
+        #nav-portal i, #nav-fine i, #nav-exam i, #nav-signs i, .nav-item span { color: #333333 !important; filter: none !important; }
+        body.dark-mode #nav-portal i, body.dark-mode #nav-fine i, body.dark-mode #nav-exam i, body.dark-mode #nav-signs i, body.dark-mode .nav-item span { color: #ffffff !important; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5)) !important; }
         .nav-item.active i, .nav-item.active span { color: var(--primary-color) !important; }
 
         .portal-cards { display: flex; flex-direction: column; gap: 12px; width: 100%; align-items: center; }
@@ -193,8 +191,7 @@
         #ptr-indicator { width: 100%; height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: bold; color: var(--header-text); transition: height 0.2s ease-out; }
         
         .main-content { flex: 1; width: 100%; max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
-        #portalSection, #queueSection, #fineSection, #examSection, #safetySection, #signsSection, #officesSection { width: 100%; }
-        #queueSection #adminSection { max-width: 700px; width: 100%; margin: 0 auto; }
+        #portalSection, #fineSection, #examSection, #safetySection, #signsSection, #officesSection { width: 100%; }
         
         .visitor-counter { text-align: center; font-size: 12px; color: var(--label-color); margin-bottom: 8px; font-weight: bold; }
         .visitor-counter b { color: var(--text-main); }
@@ -221,16 +218,7 @@
         
         .timer-box { background: rgba(220, 53, 69, 0.08); border: 1px dashed #dc3545; padding: 8px 10px; border-radius: 8px; font-size: 13px; color: #d9534f; margin-top: 12px; font-weight: bold; display: none; text-align: center; }
         .timer-box span { font-size: 12px; color: #dc3545; display: inline-block; margin-left: 5px; }
-        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 15px; }
-        #usersTable { width: 100%; border-collapse: collapse; text-align: center; font-size: 11px; }
-        #usersTable th, #usersTable td { white-space: nowrap; padding: 8px; border: 1px solid var(--border-container); color: var(--text-main); }
-        #usersTable th { background: var(--primary-color); color: white; }
         
-        .dashboard-cards { display: flex; gap: 6px; margin-bottom: 12px; justify-content: space-between; }
-        .dash-card { background: var(--bg-container); border: 1px solid var(--border-container); border-radius: 6px; padding: 8px 4px; flex: 1; text-align: center; }
-        .dash-card h4 { margin: 0 0 2px 0; font-size: 10px; color: var(--label-color); }
-        .dash-card h3 { margin: 0; font-size: 15px; color: var(--primary-color); }
-        .chart-container { max-width: 160px; margin: 0 auto; }
         .fine-container { background: var(--bg-container); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 18px; border: 2px solid var(--border-container); text-align: center; width: 100%; }
         .toggle-container { display: flex; justify-content: space-between; align-items: center; background: var(--toggle-bg); padding: 10px; border-radius: 10px; margin-bottom: 12px; border: 1px solid var(--toggle-border); }
         .switch { position: relative; display: inline-block; width: 50px; height: 28px; }
@@ -294,15 +282,6 @@
             .no-print { display: none !important; } 
         }
 
-        .rating-container { background: var(--bg-container); border: 1px solid var(--border-container); border-radius: 12px; padding: 15px; margin: 20px auto 5px auto; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: all 0.3s ease; }
-        .rating-title { font-size: 14px; color: var(--primary-color); font-weight: bold; margin-bottom: 12px; }
-        .stars { display: flex; justify-content: center; gap: 8px; direction: ltr; margin-bottom: 10px; cursor: pointer; }
-        .stars i { font-size: 26px; color: #cbd5e1; transition: color 0.2s, transform 0.2s; }
-        .stars i:hover { transform: scale(1.1); }
-        .stars i.active { color: #ffc107; text-shadow: 0 0 8px rgba(255, 193, 7, 0.4); }
-        .admin-feedbacks-container { display: none; margin-top: 15px; text-align: right; background: var(--info-bg); padding: 12px; border-radius: 8px; border: 1px solid var(--border-container); }
-        .rating-thanks { display: none; margin-top: 10px; color: #28a745; font-weight: bold; }
-
         .offline-banner { position: fixed; top: 0; left: 0; width: 100%; background: #dc3545; color: white; text-align: center; padding: 8px; font-size: 13px; font-weight: bold; z-index: 100000; transform: translateY(-100%); transition: transform 0.4s ease, background 0.4s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
         .offline-banner.show { transform: translateY(0); }
         .offline-banner.online-again { background: #28a745; }
@@ -361,11 +340,6 @@
             </div>
 
             <div class="portal-cards">
-                <div class="portal-card" id="portal-queue-card" onclick="navTo('queue')">
-                    <i class="fa-solid fa-id-card"></i>
-                    <div class="portal-card-content"><h3>سیستەمی نۆرەگرتنی مۆڵەتی شۆفێری</h3><p>بۆ نوێکردنەوەی مۆڵەت و مامەڵەکان</p></div>
-                    <div></div>
-                </div>
                 <div class="portal-card" onclick="navTo('fine')">
                     <i class="fa-solid fa-calculator"></i>
                     <div class="portal-card-content"><h3>هەژمارکردنی غەرامە</h3><p>بزانە مۆڵەتەکەت چەند غەرامەی هەیە</p></div>
@@ -383,149 +357,13 @@
                 </div>
                 <div class="portal-card" onclick="navTo('offices')">
                     <i class="fa-solid fa-building-user"></i>
-                    <div class="portal-card-content"><h3>به‌ڕێوه‌به‌رایه‌تیه‌كان و نوسینگه‌كان</h3><p>ناونیشان و لۆكه‌یشن</p></div>
+                    <div class="portal-card-content"><h3>نووسینگەکانی مۆڵەتی شۆفێری</h3><p>ناونیشان و لۆکەیشنی نووسینگەکان</p></div>
                     <div></div>
                 </div>
                 <div class="portal-card" onclick="navTo('safety')">
                     <i class="fa-solid fa-shield-halved"></i>
                     <div class="portal-card-content"><h3>ڕێنماییەکانی سەلامەتی هاتووچۆ</h3><p>ئامۆژگاری و ڕێنمایی گرنگ بۆ شۆفێران</p></div>
                     <div></div>
-                </div>
-            </div>
-        </div>
-
-        <div id="queueSection" class="page-section" style="display: none;">
-            <div class="visitor-counter no-print">👁️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b></div>
-
-            <div id="statusBadge" class="status-badge status-open no-print">
-                <span id="statusDot" class="dot dot-green"></span> <span id="statusText">دۆخی سیستەم: کراوەیە بۆ تۆمارکردن</span>
-            </div>
-
-            <div class="container no-print" id="userRegistrationSection">
-                <h2>تۆمارکردنی ناو</h2>
-                <div id="savedTicketDiv" style="display: none; background: #e9ecef; padding: 15px; border-radius: 8px; border: 2px solid #28a745; margin-bottom: 15px;">
-                    <p style="margin: 0 0 10px 0; color: #155724; font-weight: bold; font-size: 13px;">بەڕێز، تۆ ئەمڕۆ نۆرەت گرتووە!</p>
-                    <button onclick="showSavedTicket()" class="action-btn" style="margin: 0; padding: 10px; font-size: 14px;"><i class="fa-solid fa-ticket"></i> پیشاندانی پسوولەکەم</button>
-                </div>
-                <div id="registrationInputs">
-                    <div class="input-wrapper">
-                        <i class="fa-solid fa-user"></i>
-                        <input type="text" id="nameInput" placeholder=" " oninput="validateFormInputs()">
-                        <label>ناوی سیانی بنووسە...</label>
-                    </div>
-                    <div class="input-wrapper">
-                        <i class="fa-solid fa-phone"></i>
-                        <input type="tel" id="phoneInput" placeholder=" " maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false" oninput="validateFormInputs()">
-                        <label>ژمارەی تەلەفۆن (07700000000)</label>
-                    </div>
-                    <button id="registerBtn" class="action-btn" onclick="confirmAndRegister()" disabled style="background: #cccccc; cursor: not-allowed;">تۆمارکردن</button>
-                </div>
-                <div id="countdownTimer" class="timer-box"><span id="timerValue" dir="ltr" style="font-size: 14px; font-weight: bold; display: inline-block;"><i class="fa-solid fa-hourglass-half"></i> 00:00:00</span></div>
-            </div>
-
-            <div class="container no-print" id="searchSection">
-                <h2>دڵنیابوونەوە لە ناوت</h2>
-                <div class="input-wrapper">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="tel" id="searchInput" placeholder=" " maxlength="11" onkeypress="return onlyEnglishNumbers(event)">
-                    <label>ژمارەی تەلەفۆنەکەت بنووسە...</label>
-                </div>
-                <button class="action-btn search-btn" onclick="searchUser()">گەڕان</button>
-            </div>
-            
-            <div class="container printable-area" id="adminSection" style="display: none;">
-                <h2>بەشی ئەدمین - کۆنتڕۆڵی سیستەم</h2>
-
-                <div class="no-print" style="margin-bottom: 15px;">
-                    <h3 style="text-align: right; margin-bottom: 6px; font-size: 13px; color: var(--primary-color);">ئاماری ئەمڕۆ</h3>
-                    <div class="dashboard-cards">
-                        <div class="dash-card"><h4>کۆی گشتی</h4><h3 id="statTotal">0</h3></div>
-                        <div class="dash-card"><h4>هاووڵاتیان</h4><h3 id="statUser" style="color: #28a745;">0</h3></div>
-                        <div class="dash-card"><h4> ئەدمین</h4><h3 id="statAdmin" style="color: #dc3545;">0</h3></div>
-                    </div>
-                    <div style="background: var(--bg-container); padding: 6px; border-radius: 8px; border: 1px solid var(--border-container);">
-                        <div class="chart-container"><canvas id="myChart"></canvas></div>
-                    </div>
-                </div>
-
-                <div style="background: rgba(0, 86, 179, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(0, 86, 179, 0.2);" class="no-print">
-                    <h3 style="margin-top: 0; font-size: 14px; color: var(--primary-color);"><i class="fa-solid fa-building-user"></i> بەڕێوەبردنی نووسینگەکانی شۆفێری</h3>
-                    <div class="input-wrapper"><i class="fa-solid fa-building"></i><input type="text" id="adminOfficeName" placeholder=" "><label>ناوی نووسینگە</label></div>
-                    <div class="input-wrapper" style="margin-top: 8px;"><i class="fa-solid fa-phone"></i><input type="tel" id="adminOfficePhone1" placeholder=" " maxlength="11"><label>ژمارەی تەلەفۆنی یەکەم...</label></div>
-                    <div class="input-wrapper" style="margin-top: 8px;"><i class="fa-solid fa-phone"></i><input type="tel" id="adminOfficePhone2" placeholder=" " maxlength="11"><label>ژمارەی تەلەفۆنی دووەم...</label></div>
-                    <div class="input-wrapper" style="margin-top: 8px;"><i class="fa-solid fa-map-location-dot"></i><input type="text" id="adminOfficeMapUrl" placeholder=" "><label>لینکی گوگڵ ماپ</label></div>
-                    <button class="action-btn" style="background: var(--primary-color); padding: 10px; margin-top: 8px;" onclick="addNewOfficeAdmin()">زیادکردنی نووسینگە</button>
-                    <div id="adminOfficesList" style="margin-top: 15px; max-height: 180px; overflow-y: auto; text-align: right;"></div>
-                </div>
-
-                <div id="quotaAdminBlock" style="background: rgba(40, 167, 69, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(40, 167, 69, 0.2);" class="no-print">
-                    <h3 style="margin-top: 0; font-size: 14px; color: #28a745;">گۆڕینی ژمارەی پشکی ڕۆژانە <span id="currentQuotaDisplay" style="background: #28a745; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px; margin-right: 5px;">(پشکی ئێستا: ...)</span></h3>
-                    <div class="input-wrapper"><i class="fa-solid fa-users"></i><input type="number" id="adminQuotaInput" placeholder=" " min="1"><label>ژمارەی پشک (نموونە: 30)</label></div>
-                    <button class="action-btn" style="background: #28a745; padding: 10px;" onclick="updateDailyQuota()">گۆڕینی پشک</button>
-                </div>
-
-                <div id="blacklistAdminBlock" style="background: rgba(220, 53, 69, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(220, 53, 69, 0.2);" class="no-print">
-                    <h3 style="margin-top: 0; font-size: 14px; color: #dc3545;"><i class="fa-solid fa-ban"></i> لیستی ڕەش (Blacklist)</h3>
-                    <div class="input-wrapper"><i class="fa-solid fa-phone-slash"></i><input type="tel" id="blacklistPhoneInput" placeholder=" " maxlength="11" onkeypress="return onlyEnglishNumbers(event)"><label>ژمارەی مۆبایل بۆ بلۆککردن...</label></div>
-                    <div class="input-wrapper" style="margin-top: 8px;">
-                        <select id="blacklistDuration"><option value="7">بۆ ماوەی ٧ ڕۆژ</option><option value="30">بۆ ماوەی ١ مانگ</option><option value="365">بۆ ماوەی ١ ساڵ</option><option value="3650">بۆ هەمیشە (١٠ ساڵ)</option></select>
-                    </div>
-                    <div style="display: flex; gap: 8px; margin-top: 8px;">
-                        <button class="action-btn" style="background: #dc3545; padding: 10px; flex: 1; margin-top: 0;" onclick="addToBlacklist()">بلۆککردن</button>
-                        <button class="action-btn" style="background: #6c757d; padding: 10px; flex: 1; margin-top: 0;" onclick="viewBlacklist()">لیستی بلۆککراوەکان</button>
-                    </div>
-                </div>
-
-                <div id="noticeAdminBlock" style="background: rgba(23, 162, 184, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(23, 162, 184, 0.2);" class="no-print">
-                    <h3 style="margin-top: 0; font-size: 14px; color: #17a2b8;">گۆڕینی تێبینی و پێداویستییەکان (سلاید)</h3>
-                    <div class="input-wrapper" style="margin-bottom: 0;"><textarea id="adminNoticeInput" rows="5" placeholder="دەقی ئاگاداری و پێداویستییەکان لێرە بنووسە..."></textarea></div>
-                    <button class="action-btn" style="background: #17a2b8; padding: 10px;" onclick="updateNoticeText()">پاشەکەوتکردنی تێبینی</button>
-                </div>
-
-                <div id="preRegAdminBlock" style="background: rgba(0, 86, 179, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(0, 86, 179, 0.2);" class="no-print">
-                    <h3 style="margin-top: 0; font-size: 14px; color: var(--primary-color);">ده‌سه‌ڵاتی ئه‌دمین</h3>
-                    <button id="openPreRegBtn" class="action-btn" style="background: #17a2b8; padding: 10px;" onclick="showPreRegForm()">کردنەوەی بەشی تۆمارکردن</button>
-                    <div id="preRegForm" style="display: none; margin-top: 10px;">
-                        <div class="input-wrapper"><i class="fa-solid fa-user-shield"></i><input type="text" id="adminNameInput" placeholder=" " oninput="validateAdminFormInputs()"><label>ناوی سیانی بنووسە...</label></div>
-                        <div class="input-wrapper"><i class="fa-solid fa-phone"></i><input type="tel" id="adminPhoneInput" placeholder=" " maxlength="11" onkeypress="return onlyEnglishNumbers(event)" onpaste="return false" oninput="validateAdminFormInputs()"><label>ژمارەی تەلەفۆن (07700000000)...</label></div>
-                        <button id="adminRegBtn" class="action-btn" style="background: #28a745; padding: 10px;" onclick="adminRegisterUser()" disabled>تۆمارکردنی پێشوەختە</button>
-                    </div>
-                </div>
-
-                <div id="gpsAdminBlock" style="display: none; background: rgba(253, 126, 20, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(253, 126, 20, 0.2);" class="no-print">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <h3 style="margin: 0; font-size: 14px; color: #fd7e14;"><i class="fa-solid fa-location-dot"></i> نۆرەگرتن بەپێی شوێن (GPS)</h3>
-                        <label class="switch"><input type="checkbox" id="gpsToggleBtn" onchange="toggleGpsStatus()"><span class="slider"></span></label>
-                    </div>
-                    <p style="margin: 5px 0 0 0; font-size: 11px; color: var(--label-color);">ئەگەر هەڵبکرێت، تەنها دانیشتووانی (هەڵەبجە، سیروان، خورماڵ، بیارە، تەوێڵە) دەتوانن نۆرە بگرن.</p>
-                </div>
-
-                <div id="queueFeatureAdminBlock" style="display: flex; justify-content: space-between; align-items: center; background: rgba(108, 117, 125, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(108, 117, 125, 0.2);" class="no-print">
-                    <h3 style="margin: 0; font-size: 14px; color: #6c757d;"><i class="fa-solid fa-eye-slash"></i> شاردنەوەی بەشی نۆرەگرتن</h3>
-                    <label class="switch"><input type="checkbox" id="queueFeatureToggleBtn" onchange="toggleQueueFeature()"><span class="slider"></span></label>
-                </div>
-
-                <div style="display: flex; gap: 8px; margin-bottom: 10px;" class="no-print">
-                    <button class="action-btn search-btn" onclick="loadTodayUsers()" style="flex: 1; margin-top: 0; padding: 10px;">نیشاندانی لیستی ئەمڕۆ</button>
-                    <button class="action-btn" style="background: #20c997; color: white; width: auto; margin-top: 0; padding: 10px 15px;" onclick="loadTodayUsers()" title="نوێکردنەوەی خشتەکە">🔄</button>
-                </div>
-                
-                <button class="action-btn no-print" style="background: #17a2b8; padding: 10px;" onclick="downloadExcel()">داونلۆدکردنی ئێکسڵ (Excel/CSV)</button>
-                <button id="toggleStatusBtn" class="action-btn no-print" style="background: #ffc107; color: black; padding: 10px;" onclick="toggleSystemStatus()"> ڕاگرتن / کردنەوەی سایت </button>
-                <button class="action-btn no-print" style="background: #8e44ad; color: white; padding: 10px;" onclick="loadFeedbacks()"> بینینی فیدباکەکان </button>
-                <button class="action-btn no-print" style="background: #6c757d; padding: 10px;" onclick="window.print()">چاپکردنی لیست (Print)</button>
-                <button class="action-btn no-print" style="background: #dc3545; margin-top: 5px; padding: 10px;" onclick="hideAdminPanel()">داخستنی بەشی ئەدمین</button>
-                
-                <div class="table-responsive">
-                    <table id="usersTable" style="display: none;">
-                        <thead><tr><th>ژمارە</th><th>ناو</th><th>ژمارەی تەلەفۆن</th><th>کاتی تۆمارکردن</th><th class="no-print">کردارەکان</th></tr></thead>
-                        <tbody id="tableBody"></tbody>
-                    </table>
-                </div>
-
-                <div id="feedbacksContainer" class="admin-feedbacks-container no-print">
-                    <h3 style="color: #8e44ad; font-size: 14px; margin-bottom: 10px;">فیدباک و هەڵسەنگاندنەکان:</h3>
-                    <div id="feedbacksList"></div>
                 </div>
             </div>
         </div>
@@ -610,7 +448,7 @@
         <div id="officesSection" class="page-section" style="display: none;">
             <div class="offices-container">
                 <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 15px;">
-                    <h2 style="margin:0; font-size: 14px;"><i class="fa-solid fa-building-user" style="color: var(--primary-color);"> </i> به‌ڕێوه‌به‌رایه‌تیه‌كان و نووسینگه‌كانی شۆفێری</h2>
+                    <h2 style="margin:0; font-size: 14px;"><i class="fa-solid fa-building-user" style="color: var(--primary-color);"></i> نووسینگه‌كانی شۆفێری</h2>
                     <button onclick="navTo('portal')" class="btn-reset" style="padding: 4px 10px; font-size: 12px;"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە</button>
                 </div>
                 <p style="font-size: 12px; color: var(--label-color); margin-bottom: 15px; text-align: center;">:</p>
@@ -683,27 +521,9 @@
         </div>
     </div>
 
-    <div class="container" id="verifySection" style="display: none; max-width: 400px; margin: 50px auto; border: 3px solid var(--primary-color);">
-        <h2 style="color: var(--primary-color); margin-top: 10px;"><i class="fa-solid fa-shield-check"></i> دڵنیابوونەوەی پسوولە</h2>
-        <div id="verifyResult" style="padding: 15px; font-size: 15px; font-weight: bold; margin-top: 12px; border-radius: 8px; background: #e9ecef;">چاوەڕێ بکە...</div>
-        <button class="action-btn" onclick="window.location.href=window.location.origin + window.location.pathname" style="background: var(--primary-color); margin-top: 15px;">گەڕانەوە بۆ سەرەتا</button>
-    </div>
-
-    <div class="rating-container no-print" id="ratingSystem">
-        <div class="rating-title">هەڵسەنگاندنت بۆ سیستەمەکە چۆنە؟</div>
-        <div class="stars" id="starContainer">
-            <i class="fa-solid fa-star" data-value="1"></i><i class="fa-solid fa-star" data-value="2"></i><i class="fa-solid fa-star" data-value="3"></i><i class="fa-solid fa-star" data-value="4"></i><i class="fa-solid fa-star" data-value="5"></i>
-        </div>
-        <div class="input-wrapper" style="margin-bottom: 0;">
-            <textarea id="feedbackText" rows="2" placeholder="تێبینییەکانت لێرە بنووسە (ئارەزوومەندانە)..." style="display:none;"></textarea>
-        </div>
-        <button id="submitRatingBtn" class="action-btn" onclick="submitRating()" style="display: none; margin-top: 10px;">ناردنی هەڵسەنگاندن</button>
-        <div id="ratingThanks" class="rating-thanks" style="display: none; margin-top: 10px; color: #28a745; font-weight: bold;"><i class="fa-solid fa-circle-check"></i> زۆر سوپاس بۆ هەڵسەنگاندنەکەت!</div>
-    </div>
-
     <footer>
         <p style="margin: 0 0 5px 0;">هەموو مافێکی پارێزراوە بۆ تـــرافــیـك &copy; 2026</p>
-        <p class="dev-name" style="margin: 0;">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووچۆ <span onclick="handleAdminClick()" style="user-select: none;">( ڕاستی محمد شێخ حیدر )</span></p>
+        <p class="dev-name" style="margin: 0;">گه‌شه‌ پێده‌ر : ڕێپێدراوی هاتووچۆ ( ڕاستی محمد شێخ حیدر )</p>
         
         <div class="social-icons no-print">
             <a href="https://facebook.com/share/19ChSYyAyM?mibextid=wwXIfr" target="_blank" title="فەیسبووکی گەشەپێدەر"><i class="fa-brands fa-facebook"></i></a>
@@ -718,7 +538,6 @@
     <!-- مینیوی خوارەوە -->
     <nav class="bottom-nav no-print" id="bottomNav">
         <div class="nav-item active" onclick="navTo('portal')" id="nav-portal"><i class="fa-solid fa-house"></i><span>سەرەتا</span></div>
-        <div class="nav-item" onclick="navTo('queue')" id="nav-queue"><i class="fa-solid fa-id-card"></i><span>نۆرەگرتن</span></div>
         <div class="nav-item" onclick="navTo('fine')" id="nav-fine"><i class="fa-solid fa-calculator"></i><span>غەرامە</span></div>
         <div class="nav-item" onclick="navTo('exam')" id="nav-exam"><i class="fa-solid fa-graduation-cap"></i><span>تاقیکردنەوە</span></div>
         <div class="nav-item" onclick="navTo('signs')" id="nav-signs"><i class="fa-solid fa-signs-post"></i><span>هێماکان</span></div>
@@ -732,105 +551,34 @@
             }
         });
 
-        async function renderOfficesUser() {
+        // ------------------ لیستێکی جێگیر بۆ نووسینگەکان ------------------
+        const staticOfficesList = [
+            { name: "بەڕێوەبەرایەتی هاتووچۆی هەڵەبجە", phone1: "", phone2: "", mapUrl: "https://maps.app.goo.gl/iV7Ly21Rkx7ikreFA" },
+            { name: "نووسینگەی شۆفێری سیروان", phone1: "", phone2: "", mapUrl: "https://maps.app.goo.gl/iV7Ly21Rkx7ikreFA" },
+            { name: "نووسینگەی شۆفێری خورماڵ", phone1: "", phone2: "", mapUrl: "https://maps.app.goo.gl/iV7Ly21Rkx7ikreFA" }
+        ];
+
+        function renderOfficesUser() {
             const container = document.getElementById('officesListContainer');
             if(!container) return;
-            container.innerHTML = '<div class="skeleton"></div>';
-            try {
-                let res = await fetch(`${baseUrl}/api/offices`);
-                if(res.ok) {
-                    let list = await res.json();
-                    container.innerHTML = '';
-                    if(list.length === 0) {
-                        container.innerHTML = '<p style="color:var(--label-color); font-size:12px;">هیچ نووسینگەیەک تۆمار نەکراوە.</p>';
-                        return;
-                    }
-                    list.forEach(item => {
-                        let phonesHtml = '';
-                        if(item.phone1 || item.phone2) {
-                            phonesHtml = `<p style="margin: 3px 0 0 0; font-size: 11px; color: var(--label-color);" dir="ltr">`;
-                            if(item.phone1) phonesHtml += `<i class="fa-solid fa-phone" style="font-size:10px;"></i> ${item.phone1} `;
-                            if(item.phone2) phonesHtml += `&nbsp;|&nbsp; <i class="fa-solid fa-phone" style="font-size:10px;"></i> ${item.phone2}`;
-                            phonesHtml += `</p>`;
-                        }
-                        container.innerHTML += `
-                            <div class="office-card">
-                                <div class="office-info"><h4><i class="fa-solid fa-building"></i> ${item.name}</h4>${phonesHtml}</div>
-                                <a href="${item.mapUrl || 'https://maps.app.goo.gl/iV7Ly21Rkx7ikreFA'}" target="_blank" class="map-btn"><i class="fa-solid fa-location-dot"></i> لۆکەیشن</a>
-                            </div>`;
-                    });
+            container.innerHTML = '';
+            
+            staticOfficesList.forEach(item => {
+                let phonesHtml = '';
+                if(item.phone1 || item.phone2) {
+                    phonesHtml = `<p style="margin: 3px 0 0 0; font-size: 11px; color: var(--label-color);" dir="ltr">`;
+                    if(item.phone1) phonesHtml += `<i class="fa-solid fa-phone" style="font-size:10px;"></i> ${item.phone1} `;
+                    if(item.phone2) phonesHtml += `&nbsp;|&nbsp; <i class="fa-solid fa-phone" style="font-size:10px;"></i> ${item.phone2}`;
+                    phonesHtml += `</p>`;
                 }
-            } catch(e) { container.innerHTML = '<p style="color:red; font-size:12px;">کێشە لە هێنانی نووسینگەکان هەیە.</p>'; }
+                container.innerHTML += `
+                    <div class="office-card">
+                        <div class="office-info"><h4><i class="fa-solid fa-building"></i> ${item.name}</h4>${phonesHtml}</div>
+                        <a href="${item.mapUrl}" target="_blank" class="map-btn"><i class="fa-solid fa-location-dot"></i> لۆکەیشن</a>
+                    </div>`;
+            });
         }
-
-        async function renderAdminOfficesManager() {
-            const container = document.getElementById('adminOfficesList');
-            if(!container) return;
-            try {
-                let res = await fetch(`${baseUrl}/api/offices`);
-                if(res.ok) {
-                    let list = await res.json();
-                    container.innerHTML = '';
-                    if(list.length === 0) {
-                        container.innerHTML = '<span style="font-size:11px; color:var(--label-color);">هیچ نووسینگەیەک نییە.</span>';
-                        return;
-                    }
-                    list.forEach(item => {
-                        container.innerHTML += `
-                            <div style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-container); padding:6px 10px; border-radius:6px; margin-bottom:5px; border:1px solid var(--border-container);">
-                                <div style="text-align:right;">
-                                    <span style="font-size:12px; font-weight:bold; display:block;">${item.name}</span>
-                                    <span style="font-size:10px; color:var(--label-color);" dir="ltr">${item.phone1 || ''} ${item.phone2 ? '- ' + item.phone2 : ''}</span>
-                                </div>
-                                <button onclick="deleteOfficeAdmin(${item.id})" style="background:#dc3545; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:11px; cursor:pointer;"><i class="fa-solid fa-trash"></i> لابردن</button>
-                            </div>`;
-                    });
-                }
-            } catch(e) {}
-        }
-
-        async function addNewOfficeAdmin() {
-            let name = document.getElementById('adminOfficeName').value.trim();
-            let phone1 = document.getElementById('adminOfficePhone1').value.trim();
-            let phone2 = document.getElementById('adminOfficePhone2').value.trim();
-            let mapUrl = document.getElementById('adminOfficeMapUrl').value.trim() || "https://maps.app.goo.gl/iV7Ly21Rkx7ikreFA";
-            
-            if(!name) return Swal.fire('ئاگاداری', 'تکایە ناوی نووسینگە پڕبکەرەوە', 'warning');
-            if (!window.adminPwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە بە پاسوۆردی ئەدمین', 'warning');
-
-            Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
-            try {
-                let response = await fetch(`${baseUrl}/api/offices`, {
-                    method: "POST", headers: { "Content-Type": "application/json", "Admin-Password": window.adminPwd },
-                    body: JSON.stringify({ name: name, phone1: phone1, phone2: phone2, mapUrl: mapUrl })
-                });
-                let result = await response.json().catch(() => ({}));
-                if(response.ok) {
-                    Swal.fire('سەرکەوتوو', result.message || 'نووسینگە زیاد کرا!', 'success');
-                    document.getElementById('adminOfficeName').value = ''; document.getElementById('adminOfficePhone1').value = '';
-                    document.getElementById('adminOfficePhone2').value = ''; document.getElementById('adminOfficeMapUrl').value = '';
-                    renderAdminOfficesManager(); renderOfficesUser();
-                } else Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان دەسەڵاتت نییە!', 'error');
-            } catch(e) { Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە', 'error'); }
-        }
-
-        async function deleteOfficeAdmin(id) {
-            if (!window.adminPwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە', 'warning');
-            
-            const confirm = await Swal.fire({ title: 'دڵنیایت؟', text: 'ئایا دەتەوێت ئەم نووسینگەیە بسڕیتەوە؟', icon: 'warning', showCancelButton: true, confirmButtonText: 'بەڵێ، بسڕەوە', cancelButtonText: 'نەخێر' });
-            
-            if(confirm.isConfirmed) {
-                Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
-                try {
-                    let res = await fetch(`${baseUrl}/api/offices/${id}`, { method: "DELETE", headers: { "Admin-Password": window.adminPwd } });
-                    let data = await res.json().catch(() => ({}));
-                    if(res.ok) {
-                        Swal.fire('سەرکەوتوو', data.message || 'نووسینگە سڕایەوە', 'success');
-                        renderAdminOfficesManager(); renderOfficesUser();
-                    } else Swal.fire('هەڵە', data.message || 'کێشەیەک ڕوویدا', 'error');
-                } catch(e) { Swal.fire('کێشە', 'کێشەی هێڵ هەیە', 'error'); }
-            }
-        }
+        // -------------------------------------------------------------------
 
         const trafficSignsData = [];
         for (let i = 1; i <= 223; i++) { trafficSignsData.push({ img: `${i}.png` }); }
@@ -941,65 +689,6 @@
             return str.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦۷٨٩'.indexOf(d)).replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
         }
 
-        const baseUrl = "https://rastymhammad-001-site1.itempurl.com";
-        const apiUrl = `${baseUrl}/api/users`;
-        let adminClickCount = 0; let timerInterval = null; let globalSystemIsActive = true; 
-        let statChart = null; let globalUsersData = []; let isGpsRequired = false; 
-
-        let isQueueFeatureHidden = false;
-
-        async function toggleQueueFeature() {
-            if (!window.adminPwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە', 'warning');
-            let isChecked = document.getElementById("queueFeatureToggleBtn").checked;
-
-            Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
-            try {
-                let response = await fetch(`${baseUrl}/api/admin/toggle-queue?hidden=${isChecked}`, { 
-                    method: "POST", headers: { "Admin-Password": window.adminPwd } 
-                });
-                let result = await response.json().catch(() => ({}));
-                
-                if(response.ok) {
-                    Swal.fire('سەرکەوتوو', `بەشی نۆرەگرتن بە سەرکەوتوویی ${isChecked ? 'شاردرایەوە' : 'پیشاندرا'}`, 'success');
-                    isQueueFeatureHidden = isChecked;
-                    applyQueueFeatureVisibility();
-                } else {
-                    document.getElementById("queueFeatureToggleBtn").checked = !isChecked; 
-                    Swal.fire('هەڵە', result.message || 'نەتوانرا دۆخەکە بگۆڕدرێت!', 'error');
-                }
-            } catch (error) {
-                document.getElementById("queueFeatureToggleBtn").checked = !isChecked;
-                Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن بە سێرڤەرەوە هەیە', 'error');
-            }
-        }
-
-        function applyQueueFeatureVisibility() {
-            let queueCard = document.getElementById('portal-queue-card');
-            let navQueue = document.getElementById('nav-queue');
-            if(isQueueFeatureHidden) {
-                if(queueCard) queueCard.style.display = 'none';
-                if(navQueue) navQueue.style.display = 'none';
-            } else {
-                if(queueCard) queueCard.style.display = 'grid';
-                if(navQueue) navQueue.style.display = 'flex';
-            }
-        }
-
-        const allowedZones = [
-            { name: "بەڕێوەبەرایەتی هەڵەبجە", lat: 35.1877797, lng: 46.0072475, radius: 15 },
-            { name: "تەوێڵە", lat: 35.207216, lng: 46.185475, radius: 8 },
-            { name: "بیارە", lat: 35.228500, lng: 46.115500, radius: 8 },
-            { name: "خورماڵ", lat: 35.311500, lng: 46.009000, radius: 10 },
-            { name: "سیروان", lat: 35.204500, lng: 45.940000, radius: 10 }
-        ];
-
-        function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-            var R = 6371; var dLat = (lat2 - lat1) * Math.PI / 180; var dLon = (lon2 - lon1) * Math.PI / 180;
-            var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2);
-            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            return R * c; 
-        }
-
         const baseGeneralQuestions = [
             { q: "کاتی لێخوڕین لەسەر شەقامە خێراکان، کامیان ڕێگەپێدراوە؟", options: ["پێشکردنەوە لە لای ڕاستەوە", "پێشکردنەوە تەنها لە لای چەپەوە", "وەستان لە سەر شۆلەی خێرا"], answer: 1 },
             { q: "ئایا لێخوڕین بە خێراییەکی زیاتر لە سنوری دیاریکراو ڕێگەپێدراوە لە کاتی لەتاوی فریاکەوتندا؟", options: ["بەڵێ بە مەرجی ئاگادارکردنەوە", "نەخێر بە هیچ شێوەیەک", "تەنها لە شەواندا"], answer: 1 },
@@ -1096,7 +785,7 @@
             { img: "63.png", q: " مانای ئەم هێمایەی هاتووچۆ چییە ؟", options: [" ئه‌وپه‌ڕی ڕاده‌ی به‌رزی ", " دوا ڕاده‌ی قورسایی له‌سه‌ر جووت ئه‌كسل ", "‌‌ ‌دوا ڕاده‌ی قورسایی له‌سه‌ر تاك ئه‌كسل "], answer: 1 },
             { img: "64.png", q: " ئەم هێمایە چی بۆ شۆفێر دیاری دەکات ؟", options: [" ئه‌و په‌ڕی پانی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ ", " ئه‌وپه‌ڕی به‌رزی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ ", "‌‌ ‌ئه‌و په‌ڕی قورسایی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ "], answer: 0 },
             { img: "65.png", q: " کاتێک ئەم تابلۆیە دەبینیت، مانای چییە ؟", options: [" ئه‌و په‌ڕی پانی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ ", " ئه‌و په‌ڕی قورسایی مۆڵه‌ت پێداروه‌ به‌باره‌وه‌ ", "‌ ‌ئه‌وپه‌ڕی به‌رزی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ "], answer: 2 },
-            { img: "66.png", q: " ئەم نیشانەیە ئاماژەیە بۆ قەدەغەکردنی چی ؟", options: [" ئه‌و په‌ڕی پانی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ ", " ئه‌و په‌ڕی درێژی مۆڵه‌ت پێداروه‌ به‌باره‌وه‌ ", "‌ ‌ئه‌وپه‌ڕی به‌رزی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ "], answer: 1 },
+            { img: "66.png", q: " ئەم نیشانەیە ئاماژەیە بۆ قەدەغەکردنی چی ؟", options: [" ئه‌و په‌ڕی پانی مۆڵه‌ت پێدراوه‌ ", " ئه‌و په‌ڕی درێژی مۆڵه‌ت پێداروه‌ به‌باره‌وه‌ ", "‌ ‌ئه‌وپه‌ڕی به‌رزی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ "], answer: 1 },
             { img: "67.png", q: " ئەم هێمایەی قەدەغەکردن مانای چی دەگەیەنێت ؟", options: [" تێپه‌ڕاندن قه‌ده‌غه‌یه‌ ", " وه‌ستان قه‌ده‌غه‌یه‌ ", "‌ ‌ڕێگه‌ی یه‌ك ئاڕاسته‌ "], answer: 0 },
             { img: "68.png", q: " ئەم تابلۆیە چی قەدەغەی  دەکات ؟", options: [" وه‌ستا به‌ هه‌موو شێوه‌یه‌ك قه‌ده‌غه‌یه‌ ", " تێپه‌ڕاندن بۆ ئۆتۆمبێلی بچوك قه‌ده‌غه‌یه‌ ", "‌ ‌تێپه‌ڕاندن بۆ لۆری قه‌ده‌غه‌یه‌ "], answer: 2 },
             { img: "69.png", q: " ئەم نیشانەیە چی ڕوون دەکاتەوە ؟", options: [" تێپه‌ڕاندن قه‌ده‌غه‌یه‌ ", " تێپه‌ڕاندن ڕیگه‌پێدراوه‌ ", "‌ ‌تێپه‌ڕاندن بۆ ئۆتۆمبێلی بارهه‌ڵگر قه‌ده‌غه‌یه‌ "], answer: 1 },
@@ -1109,7 +798,7 @@
             { img: "76.png", q: " مانای ئه‌م هێمایه‌ ئاماژه‌ بۆچی ؟", options: [" ڕاوه‌ستان بۆ پشكنین و كۆنترۆڵكردن ", " پارككردن قه‌ده‌غه‌یه‌ ", "‌ ‌وەستان قه‌ده‌غه‌یه‌ "], answer: 0 },
             { img: "78.png", q: " تابلۆی سێگۆشەی سەرەوژێر (ڕووەو خوار) ئاماژەیە بۆ چی ؟", options: [" ڕێگه‌ی یه‌ك ئاڕاسته‌ ", " وه‌ستان قه‌ده‌غه‌یه‌ ", "‌ ‌پابه‌ندبوونی ڕه‌ها "], answer: 2 },
             { img: "79.png", q: " ئەم هێمایەی نەخشەی ڕێگا چ جۆرە یەکتربڕێک نیشان دەدات ؟", options: [" پابه‌ندبونی نائاسایی پێشڕوه‌ی بۆ شه‌قامه‌ باریكه‌كانه‌ ", " پابه‌ندبونی نائاسایی پێشڕوه‌ی بۆ شه‌قامه‌ پانه‌كانه‌ ", "‌ تێپه‌ڕاندن قه‌ده‌غه‌یه‌ "], answer: 1 },
-            { img: "81.png", q: " (STOP) مانای چییە؟ ؟", options: [" خالی پشكنین له‌پێشه‌وه‌ ", " وه‌ستان قه‌ده‌غه‌یه‌ ", "‌ ‌ڕاوه‌سته‌ پێشڕوی بۆتۆنییه‌ "], answer: 2 },
+            { img: "81.png", q: " (STOP) مانای چییە؟ ؟", options: [" خالی پشكنین له‌پێشه‌وه‌ ", " وه‌ستان قه‌ده‌غه‌یه‌ ", "‌ ‌ڕاوه‌سته‌ پێشڕوی بۆتۆیه‌ "], answer: 2 },
             { img: "82.png", q: " ئەم هێمایە ئاماژەیە بۆ چ حاڵەتێک لە ڕێگادا", options: [" یه‌كگرتنی سایده‌كان ", " تەسکبوونەوەی شەقام ", "‌ ‌دابه‌ش بوونی سایده‌كان "], answer: 0 },
             { img: "83.png", q: " تابلۆی چوارگۆشەی چەماوەی زەرد (ڕووبەری سەرەکی) مانای چییەا", options: [" پابه‌ندبوونی ڕه‌ها ", " شه‌قامی سه‌ره‌كی پێشڕه‌وی بۆتۆیه‌ ", "‌ ‌وه‌ستان قه‌ده‌غه‌یه‌ "], answer: 1 },
             { img: "84.png", q: " ئەم هێمایە بە هێڵی ڕەشەوە چی دەگەیەنێت", options: [" پابه‌ندبوونی ڕه‌ها ", " شه‌قامی سه‌ره‌كی پێشڕه‌وی بۆتۆیه‌ ", "‌ ‌شه‌قامی سه‌ره‌كی ته‌واو بوونی پێشڕه‌وی "], answer: 2 },
@@ -1209,20 +898,6 @@
 
         function resetExamMenu() { vibrate(); clearInterval(examTimerInterval); document.getElementById('examResultBox').style.display = 'none'; document.getElementById('examMenu').style.display = 'block'; }
 
-        async function loadNoticeText() {
-            let wrapper = document.getElementById('noticeScrollWrapper'); let noticeElement = document.getElementById('noticeTextContainer');
-            let savedNotice = localStorage.getItem("saved_notice_text");
-            if (savedNotice && wrapper && noticeElement) { applyNoticeToUI(savedNotice, wrapper); }
-            try {
-                let res = await fetch(`${baseUrl}/api/notice`);
-                if(res.ok) {
-                    let data = await res.json(); let text = data.notice || ""; localStorage.setItem("saved_notice_text", text);
-                    if(wrapper) { applyNoticeToUI(text, wrapper); }
-                    let adminInput = document.getElementById('adminNoticeInput'); if(adminInput) adminInput.value = text;
-                }
-            } catch(e) { if (!savedNotice && noticeElement) { noticeElement.innerText = "بەهۆی نەبوونی هێڵی ئینتەرنێتەوە ناتوانرێت تێبینییەکان بهێنرێت."; } }
-        }
-
         function applyNoticeToUI(text, wrapper) {
             let marqueeEvents = `onmouseover="if(!this.clickPaused) this.stop();" onmouseout="if(!this.clickPaused) this.start();" onclick="this.clickPaused = !this.clickPaused; if(this.clickPaused) this.stop(); else this.start();"`;
             if (text.includes('\n') || text.length > 100) {
@@ -1234,27 +909,12 @@
             }
         }
 
-        async function updateNoticeText() {
-            let newText = document.getElementById('adminNoticeInput').value;
-            if (!window.adminPwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە بە پاسوۆردی ئەدمین', 'warning');
-            Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
-            try {
-                let response = await fetch(`${baseUrl}/api/admin/notice`, { method: "PUT", headers: { "Content-Type": "application/json", "Admin-Password": window.adminPwd }, body: JSON.stringify({ text: newText }) });
-                let result = await response.json().catch(() => ({}));
-                if(response.ok) { Swal.fire('سەرکەوتوو', result.message || 'تێبینییەکان نوێکرانەوە!', 'success'); loadNoticeText(); } 
-                else { Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان دەسەڵاتت نییە!', 'error'); }
-            } catch(e) { Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە', 'error'); }
-        }
-
         function navTo(section) {
             vibrate(10); if (section !== 'exam') { clearInterval(examTimerInterval); }
             if (section === 'exam' && !sessionStorage.getItem('exam_alert_shown')) {
                 Swal.fire({ title: 'ئاگاداری گرنگ ⚠️', text: 'ئەم تاقیکردنەوەیە هیچ کات پەیوەندی بە ئیمتیحانی نەزەری فەرمی هاتووچۆوە نییە، تەنها بۆ خۆشی و کات بەسەربردن و زیادکردنی زانیاری شۆفێرە.', icon: 'info', confirmButtonText: 'تێگەیشتم، چوونە ژوورەوە', confirmButtonColor: '#0056b3' })
                 .then((res) => { if (res.isConfirmed) { sessionStorage.setItem('exam_alert_shown', 'true'); proceedNav(section); } });
                 return;
-            }
-            if (!navigator.onLine && section === 'queue') {
-                 Swal.fire({ icon: 'warning', title: 'هێڵی ئینتەرنێتت پچڕاوە!', text: 'تکایە دڵنیابە لەوەی مۆبایلەکەت ئینتەرنێتی هەیە بۆ ئەوەی بتوانیت نۆرە بگریت.', confirmButtonText: 'باشە', confirmButtonColor: '#dc3545' }); return; 
             }
             proceedNav(section);
         }
@@ -1269,7 +929,6 @@
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             let activeNav = document.getElementById('nav-' + section); if(activeNav) activeNav.classList.add('active');
             let targetSection = document.getElementById(section + 'Section'); if(targetSection) { targetSection.style.display = 'block'; }
-            if(section === 'portal') { loadNoticeText(); } else if(section === 'queue') { checkQuotaAndTimer(); checkSavedTicket(); }
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
@@ -1298,7 +957,7 @@
 
         function shareWebsite() {
             vibrate();
-            if (navigator.share) { navigator.share({ title: 'تـــرافــیـك', text: 'سیستەمی نۆرەگرتن و هەژمارکردنی غەرامەی مۆڵەتی شۆفێری', url: window.location.href, }).catch((error) => console.log('Error sharing', error)); } 
+            if (navigator.share) { navigator.share({ title: 'تـــرافــیـك', text: 'سیستەمی هەژمارکردنی غەرامە و تاقیکردنەوەی مۆڵەتی شۆفێری', url: window.location.href, }).catch((error) => console.log('Error sharing', error)); } 
             else { navigator.clipboard.writeText(window.location.href); Swal.fire({ toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, icon: 'success', title: 'لینکەکە کۆپی کرا!' }); }
         }
 
@@ -1401,492 +1060,30 @@
             updateSpeedometer(result.fine);
         }
 
-        function onlyEnglishNumbers(event) { let charCode = (event.which) ? event.which : event.keyCode; if (charCode > 31 && (charCode < 48 || charCode > 57)) return false; return true; }
+        // --- گۆڕانکاری سەرەکی بۆ چاککردنی کێشەی گیرخواردنی لۆگۆکە ---
+        document.addEventListener('DOMContentLoaded', function() {
+            updateVisitorCounter();
 
-        function validateFormInputs() {
-            let nameInput = document.getElementById("nameInput"); let phoneInput = document.getElementById("phoneInput"); let registerBtn = document.getElementById("registerBtn");
-            let nameVal = nameInput.value.trim(); let phoneVal = phoneInput.value.trim(); let nameParts = nameVal.split(/\s+/); let englishRegex = /[a-zA-Z]/;
-            let isNameValid = nameVal !== "" && !englishRegex.test(nameVal) && nameParts.length >= 3;
-            let isPhoneValid = phoneVal.length === 11 && (phoneVal.startsWith("077") || phoneVal.startsWith("075") || phoneVal.startsWith("078"));
-            nameInput.className = nameVal === "" ? "" : (isNameValid ? "valid-input" : "invalid-input"); phoneInput.className = phoneVal === "" ? "" : (isPhoneValid ? "valid-input" : "invalid-input");
-            if (isNameValid && isPhoneValid) { registerBtn.disabled = false; registerBtn.style.background = "#28a745"; registerBtn.style.cursor = "pointer"; } 
-            else { registerBtn.disabled = true; registerBtn.style.background = "#cccccc"; registerBtn.style.cursor = "not-allowed"; }
-        }
+            setTimeout(function() { 
+                let splash = document.getElementById('splash-screen'); 
+                if(splash) splash.classList.add('splash-hidden'); 
+            }, 1000); 
 
-        function checkSavedTicket() {
-            let saved = localStorage.getItem("my_daily_ticket");
-            if(saved) {
-                try {
-                    let ticket = JSON.parse(saved); let nowIraq = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Baghdad" })); let lastResetIraq = new Date(nowIraq); lastResetIraq.setHours(14, 0, 0, 0);
-                    if (nowIraq.getTime() < lastResetIraq.getTime()) { lastResetIraq.setDate(lastResetIraq.getDate() - 1); }
-                    let lastResetEpoch = lastResetIraq.getTime(); let isValid = false;
-                    if (ticket.timestamp && ticket.timestamp >= lastResetEpoch) { isValid = true; } 
-                    else if (!ticket.timestamp && ticket.savedAt === new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' })) { isValid = true; }
-                    if(isValid) { document.getElementById("savedTicketDiv").style.display = "block"; document.getElementById("registrationInputs").style.display = "none"; } 
-                    else { localStorage.removeItem("my_daily_ticket"); document.getElementById("savedTicketDiv").style.display = "none"; document.getElementById("registrationInputs").style.display = "block"; }
-                } catch(e) { localStorage.removeItem("my_daily_ticket"); document.getElementById("savedTicketDiv").style.display = "none"; document.getElementById("registrationInputs").style.display = "block"; }
-            } else { document.getElementById("savedTicketDiv").style.display = "none"; document.getElementById("registrationInputs").style.display = "block"; }
-        }
-
-        function showSavedTicket() { let saved = localStorage.getItem("my_daily_ticket"); if(saved) { let t = JSON.parse(saved); Swal.fire({ html: generateTicketHTML(t.name, t.phone, t.rank, t.time, t.qrCode, t.date), confirmButtonText: 'باشە', confirmButtonColor: '#28a745' }); } }
-
-        function generateTicketHTML(name, phone, rank, time, qrToken, dateStr) {
-            let displayDate = dateStr || new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' });
-            let verifyUrl = window.location.origin + window.location.pathname + "?verify=" + encodeURIComponent(qrToken);
-            setTimeout(() => { let qrContainer = document.getElementById("qrCodeDiv"); if(qrContainer) { qrContainer.innerHTML = ""; new QRCode(qrContainer, { text: verifyUrl, width: 90, height: 90, colorDark : "#000000", colorLight : "#ffffff", correctLevel : QRCode.CorrectLevel.H }); } }, 100);
-            return `
-                <div style="border: 2px dashed var(--primary-color); padding: 20px; border-radius: 10px; background: #f0f8ff; text-align: center;">
-                    <i class="fa-solid fa-address-card" style="font-size: 40px; color: var(--primary-color); margin-bottom: 10px;"></i>
-                    <h3 style="margin: 0 0 15px 0; color: var(--primary-color); font-size: 18px;">تـــرافــیـك</h3>
-                    <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #cce5ff; text-align: right;">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div><p style="margin: 5px 0; font-size: 15px; color: #000000;"><strong>ناو:</strong> ${name}</p><p style="margin: 5px 0; font-size: 15px; color: #000000;"><strong>مۆبایل:</strong> ${phone}</p></div>
-                            <div id="qrCodeDiv" style="padding: 5px; background: white; border: 1px solid #eee; border-radius: 4px;"></div>
-                        </div>
-                        <hr style="border: 0; border-top: 1px dashed #ccc; margin: 12px 0;">
-                        <p style="margin: 5px 0; font-size: 16px; text-align: center;"><strong>نۆرە:</strong> <span style="font-size: 28px; color: #dc3545; font-weight: bold;">${rank}</span></p>
-                        <p style="margin: 5px 0; font-size: 15px; text-align: center;"><strong>کات:</strong> <span style="color: #28a745; font-weight: bold;">${time}</span></p>
-                        <p style="margin: 5px 0; font-size: 12px; text-align: center; color: gray;">بەروار: ${displayDate}</p>
-                    </div>
-                    <p style="margin: 15px 0 0 0; font-size: 13px; color: #666; font-weight: bold;">تکایە سکرین شۆتی ئەم پسوولەیە بگرە.</p>
-                </div>`;
-        }
-
-        async function checkQuotaAndTimer() {
             try {
-                let response = await fetch(`${baseUrl}/api/users/count`, { method: "GET" });
-                if (response.ok) {
-                    let result = await response.json(); let count = result.count; let maxQuota = result.maxQuota || 40;
-                    globalSystemIsActive = (result.isActive !== false); isGpsRequired = result.isGpsRequired === true; 
-                    
-                    isQueueFeatureHidden = result.isQueueHidden === true;
-                    applyQueueFeatureVisibility();
-
-                    let gpsToggle = document.getElementById("gpsToggleBtn"); if(gpsToggle) gpsToggle.checked = isGpsRequired;
-                    let badge = document.getElementById("statusBadge"); let dot = document.getElementById("statusDot"); let statusText = document.getElementById("statusText");
-                    let regBtn = document.getElementById("registerBtn"); let nameInput = document.getElementById("nameInput"); let phoneInput = document.getElementById("phoneInput");
-
-                    if (result.isActive === false) {
-                        badge.className = "status-badge status-closed"; dot.className = "dot dot-red"; statusText.innerText = result.closeMessage || "سیستەم داخراوە یان پشک تەواو بووە";
-                        if (regBtn) { regBtn.disabled = true; regBtn.innerHTML = '<i class="fa-solid fa-lock"></i> چاوەڕێ بکە'; }
-                        if (nameInput) nameInput.disabled = true; if (phoneInput) phoneInput.disabled = true; return; 
-                    }
-                    
-                    const dateInIraq = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Baghdad"})); const iraqHour = dateInIraq.getHours(); const dayOfWeek = dateInIraq.getDay(); 
-                    let isThursdayAfterTwo = (dayOfWeek === 4 && iraqHour >= 14); let isFriday = (dayOfWeek === 5); let isSaturdayBeforeEvening = (dayOfWeek === 6 && iraqHour < 18);
-                    let isWeekendBlocked = isThursdayAfterTwo || isFriday || isSaturdayBeforeEvening; let isDailyBlocked = (iraqHour >= 14 && iraqHour < 18);
-                    
-                    if (isWeekendBlocked || isDailyBlocked || count >= maxQuota) {
-                        badge.className = "status-badge status-closed"; dot.className = "dot dot-red";
-                        if (isFriday) { statusText.innerText = "ئەمڕۆ هەینی پشووه‌، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێتەوە"; } 
-                        else if (dayOfWeek === 4 && iraqHour >= 14) { statusText.innerText = "ئەمڕۆ پێنجشەممەیە و دەوام تەواو بووە، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێتەوە"; } 
-                        else if (dayOfWeek === 6 && iraqHour < 18) { statusText.innerText = "لە ئێستادا پشووی شەممەیە، کاتژمێر 6ی ئێوارە دەکرێتەوە"; } 
-                        else if (isWeekendBlocked) { statusText.innerText = "لە ئێستادا سیستەم داخراوە، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێتەوە"; } 
-                        else if (isDailyBlocked) { statusText.innerText = "لە ئێستادا سیستەم داخراوە، ئەمڕۆ کاتژمێر 6ی ئێوارە دەکرێتەوە"; } 
-                        else if (count >= maxQuota) { 
-                            if (dayOfWeek === 3 || (dayOfWeek === 4 && iraqHour < 14)) { statusText.innerText = "پشکی ئەمڕۆ تەواو بووە، کاتژمێر 6ی ئێوارەی ڕۆژی شەممە دەکرێتەوە"; } 
-                            else if (iraqHour >= 18) { statusText.innerText = "پشکی سبەینێ تەواو بووە، کاتژمێر 6ی سبەی ئێوارە دەکرێتەوە"; } 
-                            else { statusText.innerText = "پشکی ئەمڕۆ تەواو بووە، کاتژمێر 6ی ئێوارەی ئەمڕۆ دەکرێتەوە"; }
-                        }
-                        if (regBtn) { regBtn.disabled = true; regBtn.innerHTML = '<i class="fa-solid fa-lock"></i> چاوەڕێ بکە'; }
-                        if (nameInput) nameInput.disabled = true; if (phoneInput) phoneInput.disabled = true;
-                        startCountdown(); document.getElementById("countdownTimer").style.display = "block";
-                    } else {
-                        badge.className = "status-badge status-open"; dot.className = "dot dot-green"; statusText.innerText = "دۆخی سیستەم: کراوەیە بۆ ناو تۆمارکردن";
-                        if (nameInput) nameInput.disabled = false; if (phoneInput) phoneInput.disabled = false;
-                        validateFormInputs(); document.getElementById("countdownTimer").style.display = "none"; if(timerInterval) clearInterval(timerInterval);
-                    }
-                }
-            } catch (e) { console.log(e); }
-        }
-
-        function startCountdown() {
-            if (timerInterval) clearInterval(timerInterval);
-            timerInterval = setInterval(() => {
-                const now = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Baghdad"})); let target = new Date(now); let day = now.getDay(); let hour = now.getHours();
-                target.setHours(18, 0, 0, 0);
-                if ((day === 3 && hour >= 18) || (day === 4 && hour < 18)) { target.setDate(now.getDate() + (day === 4 ? (hour < 6 ? 2 : 1) : 3)); target.setHours(18, 0, 0, 0); } 
-                else if (day === 4) { target.setDate(now.getDate() + 2); target.setHours(18, 0, 0, 0); } 
-                else if (day === 5) { target.setDate(now.getDate() + 1); target.setHours(18, 0, 0, 0); } 
-                else if (day === 6 && hour >= 18) { target.setDate(now.getDate() + 7); target.setHours(18, 0, 0, 0); } 
-                else if (hour >= 18 || (day === 3 && hour >= 14)) { if (now >= target) { target.setDate(now.getDate() + 1); } }
-                let diff = Math.max(target - now, 0); let totalHours = Math.floor(diff / (1000 * 60 * 60)); let m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)); let s = Math.floor((diff % (1000 * 60)) / 1000);
-                let timeString = `${totalHours.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-                document.getElementById("timerValue").innerHTML = ` کاتی ماوە بۆ کردنەوەی سیستەم: <span dir="ltr"><i class="fa-solid fa-hourglass-half"></i> ${timeString}</span>`;
-            }, 1000);
-        }
-
-        async function getDeviceFingerprint() {
-            return new Promise((resolve) => {
-                try {
-                    let canvas = document.createElement('canvas'); let ctx = canvas.getContext('2d'); ctx.textBaseline = "top"; ctx.font = "14px 'Arial'"; ctx.fillStyle = "#f60"; ctx.fillRect(125, 1, 62, 20); ctx.fillStyle = "#069"; ctx.fillText("HalabjaTraffic_" + navigator.userAgent.length, 2, 15); ctx.fillStyle = "rgba(102, 204, 0, 0.7)"; ctx.fillText("HalabjaTraffic", 4, 17);
-                    let dataUrl = canvas.toDataURL(); let hash = 0;
-                    for (let i = 0; i < dataUrl.length; i++) { let char = dataUrl.charCodeAt(i); hash = ((hash << 5) - hash) + char; hash = hash & hash; }
-                    let screenInfo = screen.width + "x" + screen.height + "_" + navigator.hardwareConcurrency;
-                    resolve(hash.toString() + "_" + screenInfo);
-                } catch (e) { resolve("unknown_device_" + Math.random()); }
-            });
-        }
-
-        async function confirmAndRegister() {
-            if (!navigator.onLine) { return Swal.fire('کێشەی هێڵ', 'مۆبایلەکەت هێڵی ئینتەرنێتی نییە، تکایە ئینتەرنێت بکەرەوە!', 'error'); }
-            let name = document.getElementById("nameInput").value.trim(); let phone = document.getElementById("phoneInput").value.trim();
-
-            if (isGpsRequired) {
-                if (!navigator.geolocation) { return Swal.fire('هەڵە', 'مۆبایلەکەت یان وێبگەڕەکەت پشتگیری سیستەمی شوێندۆزی (GPS) ناکات.', 'error'); }
-                let regBtn = document.getElementById("registerBtn"); let origBtnHtml = regBtn.innerHTML;
-                regBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> دڵنیابوونەوە لە شوێن...'; regBtn.disabled = true;
-                try {
-                    const position = await new Promise((resolve, reject) => { navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 10000 }); });
-                    let userLat = position.coords.latitude; let userLng = position.coords.longitude; let isUserInAllowedZone = false;
-                    for (let zone of allowedZones) { let distance = getDistanceFromLatLonInKm(zone.lat, zone.lng, userLat, userLng); if (distance <= zone.radius) { isUserInAllowedZone = true; break; } }
-                    if (!isUserInAllowedZone) { regBtn.innerHTML = origBtnHtml; regBtn.disabled = false; return Swal.fire('لە دەرەوەی بازنەیت!', 'بەپێی سیستەمی GPS، تۆ لە دەرەوەی پارێزگای هەڵەبجە و ناحیەکانی دەوروبەریتی. نۆرەگرتن تەنها بۆ دانیشتووانی ناوچەکە ڕێگەپێدراوە.', 'warning'); }
-                } catch (error) { regBtn.innerHTML = origBtnHtml; regBtn.disabled = false; return Swal.fire('ئاگاداری', 'تکایە ئیزنی (Location) بدە بە وێبسایتەکە بۆ ئەوەی بتوانیت نۆرە بگریت.', 'warning'); }
-                regBtn.innerHTML = origBtnHtml; regBtn.disabled = false;
+                calculateFine(true); 
+                
+                let staticNotice = "بەڕێوەبەرایەتی هاتووچۆی پارێزگای هەڵەبجە\nتکایە ئەو کەسانەی سەردانی بەڕێوەبەرایەتی دەکەن بۆ نوێکردنەوەی مۆڵەتی شۆفێری، ئەم پێداویستیانە لەگەڵ خۆیان بێنن:\n1_پشکنینی چاو\n2_کارتی نیشتیمانی\n3_کارتی زانیاری\n4_پەساپۆرت ئەگەر هەبوو\n\nسەبارەت بەو هاووڵاتیانەش لە ترایەی دەرچوون، دەبێت سەرجەم ئەو پێداویستیانەیان پێبێت لەگەڵ ئەو باجەی لە نوسینگەی شۆفێری پێیان دراوە.";
+                let wrapper = document.getElementById('noticeScrollWrapper');
+                if(wrapper) { applyNoticeToUI(staticNotice, wrapper); }
+                
+                navTo('portal');
+            } catch (error) {
+                console.error("Initialization error: ", error);
+                let splash = document.getElementById('splash-screen'); 
+                if(splash) splash.classList.add('splash-hidden');
             }
-
-            const confirmation = await Swal.fire({
-                title: 'دڵنیابوونەوە لە زانیارییەکان',
-                html: `<div style="text-align: right; direction: rtl;"><label style="font-size: 13px; font-weight: bold; color: #555; display: block; margin-bottom: 4px;">ناوی سیانی:</label><input id="swal-input-name" class="swal2-input" value="${name}" style="margin: 0 0 12px 0; width: 100%; font-family: 'Rudaw', Tahoma, Arial, sans-serif; font-size: 14px;"><label style="font-size: 13px; font-weight: bold; color: #555; display: block; margin-bottom: 4px;">ژمارەی مۆبایل:</label><input id="swal-input-phone" class="swal2-input" value="${phone}" maxlength="11" onkeypress="return onlyEnglishNumbers(event)" style="margin: 0; width: 100%; font-family: 'Rudaw', Tahoma, Arial, sans-serif; font-size: 14px;"></div>`,
-                showCancelButton: true, confirmButtonText: 'تـــۆمــاركــردن', cancelButtonText: 'پاشگەزبوونەوە', confirmButtonColor: '#28a745', cancelButtonColor: '#6c757d', focusConfirm: false,
-                preConfirm: () => {
-                    const editedName = document.getElementById('swal-input-name').value.trim(); const editedPhone = document.getElementById('swal-input-phone').value.trim();
-                    let nameParts = editedName.split(/\s+/); let englishRegex = /[a-zA-Z]/;
-                    if (!editedName || englishRegex.test(editedName) || nameParts.length < 3) { Swal.showValidationMessage('تکایە ناوی سیانی بە کوردی بە دروستی بنووسە'); return false; }
-                    if (editedPhone.length !== 11 || (!editedPhone.startsWith("077") && !editedPhone.startsWith("075") && !editedPhone.startsWith("078"))) { Swal.showValidationMessage('ژمارەی مۆبایل دەبێت 11 ژمارە بێت و بە 077، 075 یان 078 دەست پێبکات'); return false; }
-                    return { name: editedName, phone: editedPhone };
-                }
-            });
-
-            if (confirmation.isConfirmed && confirmation.value) {
-                let finalName = confirmation.value.name; let finalPhone = confirmation.value.phone;
-                document.getElementById("nameInput").value = finalName; document.getElementById("phoneInput").value = finalPhone;
-                let regBtn = document.getElementById("registerBtn"); let orig = regBtn.innerHTML; regBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; regBtn.disabled = true;
-                try {
-                    let deviceFp = await getDeviceFingerprint();
-                    let response = await fetch(apiUrl, { method: "POST", headers: { "Content-Type": "application/json", "X-Device-Id": deviceFp }, body: JSON.stringify({ name: finalName, phone: finalPhone }) });
-                    let result = await response.json().catch(() => ({}));
-                    if(response.ok && result.ticket) {
-                        let todayDateStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' }); let currentTimestamp = new Date().getTime(); 
-                        localStorage.setItem("my_daily_ticket", JSON.stringify({ name: result.ticket.name, phone: result.ticket.phone, rank: result.ticket.rank, time: result.ticket.time, qrCode: result.ticket.qrCode, date: result.ticket.date, savedAt: todayDateStr, timestamp: currentTimestamp })); checkSavedTicket();
-                        Swal.fire({ html: generateTicketHTML(result.ticket.name, result.ticket.phone, result.ticket.rank, result.ticket.time, result.ticket.qrCode, result.ticket.date), confirmButtonText: 'باشە', confirmButtonColor: '#28a745' });
-                    } else Swal.fire('هەڵە', result.message || 'کێشەیەک ڕوویدا', 'error');
-                } catch (e) { Swal.fire('کێشەی هێڵ', 'کێشە لە سێرڤەر هەیە', 'error'); } finally { regBtn.innerHTML = orig; checkQuotaAndTimer(); }
-            }
-        }
-
-        async function searchUser() {
-            if (!navigator.onLine) { return Swal.fire('کێشەی هێڵ', 'مۆبایلەکەت هێڵی ئینتەرنێتی نییە!', 'error'); }
-            let searchPhone = document.getElementById("searchInput").value.trim(); if(searchPhone === "") return;
-            try {
-                let response = await fetch(`${apiUrl}/search/${encodeURIComponent(searchPhone)}`); let result = await response.json().catch(() => ({}));
-                if(response.ok) { let todayDateStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baghdad' }); let searchQrToken = btoa(result.phone + "|" + todayDateStr.replace(/-/g, '')); Swal.fire({ html: generateTicketHTML(result.name, result.phone, result.rank, result.timeMessage, searchQrToken, result.Date), confirmButtonText: 'باشە', confirmButtonColor: '#0056b3' }); } 
-                else Swal.fire('نەدۆزرایەوە', result.message || 'ناو نەدۆزرایەوە!', 'error'); document.getElementById("searchInput").value = "";
-            } catch (e) {}
-        }
-
-        function handleAdminClick() { adminClickCount++; if (adminClickCount >= 5) { adminClickCount = 0; showAdminPanel(); } }
-
-        async function showAdminPanel() {
-            let savedBioPwd = localStorage.getItem("admin_biometric_pwd");
-            if (savedBioPwd && window.PublicKeyCredential) {
-                try {
-                    const publicKeyCredentialRequestOptions = { challenge: new Uint8Array(32), timeout: 60000, userVerification: "required" };
-                    const credential = await navigator.credentials.get({ publicKey: publicKeyCredentialRequestOptions });
-                    if (credential) { return await proceedWithAdminLogin(savedBioPwd, false); }
-                } catch (err) { console.log("Biometric auth canceled or failed", err); }
-            }
-            const { value: pwd } = await Swal.fire({ title: 'تایبه‌ت به‌ ئه‌دمین', input: 'password', confirmButtonText: 'چوونەژوورەوە', cancelButtonText: 'داخستن', showCancelButton: true });
-            if (pwd) { let normalizedPwd = toEnglishDigits(pwd); await proceedWithAdminLogin(normalizedPwd, true); }
-        }
-
-        async function proceedWithAdminLogin(normalizedPwd, isManualLogin) {
-            Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
-            try {
-                let response = await fetch(`${baseUrl}/api/admin/verify?type=admin`, { method: "POST", headers: { "Admin-Password": normalizedPwd } });
-                if (response.status === 429) { return Swal.fire('سزادراویت!', 'بەهۆی زۆر تاقیکردنەوەی هەڵە، ئایپییەکەت بۆ ١٥ خولەک سزادراوە. تکایە چاوەڕێ بکە.', 'error'); }
-                if (response.ok) {
-                    let resData = await response.json(); window.adminRole = resData.role; window.adminPwd = normalizedPwd; 
-                    if (isManualLogin && window.PublicKeyCredential && !localStorage.getItem("admin_biometric_pwd")) {
-                        Swal.close();
-                        const enableBio = await Swal.fire({
-                            title: '<i class="fa-solid fa-face-viewfinder" style="font-size: 40px; color: var(--primary-color);"></i>',
-                            html: '<b>دەتەوێت Face ID / Touch ID چالاک بکەیت؟</b><br><br><span style="font-size:13px; color:#555;">بۆ ئەوەی جارێکی تر پێویست بە نووسینی پاسوۆرد نەکات و ڕاستەوخۆ بە سکانکردنی دەموچاو یان پەنجەمۆر بچیتە ژوورەوە.</span>',
-                            showCancelButton: true, confirmButtonText: 'بەڵێ، چالاکی بکە', cancelButtonText: 'نەخێر، سوپاس', confirmButtonColor: '#28a745'
-                        });
-                        if (enableBio.isConfirmed) {
-                            try {
-                                const publicKeyCredentialCreationOptions = {
-                                    challenge: new Uint8Array(32), rp: { name: "تـــرافــیـك", id: window.location.hostname },
-                                    user: { id: new Uint8Array(16), name: "admin", displayName: "ئەدمین" },
-                                    pubKeyCredParams: [{alg: -7, type: "public-key"}, {alg: -257, type: "public-key"}],
-                                    authenticatorSelection: { authenticatorAttachment: "platform", userVerification: "required" }, timeout: 60000
-                                };
-                                await navigator.credentials.create({ publicKey: publicKeyCredentialCreationOptions });
-                                localStorage.setItem("admin_biometric_pwd", normalizedPwd);
-                                await Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'بە سەرکەوتوویی چالاک کرا!', showConfirmButton: false, timer: 3000 });
-                            } catch(err) { console.log("Bio setup failed", err); }
-                        }
-                    } else { Swal.close(); }
-                    navTo('queue');
-                    if (window.adminRole === 'admin') {
-                        document.getElementById('quotaAdminBlock').style.display = 'none'; document.getElementById('noticeAdminBlock').style.display = 'none';
-                        document.getElementById('preRegAdminBlock').style.display = 'none'; document.getElementById('toggleStatusBtn').style.display = 'none';
-                        document.getElementById('blacklistAdminBlock').style.display = 'none'; document.getElementById('gpsAdminBlock').style.display = 'none';
-                        document.getElementById('queueFeatureAdminBlock').style.display = 'none';
-                    } else {
-                        document.getElementById('quotaAdminBlock').style.display = 'block'; document.getElementById('noticeAdminBlock').style.display = 'block';
-                        document.getElementById('preRegAdminBlock').style.display = 'block'; document.getElementById('toggleStatusBtn').style.display = 'inline-block';
-                        document.getElementById('blacklistAdminBlock').style.display = 'block'; document.getElementById('gpsAdminBlock').style.display = 'block';
-                        document.getElementById('queueFeatureAdminBlock').style.display = 'flex'; document.getElementById("queueFeatureToggleBtn").checked = isQueueFeatureHidden;
-                    }
-                    renderAdminOfficesManager();
-                    fetch(`${baseUrl}/api/users/count`).then(r => r.json()).then(data => { if (data && data.maxQuota) { document.getElementById('currentQuotaDisplay').textContent = `(پشکی ئێستا: ${data.maxQuota})`; } }).catch(() => {});
-                    document.getElementById("adminSection").style.display = "block"; document.getElementById("adminSection").scrollIntoView({ behavior: 'smooth' });
-                    loadAdminStats(); loadNoticeText();
-                } else { Swal.fire('هەڵە', 'پاسوۆردەکە هەڵەیە یان دەسەڵاتت نییە!', 'error'); }
-            } catch(e) { Swal.fire('کێشە', 'سێرڤەرەکە خەوتووە یان کێشەی هێڵ هەیە، تکایە دووبارە تاقیبکەرەوە!', 'error'); }
-        }
-
-        function hideAdminPanel() {
-            document.getElementById("adminSection").style.display = "none"; document.getElementById("usersTable").style.display = "none"; 
-            document.getElementById("tableBody").innerHTML = ""; document.getElementById("feedbacksContainer").style.display = "none";
-            let preRegForm = document.getElementById("preRegForm"); let openPreRegBtn = document.getElementById("openPreRegBtn");
-            if(preRegForm) preRegForm.style.display = "none"; if(openPreRegBtn) openPreRegBtn.style.display = "inline-block";
-            window.adminPwd = ""; adminClickCount = 0; window.adminRole = "";
-        }
-
-        async function loadAdminStats() {
-            if(!window.adminPwd) return;
-            try {
-                let response = await fetch(`${baseUrl}/api/admin/stats`, { headers: { "Admin-Password": window.adminPwd } });
-                if(response.ok) {
-                    let stats = await response.json();
-                    document.getElementById('statTotal').innerText = stats.today.total; document.getElementById('statUser').innerText = stats.today.byUser; document.getElementById('statAdmin').innerText = stats.today.byAdmin;
-                    let ctx = document.getElementById('myChart').getContext('2d'); if(statChart) statChart.destroy();
-                    statChart = new Chart(ctx, { type: 'doughnut', data: { labels: ['هاووڵاتیان', 'لە ئەدمینەوە'], datasets: [{ data: [stats.today.byUser, stats.today.byAdmin], backgroundColor: ['#28a745', '#dc3545'], borderWidth: 1 }] }, options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { font: { family: 'Rudaw', size: 10 } } }, title: { display: false } } } });
-                }
-            } catch(e) {}
-        }
-
-        async function updateDailyQuota() {
-            let newQuota = document.getElementById("adminQuotaInput").value;
-            if(!newQuota || newQuota < 1) return Swal.fire('ئاگاداری', 'تکایە ژمارەیەکی دروست بنووسە', 'warning');
-            if (!window.adminPwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە', 'warning');
-            Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
-            try {
-                let response = await fetch(`${baseUrl}/api/admin/quota?newQuota=${newQuota}`, { method: "PUT", headers: { "Admin-Password": window.adminPwd } });
-                let result = await response.json().catch(() => ({}));
-                if(response.ok) { Swal.fire('سەرکەوتوو', result.message, 'success'); document.getElementById('currentQuotaDisplay').textContent = `(پشکی ئێستا: ${newQuota})`; checkQuotaAndTimer(); document.getElementById("adminQuotaInput").value = ""; } 
-                else Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان دەسەڵاتت نییە!', 'error');
-            } catch (error) { Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە یان سێرڤەر خەوتووە', 'error'); }
-        }
-
-        async function addToBlacklist() {
-            let phoneInput = document.getElementById("blacklistPhoneInput").value; let phone = toEnglishDigits(phoneInput.trim()); let days = document.getElementById("blacklistDuration").value;
-            if (!phone || phone.length !== 11 || (!phone.startsWith("077") && !phone.startsWith("075") && !phone.startsWith("078"))) { return Swal.fire('ئاگاداری', 'تکایە ژمارە مۆبایلێکی دروست بنووسە', 'warning'); }
-            Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
-            try {
-                let response = await fetch(`${baseUrl}/api/admin/blacklist?phone=${phone}&days=${parseInt(days)}`, { method: "POST", headers: { "Content-Type": "application/json", "Admin-Password": window.adminPwd }, body: JSON.stringify({ phone: phone, days: parseInt(days) }) });
-                let text = await response.text(); 
-                try {
-                    let result = JSON.parse(text);
-                    if(response.ok) { Swal.fire('سەرکەوتوو', result.message || 'ژمارەکە خرایە لیستی ڕەشەوە', 'success'); document.getElementById("blacklistPhoneInput").value = ""; } 
-                    else { let errMsg = result.message || 'هەڵەیەک ڕوویدا لە سێرڤەرەوە!'; if(response.status === 500) errMsg = 'سێرڤەرەکە کراش دەکات! ڕەنگە ژمارەکە پێشتر بلۆک کرابێت.'; Swal.fire('هەڵە', errMsg, 'error'); }
-                } catch(e) { Swal.fire('ئیرۆری ناوخۆیی سێرڤەر (500)', 'تکایە سەیری ئەم ئیرۆرە بکە:\n\n' + text.substring(0, 150), 'error'); }
-            } catch (error) { Swal.fire('کێشە', 'کێشەی هێڵ هەیە یان سێرڤەرەکە کار ناکات', 'error'); }
-        }
-
-        async function viewBlacklist() {
-            Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
-            try {
-                let response = await fetch(`${baseUrl}/api/admin/blacklist`, { headers: { "Admin-Password": window.adminPwd } });
-                if(response.ok) {
-                    let data = await response.json(); if(data.length === 0) { return Swal.fire('زانیاری', 'هیچ ژمارەیەک لە لیستی ڕەشدا نییە', 'info'); }
-                    let html = '<div style="max-height:300px; overflow-y:auto;"><table style="width:100%; border-collapse:collapse; text-align:center; font-size:12px;" border="1"><tr><th style="padding:5px;">ژمارە</th><th style="padding:5px;">کاتی کردنەوە</th><th style="padding:5px;">لابردن</th></tr>';
-                    data.forEach(item => { html += `<tr><td style="padding:5px;" dir="ltr">${item.phone}</td><td style="padding:5px;">${item.blockedUntil}</td><td style="padding:5px;"><button onclick="unblockPhone('${item.phone}')" style="background:#28a745;color:white;border:none;padding:5px;border-radius:4px;cursor:pointer;">لابردن</button></td></tr>`; });
-                    html += '</table></div>'; Swal.fire({ title: 'لیستی ڕەش', html: html, showCloseButton: true, showConfirmButton: false });
-                } else { Swal.fire('هەڵە', 'نەتوانرا لیستەکە بهێنرێت یان دەسەڵاتت نییە', 'error'); }
-            } catch(e) { Swal.fire('کێشە', 'کێشەی هێڵ هەیە', 'error'); }
-        }
-
-        window.unblockPhone = async function(phone) {
-            const confirm = await Swal.fire({ title: 'دڵنیایت؟', text: `ئایا دەتەوێت بلۆک لەسەر ژمارە ${phone} لاببەیت؟`, icon: 'warning', showCancelButton: true, confirmButtonText: 'بەڵێ، لایببە', cancelButtonText: 'نەخێر' });
-            if(confirm.isConfirmed) {
-                Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
-                try {
-                    let res = await fetch(`${baseUrl}/api/admin/blacklist/${phone}`, { method: "DELETE", headers: { "Admin-Password": window.adminPwd } });
-                    let data = await res.json().catch(() => ({}));
-                    if(res.ok) { Swal.fire('سەرکەوتوو', data.message || 'ژمارەکە لابرا', 'success'); } else Swal.fire('هەڵە', data.message || 'کێشەیەک ڕوویدا', 'error');
-                } catch(e) { Swal.fire('کێشە', 'کێشەی هێڵ هەیە', 'error'); }
-            }
-        }
-
-        async function toggleSystemStatus() {
-            let customMsg = "";
-            if (globalSystemIsActive) {
-                const { value: text } = await Swal.fire({ title: 'هۆکاری داخستنی سیستەم', input: 'textarea', inputPlaceholder: 'دەتوانیت لێرەدا پەیامێکی درێژ بنووسیت بۆ هاووڵاتیان...', showCancelButton: true, confirmButtonText: 'بەردەوام بە', cancelButtonText: 'پاشگەزبوونەوە' });
-                if (text === undefined) return; customMsg = text.trim();
-            } else {
-                const result = await Swal.fire({ title: 'کردنەوەی سایت', text: 'ئایا دەتەوێت سایتەکە بکەیتەوە بۆ هاووڵاتیان؟', icon: 'question', showCancelButton: true, confirmButtonText: 'بەڵێ، بیکەرەوە', cancelButtonText: 'نەخێر' });
-                if (!result.isConfirmed) return;
-            }
-            if (!window.adminPwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە', 'warning');
-            Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
-            try {
-                let url = `${baseUrl}/api/admin/toggle-status`; if (globalSystemIsActive && customMsg !== "") url += `?message=${encodeURIComponent(customMsg)}`;
-                let response = await fetch(url, { method: "POST", headers: { "Admin-Password": window.adminPwd } });
-                let result = await response.json().catch(() => ({}));
-                if(response.ok) { await Swal.fire('سەرکەوتوو', result.message || 'دۆخ گۆڕدرا!', 'success'); location.reload(); } 
-                else Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان دەسەڵاتت نییە!', 'error');
-            } catch (error) { Swal.fire('کێشە', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error'); }
-        }
-
-        async function toggleGpsStatus() {
-            if (!window.adminPwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە', 'warning');
-            let isChecked = document.getElementById("gpsToggleBtn").checked;
-            try {
-                let response = await fetch(`${baseUrl}/api/admin/toggle-gps?status=${isChecked}`, { method: "POST", headers: { "Admin-Password": window.adminPwd } });
-                let result = await response.json().catch(() => ({}));
-                if(response.ok) { Swal.fire('سەرکەوتوو', `سیستەمی GPS بە سەرکەوتوویی ${isChecked ? 'چالاک کرا' : 'ناچالاک کرا'}`, 'success'); isGpsRequired = isChecked; } 
-                else { document.getElementById("gpsToggleBtn").checked = !isChecked; Swal.fire('هەڵە', result.message || 'نەتوانرا دۆخەکە بگۆڕدرێت!', 'error'); }
-            } catch (error) { document.getElementById("gpsToggleBtn").checked = !isChecked; Swal.fire('کێشە', 'کێشە لە پەیوەندیکردن هەیە', 'error'); }
-        }
-
-        async function loadTodayUsers() {
-            let table = document.getElementById("usersTable"); let tbody = document.getElementById("tableBody");
-            if (!window.adminPwd) { return Swal.fire('ئاگاداری', 'تکایە سەرەتا لە بەشی ئەدمین چوونەژوورەوە بکە!', 'warning'); }
-            table.style.display = "table";
-            tbody.innerHTML = `<tr><td colspan='5'><div class='skeleton'></div></td></tr><tr><td colspan='5'><div class='skeleton'></div></td></tr><tr><td colspan='5'><div class='skeleton'></div></td></tr>`;
-            try {
-                let response = await fetch(`${apiUrl}/today-list`, { method: "GET", headers: { "Admin-Password": window.adminPwd } });
-                if (response.status === 429) { tbody.innerHTML = ""; table.style.display = "none"; return Swal.fire('سزادراویت!', 'بەهۆی زۆر تاقیکردنەوەی هەڵە، ئایپییەکەت سزادراوە. تکایە چاوەڕێ بکە.', 'error'); }
-                if (!response.ok) { let errResult = await response.json().catch(() => ({})); Swal.fire('هەڵە', errResult.message || 'پاسوۆردەکە هەڵەیە بەپێی سێرڤەر!', 'error'); tbody.innerHTML = ""; table.style.display = "none"; return; }
-                globalUsersData = await response.json(); tbody.innerHTML = ""; document.getElementById("feedbacksContainer").style.display = "none";
-                if(!Array.isArray(globalUsersData)) globalUsersData = [];
-                if(globalUsersData.length === 0) tbody.innerHTML = "<tr><td colspan='5' style='padding: 15px;'>هیچ ناوێک بۆ ئەمڕۆ تۆمار نەکراوە!</td></tr>";
-                else {
-                    globalUsersData.forEach(user => {
-                        let actionButtons = '';
-                        if (window.adminRole === 'superadmin') {
-                            actionButtons = `<button onclick="editUser(${user.id || user.Id}, '${user.name}', '${user.phone}')" style="background: #ffc107; color: black; padding: 4px 8px; margin: 0; width: auto; font-size: 12px; border-radius: 4px;" title="دەستکاریکردن"><i class="fa-solid fa-pen"></i></button><button onclick="deleteUser(${user.id || user.Id})" style="background: #dc3545; color: white; padding: 4px 8px; margin: 0; width: auto; font-size: 12px; border-radius: 4px;" title="سڕینەوە"><i class="fa-solid fa-trash"></i></button>`;
-                        } else { actionButtons = `<span style="color:var(--label-color); font-size:10px;">تەنها بۆ بینین</span>`; }
-                        let row = `<tr><td style="font-weight: bold; color: var(--primary-color);">${user.rank}</td><td>${user.name}</td><td>${user.phone}</td><td>${user.createdAt}</td><td class="no-print"><div style="display: flex; gap: 5px; justify-content: center;">${actionButtons}</div></td></tr>`;
-                        tbody.innerHTML += row;
-                    });
-                }
-                loadAdminStats();
-            } catch (error) { tbody.innerHTML = ""; table.style.display = "none"; Swal.fire('کێشەی هێڵ', 'سێرڤەرەکە خەوتووە یان کێشەی هێڵ هەیە، تکایە دووبارە تاقیبکەرەوە!', 'error'); }
-        }
-
-        function validateAdminFormInputs() {
-            let nameInput = document.getElementById("adminNameInput"); let phoneInput = document.getElementById("adminPhoneInput"); let adminRegBtn = document.getElementById("adminRegBtn");
-            let nameVal = nameInput.value.trim(); let phoneVal = phoneInput.value.trim(); let nameParts = nameVal.split(/\s+/); let englishRegex = /[a-zA-Z]/;
-            let isNameValid = nameVal !== "" && !englishRegex.test(nameVal) && nameParts.length >= 3;
-            let isPhoneValid = phoneVal.length === 11 && (phoneVal.startsWith("077") || phoneVal.startsWith("075") || phoneVal.startsWith("078"));
-            nameInput.className = nameVal === "" ? "" : (isNameValid ? "valid-input" : "invalid-input"); phoneInput.className = phoneVal === "" ? "" : (isPhoneValid ? "valid-input" : "invalid-input");
-            if (isNameValid && isPhoneValid) { adminRegBtn.disabled = false; adminRegBtn.style.background = "#28a745"; adminRegBtn.style.cursor = "pointer"; } 
-            else { adminRegBtn.disabled = true; adminRegBtn.style.background = "#cccccc"; adminRegBtn.style.cursor = "not-allowed"; }
-        }
-
-        function showPreRegForm() { document.getElementById("openPreRegBtn").style.display = "none"; document.getElementById("preRegForm").style.display = "block"; }
-
-        async function adminRegisterUser() {
-            let name = document.getElementById("adminNameInput").value.trim(); let phone = document.getElementById("adminPhoneInput").value.trim(); let regBtn = document.getElementById("adminRegBtn");
-            if(name === "" || phone === "") return Swal.fire('ئاگاداری', 'تکایە ناو و ژمارەی تەلەفۆن پڕبکەرەوە!', 'warning');
-            let originalText = regBtn.innerHTML; regBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> تکایە چاوەڕێ بکە...'; regBtn.disabled = true;
-            try {
-                let response = await fetch(apiUrl, { method: "POST", headers: { "Content-Type": "application/json", "Admin-Password": window.adminPwd }, body: JSON.stringify({ name: name, phone: phone }) });
-                if (response.status === 429) return Swal.fire('ئاگاداری', 'تکایە کەمێک چاوەڕێ بکە (Rate Limit)', 'warning');
-                let result = await response.json().catch(() => ({}));
-                if(response.ok) { Swal.fire('سەرکەوتوو بوو', result.message || 'ناو بە سەرکەوتوویی لەلایەن ئەدمنەوە تۆمارکرا!', 'success'); document.getElementById("adminNameInput").value = ""; document.getElementById("adminPhoneInput").value = ""; validateAdminFormInputs(); } 
-                else Swal.fire('هەڵە', result.message || 'پاسوۆرد هەڵەیە یان کێشەیەک هەیە!', 'error');
-            } catch (error) { Swal.fire('کێشەی هێڵ', 'کێشە لە پەیوەندیکردن هەیە یان سێرڤەرەکە خەوتووە!', 'error'); } finally { regBtn.innerHTML = originalText; regBtn.disabled = false; checkQuotaAndTimer(); }
-        }
-
-        async function editUser(id, currentName, currentPhone) {
-            const { value: formValues } = await Swal.fire({
-                title: 'دەستکاریکردنی زانیاری', html: `<input id="swal-input-name" class="swal2-input" value="${currentName}" placeholder="ناوی سیانی"> <input id="swal-input-phone" class="swal2-input" value="${currentPhone}" placeholder="ژمارەی مۆبایل">`, focusConfirm: false, showCancelButton: true, confirmButtonText: 'پاشەکەوتکردن', cancelButtonText: 'داخستن', preConfirm: () => [document.getElementById('swal-input-name').value, document.getElementById('swal-input-phone').value]
-            });
-            if (formValues) {
-                let newName = formValues[0].trim(); let newPhone = formValues[1].trim();
-                if (!newName || !newPhone) return Swal.fire('هەڵە', 'تکایە هەردوو خانەکە پڕبکەرەوە', 'error');
-                if (!newPhone.startsWith("077") && !newPhone.startsWith("075") && !newPhone.startsWith("078")) return Swal.fire('هەڵە', 'ژمارەی مۆبایل دەبێت بە 077 یان 075 یان 078 دەست پێبکات', 'error');
-                if (newPhone.length !== 11) return Swal.fire('هەڵە', 'ژمارەی مۆبایل دەبێت 11 ژمارە بێت', 'error');
-                Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
-                try {
-                    let response = await fetch(`${apiUrl}/${id}`, { method: "PUT", headers: { "Content-Type": "application/json", "Admin-Password": window.adminPwd }, body: JSON.stringify({ name: newName, phone: newPhone }) });
-                    let resData = await response.json().catch(() => ({}));
-                    if (response.ok) { Swal.fire('سەرکەوتوو بوو!', resData.message || 'زانیارییەکان گۆڕدران.', 'success'); loadTodayUsers(); } 
-                    else Swal.fire('هەڵە!', resData.message || 'دەسەڵاتت نییە یان کێشەیەک هەیە!', 'error');
-                } catch (error) { Swal.fire('کێشە', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error'); }
-            }
-        }
-
-        async function deleteUser(id) {
-            const confirmResult = await Swal.fire({ title: 'دڵنیایت؟', text: "ئایا بەڕاستی دەتەوێت ئەم ناوە بسڕیتەوە؟", icon: 'warning', showCancelButton: true, confirmButtonColor: '#dc3545', cancelButtonColor: '#6c757d', confirmButtonText: 'بەڵێ، بسڕەوە', cancelButtonText: 'نەخێر پەشیمان بوومەوە' });
-            if (confirmResult.isConfirmed) {
-                Swal.fire({ title: 'چاوەڕێ بکە...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
-                try {
-                    let response = await fetch(`${apiUrl}/${id}`, { method: "DELETE", headers: { "Admin-Password": window.adminPwd } });
-                    let resData = await response.json().catch(() => ({}));
-                    if (response.ok) { Swal.fire('سڕایەوە!', resData.message || 'ناوەکە بە سەرکەوتوویی سڕایەوە.', 'success'); loadTodayUsers(); checkQuotaAndTimer(); } 
-                    else Swal.fire('هەڵە!', resData.message || 'دەسەڵاتت نییە یان کێشەیەک هەیە!', 'error');
-                } catch (error) { Swal.fire('کێشە', 'کێشەیەک هەیە لە پەیوەندیکردن بە سێرڤەرەوە!', 'error'); }
-            }
-        }
-
-        function downloadExcel() {
-            if (globalUsersData.length === 0) return Swal.fire('ئاگاداری', "سەرەتا تکایە لە سەرەوە 'نیشاندانی لیستی ئەمڕۆ' دابگرە!", 'warning');
-            let csvContent = "\uFEFFژمارە,ناو,ژمارەی تەلەفۆن,کاتی تۆمارکردن\n";
-            globalUsersData.forEach(u => { csvContent += `${u.rank},"${u.name}","${u.phone}","${u.createdAt}"\n`; });
-            let blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            let url = URL.createObjectURL(blob); let a = document.createElement('a'); a.href = url; a.download = `Traffic_List_${new Date().toISOString().slice(0,10)}.csv`; document.body.appendChild(a); a.click(); document.body.removeChild(a);
-        }
-
-        let currentRating = 0; const ratingStars = document.querySelectorAll('#starContainer i'); const feedbackInput = document.getElementById('feedbackText'); const submitRatingBtn = document.getElementById('submitRatingBtn'); const ratingThanks = document.getElementById('ratingThanks'); const ratingSystem = document.getElementById('ratingSystem');
-
-        if (localStorage.getItem('user_has_rated')) { ratingSystem.style.display = 'none'; }
-
-        ratingStars.forEach(star => {
-            star.addEventListener('click', function() {
-                vibrate(); currentRating = parseInt(this.getAttribute('data-value'));
-                ratingStars.forEach(s => { if (parseInt(s.getAttribute('data-value')) <= currentRating) { s.classList.add('active'); } else { s.classList.remove('active'); } });
-                feedbackInput.style.display = 'block'; submitRatingBtn.style.display = 'block';
-            });
         });
-
-        async function submitRating() {
-            if(currentRating === 0) return; let feedback = feedbackInput.value.trim(); submitRatingBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; submitRatingBtn.disabled = true;
-            try { await fetch(`${baseUrl}/api/feedback`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ rating: currentRating, text: feedback }) }); } catch(e) {}
-            localStorage.setItem('user_has_rated', 'true'); document.getElementById('starContainer').style.display = 'none'; feedbackInput.style.display = 'none'; submitRatingBtn.style.display = 'none'; document.querySelector('.rating-title').style.display = 'none'; ratingThanks.style.display = 'block'; vibrate(30);
-            setTimeout(() => { ratingSystem.style.opacity = '0'; setTimeout(() => ratingSystem.style.display = 'none', 300); }, 4000);
-        }
-
-        async function loadFeedbacks() {
-            if (!window.adminPwd) return Swal.fire('ئاگاداری', 'سەرەتا چوونەژوورەوە بکە!', 'warning');
-            let listDiv = document.getElementById("feedbacksList"); listDiv.innerHTML = `<div class='skeleton'></div><div class='skeleton'></div><div class='skeleton'></div>`;
-            document.getElementById("feedbacksContainer").style.display = "block"; document.getElementById("usersTable").style.display = "none";
-            try {
-                let response = await fetch(`${baseUrl}/api/admin/feedback`, { headers: { "Admin-Password": window.adminPwd } });
-                if (response.ok) {
-                    let feedbacks = await response.json(); listDiv.innerHTML = "";
-                    if (!feedbacks || feedbacks.length === 0) { listDiv.innerHTML = "<p style='text-align:center; color: var(--label-color);'>هیچ فیدباکێک نییە</p>"; } 
-                    else { feedbacks.forEach(fb => { let stars = '⭐'.repeat(fb.rating); listDiv.innerHTML += `<div style="background: var(--bg-container); border: 1px solid var(--border-container); padding: 10px; border-radius: 8px; margin-bottom: 8px;"><div style="display:flex; justify-content:space-between; margin-bottom: 5px;"><span style="color: #ffc107; font-size:12px;">${stars}</span><span style="color: var(--label-color); font-size:10px;">${fb.date || ''}</span></div><p style="margin:0; font-size:12px; color: var(--text-main);">${fb.text || 'بێ تێبینی'}</p></div>`; }); }
-                } else { listDiv.innerHTML = ""; Swal.fire('هەڵە', 'دەسەڵاتت نییە یان کێشەیەک هەیە!', 'error'); }
-            } catch (error) { listDiv.innerHTML = ""; Swal.fire('کێشە', 'سێرڤەرەکە خەوتووە یان کێشەی هێڵ هەیە', 'error'); }
-        }
-
-        window.addEventListener('load', function() {
-            checkQuotaAndTimer(); // زانیارییەکان لە سێرڤەرەوە دەخوێنێتەوە بۆ شاردنەوە
-            setTimeout(function() { let splash = document.getElementById('splash-screen'); if(splash) { splash.classList.add('splash-hidden'); } }, 3000); 
-            calculateFine(true); loadNoticeText();
-            const urlParams = new URLSearchParams(window.location.search); const verifyToken = urlParams.get('verify');
-            if (verifyToken) {
-                document.getElementById('mainWrapper').style.display = 'none'; document.getElementById('verifySection').style.display = 'block';
-                fetch(`${apiUrl}/verify-qr?token=${encodeURIComponent(verifyToken)}`).then(res => res.json()).then(data => { document.getElementById('verifyResult').innerHTML = data.isValid ? `<span style="color:#28a745;">✓ ${data.message}</span>` : `<span style="color:#dc3545;">✕ ${data.message}</span>`; }).catch(err => { document.getElementById('verifyResult').innerHTML = "کێشە هەیە!"; });
-            } else { navTo('portal'); }
-        });
+        // --------------------------------------------------------------
 
         let deferredPrompt; const installAppContainer = document.getElementById('installAppContainer'); const installAppBtn = document.getElementById('installAppBtn');
         const isIos = () => { const userAgent = window.navigator.userAgent.toLowerCase(); return /iphone|ipad|ipod/.test(userAgent); };
@@ -1922,7 +1119,7 @@
 
         // ------------------ Service Worker Registration ------------------
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
+            document.addEventListener('DOMContentLoaded', () => {
                 navigator.serviceWorker.register('sw.js').then(registration => {
                     console.log('ServiceWorker registration successful');
                 }, err => {
