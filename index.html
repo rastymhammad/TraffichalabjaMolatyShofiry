@@ -26,326 +26,269 @@
             font-display: swap;
         }
 
-        /* ----- دیزاینە نوێیەکە لێرەوە دەست پێدەکات ----- */
+        html { background-color: #f0f8ff; }
+        html.dark-mode { background-color: #121212; }
+
         :root {
             --primary-color: #0056b3;
-            --primary-gradient: linear-gradient(135deg, var(--primary-color), #00aaff);
-            --glass-bg-light: rgba(255, 255, 255, 0.75);
-            --glass-border-light: rgba(255, 255, 255, 0.5);
-            --glass-shadow-light: 0 10px 30px rgba(0,0,0,0.06);
-            --glass-bg-dark: rgba(25, 25, 25, 0.75);
-            --glass-border-dark: rgba(255, 255, 255, 0.08);
-            --glass-shadow-dark: 0 10px 30px rgba(0,0,0,0.5);
+            --primary-gradient: linear-gradient(135deg, #0056b3, #00aaff);
         }
 
-        html { background-color: #f0f8ff; }
-        body { 
-            font-family: 'Rudaw', Tahoma, Arial, sans-serif; 
-            background: radial-gradient(circle at top left, #eef5fb 0%, #f0f8ff 50%, #e6f2ff 100%);
-            background-attachment: fixed;
-            color: var(--text-main); 
-            padding: 0 10px 100px 10px; 
-            margin: 0; text-align: center; transition: background 0.4s, color 0.4s; 
-            display: flex; flex-direction: column; align-items: center; min-height: 100vh; user-select: none; 
-        }
-
-        body.dark-mode { 
-            /* مۆدی OLED */
-            background: radial-gradient(circle at top left, #121212 0%, #000000 50%, #050505 100%);
-        }
-
-        :root {
-            --bg-body: transparent; 
-            --bg-container: var(--glass-bg-light); 
-            --text-main: #2c3e50; 
-            --border-container: var(--glass-border-light);
-            --header-bg: var(--glass-bg-light); 
-            --header-text: var(--primary-color); 
-            --input-bg: rgba(255, 255, 255, 0.9); 
-            --input-border: rgba(0,0,0,0.1);
-            --input-text: #333; 
-            --toggle-bg: rgba(255, 255, 255, 0.6); 
-            --toggle-border: rgba(255, 255, 255, 0.4); 
-            --slider-bg: #e2e8f0; 
-            --date-bg: rgba(255, 255, 255, 0.8);
-            --date-border: rgba(255, 165, 0, 0.3); 
-            --date-title: #e67e22; 
-            --label-color: #6c7a89; 
-            --results-bg: rgba(255, 255, 255, 0.85);
-            --results-border: rgba(0,0,0,0.05); 
-            --text-row: #34495e; 
-            --total-color: #2980b9; 
-            --fine-color: #c0392b;
-            --fee-color: #2980b9; 
-            --info-bg: rgba(236, 240, 241, 0.8); 
-            --info-text: #7f8c8d; 
-            --modal-overlay: rgba(0, 0, 0, 0.5);
-            --modal-bg: rgba(255, 255, 255, 0.95); 
-            --modal-text: #2c3e50; 
-            --grid-bg: #ecf0f1; 
-            --dynamic-status-color: #27ae60;
-            --box-shadow-main: var(--glass-shadow-light);
-        }
-
-        body.dark-mode {
-            --bg-container: var(--glass-bg-dark); 
-            --text-main: #ecf0f1; 
-            --border-container: var(--glass-border-dark);
-            --header-bg: var(--glass-bg-dark); 
-            --header-text: var(--primary-color); 
-            --input-bg: rgba(30, 30, 30, 0.8); 
-            --input-border: rgba(255,255,255,0.1);
-            --input-text: #fdfdfd; 
-            --toggle-bg: rgba(30, 30, 30, 0.6); 
-            --toggle-border: rgba(255,255,255,0.05); 
-            --slider-bg: #4a4a4a; 
-            --date-bg: rgba(243, 156, 18, 0.05);
-            --date-border: rgba(243, 156, 18, 0.2); 
-            --date-title: #f39c12; 
-            --label-color: #95a5a6; 
-            --results-bg: rgba(20, 20, 20, 0.85);
-            --results-border: rgba(255,255,255,0.05); 
-            --text-row: #bdc3c7; 
-            --total-color: #3498db; 
-            --fine-color: #e74c3c;
-            --fee-color: #3498db; 
-            --info-bg: rgba(25, 25, 25, 0.8); 
-            --info-text: #95a5a6; 
-            --modal-overlay: rgba(0, 0, 0, 0.7);
-            --modal-bg: rgba(30, 30, 30, 0.95); 
-            --modal-text: #ecf0f1; 
-            --grid-bg: #2c3e50;
-            --box-shadow-main: var(--glass-shadow-dark);
-        }
-
-        /* دیزاینی سەرەوە (Header) */
-        .header-title {
-            position: sticky; top: 15px; z-index: 100; 
-            background: var(--header-bg) !important; 
-            border: 1px solid var(--border-container);
-            backdrop-filter: blur(20px) saturate(150%); -webkit-backdrop-filter: blur(20px) saturate(150%);
-            box-shadow: var(--box-shadow-main) !important; 
-            padding: 14px 20px; border-radius: 20px;
-            margin: 5px auto 15px auto; 
-            border-bottom: 3px solid var(--primary-color); 
-            width: 100%; display: flex; align-items: center; justify-content: center;
-            transition: all 0.4s ease;
-        }
-        .header-title h1 { color: var(--primary-color); font-size: 17px; margin: 0; font-weight: bold; text-align: center; text-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .header-btns { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); display: flex; gap: 12px; align-items: center; z-index: 10; }
-        .theme-toggle-btn, .color-picker-btn { background: transparent; border: none; font-size: 20px; cursor: pointer; padding: 0; margin: 0; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        .theme-toggle-btn:hover, .color-picker-btn:hover { transform: scale(1.2) rotate(5deg); }
-
-        /* مینیوی خوارەوەی سەراوژێر (Floating Bottom Nav) */
-        .bottom-nav {
-            position: fixed !important; bottom: 20px !important; width: 90% !important; left: 5% !important;
-            display: flex !important; flex-direction: row !important; justify-content: space-around !important;
-            align-items: center !important; 
-            border-radius: 35px !important; 
-            background: var(--glass-bg-light) !important;
-            backdrop-filter: blur(25px) saturate(200%) !important; -webkit-backdrop-filter: blur(25px) saturate(200%) !important; 
-            padding: 8px 5px !important;
-            z-index: 1000 !important; 
-            border: 1px solid var(--glass-border-light) !important;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.05) !important;
-            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease !important;
-        }
-        body.dark-mode .bottom-nav { 
-            background: var(--glass-bg-dark) !important; 
-            border: 1px solid var(--glass-border-dark) !important;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5), 0 5px 15px rgba(0,0,0,0.3) !important; 
-        }
-        .bottom-nav.hidden-by-modal { transform: translateY(180%) scale(0.9) !important; opacity: 0; }
-        .nav-item { 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            color: var(--label-color); cursor: pointer; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
-            flex: 1; padding: 10px 0; border-radius: 25px;
-            -webkit-tap-highlight-color: transparent; 
-        }
-        .nav-item i { font-size: 20px; margin-bottom: 4px; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        .nav-item span { font-size: 10px; font-weight: bold; transition: all 0.3s ease; }
-        
-        .nav-item.active { 
-            background: rgba(0,0,0,0.04);
-            transform: translateY(-3px);
-        }
-        body.dark-mode .nav-item.active { background: rgba(255,255,255,0.08); }
-        .nav-item.active i { transform: scale(1.15); color: var(--primary-color) !important; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
-        body.dark-mode .nav-item.active i { filter: drop-shadow(0 0 8px var(--primary-color)) !important; } /* نیۆن بۆ دارک مۆد */
-        .nav-item.active span { color: var(--primary-color) !important; }
-
-        #nav-portal i, #nav-fine i, #nav-exam i, #nav-signs i, .nav-item span { color: var(--label-color); filter: none !important; }
-
-        /* کاردەکانی پەڕەی سەرەکی بە شێوازی 3D/Glass */
-        .portal-cards { display: flex; flex-direction: column; gap: 14px; width: 100%; align-items: center; padding-top: 5px; }
-        .portal-card {
-            background: var(--bg-container); 
-            border: 1px solid var(--border-container); 
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border-radius: 20px; padding: 16px 20px; cursor: pointer; 
-            display: grid; grid-template-columns: 40px 1fr 30px; align-items: center; 
-            width: 100%; max-width: 380px; margin: 0 auto; 
-            box-shadow: var(--box-shadow-main), inset 0 0 0 1px rgba(255,255,255,0.2); 
-            min-height: 80px; 
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-        }
-        .portal-card:hover, .portal-card:active { 
-            transform: translateY(-5px) scale(1.02); 
-            border-color: var(--primary-color); 
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1), inset 0 0 0 1px rgba(255,255,255,0.3); 
-        }
-        body.dark-mode .portal-card:hover {
-            box-shadow: 0 15px 30px rgba(0,0,0,0.6), 0 0 15px rgba(255,255,255,0.05); 
-        }
-        .portal-card i { 
-            font-size: 28px; color: var(--primary-color); justify-self: start; 
-            transition: transform 0.3s ease;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
-        }
-        body.dark-mode .portal-card i { filter: drop-shadow(0 0 8px var(--primary-color)); } /* نیۆن */
-        .portal-card:hover i { transform: scale(1.1) rotate(-5deg); }
-        .portal-card-content { text-align: center; grid-column: 2; padding: 0 10px; }
-        .portal-card-content h3 { margin: 0 0 5px 0; font-size: 14px; color: var(--text-main); font-weight: bold; text-shadow: 0 1px 2px rgba(0,0,0,0.02); }
-        .portal-card-content p { margin: 0; font-size: 11px; color: var(--label-color); }
-
-        /* بەشەکانی تر (Containers) */
-        .container, .fine-container, .signs-container, .exam-container, .safety-container, .offices-container { 
-            background: var(--bg-container); 
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-radius: 20px; padding: 20px; 
-            border: 1px solid var(--border-container); 
-            width: 100%; box-shadow: var(--box-shadow-main); 
-            transition: all 0.3s ease;
-        }
-
-        /* دوگمەکان (Soft UI Buttons) */
-        button.action-btn, .start-quiz-btn { 
-            background: linear-gradient(135deg, #28a745, #2ecc71); 
-            color: white; border: none; padding: 14px 20px; cursor: pointer; 
-            border-radius: 12px; font-size: 15px; font-weight: bold; width: 100%; 
-            margin-top: 10px; font-family: 'Rudaw', Tahoma, sans-serif; 
-            box-shadow: 0 6px 15px rgba(40, 167, 69, 0.3);
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important; 
-        }
-        button.action-btn:disabled { background: #cccccc !important; color: #888 !important; box-shadow: none !important; cursor: not-allowed; transform: none !important; }
-        button.action-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(40, 167, 69, 0.4); }
-        button.action-btn:active:not(:disabled) { transform: translateY(1px) scale(0.97) !important; box-shadow: 0 2px 10px rgba(40, 167, 69, 0.3); }
-        
-        .search-btn { background: linear-gradient(135deg, var(--primary-color), #3498db) !important; box-shadow: 0 6px 15px rgba(0, 86, 179, 0.3) !important; }
-        .search-btn:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(0, 86, 179, 0.4) !important; }
-        body.dark-mode .search-btn { box-shadow: 0 6px 15px rgba(0, 86, 179, 0.5) !important; }
-
-        .btn-reset { 
-            background: rgba(255,255,255,0.2); backdrop-filter: blur(5px);
-            border: 1px solid var(--date-border); color: var(--date-title); 
-            border-radius: 8px; padding: 4px 10px; font-size: 11px; font-weight: bold; cursor: pointer; 
-            transition: all 0.2s ease;
-        }
-        .btn-reset:hover { background: var(--date-border); color: #fff; }
-
-        /* Input Fields */
-        .input-wrapper input, .input-wrapper select, .input-wrapper textarea { 
-            background: var(--input-bg); color: var(--input-text);
-            border: 2px solid var(--input-border); border-radius: 12px; 
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .input-wrapper input:focus { border-color: var(--primary-color); box-shadow: 0 0 0 4px rgba(0,86,179,0.1), inset 0 2px 5px rgba(0,0,0,0.02); transform: translateY(-2px); }
-        body.dark-mode .input-wrapper input:focus { box-shadow: 0 0 0 4px rgba(255,255,255,0.05), inset 0 2px 5px rgba(0,0,0,0.2); }
-
-        /* Date Boxes */
-        .date-box { 
-            background: var(--toggle-bg); border: 1px solid var(--toggle-border); 
-            border-radius: 12px; padding: 8px 2px; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.02); 
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important; 
-        }
-        .date-box:hover, .date-box:active { transform: translateY(-3px) scale(1.03) !important; box-shadow: 0 8px 15px rgba(0,0,0,0.06); border-color: var(--primary-color); }
-        body.dark-mode .date-box:hover { box-shadow: 0 8px 15px rgba(0,0,0,0.3); }
-
-        /* ئەنیمەیشنی هاتنە ژوورەوە (Page Transition) */
-        @keyframes slideFade {
-            0% { opacity: 0; transform: translateY(15px) scale(0.98); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        .page-section { display: none; animation: slideFade 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
-
-        /* مۆداڵ (Modal Glass) */
-        .modal-overlay { background: var(--modal-overlay); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
-        .modal-content { 
-            background: var(--modal-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255,255,255,0.2);
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
-        }
-        .grid-item { border-radius: 10px; transition: all 0.2s ease; }
-        .grid-item:active { transform: scale(0.9); }
-
-        /* ڕوونکردنەوەی غەرامە (Rule Box) */
-        .fine-rule-box { 
-            background: rgba(0, 86, 179, 0.05); 
-            border: 1px dashed rgba(0, 86, 179, 0.3); 
-            border-radius: 12px; padding: 15px; margin-top: 15px; font-size: 12px; color: var(--text-main); text-align: right; 
-            display: none; line-height: 1.8; 
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
-            animation: slideFade 0.4s ease forwards;
-        }
-        body.dark-mode .fine-rule-box { background: rgba(255, 255, 255, 0.02); border-color: rgba(255, 255, 255, 0.1); }
-        .fine-rule-box h4 { margin: 0 0 8px 0; font-size: 13px; color: var(--primary-color); border-bottom: 1px solid rgba(0, 86, 179, 0.1); padding-bottom: 6px; }
-        body.dark-mode .fine-rule-box h4 { border-bottom-color: rgba(255, 255, 255, 0.05); }
-
-        /* هێماکانی هاتووچۆ 3D */
-        .sign-card { 
-            background: rgba(255,255,255,0.8) !important; 
-            backdrop-filter: blur(5px);
-            border: 1px solid var(--border-container); border-radius: 16px; 
-            box-shadow: 0 6px 12px rgba(0,0,0,0.04); 
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
-        }
-        body.dark-mode .sign-card { background: rgba(30,30,30,0.8) !important; box-shadow: 0 6px 12px rgba(0,0,0,0.3); }
-        .sign-card:hover { transform: translateY(-4px) scale(1.03); border-color: var(--primary-color); box-shadow: 0 10px 20px rgba(0,0,0,0.08); }
-        .sign-card img { filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
-
-        /* وێنەکانی سەرەتا و لۆدینگەکان */
         @keyframes pulseRotate {
             0% { transform: scale(1) rotate(0deg); opacity: 0.8; }
-            50% { transform: scale(1.15) rotate(180deg); opacity: 1; filter: drop-shadow(0 0 8px var(--primary-color)); }
+            50% { transform: scale(1.15) rotate(180deg); opacity: 1; filter: drop-shadow(0 0 5px rgba(220, 53, 69, 0.7)); }
             100% { transform: scale(1) rotate(360deg); opacity: 0.8; }
         }
 
+        .fa-hourglass-half, #countdownTimer i { display: inline-block; animation: pulseRotate 2.5s infinite ease-in-out; }
+
         @keyframes badgePulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.4); }
-            70% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(39, 174, 96, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(39, 174, 96, 0); }
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(72, 187, 120, 0.4); }
+            70% { transform: scale(1.02); box-shadow: 0 0 0 8px rgba(72, 187, 120, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(72, 187, 120, 0); }
         }
 
-        .skeleton { border-radius: 8px; }
+        .status-badge { animation: badgePulse 2s infinite; }
 
-        .notice-slider-box { border-radius: 16px; box-shadow: var(--box-shadow-main); }
-        .toggle-container { border-radius: 12px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.02); }
-        .results { border-radius: 16px; border-width: 2px; }
+        @keyframes softGlow {
+            0% { box-shadow: 0 0 5px rgba(40, 167, 69, 0.4); }
+            50% { box-shadow: 0 0 18px rgba(40, 167, 69, 0.8); }
+            100% { box-shadow: 0 0 5px rgba(40, 167, 69, 0.4); }
+        }
+        button.action-btn:not(:disabled) { animation: softGlow 3s infinite; }
+
+        @keyframes slideFade {
+            0% { opacity: 0; transform: translateX(25px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+        .page-section { display: none; animation: slideFade 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; }
+
+        .skeleton { background: linear-gradient(90deg, var(--bg-container) 25%, var(--info-bg) 50%, var(--bg-container) 75%); background-size: 200% 100%; animation: skeletonLoading 1.5s infinite; border-radius: 6px; height: 20px; width: 100%; margin: 5px 0; }
+        @keyframes skeletonLoading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        .swal2-popup { border-radius: 20px !important; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); background: rgba(255, 255, 255, 0.85) !important; box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important; border: 1px solid rgba(255,255,255,0.6) !important; font-family: 'Rudaw', Tahoma, sans-serif !important; }
+        body.dark-mode .swal2-popup { background: rgba(30, 30, 30, 0.85) !important; border-color: rgba(255,255,255,0.1) !important; color: #e0e0e0 !important; }
+        body.dark-mode .swal2-title, body.dark-mode .swal2-html-container { color: #e0e0e0 !important; }
+        body.dark-mode .swal2-input, body.dark-mode .swal2-textarea { background: #2c2c2c !important; color: #fff !important; border-color: #444 !important; }
+
+        body { background: linear-gradient(135deg, #f0f8ff 0%, #e6f2ff 100%); background-attachment: fixed; }
+        body.dark-mode { background: linear-gradient(135deg, #121212 0%, #1a1a2e 100%); }
+
+        .header-title {
+            position: sticky; top: 10px; z-index: 100; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.85) !important; border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06) !important; padding: 12px 20px; border-radius: 12px;
+            margin: 5px auto 12px auto; border-bottom: 4px solid var(--primary-color); transition: 0.3s; width: 100%;
+            display: flex; align-items: center; justify-content: center;
+        }
+        body.dark-mode .header-title { background: rgba(30, 30, 30, 0.85) !important; border-color: rgba(255,255,255,0.1); box-shadow: 0 8px 20px rgba(0,0,0,0.3) !important; }
+        .header-title h1 { color: var(--primary-color); font-size: 16px; margin: 0; font-weight: bold; text-align: center; }
         
-        .exam-option { border-radius: 12px; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        .exam-option:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .header-btns { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); display: flex; gap: 8px; align-items: center; z-index: 10; }
+        .theme-toggle-btn, .color-picker-btn { background: transparent; border: none; font-size: 18px; cursor: pointer; padding: 0; margin: 0; transition: transform 0.2s; }
+        .theme-toggle-btn:hover, .color-picker-btn:hover { transform: scale(1.1); }
 
-        footer { border-radius: 20px 20px 0 0; background: var(--header-bg); backdrop-filter: blur(15px); border-top: 1px solid var(--border-container); box-shadow: 0 -5px 20px rgba(0,0,0,0.03); margin-bottom: 25px;}
-        body.dark-mode footer { box-shadow: 0 -5px 20px rgba(0,0,0,0.3); }
+        .bottom-nav {
+            position: fixed !important; bottom: 15px !important; width: 92% !important; left: 4% !important;
+            display: flex !important; flex-direction: row !important; justify-content: space-around !important;
+            align-items: center !important; border-radius: 20px !important; box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+            border: 1px solid rgba(255,255,255,0.4) !important; background: rgba(255, 255, 255, 0.85) !important;
+            backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; padding: 10px 0 !important;
+            z-index: 1000 !important; transition: transform 0.4s cubic-bezier(0.3, 0.8, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease !important;
+        }
+        body.dark-mode .bottom-nav { background: rgba(30, 30, 30, 0.85) !important; box-shadow: 0 10px 25px rgba(0,0,0,0.4) !important; border-color: rgba(255,255,255,0.1) !important; }
+        .bottom-nav.hidden-by-modal { transform: translateY(150%) !important; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--label-color); cursor: pointer; transition: all 0.3s ease; flex: 1; -webkit-tap-highlight-color: transparent; }
+        .nav-item i { font-size: 20px; margin-bottom: 3px; transition: transform 0.2s; }
+        .nav-item span { font-size: 10px; font-weight: bold; }
+        
+        #nav-portal i, #nav-fine i, #nav-exam i, #nav-signs i, .nav-item span { color: #333333 !important; filter: none !important; }
+        body.dark-mode #nav-portal i, body.dark-mode #nav-fine i, body.dark-mode #nav-exam i, body.dark-mode #nav-signs i, body.dark-mode .nav-item span { color: #ffffff !important; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5)) !important; }
+        .nav-item.active i, .nav-item.active span { color: var(--primary-color) !important; }
 
-        /* Utilities */
+        .portal-cards { display: flex; flex-direction: column; gap: 12px; width: 100%; align-items: center; }
+        .portal-card {
+            background: var(--header-bg); border: 1px solid var(--border-container); border-radius: 16px; padding: 14px 18px; cursor: pointer; display: grid; grid-template-columns: 35px 1fr 35px; align-items: center; width: 100%; max-width: 380px; margin: 0 auto; box-shadow: 0 4px 15px rgba(0,0,0,0.04); min-height: 75px; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease !important;
+        }
+        .portal-card:hover { transform: translateY(-4px) scale(1.03); border-color: var(--primary-color); box-shadow: 0 8px 20px rgba(0,86,179,0.15); }
+        .portal-card i { font-size: 26px; color: var(--primary-color); justify-self: start; }
+        .portal-card-content { text-align: center; grid-column: 2; padding: 0 5px; }
+        .portal-card-content h3 { margin: 0 0 4px 0; font-size: 14px; color: var(--text-main); font-weight: bold; }
+        .portal-card-content p { margin: 0; font-size: 11px; color: var(--label-color); }
+
+        .signs-container, .exam-container, .safety-container, .offices-container { background: var(--bg-container); border-radius: 16px; padding: 18px; border: 1px solid var(--border-container); text-align: right; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .signs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; max-height: 70vh; overflow-y: auto; padding: 5px; margin-top: 10px; }
+        .sign-card { background: #ffffff !important; border: 1px solid var(--border-container); border-radius: 12px; padding: 10px; text-align: center; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); cursor: pointer; transition: 0.2s; height: 110px; }
+        .sign-card:hover { transform: translateY(-2px); border-color: var(--primary-color); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .sign-card img { width: 100%; height: 100%; object-fit: contain; }
+
+        .sign-lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 99999; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+        .sign-lightbox.show { opacity: 1; visibility: visible; }
+        .lightbox-content { background: #ffffff; border-radius: 24px; padding: 25px 15px; width: 95%; max-width: 420px; text-align: center; position: relative; box-shadow: 0 15px 40px rgba(0,0,0,0.4); color: #333333; }
+        .lightbox-close { position: absolute; top: 12px; left: 12px; background: #f1f5f9; border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #333; transition: 0.2s; z-index: 10; }
+        .lightbox-close:hover { background: #e2e8f0; }
+        .lightbox-img-box { width: 100%; height: 320px; margin: 10px auto; display: flex; align-items: center; justify-content: center; background: #ffffff; border-radius: 16px; border: 2px solid #e2e8f0; box-shadow: 0 4px 15px rgba(0,0,0,0.08); padding: 5px; }
+        .lightbox-img-box img { width: 100%; height: 100%; object-fit: contain; }
+        .lightbox-nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; gap: 10px; }
+        .lightbox-btn { flex: 1; background: var(--primary-color); color: white; border: none; padding: 12px; border-radius: 12px; font-size: 13px; font-weight: bold; cursor: pointer; font-family: 'Rudaw', Tahoma, sans-serif; transition: 0.2s; }
+        .lightbox-btn:hover { opacity: 0.9; }
+
+        .exam-option { background: var(--toggle-bg); border: 2px solid var(--toggle-border); border-radius: 10px; padding: 12px; margin: 8px 0; cursor: pointer; text-align: right; font-size: 13px; color: var(--text-main); transition: 0.2s; }
+        .exam-option:hover { border-color: var(--primary-color); background: var(--info-bg); }
+        .exam-option.correct { background: #d4edda !important; border-color: #28a745 !important; color: #155724 !important; font-weight: bold; }
+        .exam-option.wrong { background: #f8d7da !important; border-color: #dc3545 !important; color: #721c24 !important; font-weight: bold; }
+        .safety-item { background: var(--toggle-bg); border: 1px solid var(--toggle-border); border-radius: 10px; padding: 12px; margin-bottom: 10px; font-size: 12px; line-height: 1.6; color: var(--text-main); display: flex; align-items: flex-start; gap: 10px; }
+        .safety-item i { color: var(--primary-color); font-size: 16px; margin-top: 2px; flex-shrink: 0; }
+
+        .office-card { background: var(--toggle-bg); border: 1px solid var(--toggle-border); border-radius: 12px; padding: 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; }
+        .office-card:hover { border-color: var(--primary-color); transform: translateY(-2px); }
+        .office-info h4 { margin: 0 0 4px 0; font-size: 14px; color: var(--text-main); font-weight: bold; }
+        .office-info p { margin: 0; font-size: 11px; color: var(--label-color); }
+        .map-btn { background: #e74c3c; color: white; border: none; padding: 8px 14px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
+        .map-btn:hover { opacity: 0.9; color: white; }
+
+        .exam-timer { display: inline-flex; align-items: center; gap: 5px; background: rgba(220, 53, 69, 0.1); color: #dc3545; padding: 4px 10px; border-radius: 20px; font-weight: bold; font-size: 12px; }
+
+        button.action-btn, .start-quiz-btn, .date-box { transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.3s ease !important; }
+        button.action-btn:active:not(:disabled), .start-quiz-btn:active, .date-box:active { transform: scale(0.96) !important; }
+        
+        .notice-slider-box { background: var(--bg-container); border: 2px solid var(--primary-color); border-radius: 12px; padding: 10px 15px; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,86,179,0.08); text-align: center; width: 100%; overflow: hidden; position: relative; }
+        .notice-header-row { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: bold; color: var(--primary-color); margin-bottom: 6px; border-bottom: 1px dashed var(--border-container); padding-bottom: 4px; }
+        .notice-scroll-container.horizontal { width: 100%; height: 25px; display: flex; align-items: center; }
+        .notice-scroll-container.horizontal marquee { font-size: 12px; color: var(--text-main); font-weight: bold; width: 100%; text-align: center; }
+        .notice-scroll-container.vertical { width: 100%; height: 75px; overflow: hidden; position: relative; text-align: center; }
+        .notice-scroll-container.vertical marquee { font-size: 12px; color: var(--text-main); line-height: 1.6; white-space: pre-line; text-align: center; width: 100%; height: 100%; }
+
+        /* ستايڵێکی نوێ بۆ ڕوونکردنەوەی غەرامەکە */
+        .fine-rule-box { background: rgba(0, 86, 179, 0.08); border: 1px dashed rgba(0, 86, 179, 0.3); border-radius: 8px; padding: 12px; margin-top: 15px; font-size: 12px; color: var(--text-main); text-align: right; display: none; line-height: 1.6; }
+        .fine-rule-box h4 { margin: 0 0 6px 0; font-size: 13px; color: var(--primary-color); border-bottom: 1px solid rgba(0, 86, 179, 0.2); padding-bottom: 4px; }
+        .fine-rule-box i { color: var(--primary-color); margin-left: 5px; }
+
         * { box-sizing: border-box; }
-        .no-print { display: block; }
-        
-        .rating-container { border-radius: 16px; backdrop-filter: blur(15px); }
-        .offline-banner { backdrop-filter: blur(10px); }
 
-        .spinner { border-top-color: var(--primary-color); }
+        :root {
+            --bg-body: #f0f8ff; --bg-container: white; --text-main: #333; --border-container: #e2e8f0;
+            --header-bg: white; --header-text: var(--primary-color); --input-bg: white; --input-border: #f5c6cb;
+            --input-text: #333; --badge-bg: linear-gradient(135deg, #1a365d, #2a4365); --badge-text: white;
+            --toggle-bg: #f7fafc; --toggle-border: #e2e8f0; --slider-bg: #e2e8f0; --date-bg: #fffaf0;
+            --date-border: #feebc8; --date-title: #dd6b20; --label-color: #718096; --results-bg: #f7fafc;
+            --results-border: #e2e8f0; --text-row: #4a5568; --total-color: #2b6cb0; --fine-color: #e53e3e;
+            --fee-color: #3182ce; --info-bg: #edf2f7; --info-text: #718096; --modal-overlay: rgba(0, 0, 0, 0.4);
+            --modal-bg: white; --modal-text: #2d3748; --grid-bg: #edf2f7; --dynamic-status-color: #48bb78;
+        }
+
+        body.dark-mode {
+            --bg-body: #121212; --bg-container: #1e1e1e; --text-main: #e0e0e0; --border-container: #334155;
+            --header-bg: #1e1e1e; --header-text: #4da3ff; --input-bg: #2c2c2c; --input-border: #444;
+            --input-text: #fff; --badge-bg: linear-gradient(135deg, #0f172a, #1e293b); --badge-text: #f8fafc;
+            --toggle-bg: #1e293b; --toggle-border: #334155; --slider-bg: #475569; --date-bg: rgba(245, 158, 11, 0.05);
+            --date-border: rgba(245, 158, 11, 0.2); --date-title: #fbbf24; --label-color: #94a3b8; --results-bg: #0f172a;
+            --results-border: #334155; --text-row: #94a3b8; --total-color: #38bdf8; --fine-color: #f87171;
+            --fee-color: #60a5fa; --info-bg: #0f172a; --info-text: #94a3b8; --modal-overlay: rgba(15, 23, 42, 0.6);
+            --modal-bg: #1e293b; --modal-text: #f8fafc; --grid-bg: #334155;
+        }
+
+        @media all and (display-mode: standalone) { #installAppContainer { display: none !important; } }
+
+        body { font-family: 'Rudaw', Tahoma, Arial, sans-serif; background-color: var(--bg-body); color: var(--text-main); padding: 0 10px 80px 10px; margin: 0; text-align: center; transition: background-color 0.4s, color 0.4s; display: flex; flex-direction: column; align-items: center; min-height: 100vh; user-select: none; }
+        
+        #ptr-indicator { width: 100%; height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: bold; color: var(--header-text); transition: height 0.2s ease-out; }
+        
+        .main-content { flex: 1; width: 100%; max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+        #portalSection, #fineSection, #examSection, #safetySection, #signsSection, #officesSection { width: 100%; }
+        
+        .visitor-counter { text-align: center; font-size: 12px; color: var(--label-color); margin-bottom: 8px; font-weight: bold; }
+        .visitor-counter b { color: var(--text-main); }
+        
+        .container { background: var(--bg-container); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: 0 auto 20px auto; border: 1px solid var(--border-container); width: 100%; }
+        h2 { color: var(--primary-color); margin-top: 0; margin-bottom: 15px; font-size: 16px; }
+
+        .fine-container { background: var(--bg-container); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 18px; border: 2px solid var(--border-container); text-align: center; width: 100%; }
+        .toggle-container { display: flex; justify-content: space-between; align-items: center; background: var(--toggle-bg); padding: 10px; border-radius: 10px; margin-bottom: 12px; border: 1px solid var(--toggle-border); }
+        .switch { position: relative; display: inline-block; width: 50px; height: 28px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--slider-bg); border-radius: 28px; }
+        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: #48bb78; }
+        input:checked + .slider:before { transform: translateX(22px); }
+        
+        .checklist-box { background: var(--toggle-bg); border: 1px solid var(--toggle-border); border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; text-align: right; cursor: pointer; user-select: none; }
+        .checklist-title { font-size: 12px; font-weight: bold; color: var(--text-main); margin-bottom: 0px; display: flex; align-items: center; gap: 6px; }
+        #checklistIcon { transition: transform 0.3s ease; }
+        .checklist-items { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 11px; color: var(--label-color); padding-top: 10px; border-top: 1px dashed var(--toggle-border); }
+        .check-item { display: flex; align-items: center; gap: 5px; }
+        
+        .date-section { background: var(--date-bg); border: 1px solid var(--date-border); border-radius: 12px; padding: 12px; margin-bottom: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+        .date-title-wrap { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .date-title { color: var(--date-title); font-weight: bold; font-size: 13px; }
+        .btn-reset { background: transparent; border: 1px solid var(--date-border); color: var(--date-title); border-radius: 5px; padding: 2px 8px; font-size: 11px; font-weight: bold; cursor: pointer; }
+        .date-inputs { display: flex; gap: 8px; justify-content: center; }
+        .date-box { flex: 1; text-align: center; background: var(--bg-container); border: 1px solid var(--toggle-border); border-radius: 8px; padding: 6px 2px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.02); transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; cursor: pointer; }
+        .date-box:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.06); border-color: var(--primary-color); }
+        .date-box label { display: block; font-size: 11px; color: var(--label-color); margin-bottom: 2px; font-weight: bold; pointer-events: none;}
+        .date-custom-input { width: 100%; padding: 0; border: none; background: transparent; text-align: center; font-size: 16px; font-weight: bold; color: var(--input-text); pointer-events: none; }
+        
+        .results { background: var(--results-bg); border-radius: 10px; padding: 12px; border: 2px solid var(--dynamic-status-color); margin-bottom: 12px; position: relative; overflow: hidden; z-index: 1; text-align: right; }
+        .result-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed var(--results-border); font-size: 13px; color: var(--text-row); position: relative; z-index: 2; }
+        .result-row:last-child { border-bottom: none; }
+        .total-row { font-size: 16px; font-weight: bold; color: var(--total-color); }
+        .fine-row { color: var(--fine-color); font-weight: bold; }
+        .fee-row { color: var(--fee-color); font-weight: bold; }
+        
+        .gauge-container { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%); width: 200px; height: 100px; text-align: center; display: none; opacity: 0.25; pointer-events: none; z-index: 0; }
+        .gauge { position: relative; width: 200px; height: 100px; overflow: hidden; background: var(--slider-bg); border-top-left-radius: 100px; border-top-right-radius: 100px; }
+        .gauge-fill { position: absolute; top: 100%; left: 0; width: inherit; height: 100%; background: #48bb78; transform-origin: center top; transition: transform 0.8s ease-out, background 0.8s; border-bottom-left-radius: 100px; border-bottom-right-radius: 100px; }
+        .gauge-cover { position: absolute; top: 20px; left: 20px; width: 160px; height: 80px; background: var(--results-bg); border-top-left-radius: 80px; border-top-right-radius: 80px; }
+        .needle { position: absolute; bottom: 0; left: 50%; width: 4px; height: 80px; background: var(--input-text); transform-origin: bottom center; transform: translateX(-50%) rotate(-90deg); transition: transform 0.8s; border-radius: 4px; z-index: 2; }
+        
+        /* ستايڵێکی نوێ بۆ ڕوونکردنەوەی غەرامەکە */
+        .fine-rule-box { background: rgba(0, 86, 179, 0.08); border: 1px dashed rgba(0, 86, 179, 0.3); border-radius: 8px; padding: 12px; margin-top: 15px; font-size: 12px; color: var(--text-main); text-align: right; display: none; line-height: 1.6; }
+        .fine-rule-box h4 { margin: 0 0 6px 0; font-size: 13px; color: var(--primary-color); border-bottom: 1px solid rgba(0, 86, 179, 0.2); padding-bottom: 4px; }
+        .fine-rule-box i { color: var(--primary-color); margin-left: 5px; }
+
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-overlay); justify-content: center; align-items: flex-end; z-index: 1000; }
+        .modal-content { background: var(--modal-bg); padding: 20px 15px; border-radius: 24px 24px 0 0; width: 100%; max-width: 400px; text-align: center; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
+        .modal-overlay.show .modal-content { transform: translateY(0); }
+        .modal-content h3 { margin-top: 0; margin-bottom: 12px; color: var(--modal-text); font-size: 14px; }
+        .number-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; max-height: 50vh; overflow-y: auto; padding: 5px; }
+        .grid-item { padding: 8px; min-height: 38px; display: flex; align-items: center; justify-content: center; background: var(--grid-bg); border-radius: 6px; font-weight: bold; color: var(--input-text); cursor: pointer; font-size: 13px;}
+        .grid-item.selected-item { background: #3182ce !important; color: white !important; }
+        
+        footer { background-color: var(--header-bg); color: var(--text-main); text-align: center; padding: 15px; margin-top: 25px; border-radius: 12px 12px 0 0; font-size: 12px; border-top: 1px solid var(--border-container); width: 100%; max-width: 400px; margin-bottom: 20px; }
+        .dev-name { color: var(--primary-color); font-weight: bold; margin-top: 5px; cursor: pointer; }
+        .social-icons { margin-top: 10px; }
+        .social-icons a { color: var(--primary-color); font-size: 24px; margin: 0 10px; text-decoration: none; display: inline-block; transition: all 0.3s ease; }
+        .social-icons a:hover { transform: scale(1.1) translateY(-2px); }
+        .no-print { display: block; }
+
+        .rating-container { background: var(--bg-container); border: 1px solid var(--border-container); border-radius: 12px; padding: 15px; margin: 20px auto 5px auto; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: all 0.3s ease; }
+        .rating-title { font-size: 14px; color: var(--primary-color); font-weight: bold; margin-bottom: 12px; }
+        .stars { display: flex; justify-content: center; gap: 8px; direction: ltr; margin-bottom: 10px; cursor: pointer; }
+        .stars i { font-size: 26px; color: #cbd5e1; transition: color 0.2s, transform 0.2s; }
+        .stars i:hover { transform: scale(1.1); }
+        .stars i.active { color: #ffc107; text-shadow: 0 0 8px rgba(255, 193, 7, 0.4); }
+        .admin-feedbacks-container { display: none; margin-top: 15px; text-align: right; background: var(--info-bg); padding: 12px; border-radius: 8px; border: 1px solid var(--border-container); }
+        .rating-thanks { display: none; margin-top: 10px; color: #28a745; font-weight: bold; }
+
+        .offline-banner { position: fixed; top: 0; left: 0; width: 100%; background: #dc3545; color: white; text-align: center; padding: 8px; font-size: 13px; font-weight: bold; z-index: 100000; transform: translateY(-100%); transition: transform 0.4s ease, background 0.4s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .offline-banner.show { transform: translateY(0); }
+        .offline-banner.online-again { background: #28a745; }
+
+        .page-transition-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.7); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 9999; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: opacity 0.2s ease, visibility 0.2s ease; }
+        body.dark-mode .page-transition-overlay { background: rgba(18,18,18,0.7); }
+        .page-transition-overlay.active { opacity: 1; visibility: visible; }
+        .spinner { width: 40px; height: 40px; border: 4px solid rgba(0, 86, 179, 0.2); border-top-color: var(--primary-color); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        .splash-screen { background: var(--bg-body); }
-        .splash-logo img { filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15)); }
-        .splash-loader::after { background: var(--primary-gradient); }
+        .splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-body); z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.6s ease-out, visibility 0.6s ease-out; }
+        .splash-logo img { width: 140px; height: auto; animation: pulseSplash 1.2s infinite alternate; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.15)); }
+        .splash-text { margin-top: 20px; font-size: 18px; font-weight: bold; color: var(--primary-color); animation: fadeInUpSplash 0.8s ease-out forwards; }
+        .splash-loader { width: 180px; height: 4px; background: rgba(0, 86, 179, 0.2); border-radius: 4px; margin-top: 25px; position: relative; overflow: hidden; animation: fadeInUpSplash 0.8s ease-out forwards; }
+        .splash-loader::after { content: ''; position: absolute; left: -50px; top: 0; height: 100%; width: 50px; background: var(--primary-color); border-radius: 4px; animation: loadingBar 1.5s ease-in-out infinite; }
+        @keyframes pulseSplash { 0% { transform: scale(0.95); } 100% { transform: scale(1.05); filter: drop-shadow(0 15px 25px rgba(0,86,179,0.3)); } }
+        @keyframes fadeInUpSplash { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes loadingBar { 0% { left: -50px; width: 30%; } 50% { width: 40%; } 100% { left: 100%; width: 30%; } }
         .splash-hidden { opacity: 0; visibility: hidden; }
-        /* ----- کۆتایی دیزاینە نوێیەکە ----- */
-
     </style>
 </head>
 <body>
@@ -415,7 +358,7 @@
 
         <div id="fineSection" class="page-section" style="display: none;">
             <div class="fine-container" id="fine-container-box">
-                <div class="visitor-counter">👁 ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b></div>
+                <div class="visitor-counter">👁️️ ژمارەی بەکارهێنەر: <b class="visitor-count-text">...</b></div>
                 <div class="toggle-container">
                     <span id="fine-status-text" style="font-weight: bold; color: #48bb78; font-size: 13px;">✓ داشکاندنی غەرامە (٢٠٪) چالاکە</span>
                     <label class="switch"><input type="checkbox" id="university-toggle" checked onchange="vibrate(); calculateFine()"><span class="slider"></span></label>
@@ -445,6 +388,7 @@
                     <div class="result-row total-row"><span>💰 کۆی گشتی:</span><span id="total-price">0 دینار</span></div>
                     <div class="result-row"><span>⏳ ماوەی بەسەرچوون:</span><span id="duration-text">0 مانگ</span></div>
                     
+                    <!-- بەشی ڕوونکردنەوەی جۆری هەژمارکردنی غەرامە لێرە زیاد کرا -->
                     <div class="fine-rule-box" id="fineRuleBox">
                         <h4><i class="fa-solid fa-scale-balanced"></i> ڕوونکردنەوەی غەرامە:</h4>
                         <span id="fineRuleText"></span>
@@ -576,9 +520,6 @@
         <div class="stars" id="starContainer">
             <i class="fa-solid fa-star" data-value="1"></i><i class="fa-solid fa-star" data-value="2"></i><i class="fa-solid fa-star" data-value="3"></i><i class="fa-solid fa-star" data-value="4"></i><i class="fa-solid fa-star" data-value="5"></i>
         </div>
-        <div class="input-wrapper" style="margin-bottom: 0;">
-            <textarea id="feedbackText" rows="2" placeholder="تێبینییەکانت لێرە بنووسە (ئارەزوومەندانە)..." style="display:none;"></textarea>
-        </div>
         <button id="submitRatingBtn" class="action-btn" onclick="submitRating()" style="display: none; margin-top: 10px;">ناردنی هەڵسەنگاندن</button>
         <div id="ratingThanks" class="rating-thanks" style="display: none; margin-top: 10px; color: #28a745; font-weight: bold;"><i class="fa-solid fa-circle-check"></i> زۆر سوپاس بۆ هەڵسەنگاندنەکەت!</div>
     </div>
@@ -593,7 +534,7 @@
         </div>
         
         <button class="action-btn no-print" onclick="shareWebsite()" style="background: linear-gradient(135deg, #17a2b8, #007bff) !important; width: auto; padding: 10px 25px; font-size: 13px; margin: 15px auto 5px auto; display: block; border-radius: 25px; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);">
-            <i class="fa-solid fa-share-nodes"></i> نــاردنی بــۆ هــاوڕێكه‌‌ت
+            <i class="fa-solid fa-share-nodes"></i> نــاردنی بــۆ هــاوڕێكه‌ت
         </button>
     </footer>
 
@@ -613,6 +554,7 @@
             }
         });
 
+        // ------------------ لیستێکی جێگیر بۆ نووسینگەکان ------------------
         const staticOfficesList = [
             { name: "بەڕێوەبەرایەتی هاتووچۆی هەڵەبجە", phone1: "", phone2: "", mapUrl: "https://maps.app.goo.gl/iV7Ly21Rkx7ikreFA" },
             { name: "نووسینگەی شۆفێری سیروان", phone1: "", phone2: "", mapUrl: "https://maps.app.goo.gl/iV7Ly21Rkx7ikreFA" },
@@ -639,6 +581,7 @@
                     </div>`;
             });
         }
+        // -------------------------------------------------------------------
 
         const trafficSignsData = [];
         for (let i = 1; i <= 223; i++) { trafficSignsData.push({ img: `${i}.png` }); }
@@ -782,10 +725,10 @@
 
         const baseSignsQuestions = [
             { img: "1.png", q: "ئەم هێمایەی ئاماژەیە بۆ چی؟", options: ["یەکتربڕی مەترسی‌دار لە پێشەوەیە", "ڕێگاكه‌ كاری تێدا ده‌كرێت", "لەم شوێنەدا وەستان قەدەغەیە"], answer: 0 },
-            { img: "2.png", q: "کاتێک ئەم هێمایه‌ لە سەر ڕێگا دەبینیت، مانای چییە؟", options: ["چوارڕیانی ئازاد له‌ پێشته‌وه‌یه‌", "ڕێگەی سەرەکییە مه‌ترسیداره‌", "چوارڕیانی مه‌ترسیدار له‌ پێشته‌وه‌یه‌"], answer: 2 },
+            { img: "2.png", q: "کاتێک ئەم هێمایه‌ لە سەر ڕێگا دەبینیت، مانای چییە؟", options: ["چوارڕیانی ئازاد له‌‌ پێشته‌وه‌یه‌", "ڕێگەی سەرەکییە مه‌ترسیداره‌", "چوارڕیانی مه‌ترسیدار له‌ پێشته‌وه‌یه‌"], answer: 2 },
             { img: "3.png", q: "ئەم تابڵۆیە هۆشدارییە لەسەر بوونی چی؟", options: ["ئاگاراری ڕێگای لاوه‌كی به‌", "سێ ڕیانی مه‌ترسی دار له‌پێشه‌وه‌یه‌", "‌ده‌بێت سایدی ده‌سته‌ ڕاست بوه‌ستێت بۆت"], answer: 1 },
-            { img: "4.png", q: "ئەم هێمایە چی بۆ شۆفێر ڕوون دەکاتەوە؟", options: ["فولكه‌ لە پێشەوەیە", "وه‌ستان له‌ناو فولكه‌ قه‌ده‌غه‌یه‌", "پێچکردنەوە قەدەغەیە"], answer: 0 },
-            { img: "5.png", q: "ئاگاداری لەسەر چی دەدات ئەم هێمایەی؟", options: ["ده‌‌بێت پیاده‌ بۆم ڕاوه‌ستێت", "شوێنی په‌ڕینه‌وه‌ی پیاده‌ له‌ پێشه‌وه‌یه‌", "ڕێگاكه‌ كاری تێدا ده‌كرێت"], answer: 1 },
+            { img: "4.png", q: "ئەم هێمایە چی بۆ شۆفێر ڕوون دەکاتەوە؟", options: ["فولكه‌ لە پێشەوەیە", "وه‌ستان له‌ناو فولكه‌‌ قه‌ده‌غه‌یه‌", "پێچکردنەوە قەدەغەیە"], answer: 0 },
+            { img: "5.png", q: "ئاگاداری لەسەر چی دەدات ئەم هێمایەی؟", options: ["ده‌بێت پیاده‌ بۆم ڕاوه‌ستێت", "شوێنی په‌ڕینه‌وه‌ی پیاده‌ له‌ پێشه‌وه‌یه‌‌", "ڕێگاكه‌ كاری تێدا ده‌كرێت"], answer: 1 },
             { img: "6.png", q: "بەپێی یاسای هاتووچۆ، ئەم تابلۆیە مانای چییە؟", options: ["هاتووچۆی ڕووبه‌ڕوو له‌ پێشه‌وه‌یه‌", "شەقامی یەک ئاراستە", "قەدەغەکردنی تێپەڕین‌"], answer: 0 },
             { img: "7.png", q: "ئەم نیشانەیە چی بە شۆفێر دەڵێت؟", options: ["ترافیک لایت لە پێشەوە", "وەستانی ناچاری", "شەقامی خێرا"], answer: 0 },
             { img: "8.png", q: "ئەم هێمایەی هاتووچۆ هۆشداری دەدات لەسەر چی؟", options: ["ترافیک لایت لە پێشەوە", "وەستانی ناچاری", "مه‌ترسیی ڕیزبه‌ستن قه‌ره‌بالغی له‌پێشه‌وه‌یه‌"], answer: 2 },
@@ -793,73 +736,73 @@
             { img: "10.png", q: "ئەم هێمایە ئاماژەیە بۆ چ حاڵەتێک؟", options: ["منداڵ ده‌بێت ڕاوه‌ستێت ", "منداڵ  لە پێشەوە", "‌قوتابخانه‌ی منداڵ له‌پێشه‌"], answer: 1 },
             { img: "11.png", q: "ئەم هێمایە مانای چی ده‌گه‌یه‌نێت؟", options: ["ئه‌سپ سوار ڕێگه‌ پێدراوه‌ ", "ئه‌سپ سوار قه‌ده‌قه‌یه‌", "‌‌ئه‌سپ سوار له‌ پێشه‌وه‌"], answer: 2 },
             { img: "12.png", q: "کاتێک ئەم دەبینیت، دەبێت وریای چی بیت ؟", options: [" ئاژه‌ڵی كێوی له‌ پێشه‌وه‌ ", "ئاژه‌ڵی ماڵی له‌ پێشه‌وه‌", "‌‌ ڕێگه‌ پێدراوه‌ ئاژه‌ڵی ماڵی تێپه‌ڕێت"], answer: 0 },
-            { img: "13.png", q: "مانای ئەم تابلۆیه‌ هۆشدارییە چی دەگەیەنێت ؟", options: [" كێڵگه‌ی گاوداری له‌ پێشه‌وه‌ ", "ئاژه‌ڵی ماڵی له‌ پێشه‌وه‌", "‌‌‌‌ كێڵگه‌ی کشتوكاڵی له‌پێشه‌وه‌"], answer: 1 },
+            { img: "13.png", q: "مانای ئەم تابلۆیه‌ هۆشدارییە چی دەگەیەنێت ؟", options: [" كێڵگه‌ی گاوداری له‌ پێشه‌وه‌ ", "ئاژه‌ڵی ماڵی له‌ پێشه‌وه‌", "‌‌ كێڵگه‌ی کشتوكاڵی له‌پێشه‌وه‌"], answer: 1 },
             { img: "14.png", q: "شۆفێر لە کاتی بینینی ئەم هێمایە دەبێت چ بکات ؟", options: [" ڕێگاكه‌ به‌رزای و نزماییه‌ ", "شۆفێری له‌م شوێنه‌ قه‌ده‌غه‌یه‌", "‌‌ ڕێگه‌ی خلیسك له‌پێشه‌"], answer: 2 },
-            { img: "15.png", q: "ئەم تابلۆیە هۆشداری دەدات لەسەر چی ؟", options: ["به‌رد یان زیخ له‌ پێشه‌وه‌  ", "شۆفێری له‌م ناوه‌چه‌ ڕێگه‌ پێدارو نییه‌", "‌‌ ڕێگه‌ی سه‌خت له‌ پێشه‌وه‌ "], answer: 0 },
-            { img: "16.png", q: "ئاماژەی ئەم تابلۆیە لە سەر ڕێگا چییه‌ ؟", options: ["ئه‌م ڕێگایه‌ به‌‌ستراوه‌  ", " شه‌قامی به‌ردین", "‌‌ ‌به‌رده‌ خزه‌ هه‌ره‌سهێنان له‌ پێشه‌وه‌ "], answer: 2 },
-            { img: "17.png", q: "شۆفێر لە بەرامبەر ئەم هێمایەدا دەبێت لە چی وریابێت ؟", options: ["ڕێگاكه‌ مه‌ترسیداره‌‌  ", " قه‌راغ ڕێگه‌ی مه‌ترسی دار له‌ پێشه‌وه‌ ", "‌‌ ‌‌ڕێگاكه‌‌ هه‌ورازو نشێوه‌ "], answer: 1 },
+            { img: "15.png", q: "ئەم تابلۆیە هۆشداری دەدات لەسەر چی ؟", options: ["به‌رد یان زیخ له‌ پێشه‌وه‌  ", "شۆفێری له‌م ناوه‌چه‌‌ ڕێگه‌ پێدارو نییه‌", "‌‌ ڕێگه‌ی سه‌خت له‌ پێشه‌وه‌ "], answer: 0 },
+            { img: "16.png", q: "ئاماژەی ئەم تابلۆیە لە سەر ڕێگا چییه‌‌ ؟", options: ["ئه‌م ڕێگایه‌ به‌ستراوه‌  ", " شه‌قامی به‌ردین", "‌‌ ‌به‌‌رده‌ خزه‌ هه‌ره‌سهێنان له‌ پێشه‌وه‌ "], answer: 2 },
+            { img: "17.png", q: "شۆفێر لە بەرامبەر ئەم هێمایەدا دەبێت لە چی وریابێت ؟", options: ["ڕێگاكه‌ مه‌ترسیداره‌  ", " قه‌راغ ڕێگه‌ی مه‌ترسی دار له‌ پێشه‌وه‌ ", "‌‌ ‌‌ڕێگاكه‌ هه‌ورازو نشێوه‌ "], answer: 1 },
             { img: "18.png", q: " مەبەست لەم هێما هۆشدارییە بۆ چی ؟", options: ["تاسه‌ی ده‌سكرد له‌مپه‌ر له‌ پێشه‌وه‌یه‌  ", " بوونی پرد له‌ پێشه‌وه‌ ", "‌‌ ‌‌ڕێگاكه‌ ‌به‌ستراوه‌ "], answer: 0 },
             { img: "19.png", q: " ئەم تابلۆیە ئاماژەیە بۆ چ جۆرە ڕێگەیەک ؟", options: ["تاسه‌ی ده‌سكرد له‌ پێشه‌وه‌یه‌  ", " ئاگاداری ڕێگه‌كه‌ به‌ ", "‌‌ ڕه‌گله‌ (تاسه‌) له‌پیشه‌وه‌ "], answer: 2 },
             { img: "20.png", q: " ئەم هێمایه‌ چی ڕێگاكه‌ نیشان دەدات ؟", options: ["شه‌قامه‌كه‌ به‌ستراوه‌  ", " كاركردنی شه‌قام له‌ پێشه‌وه‌ ", "‌‌ زه‌وی كشتوكاڵی له‌پێشه‌وه‌ "], answer: 1 },
-            { img: "21.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["ته‌سكبوونه‌وه‌ی شه‌قام لای چه‌پ له‌ پێشه‌وه‌یه‌  ", " شەقامەکە لە لای ڕاستەوە تەسک دەبێتەوە ", "‌‌ شەقامەکە فراوان دەبێت "], answer: 0 },
-            { img: "22.png", q: " ئاگاداری لەسەر بوونی چی دەدات ئەم تابلۆیە ؟", options: ["شەقامی یەک ئاراستە  ", " ته‌سكبوونه‌وه‌ی شه‌قام لای چه‌پ له‌ پێشه‌‌وه‌ ", "‌‌ ته‌سكبوونه‌وه‌ی شه‌قام لای ڕاسته‌وه‌ له‌ پێشه‌وه‌‌ "], answer: 2 },
-            { img: "23.png", q: " کاتێک ئەم هێمایە دەبینیت، نیشانەی چییە ؟", options: ["هێڵی شه‌مه‌نده‌فه‌ر له‌پ  ", " ته‌سكبوونه‌وه‌ی شه‌قام له‌ هه‌ردوولاوه‌ له‌ پێشه‌وه‌ ", "‌‌ شەقامەکە فراوان دەبێت "], answer: 1 },
-            { img: "24.png", q: " ئەم تابڵۆیە هۆشداری دەدات لەسەر چ جۆرە پێچێک ؟", options: ["پێچكردنه‌وه‌ بۆ لای ده‌سته‌ ڕاست له‌پێشه‌وه‌   ", "پێچكردنه‌وه‌ بۆلای چه‌پ قه‌ده‌قه‌یه‌ ", "‌‌ پێچكردنه‌وه‌ بۆ لای ده‌سته‌ چه‌پ له‌ پێشه‌وه‌ "], answer: 2 },
-            { img: "25.png", q: " ئەم هێمایەی ئاماژەیە بۆ چ حاڵەتێک ؟", options: ["پێچكردنه‌وه‌ بۆ لای ده‌سته‌ ڕاست له‌پێشه‌وه‌  ", " پێچكردنه‌‌وه‌ بۆ لای ده‌سته‌ ڕاست قه‌دەغەیە ", "‌‌ پێچكردنه‌وه‌ بۆلای چه‌پ قه‌دەغەیە "], answer: 0 },
-            { img: "26.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["شه‌قامه‌كه‌ پێچاو پێچه‌  ", " چه‌‌ند پێچێك یه‌كه‌م بۆلای ده‌سته‌چه‌پ ", "‌‌ چه‌ند پێچێك یه‌كه‌م بۆلای ده‌سته‌ڕاست "], answer: 2 },
+            { img: "21.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["ته‌سكبوونه‌وه‌ی شه‌قام لای چه‌پ له‌‌ پێشه‌وه‌یه‌  ", " شەقامەکە لە لای ڕاستەوە تەسک دەبێتەوە ", "‌‌ شەقامەکە فراوان دەبێت "], answer: 0 },
+            { img: "22.png", q: " ئاگاداری لەسەر بوونی چی دەدات ئەم تابلۆیە ؟", options: ["شەقامی یەک ئاراستە  ", " ته‌سكبوونه‌وه‌ی شه‌قام لای چه‌پ له‌ پێشه‌وه‌ ", "‌‌ ته‌سكبوونه‌وه‌ی شه‌قام لای ڕاسته‌وه‌ له‌ پێشه‌وه‌‌ "], answer: 2 },
+            { img: "23.png", q: " کاتێک ئەم هێمایە دەبینیت، نیشانەی چییە ؟", options: ["هێڵی شه‌مه‌‌نده‌فه‌ر له‌پ  ", " ته‌سكبوونه‌وه‌ی شه‌قام له‌ هه‌ردوولاوه‌ له‌ پێشه‌وه‌ ", "‌‌ شەقامەکە فراوان دەبێت "], answer: 1 },
+            { img: "24.png", q: " ئەم تابڵۆیە هۆشداری دەدات لەسەر چ جۆرە پێچێک ؟", options: ["پێچكردنه‌وه‌ بۆ لای ده‌سته‌ ڕاست له‌پێشه‌وه‌   ", "پێچكردنه‌وه‌ بۆلای چه‌‌پ قه‌ده‌قه‌یه‌ ", "‌‌ پێچكردنه‌وه‌ بۆ لای ده‌سته‌ چه‌پ له‌ پێشه‌‌وه‌ "], answer: 2 },
+            { img: "25.png", q: " ئەم هێمایەی ئاماژەیە بۆ چ حاڵەتێک ؟", options: ["پێچكردنه‌وه‌ بۆ لای ده‌سته‌ ڕاست له‌پێشه‌وه‌  ", " پێچكردنه‌وه‌ بۆ لای ده‌سته‌ ڕاست قه‌دەغەیە ", "‌‌ پێچكردنه‌وه‌‌ بۆلای چه‌پ قه‌دەغەیە "], answer: 0 },
+            { img: "26.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["شه‌قامه‌كه‌ پێچاو پێچه‌  ", " چه‌ند پێچێك یه‌كه‌م بۆلای ده‌سته‌چه‌پ ", "‌‌ چه‌ند پێچێك یه‌كه‌م بۆلای ده‌سته‌ڕاست "], answer: 2 },
             { img: "27.png", q: " ئاگاداری لەسەر بوونی چی دەدات ئەم تابلۆیە ؟", options: ["شه‌قامه‌كه‌ پێچاو پێچه‌  ", " چه‌ند پێچێك یه‌كه‌م بۆلای ده‌سته‌چه‌پ ", "‌‌ چه‌ند پێچێك یه‌كه‌م بۆلای ده‌سته‌ڕاست "], answer: 1 },
             { img: "28.png", q: " کاتێک ئەم هێمایە دەبینیت، نیشانەی چییە ؟", options: ["لێژیی له‌ پێشه‌وه‌یه‌  ", " هەوراز له‌پێشه‌وه‌یه‌ ", "‌‌ ڕێگاكه‌ كاری تێدا ده‌كرێت به‌و ڕێژه‌یه‌ "], answer: 0 },
             { img: "29.png", q: " ئەم تابڵۆیە هۆشداری دەدات لەسەر چی ؟", options: ["لێژیی له‌ پێشه‌وه‌یه‌  ", " هەوراز له‌پێشه‌وه‌یه‌ ", "‌‌ ڕێگاكه‌ كاری تێدا ده‌كرێت به‌و ڕێژه‌یه‌‌ "], answer: 1 },
             { img: "30.png", q: " ئەم هێمایەی ئاماژەیە بۆ چ حاڵەتێک ؟", options: ["تونێل كاری تێدا ده‌كرێت  ", " تونێل به‌ستراوه‌ ", "‌‌ تونێل له‌پێشه‌وه‌ "], answer: 2 },
             { img: "31.png", q: " ئەم هێمایە ئاماژەیە بۆ چ جۆرە مەترسییەک ؟", options: ["هێڵی شه‌مه‌نده‌‌فه‌ر به‌بێ له‌مپه‌ر له‌پێشه‌وه‌  ", " هێڵی شه‌مه‌نده‌فه‌ر به‌ له‌مپه‌ره‌وه‌ له‌پێشه‌وه‌ ", "‌‌ هێڵی شه‌مه‌نده‌فه‌ر له‌پێشه‌وه‌ "], answer: 0 },
             { img: "32.png", q: " ئەم نیشانەیە چی بۆ شۆفێر ڕوون دەکاتەوە ؟", options: ["هێڵی شه‌مه‌نده‌فه‌ر به‌بێ له‌مپه‌ر له‌پێشه‌وه‌  ", " هێڵی شه‌مه‌نده‌فه‌ر به‌ له‌مپه‌ره‌وه‌ له‌‌پێشه‌وه‌ ", "‌‌ هێڵی شه‌مه‌نده‌فه‌ر له‌پێشه‌وه‌ "], answer: 1 },
-            { img: "33.png", q: " ئەم هێمایە کە لە نزیک هێڵی شەمەندەفەر دەبینرێت، مانای چییە ؟", options: ["هێڵی شه‌مه‌نده‌فه‌ری فره‌‌ ڕێڕه‌و له‌پێشه‌وه‌  ", " هێڵی شه‌مه‌نده‌فه‌ر به‌ له‌مپه‌ره‌وه‌ له‌پێشه‌وه‌ ", "‌‌ هێڵی شه‌مه‌نده‌فه‌ری یه‌ك ڕێڕه‌و له‌ پێشه‌وه‌ "], answer: 2 },
-            { img: "34.png", q: " ئەم تابلۆیە هۆشداری دەدات لەسەر بوونی چی ؟", options: ["هێڵی شه‌مه‌نده‌فه‌ری فره‌ ڕێڕه‌و له‌پێشه‌وه‌  ", " هێڵی شه‌مه‌نده‌فه‌ر به‌ له‌مپه‌ره‌وه‌ له‌پێشه‌‌وه‌ ", "‌‌ هێڵی شه‌مه‌نده‌فه‌ری یه‌ك ڕێڕه‌و له‌ پێشه‌وه‌ "], answer: 0 },
-            { img: "35.png", q: " ئەم نیشانەیە هۆشدارییە لەسەر بوونی چ حاڵەتێک لە ڕێگادا ؟", options: ["پرده‌كه‌ كاری تێدا ده‌كرێت  ", " پردی هه‌‌ڵدانه‌وه‌ (پردی بزۆك) له‌پێشه‌وه‌ ", "‌‌ پردی ئاسنینی سابت له‌‌پێشه‌وه‌ "], answer: 1 },
-            { img: "36.png", q: " ئەم تابلۆیە هۆشداری دەدات لەسەر بوونی چ مەترسییەک ؟", options: ["ڕێگاكه‌ كار تێداده‌كرێت  ", " ڕێگەی خلیسکێنەر ", "‌‌ كه‌نار ده‌ریای نزیك له‌پێشه‌وه‌‌ "], answer: 2 },
-            { img: "37.png", q: " ئەم نیشانەیە چی به‌ شۆفێر ڕوون دەکاتەوە ؟", options: ["مه‌ترسیی بای ته‌نیشت له‌پێشه‌وه‌  ", " ڕێگەی ته‌م و مژاوی ", "‌‌ كه‌نار ده‌ریای نزیك له‌پێشه‌وه‌ "], answer: 0 },
-            { img: "38.png", q: " کاتێک ئەم هێمایە لەسەر ڕێگا دەبینیت، نیشانەی چییە ؟", options: ["شوێنی وەستاندنی هەلیکۆپتەر  ", " نزمه‌فڕه‌ی فڕۆكه‌ له‌پێشه‌وه‌ ", "‌‌ مه‌تاڕ له‌پێشه‌وه‌ "], answer: 1 },
+            { img: "33.png", q: " ئەم هێمایە کە لە نزیک هێڵی شەمەندەفەر دەبینرێت، مانای چییە ؟", options: ["هێڵی شه‌مه‌نده‌فه‌ری فره‌‌ ڕێڕه‌و له‌پێشه‌وه‌  ", " هێڵی شه‌مه‌نده‌فه‌ر به‌ له‌مپه‌ره‌وه‌ له‌پێشه‌وه‌ ", "‌‌ هێڵی شه‌مه‌نده‌فه‌ری یه‌ك ڕێڕه‌و له‌ پێشه‌‌وه‌ "], answer: 2 },
+            { img: "34.png", q: " ئەم تابلۆیە هۆشداری دەدات لەسەر بوونی چی ؟", options: ["هێڵی شه‌مه‌نده‌فه‌ری فره‌ ڕێڕه‌‌و له‌پێشه‌وه‌  ", " هێڵی شه‌مه‌نده‌فه‌ر به‌ له‌مپه‌ره‌وه‌ له‌پێشه‌وه‌ ", "‌‌ هێڵی شه‌مه‌نده‌فه‌ری یه‌ك ڕێڕه‌و له‌ پێشه‌‌وه‌ "], answer: 0 },
+            { img: "35.png", q: " ئەم نیشانەیە هۆشدارییە لەسەر بوونی چ حاڵەتێک لە ڕێگادا ؟", options: ["پرده‌كه‌ كاری تێدا ده‌كرێت  ", " پردی هه‌ڵدانه‌وه‌ (پردی بزۆك) له‌پێشه‌وه‌ ", "‌‌ پردی ئاسنینی سابت له‌پێشه‌وه‌ "], answer: 1 },
+            { img: "36.png", q: " ئەم تابلۆیە هۆشداری دەدات لەسەر بوونی چ مەترسییەک ؟", options: ["ڕێگاكه‌ كار تێداده‌كرێت  ", " ڕێگەی خلیسکێنەر ", "‌‌ كه‌نار ده‌ریای نزیك له‌پێشه‌وه‌ "], answer: 2 },
+            { img: "37.png", q: " ئەم نیشانەیە چی به‌ شۆفێر ڕوون دەکاتەوە ؟", options: ["مه‌ترسیی بای ته‌نیشت له‌‌پێشه‌وه‌  ", " ڕێگەی ته‌م و مژاوی ", "‌‌ كه‌نار ده‌ریای نزیك له‌پێشه‌وه‌ "], answer: 0 },
+            { img: "38.png", q: " کاتێک ئەم هێمایە لەسەر ڕێگا دەبینیت، نیشانەی چییە ؟", options: ["شوێنی وەستاندنی هەلیکۆپتەر  ", " نزمه‌فڕه‌ی فڕۆكه‌ له‌پێشه‌وه‌ ", "‌‌ مه‌تاڕ له‌‌پێشه‌وه‌ "], answer: 1 },
             { img: "39.png", q: " ئەم هێمایەی هۆشدارییە گشتییە ئاماژەیە بۆ چی ؟", options: ["کۆتایی ڕێگەی خێرا  ", " نیشانه‌ی ووریاكردنه‌وه‌ی مه‌ترسی له‌پێشه‌وه‌ ", "‌‌ وەستانی ناچاری "], answer: 1 },
-            { img: "40.png", q: " ئەم تابلۆ تیشکییانە (هێڵە لارییەکان) ئاماژەن بۆ چی ؟", options: ["هێڵی شه‌مه‌نده‌فه‌ر به‌ له‌مپه‌ره‌وه‌ له‌‌پێشه‌وه‌  ", " ڕێگەی خلیسکێنەر ", "‌‌ ماوه‌ی دووریی له‌ هێڵی شه‌نده‌فه‌ره‌وه‌ "], answer: 2 },
-            { img: "41.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["به‌رزترین خێرای به‌رپرسیارانه‌‌  ", " خێراییه‌كه‌ت كه‌مبكه‌ره‌وه‌ ", "‌‌ (40) كیلۆمه‌تری تر ڕێگاكه‌ كۆتایی دێت "], answer: 0 },
-            { img: "43.png", q: " ئەم هێمایەی قەدەغەکردن ئاماژەیە بۆ چی ؟", options: ["پێچكردنه‌وه‌ بۆ ده‌سته‌ڕاست ڕێگه‌ پێدراوه‌  ", " پێچكردنه‌وه‌ بۆ ده‌سته‌چه‌پ قه‌دەغەیە ", "‌‌پێچكردنه‌وه‌ بۆ ده‌سته‌ڕاست قه‌دەغەیە "], answer: 2 },
+            { img: "40.png", q: " ئەم تابلۆ تیشکییانە (هێڵە لارییەکان) ئاماژەن بۆ چی ؟", options: ["هێڵی شه‌مه‌نده‌فه‌ر به‌ له‌مپه‌ره‌وه‌ له‌پێشه‌وه‌  ", " ڕێگەی خلیسکێنەر ", "‌‌ ماوه‌ی دووریی له‌ هێڵی شه‌نده‌فه‌ره‌وه‌ "], answer: 2 },
+            { img: "41.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["به‌رزترین خێرای به‌رپرسیارانه‌  ", " خێراییه‌كه‌ت كه‌مبكه‌ره‌وه‌ ", "‌‌ (40) كیلۆمه‌تری تر ڕێگاكه‌ كۆتایی دێت "], answer: 0 },
+            { img: "43.png", q: " ئەم هێمایەی قەدەغەکردن ئاماژەیە بۆ چی ؟", options: ["پێچكردنه‌وه‌ بۆ ده‌سته‌ڕاست ڕێگه‌ پێدراوه‌  ", " پێچكردنه‌وه‌‌ بۆ ده‌سته‌چه‌پ قه‌دەغەیە ", "‌‌پێچكردنه‌وه‌ بۆ ده‌سته‌ڕاست قه‌دەغەیە "], answer: 2 },
             { img: "44.png", q: " کاتێک ئەم تابلۆیە لەسەر ڕێگا دەبینیت، مانای چییە ؟", options: ["پێچكردنه‌وه‌ بۆ ده‌سته‌ڕاست ڕێگه‌ پێدراوه‌  ", " پێچكردنه‌وه‌ بۆ ده‌سته‌چه‌پ قه‌دەغەیە ", "‌‌پێچكردنه‌وه‌ بۆ ده‌سته‌ڕاست قه‌دەغەیە "], answer: 1 },
             { img: "45.png", q: " ئەم هێمایە چی بۆ شۆفێر قەدەغە دەکات ؟", options: ["سوڕانه‌وه‌ قه‌ده‌قه‌یه‌  ", " پێچكردنه‌وه‌ بۆ ده‌سته‌چه‌پ قه‌دەغەیە ", "‌‌پێچكردنه‌وه‌ بۆ ده‌سته‌ڕاست قه‌دەغەیە "], answer: 0 },
-            { img: "46.png", q: " ئەم هێمایە ئاماژەیە بۆ چی ؟", options: ["وه‌‌ستان قه‌ده‌غه‌یه‌  ", " وه‌ستان ڕێگه‌ پێدراوه‌ ", "‌‌لێخوڕین بۆ ناو ئه‌م شه‌قامه‌ قه‌ده‌غه‌یه‌ "], answer: 2 },
-            { img: "47.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["وه‌ستان قه‌ده‌غه‌یه‌  ", " لێخوڕن به‌هه‌ردوو ئاڕاسته‌ قه‌ده‌غه‌یه‌ ", "‌‌ وه‌ستانی كاتی ڕێگه‌ پێداروه‌ "], answer: 1 },
-            { img: "48.png", q: " ئەم هێمایە چی بۆ شۆفێر قەدەغە دەکات ؟", options: ["لێخوڕینی ئۆتۆمبێل و ماتۆڕ بۆ ناو ئه‌م شه‌قامه‌ قه‌ده‌غه‌یه‌  ", " هاتووچۆی ماتۆڕسکیل قەدەغەیە ", "‌‌ وه‌ستانی ئۆتۆمبێل و ماتۆرسكیل ڕێگه‌‌پێدراوه‌ "], answer: 0 },
-            { img: "49.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["وه‌ستانی پاسكیل قه‌ده‌غه‌یه‌  ", " وه‌ستانی ئۆتۆمبێل قه‌ده‌غەیە ", "‌‌ ‌لێخوڕینی ماتۆڕ قه‌‌ده‌غه‌یه‌ "], answer: 2 },
+            { img: "46.png", q: " ئەم هێمایە ئاماژەیە بۆ چی ؟", options: ["وه‌ستان قه‌ده‌غه‌یه‌  ", " وه‌ستان ڕێگه‌ پێدراوه‌ ", "‌‌لێخوڕین بۆ ناو ئه‌م شه‌قامه‌ قه‌ده‌غه‌یه‌ "], answer: 2 },
+            { img: "47.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["وه‌‌ستان قه‌ده‌غه‌یه‌  ", " لێخوڕن به‌هه‌ردوو ئاڕاسته‌ قه‌ده‌غه‌یه‌ ", "‌‌ وه‌ستانی كاتی ڕێگه‌ پێداروه‌ "], answer: 1 },
+            { img: "48.png", q: " ئەم هێمایە چی بۆ شۆفێر قەدەغە دەکات ؟", options: ["لێخوڕینی ئۆتۆمبێل و ماتۆڕ بۆ ناو ئه‌م شه‌قامه‌ قه‌ده‌غه‌یه‌  ", " هاتووچۆی ماتۆڕسکیل قەدەغەیە ", "‌‌ وه‌ستانی ئۆتۆمبێل و ماتۆرسكیل ڕێگه‌پێدراوه‌ "], answer: 0 },
+            { img: "49.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["وه‌ستانی پاسكیل قه‌‌ده‌غه‌یه‌  ", " وه‌ستانی ئۆتۆمبێل قه‌ده‌غەیە ", "‌‌ ‌لێخوڕینی ماتۆڕ قه‌ده‌غه‌یه‌ "], answer: 2 },
             { img: "50.png", q: " ئەم تابلۆیە قەدەغەکردنە بۆ چ جۆرە ئۆتۆمبێلێک ؟", options: ["لێخوڕینی لۆری قه‌ده‌غه‌یه‌  ", " وه‌ستانی ئۆتۆمبێل قه‌ده‌غەیە ", "‌‌ ‌لێخوڕینی ماتۆڕ قه‌ده‌غه‌یه‌ "], answer: 0 },
-            { img: "51.png", q: " مانای ئەم هێمایە چییە لەسەر ڕێگەوبانەکان ؟", options: ["وه‌ستانی پاس قه‌ده‌غه‌یه‌  ", " لێخوڕینی پاس قه‌ده‌غه‌یه‌ ", "‌‌ ‌لێخوڕینی ماتۆڕ پاس ڕێگه‌پێدراوه‌ "], answer: 1 },
+            { img: "51.png", q: " مانای ئەم هێمایە چییە لەسەر ڕێگەوبانەکان ؟", options: ["وه‌ستانی پاس قه‌ده‌غه‌یه‌  ", " لێخوڕینی پاس قه‌ده‌‌غه‌یه‌ ", "‌‌ ‌لێخوڕینی ماتۆڕ پاس ڕێگه‌پێدراوه‌ "], answer: 1 },
             { img: "52.png", q: " ئەم تابلۆیە هۆشداری دەدات لە قەدەغەکردنی هاتووچۆ بۆ کۆمەڵێک ئامێر، کامیانە ؟", options: ["لێخوڕینی تراكتۆر قه‌ده‌غه‌یه‌  ", " وه‌ستانی تراكتۆر قه‌ده‌غه‌یه‌ ", "‌‌ ‌لێخوڕینی تراكتۆر ڕێگه‌پێدراوه‌ "], answer: 0 },
             { img: "53.png", q: " ئەم هێمایەی قەدەغەکردن ئاماژەیە بۆ هاتووچۆی چ جۆرێك ؟", options: ["ڕێڕه‌وی ئه‌سپسوار له‌پێشه‌وه‌  ", " ئه‌سپسواری قه‌ده‌غه‌یه‌ ", "‌‌ ‌لێخوڕینی عه‌ره‌بانه‌ قه‌ده‌غه‌یه‌ "], answer: 2 },
-            { img: "54.png", q: " کاتێک ئەم هێمایە دەبینیت، قەدەغەکردن بۆ چ جۆرە هۆکارێکی گواستنەوەیە ؟", options: ["وه‌ستانی پاسكیل ڕێگه‌پێدراوه‌  ", " لێخوڕینی پاسكیل قه‌ده‌غه‌یه‌‌ ", "‌‌ ‌ڕێڕه‌وی پاسیكل له‌پێشه‌وه‌ "], answer: 1 },
+            { img: "54.png", q: " کاتێک ئەم هێمایە دەبینیت، قەدەغەکردن بۆ چ جۆرە هۆکارێکی گواستنەوەیە ؟", options: ["وه‌ستانی پاسكیل ڕێگه‌پێدراوه‌  ", " لێخوڕینی پاسكیل قه‌ده‌غه‌یه‌ ", "‌‌ ‌ڕێڕه‌وی پاسیكل له‌پێشه‌وه‌‌ "], answer: 1 },
             { img: "55.png", q: " ئەم نیشانەیە لەسەر ڕێگا مانای چییە ؟", options: ["وه‌ستانی پاسكیل ڕێگه‌پێدراوه‌  ", " لێخوڕینی پاسكیل قه‌ده‌غه‌یه‌ ", "‌‌ ‌لێخوڕینی ماتۆرسكیل قه‌ده‌غه‌یه‌ "], answer: 2 },
-            { img: "56.png", q: " ئامانجی ئەم تابلۆیە چییە ؟", options: ["ئه‌سپ سواری قه‌‌ده‌غه‌یه‌  ", " ڕێڕه‌وی ئه‌سپ له‌پێشه‌وه‌ ", "‌‌ ‌لێخوڕینی ماتۆرسكیل قه‌ده‌غه‌یه‌ "], answer: 0 },
+            { img: "56.png", q: " ئامانجی ئەم تابلۆیە چییە ؟", options: ["ئه‌سپ سواری قه‌ده‌غه‌یه‌  ", " ڕێڕه‌وی ئه‌سپ له‌پێشه‌وه‌ ", "‌‌ ‌لێخوڕینی ماتۆرسكیل قه‌ده‌غه‌یه‌ "], answer: 0 },
             { img: "57.png", q: " کاتێک ئەم تابلۆیە دەبینرێت، مانای چی دەگەیەنێت ؟", options: ["ئه‌سپ سواری قه‌ده‌غه‌یه‌  ", " ڕێڕه‌وی ئه‌سپ له‌پێشه‌وه‌ ", "‌‌ ‌پیاده‌ ڕۆیشتن قه‌ده‌غه‌یه‌ "], answer: 2 },
-            { img: "58.png", q: " ئەم هێمایەی قەدەغەکردن بۆ چ جۆرە ئامێرێکە ؟", options: ["عه‌ره‌بانه‌ی ده‌ستی ڕێگه‌پێداروه‌  ", " عه‌ره‌بانه‌ی ده‌ستی قه‌ده‌غه‌یه‌‌ ", "‌‌ ‌پیاده‌ ڕۆیشتن قه‌ده‌غه‌یه‌ "], answer: 1 },
+            { img: "58.png", q: " ئەم هێمایەی قەدەغەکردن بۆ چ جۆرە ئامێرێکە ؟", options: ["عه‌ره‌بانه‌ی ده‌ستی ڕێگه‌پێداروه‌  ", " عه‌ره‌بانه‌ی ده‌ستی قه‌ده‌غه‌یه‌ ", "‌‌ ‌پیاده‌ ڕۆیشتن قه‌ده‌غه‌یه‌ "], answer: 1 },
             { img: "59.png", q: " ئەم تابلۆیە قەدەغەکردنی هاتووچۆیە بۆ کام جۆرە بارهەڵگر ؟", options: ["لێخوڕینی بار هه‌ڵگر ڕێپگه‌پێدراوه‌  ", " لێخوڕینی لۆری قه‌ده‌غه‌یه‌ ", "‌‌ ‌لێخوڕینی لۆری به‌باری مه‌تریسداره‌وه‌ قه‌ده‌غه‌یه‌ "], answer: 2 },
-            { img: "60.png", q: " مانای ئەم هێمایە لەسەر پرد یان ڕێگاکان چییە ؟", options: ["ئه‌وپه‌‌ڕی ڕاده‌ی قورسایی  ", " ئه‌وپه‌ڕی ڕاده‌ی به‌رزی ", "‌‌ ‌قه‌ده‌غه‌یه‌ له‌ پێنچ خووله‌ك زیاتر بووه‌ستیت "], answer: 0 },
+            { img: "60.png", q: " مانای ئەم هێمایە لەسەر پرد یان ڕێگاکان چییە ؟", options: ["ئه‌وپه‌ڕی ڕاده‌ی قورسایی  ", " ئه‌وپه‌ڕی ڕاده‌ی به‌رزی ", "‌‌ ‌قه‌ده‌غه‌یه‌ له‌ پێنچ خووله‌ك زیاتر بووه‌ستیت "], answer: 0 },
             { img: "61.png", q: " ئەم نیشانەیە مانای چییە لەسەر ڕێگا ؟", options: [" ئه‌وپه‌ڕی ڕاده‌ی به‌رزی ", " دوا ڕاده‌ی قورسایی به‌عه‌ره‌بانه‌وه‌ ", "‌‌ ‌لێخوڕینی بار هه‌ڵگر ڕێپگه‌پێدراوه‌ "], answer: 1 },
-            { img: "62.png", q: " ئەم تابلۆیە هۆشداری دەدات لەسەر سنووردارکردنی چی ؟", options: [" ئه‌وپه‌ڕی ڕاده‌ی به‌رزی ", " دوا ڕاده‌ی قورسایی به‌عه‌ره‌بانه‌وه‌ ", "‌‌‌‌ ‌دوا ڕاده‌ی قورسایی له‌سه‌ر ئه‌كسل "], answer: 2 },
+            { img: "62.png", q: " ئەم تابلۆیە هۆشداری دەدات لەسەر سنووردارکردنی چی ؟", options: [" ئه‌وپه‌ڕی ڕاده‌ی به‌رزی ", " دوا ڕاده‌ی قورسایی به‌عه‌ره‌‌بانه‌وه‌ ", "‌‌ ‌دوا ڕاده‌ی قورسایی له‌سه‌ر ئه‌كسل "], answer: 2 },
             { img: "63.png", q: " مانای ئەم هێمایەی هاتووچۆ چییە ؟", options: [" ئه‌وپه‌ڕی ڕاده‌ی به‌رزی ", " دوا ڕاده‌ی قورسایی له‌سه‌ر جووت ئه‌كسل ", "‌‌ ‌دوا ڕاده‌ی قورسایی له‌سه‌ر تاك ئه‌كسل "], answer: 1 },
-            { img: "64.png", q: " ئەم هێمایە چی بۆ شۆفێر دیاری دەکات ؟", options: [" ئه‌و په‌ڕی پانی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ ", " ئه‌وپه‌ڕی به‌رزی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ ", "‌‌ ‌ئه‌و په‌ڕی قورسایی مۆڵه‌ت پێدراوه‌ به‌‌باره‌وه‌ "], answer: 0 },
-            { img: "65.png", q: " کاتێک ئەم تابلۆیە دەبینیت، مانای چییە ؟", options: [" ئه‌و په‌ڕی پانی مۆڵه‌ت پێدراوه‌ به‌‌باره‌وه‌ ", " ئه‌و په‌ڕی قورسایی مۆڵه‌ت پێداروه‌ به‌باره‌وه‌ ", "‌ ‌ئه‌وپه‌ڕی به‌رزی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ "], answer: 2 },
-            { img: "66.png", q: " ئەم نیشانەیە ئاماژەیە بۆ قەدەغەکردنی چی ؟", options: [" ئه‌و په‌ڕی پانی مۆڵه‌ت پێدراوه‌ ", " ئه‌و په‌ڕی درێژی مۆڵه‌ت پێداروه‌ به‌باره‌وه‌ ", "‌ ‌ئه‌وپه‌ڕی به‌رزی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ "], answer: 1 },
-            { img: "67.png", q: " ئەم هێمایەی قەدەغەکردن مانای چی دەگەیەنێت ؟", options: [" تێپه‌ڕاندن قه‌ده‌غه‌یه‌ ", " وه‌ستان قه‌ده‌غه‌یه‌ ", "‌ ‌ڕێگه‌ی یه‌ك ئاڕاسته‌ "], answer: 0 },
-            { img: "68.png", q: " ئەم تابلۆیە چی قەدەغەی  دەکات ؟", options: [" وه‌ستا به‌ هه‌موو شێوه‌یه‌ك قه‌ده‌غه‌یه‌ ", " تێپه‌ڕاندن بۆ ئۆتۆمبێلی بچوك قه‌ده‌غه‌یه‌ ", "‌ ‌‌تێپه‌ڕاندن بۆ لۆری قه‌ده‌غه‌یه‌ "], answer: 2 },
-            { img: "69.png", q: " ئەم نیشانەیە چی ڕوون دەکاتەوە ؟", options: [" تێپه‌ڕاندن قه‌ده‌غه‌یه‌ ", " تێپه‌ڕاندن ڕیگه‌پێدراوه‌ ", "‌ ‌تێپه‌‌ڕاندن بۆ ئۆتۆمبێلی بارهه‌ڵگر قه‌ده‌غه‌یه‌ "], answer: 1 },
+            { img: "64.png", q: " ئەم هێمایە چی بۆ شۆفێر دیاری دەکات ؟", options: [" ئه‌و په‌ڕی پانی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ ", " ئه‌وپه‌ڕی به‌رزی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ ", "‌‌ ‌ئه‌و په‌ڕی قورسایی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ "], answer: 0 },
+            { img: "65.png", q: " کاتێک ئەم تابلۆیە دەبینیت، مانای چییە ؟", options: [" ئه‌و په‌ڕی پانی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ ", " ئه‌و په‌ڕی قورسایی مۆڵه‌ت پێداروه‌ به‌باره‌وه‌ ", "‌ ‌ئه‌وپه‌ڕی به‌رزی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ "], answer: 2 },
+            { img: "66.png", q: " ئەم نیشانەیە ئاماژەیە بۆ قەدەغەکردنی چی ؟", options: [" ئه‌و په‌ڕی پانی مۆڵه‌ت پێدراوه‌ ", " ئه‌و په‌‌ڕی درێژی مۆڵه‌ت پێداروه‌ به‌باره‌وه‌ ", "‌ ‌ئه‌وپه‌ڕی به‌رزی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ "], answer: 1 },
+            { img: "67.png", q: " ئەم هێمایەی قەدەغەکردن مانای چی دەگەیەنێت ؟", options: [" تێپه‌‌ڕاندن قه‌ده‌غه‌یه‌ ", " وه‌ستان قه‌ده‌غه‌یه‌ ", "‌ ‌ڕێگه‌ی یه‌‌ك ئاڕاسته‌ "], answer: 0 },
+            { img: "68.png", q: " ئەم تابلۆیە چی قەدەغەی  دەکات ؟", options: [" وه‌ستا به‌ هه‌موو شێوه‌یه‌ك قه‌ده‌غه‌یه‌ ", " تێپه‌ڕاندن بۆ ئۆتۆمبێلی بچوك قه‌ده‌غه‌یه‌ ", "‌ ‌تێپه‌ڕاندن بۆ لۆری قه‌ده‌غه‌یه‌ "], answer: 2 },
+            { img: "69.png", q: " ئەم نیشانەیە چی ڕوون دەکاتەوە ؟", options: [" تێپه‌ڕاندن قه‌ده‌غه‌یه‌ ", " تێپه‌ڕاندن ڕیگه‌پێدراوه‌ ", "‌ ‌تێپه‌ڕاندن بۆ ئۆتۆمبێلی بارهه‌ڵگر قه‌ده‌غه‌یه‌ "], answer: 1 },
             { img: "70.png", q: " مانای ئەم هێمایە لەسەر ڕێگا چییە ؟", options: [" تێپه‌ڕاندن بۆ لۆری ڕێگه‌پێدراوه‌ ", " تێپه‌ڕاندن بۆ ئۆتۆمبێلی بچوك ڕێگه‌پێدراوه‌ ", "‌ ‌تێپه‌ڕاندن بۆ ئۆتۆمبێلی بارهه‌ڵگر قه‌ده‌غه‌یه‌ "], answer: 0 },
             { img: "71.png", q: " ئەم نیشانەیە چی بۆ شۆفێر دیاری دەکات ؟", options: [" ئه‌و په‌ڕی خێرایی ڕێگه‌پێدراو ", " ئه‌و په‌ڕی خێرایی ڕێگه‌پێدراو نییه‌ ", "‌ ‌وه‌ستان له‌م شوێنه‌دا قه‌ده‌غه‌یه‌ "], answer: 0 },
             { img: "72.png", q: " مانای ئەم هێمایەی هاتووچۆ چییە ؟", options: [" تێپه‌ڕاندن ڕیگه‌پێدراوه‌ ", " تێپه‌ڕاندن بۆ ئۆتۆمبێلی بچوك ڕێگه‌پێدراوه‌ ", "‌ ‌ته‌واو بوونی ئه‌وپه‌ڕی خێرای ڕێگه‌پێدراوه‌ "], answer: 2 },
             { img: "73.png", q: " ئەم هێمایە ئاماژەیە بۆ چ حاڵەتێک لەسەر ڕێگا ؟", options: [" تێپه‌ڕاندن ڕیگه‌پێدراوه‌ ", " ته‌واوبوونی قه‌ده‌غه‌كردن ", "‌ ‌ته‌واو بوونی ئه‌وپه‌ڕی خێرای ڕێگه‌پێدراوه‌ "], answer: 1 },
-            { img: "74.png", q: " کاتێک ئەم تابلۆیە دەبینیت، مانای چییە ؟", options: [" ڕاوه‌ستان و پارككردن قه‌ده‌غه‌یه‌ ", " وەستانی کاتی ڕێگەپێدراوە ", "‌ ‌ته‌واو بوونی ئه‌وپه‌ڕی خێرای ڕێگه‌پێدراوه‌ "], answer: 0 },
+            { img: "74.png", q: " کاتێک ئەم تابلۆیە دەبینیت، مانای چییە ؟", options: [" ڕاوه‌‌ستان و پارككردن قه‌ده‌غه‌یه‌ ", " وەستانی کاتی ڕێگەپێدراوە ", "‌ ‌ته‌واو بوونی ئه‌وپه‌ڕی خێرای ڕێگه‌پێدراوه‌ "], answer: 0 },
             { img: "75.png", q: " ئەم نیشانەیە چی لەسەر شەقامەکان قەدەغە دەکات ؟", options: [" تێپه‌ڕاندن ڕیگه‌پێدراوه‌ ", " پارككردن قه‌ده‌غه‌یه‌ ", "‌ ‌وەستانی کاتی ڕێگەپێدراوە "], answer: 1 },
-            { img: "76.png", q: " مانای ئه‌م هێمایه‌ ئاماژه‌ بۆچی ؟", options: [" ڕاوه‌ستان بۆ پشكنین و كۆنترۆڵكردن ", " پارككردن قه‌ده‌غه‌یه‌ ", "‌ ‌وەستان قه‌ده‌غه‌یه‌ "], answer: 0 },
-            { img: "78.png", q: " تابلۆی سێگۆشەی سەرەوژێر (ڕووەو خوار) ئاماژەیە بۆ چی ؟", options: [" ڕێگه‌ی یه‌ك ئاڕاسته‌ ", " وه‌ستان قه‌ده‌غه‌یه‌ ", "‌ ‌پابه‌‌ندبوونی ڕه‌ها "], answer: 2 },
-            { img: "79.png", q: " ئەم هێمایەی نەخشەی ڕێگا چ جۆرە یەکتربڕێک نیشان دەدات ؟", options: [" پابه‌ندبونی نائاسایی پێشڕوه‌ی بۆ شه‌قامه‌ باریكه‌كانه‌ ", " پابه‌ندبونی نائاسایی پێشڕوه‌ی بۆ شه‌قامه‌ پانه‌كانه‌ ", "‌ تێپه‌ڕاندن قه‌ده‌غه‌یه‌ "], answer: 1 },
+            { img: "76.png", q: " مانای ئه‌م هێمایه‌ ئاماژه‌ بۆچی ؟", options: [" ڕاوه‌ستان بۆ پشكنین و كۆنترۆڵكردن ", " پارككردن قه‌ده‌غه‌یه‌ ", "‌ ‌وەستان قه‌ده‌غه‌یه‌‌ "], answer: 0 },
+            { img: "78.png", q: " تابلۆی سێگۆشەی سەرەوژێر (ڕووەو خوار) ئاماژەیە بۆ چی ؟", options: [" ڕێگه‌ی یه‌ك ئاڕاسته‌ ", " وه‌ستان قه‌ده‌غه‌یه‌ ", "‌ ‌پابه‌ندبوونی ڕه‌ها "], answer: 2 },
+            { img: "79.png", q: " ئەم هێمایەی نەخشەی ڕێگا چ جۆرە یەکتربڕێک نیشان دەدات ؟", options: [" پابه‌ندبونی نائاسایی پێشڕوه‌ی بۆ شه‌قامه‌ باریكه‌‌كانه‌ ", " پابه‌ندبونی نائاسایی پێشڕوه‌ی بۆ شه‌قامه‌ پانه‌كانه‌ ", "‌ تێپه‌ڕاندن قه‌ده‌غه‌یه‌ "], answer: 1 },
             { img: "81.png", q: " (STOP) مانای چییە؟ ؟", options: [" خالی پشكنین له‌پێشه‌وه‌ ", " وه‌ستان قه‌ده‌غه‌یه‌ ", "‌ ‌ڕاوه‌سته‌ پێشڕوی بۆتۆیه‌ "], answer: 2 },
-            { img: "82.png", q: " ئەم هێمایە ئاماژەیە بۆ چ حاڵەتێک لە ڕێگادا", options: [" یه‌كگرتنی سایده‌‌كان ", " تەسکبوونەوەی شەقام ", "‌ ‌دابه‌ش بوونی سایده‌كان "], answer: 0 },
+            { img: "82.png", q: " ئەم هێمایە ئاماژەیە بۆ چ حاڵەتێک لە ڕێگادا", options: [" یه‌كگرتنی سایده‌كان ", " تەسکبوونەوەی شەقام ", "‌ ‌دابه‌ش بوونی سایده‌كان "], answer: 0 },
             { img: "83.png", q: " تابلۆی چوارگۆشەی چەماوەی زەرد (ڕووبەری سەرەکی) مانای چییەا", options: [" پابه‌ندبوونی ڕه‌ها ", " شه‌قامی سه‌ره‌كی پێشڕه‌وی بۆتۆیه‌ ", "‌ ‌وه‌ستان قه‌ده‌غه‌یه‌ "], answer: 1 },
             { img: "84.png", q: " ئەم هێمایە بە هێڵی ڕەشەوە چی دەگەیەنێت", options: [" پابه‌ندبوونی ڕه‌ها ", " شه‌قامی سه‌ره‌كی پێشڕه‌وی بۆتۆیه‌ ", "‌ ‌شه‌قامی سه‌ره‌كی ته‌واو بوونی پێشڕه‌وی "], answer: 2 },
             { img: "85.png", q: " ئەم هێمایەی ناو بازنەی سوور ئاماژەیە بۆ چی", options: [" تێپه‌ڕاندن ڕیگه‌پێدراوه‌ ", " پێشڕه‌وی بۆ ئۆتۆمبێلی ڕووبه‌ڕوه‌ ", "‌ ‌شه‌قامی یه‌ك ئاڕاسته‌ "], answer: 1 },
@@ -867,16 +810,16 @@
             { img: "88.png", q: "ئەم هێمایە (تیرەی شین بە ئاڕاستەی ڕاستەوخۆ) ئاماژەیە بۆ چی؟", options: ["ته‌نیا ڕاسته‌و ڕاست بۆ پێشه‌وه‌", "پێچکردنەوە قەدەغەیە", "وەستان قەدەغەیە"], answer: 0 },
             { img: "89.png", q: "ئەم هێمایە (تیرەی شین بۆ چەپ) مانای چییە؟", options: ["ته‌نیا بۆ لای ده‌ست ڕاست", "پێچکردنەوە بۆ ڕاست", "ته‌نیا بۆ لای ده‌سته‌چه‌پ"], answer: 2 },
             { img: "90.png", q: "ئەم هێمایە (تیرەی شین بۆ ڕاست) مانای چییە؟", options: ["ته‌نیا بۆ لای ده‌سته‌ڕاست", "پێچکردنەوە بۆ چەپ", "خێرایی کەم بکەوە"], answer: 0 },
-            { img: "91.png", q: "ئەم هێمایەی تیرەی چەماوە بۆ چەپ ئاماژەیە بۆ چی؟", options: ["ته‌نیا بۆ لای ده‌سته‌چه‌پ", "ته‌نیا بۆ لای ده‌سته‌چه‌پ", "پێچبكه‌ره‌وه‌ بۆلای ده‌سته‌چه‌پ"], answer: 2 },
-            { img: "92.png", q: "ئەم هێمایەی تیرەی چەماوە بۆ ڕاست ئاماژەیە بۆ چی؟", options: ["ته‌نیا بۆ لای ده‌سته‌چه‌پ", "پێچبكه‌‌ره‌وه‌ بۆلای ده‌سته‌ڕاست", "وەستان قەدەغەیە"], answer: 1 },
+            { img: "91.png", q: "ئەم هێمایەی تیرەی چەماوە بۆ چەپ ئاماژەیە بۆ چی؟", options: ["ته‌نیا بۆ لای ده‌‌سته‌چه‌پ", "ته‌نیا بۆ لای ده‌سته‌چه‌پ", "پێچبكه‌ره‌وه‌ بۆلای ده‌سته‌چه‌پ"], answer: 2 },
+            { img: "92.png", q: "ئەم هێمایەی تیرەی چەماوە بۆ ڕاست ئاماژەیە بۆ چی؟", options: ["ته‌نیا بۆ لای ده‌سته‌‌چه‌پ", "پێچبكه‌ره‌وه‌ بۆلای ده‌سته‌ڕاست", "وەستان قەدەغەیە"], answer: 1 },
             { img: "93.png", q: "ئەم هێمایە (تیرەی پێشەوە و چەپ) مانای چییە؟", options: ["ته‌نیا ڕاسته‌وڕاست و لادان به‌لای چه‌پدا ", "ته‌نیا ڕاسته‌وڕاست و لادان به‌لای ڕاستدا ", "قەدەغەی تێپەڕین"], answer: 0 },
-            { img: "94.png", q: "ئەم هێمایە (تیرەی پێشەوە و ڕاست) مانای چییە؟", options: ["پێچکردنەوە بۆ چەپ", "ته‌نیا ڕاسته‌وڕاست و لادان به‌‌لای ڕاستدا", "ته‌نیا ڕاسته‌وڕاست و لادان به‌لای چه‌پدا"], answer: 1 },
+            { img: "94.png", q: "ئەم هێمایە (تیرەی پێشەوە و ڕاست) مانای چییە؟", options: ["پێچکردنەوە بۆ چەپ", "ته‌نیا ڕاسته‌وڕاست و لادان به‌لای ڕاستدا", "ته‌نیا ڕاسته‌وڕاست و لادان به‌لای چه‌پدا"], answer: 1 },
             { img: "95.png", q: "ئەم هێمایە (تیرەی چەپ و ڕاست) مانای چییە؟", options: ["ته‌نیا بۆ لای ده‌سته‌چه‌پ", "ڕاسته‌وڕاست پۆ پێشه‌وه‌", "ته‌نیا لادان به‌لای ده‌سه‌ت ڕاسپ و چه‌پدا"], answer: 2 },
-            {img: "96.png", q: "ئەم هێمایەی بازنەیی بە تیرە خولاوەکان مانای چییە؟", options: ["ئاڕاسته‌ی لێخوڕین له‌ فولكه‌دا", "شەقامی خێرا", "پێچکردنەوە قەدەغەیە"], answer: 0 },
+            {img: "96.png", q: "ئەم هێمایەی بازنەیی بە تیرە خولاوەکان مانای چییە؟", options: ["ئاڕاسته‌ی لێخوڕین له‌‌ فولكه‌دا", "شەقامی خێرا", "پێچکردنەوە قەدەغەیە"], answer: 0 },
             {img: "97.png", q: "ئەم هێمایە (تیرەی خوارەوە بۆ چەپ) ئاماژەیە بۆ چی؟", options: ["ته‌نیا به‌لای چه‌پی ئه‌م هێمایه‌دا بڕۆ", "لادان به‌لای ڕاستدا", "وەستان له‌ ده‌سته‌چه‌پدا ڕێگه‌دراوه‌"], answer: 0 },
             { img: "98.png", q: "ئەم هێمایە (تیرەی خوارەوە بۆ لای ڕاست) ئاماژەیە بۆ چی؟", options: ["ته‌نیا به‌لای چه‌پی ئه‌م هێمایه‌دا بڕۆ", "ته‌نیا به‌لای ڕاستی ئه‌م هێمایه‌دا بڕۆ", "ئاڕاسته‌ی لێخوڕین له‌ فولكه‌دا"], answer: 1 },
             { img: "99.png", q: "ئەم هێمایە (دوو تیر کە بەرەو هەردوو لای خوارەوە دەچن) مانای چییە؟", options: ["قه‌ده‌غه‌یه‌ به‌ ده‌سته‌ چه‌پو ڕاست بڕۆیت", "ده‌توانی به‌لای ڕاست یان چه‌پی ئه‌م هێمایه‌دا بڕۆیت", "ته‌نیا به‌لای ڕاستی ئه‌م هێمایه‌دا بڕۆ"], answer: 1 },
-            { img: "100.png", q: "ئەم هێمایەی نێو بازنەی شین کە وێنەی پایسکڵی تێدایە ئاماژەیە بۆ چی؟", options: ["وه‌ستانی پاسكیل قه‌ده‌غه‌یه‌", "پاركردنی پاسكیل", "ڕێڕه‌وی پاسكیل"], answer: 2 },
+            { img: "100.png", q: "ئەم هێمایەی نێو بازنەی شین کە وێنەی پایسکڵی تێدایە ئاماژەیە بۆ چی؟", options: ["وه‌ستانی پاسكیل قه‌‌ده‌غه‌یه‌", "پاركردنی پاسكیل", "ڕێڕه‌وی پاسكیل"], answer: 2 },
             { img: "170.png", q: "ئەم هێمایەی هاتووچۆ ئاماژەیە بۆ چی؟", options: ["فڕۆکەخانە", "وێستگەی شەمەندەفەر", "نەخۆشخانه"], answer: 0 },
             { img: "171.png", q: "ئەم هێمایەی هاتووچۆ ئاماژەیە بۆ چی؟", options: ["وێستگەی شەمەندەفەر", "بەنزینخانە", "مزگەوت"], answer: 0 },
             { img: "172.png", q: "ئەم هێمایەی هاتووچۆ مانای چییە؟", options: ["فرۆكه‌خانه‌", "وێستگەی پاس", "فیتەر"], answer: 1 },
@@ -999,7 +942,7 @@
 
         function toggleTheme() {
             vibrate(); document.body.classList.toggle("dark-mode"); document.documentElement.classList.toggle("dark-mode"); let metaTheme = document.getElementById("meta-theme-color");
-            if (document.body.classList.contains("dark-mode")) { document.getElementById("themeToggleBtn").innerText = "☀️️"; localStorage.setItem("theme", "dark"); if(metaTheme) metaTheme.setAttribute("content", "#121212"); } 
+            if (document.body.classList.contains("dark-mode")) { document.getElementById("themeToggleBtn").innerText = "☀️"; localStorage.setItem("theme", "dark"); if(metaTheme) metaTheme.setAttribute("content", "#121212"); } 
             else { document.getElementById("themeToggleBtn").innerText = "🌙"; localStorage.setItem("theme", "light"); if(metaTheme) metaTheme.setAttribute("content", getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim()); }
         }
         function vibrate(ms = 15) { if (navigator.vibrate) navigator.vibrate(ms); }
@@ -1090,7 +1033,7 @@
                 else if (expiryDate >= date2022_M3_Start && expiryDate <= date2022_M3_End) { fine = 20000; rulePeriod = 'm3window'; }
                 else if (expiryDate > date2019 && expiryDate <= date2022_Start) { 
                     let totalYears = yearDiff; if (asOfDate.getMonth() > expiryDate.getMonth() || (asOfDate.getMonth() === expiryDate.getMonth() && asOfDate.getDate() > expiryDate.getDate())) totalYears += 1; if (totalYears === 0) totalYears = 1; 
-                    fine = totalYears * 30000; rulePeriod = '2019to2022'; displayMonths = totalYears; 
+                    fine = totalYears * 30000; rulePeriod = '2019to2022'; displayMonths = totalYears; // Using displayMonths as years for this specific rule
                 } 
                 else { 
                     let chargeableMonths = totalMonths > 1 ? totalMonths - 1 : 0; 
@@ -1120,6 +1063,7 @@
             let suffM = (result.period === '2019to2022') ? " ساڵ" : " مانگ"; 
             let suffD = " دینار";
             
+            // ئەپدەیتکردنی بەشی ڕوونکردنەوەی یاسای غەرامەکە
             const ruleBox = document.getElementById('fineRuleBox');
             const ruleText = document.getElementById('fineRuleText');
             if (ruleBox && ruleText) {
@@ -1166,8 +1110,8 @@
             currentValues.duration = result.months; currentValues.fine = result.fine; currentValues.total = result.total;
             document.getElementById('fee-price').textContent = result.baseFee.toLocaleString() + suffD;
             const fineBox = document.getElementById('fine-container-box');
-            if (expiryDate < currentDate && result.fine > 0) { document.documentElement.style.setProperty('--dynamic-status-color', '#e53e3e'); fineBox.style.borderColor = 'rgba(229, 62, 62, 0.4)'; fineBox.style.boxShadow = 'var(--glass-shadow-light)'; } 
-            else { document.documentElement.style.setProperty('--dynamic-status-color', '#27ae60'); fineBox.style.borderColor = 'rgba(39, 174, 96, 0.4)'; fineBox.style.boxShadow = 'var(--glass-shadow-light)'; }
+            if (expiryDate < currentDate && result.fine > 0) { document.documentElement.style.setProperty('--dynamic-status-color', '#e53e3e'); fineBox.style.borderColor = 'rgba(229, 62, 62, 0.4)'; fineBox.style.boxShadow = '0 10px 30px rgba(229, 62, 62, 0.15)'; } 
+            else { document.documentElement.style.setProperty('--dynamic-status-color', '#48bb78'); fineBox.style.borderColor = 'rgba(72, 187, 120, 0.4)'; fineBox.style.boxShadow = '0 10px 30px rgba(72, 187, 120, 0.15)'; }
             updateSpeedometer(result.fine);
         }
 
@@ -1189,6 +1133,7 @@
             setTimeout(() => { ratingSystem.style.opacity = '0'; setTimeout(() => ratingSystem.style.display = 'none', 300); }, 4000);
         }
 
+        // --- گۆڕانکاری سەرەکی بۆ چاککردنی کێشەی گیرخواردنی لۆگۆکە ---
         document.addEventListener('DOMContentLoaded', function() {
             updateVisitorCounter();
 
@@ -1197,8 +1142,8 @@
                 let wrapper = document.getElementById('noticeScrollWrapper');
                 if(wrapper) { applyNoticeToUI(staticNotice, wrapper); }
                 
-                navTo('portal'); 
-                setTimeout(() => calculateFine(true), 100); 
+                navTo('portal'); // یەکەم جار پەڕەی سەرەکی بکەرەوە
+                setTimeout(() => calculateFine(true), 100); // دواتر غەرامەکە هەژمار بکە بۆ ئەوەی خێرا بێت
             } catch (error) {
                 console.error("Initialization error: ", error);
             }
@@ -1208,6 +1153,7 @@
                 if(splash) splash.classList.add('splash-hidden'); 
             }, 800); 
         });
+        // --------------------------------------------------------------
 
         let deferredPrompt; const installAppContainer = document.getElementById('installAppContainer'); const installAppBtn = document.getElementById('installAppBtn');
         const isIos = () => { const userAgent = window.navigator.userAgent.toLowerCase(); return /iphone|ipad|ipod/.test(userAgent); };
@@ -1241,6 +1187,7 @@
             console.log('PWA was installed'); installAppContainer.style.display = 'none'; Swal.fire('پیرۆزە!', 'ئەپەکە بە سەرکەوتوویی دابەزییە سەر مۆبایلەکەت.', 'success');
         });
 
+        // ------------------ Service Worker Registration ------------------
         if ('serviceWorker' in navigator) {
             document.addEventListener('DOMContentLoaded', () => {
                 navigator.serviceWorker.register('sw.js').then(registration => {
@@ -1250,6 +1197,7 @@
                 });
             });
         }
+        // -----------------------------------------------------------------
     </script>
 </body>
 </html>
