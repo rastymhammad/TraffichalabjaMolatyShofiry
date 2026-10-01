@@ -127,7 +127,10 @@
 
         .sign-lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 99999; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
         .sign-lightbox.show { opacity: 1; visibility: visible; }
-        .lightbox-content { background: #ffffff; border-radius: 24px; padding: 25px 15px; width: 95%; max-width: 420px; text-align: center; position: relative; box-shadow: 0 15px 40px rgba(0,0,0,0.4); color: #333333; }
+        /* گۆڕانکاری ئەنیمەیشنی هێماکان لێرە کراوە */
+        .lightbox-content { background: #ffffff; border-radius: 24px; padding: 25px 15px; width: 95%; max-width: 420px; text-align: center; position: relative; box-shadow: 0 15px 40px rgba(0,0,0,0.4); color: #333333; transform: scale(0.9); opacity: 0; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease; }
+        .sign-lightbox.show .lightbox-content { transform: scale(1); opacity: 1; }
+        
         .lightbox-close { position: absolute; top: 12px; left: 12px; background: #f1f5f9; border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #333; transition: 0.2s; z-index: 10; }
         .lightbox-close:hover { background: #e2e8f0; }
         .lightbox-img-box { width: 100%; height: 320px; margin: 10px auto; display: flex; align-items: center; justify-content: center; background: #ffffff; border-radius: 16px; border: 2px solid #e2e8f0; box-shadow: 0 4px 15px rgba(0,0,0,0.08); padding: 5px; }
@@ -136,10 +139,13 @@
         .lightbox-btn { flex: 1; background: var(--primary-color); color: white; border: none; padding: 12px; border-radius: 12px; font-size: 13px; font-weight: bold; cursor: pointer; font-family: 'Rudaw', Tahoma, sans-serif; transition: 0.2s; }
         .lightbox-btn:hover { opacity: 0.9; }
 
+        @keyframes popClick { 0% { transform: scale(1); } 50% { transform: scale(0.95); } 100% { transform: scale(1); } }
         .exam-option { background: var(--toggle-bg); border: 2px solid var(--toggle-border); border-radius: 10px; padding: 12px; margin: 8px 0; cursor: pointer; text-align: right; font-size: 13px; color: var(--text-main); transition: 0.2s; }
         .exam-option:hover { border-color: var(--primary-color); background: var(--info-bg); }
+        .exam-option.clicked { animation: popClick 0.3s ease; }
         .exam-option.correct { background: #d4edda !important; border-color: #28a745 !important; color: #155724 !important; font-weight: bold; }
         .exam-option.wrong { background: #f8d7da !important; border-color: #dc3545 !important; color: #721c24 !important; font-weight: bold; }
+        
         .safety-item { background: var(--toggle-bg); border: 1px solid var(--toggle-border); border-radius: 10px; padding: 12px; margin-bottom: 10px; font-size: 12px; line-height: 1.6; color: var(--text-main); display: flex; align-items: flex-start; gap: 10px; }
         .safety-item i { color: var(--primary-color); font-size: 16px; margin-top: 2px; flex-shrink: 0; }
 
@@ -206,21 +212,6 @@
         .container { background: var(--bg-container); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: 0 auto 20px auto; border: 1px solid var(--border-container); width: 100%; }
         h2 { color: var(--primary-color); margin-top: 0; margin-bottom: 15px; font-size: 16px; }
 
-        .input-wrapper { position: relative; width: 100%; margin: 12px 0; }
-        .input-wrapper i { position: absolute; right: 12px; top: 15px; color: var(--primary-color); font-size: 16px; z-index: 2; transition: all 0.3s ease; }
-        .input-wrapper input { width: 100%; padding: 20px 35px 8px 10px; box-sizing: border-box; border: 2px solid var(--input-border); border-radius: 6px; font-size: 14px; font-family: 'Rudaw', Tahoma, Arial, sans-serif; outline: none; transition: 0.3s ease all; background: var(--input-bg); color: var(--input-text); user-select: text; }
-        .input-wrapper label { position: absolute; right: 35px; top: 14px; font-size: 13px; color: var(--label-color); transition: 0.3s ease all; pointer-events: none; z-index: 1; }
-        .input-wrapper input:focus ~ label, .input-wrapper input:not(:placeholder-shown) ~ label { top: 4px; font-size: 10px; color: var(--primary-color); font-weight: bold; }
-        .input-wrapper:focus-within i { color: var(--primary-color); transform: scale(1.2); }
-        .input-wrapper input:disabled { background-color: #e9ecef; cursor: not-allowed; opacity: 0.7; }
-        .input-wrapper input.valid-input { border-color: #28a745 !important; box-shadow: 0 0 5px rgba(40, 167, 69, 0.3); }
-        .input-wrapper input.invalid-input { border-color: #f5c6cb !important; box-shadow: 0 0 5px rgba(245, 198, 203, 0.5); }
-        .input-wrapper select, .input-wrapper textarea { width: 100%; padding: 10px; border: 2px solid var(--input-border); border-radius: 6px; font-family: 'Rudaw', Tahoma, sans-serif; background: var(--input-bg); color: var(--input-text); outline: none; }
-        
-        button.action-btn { background: #28a745; color: white; border: none; padding: 12px 20px; cursor: pointer; border-radius: 6px; font-size: 15px; font-weight: bold; width: 100%; margin-top: 8px; font-family: 'Rudaw', Tahoma, sans-serif; transition: 0.3s; }
-        button.action-btn:disabled { background: #cccccc !important; color: #666666 !important; cursor: not-allowed !important; box-shadow: none !important; }
-        button.action-btn:hover:not(:disabled) { background: #218838; }
-        
         .fine-container { background: var(--bg-container); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 18px; border: 2px solid var(--border-container); text-align: center; width: 100%; }
         .toggle-container { display: flex; justify-content: space-between; align-items: center; background: var(--toggle-bg); padding: 10px; border-radius: 10px; margin-bottom: 12px; border: 1px solid var(--toggle-border); }
         .switch { position: relative; display: inline-block; width: 50px; height: 28px; }
@@ -259,7 +250,6 @@
         .gauge-cover { position: absolute; top: 20px; left: 20px; width: 160px; height: 80px; background: var(--results-bg); border-top-left-radius: 80px; border-top-right-radius: 80px; }
         .needle { position: absolute; bottom: 0; left: 50%; width: 4px; height: 80px; background: var(--input-text); transform-origin: bottom center; transform: translateX(-50%) rotate(-90deg); transition: transform 0.8s; border-radius: 4px; z-index: 2; }
         
-        /* شاردنەوەی پەنجەرەکان */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-overlay); justify-content: center; align-items: flex-end; z-index: 1000; }
         .modal-content { background: var(--modal-bg); padding: 20px 15px; border-radius: 24px 24px 0 0; width: 100%; max-width: 400px; text-align: center; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
         .modal-overlay.show .modal-content { transform: translateY(0); }
@@ -358,7 +348,7 @@
                 </div>
                 <div class="portal-card" onclick="navTo('offices')">
                     <i class="fa-solid fa-building-user"></i>
-                    <div class="portal-card-content"><h3>به‌ڕێوه‌به‌رایه‌تیه‌كان و نوسینگه‌كان </h3><p>ناونیشان و لۆکەیشن </p></div>
+                    <div class="portal-card-content"><h3>نووسینگەکانی مۆڵەتی شۆفێری</h3><p>ناونیشان و لۆکەیشنی نووسینگەکان</p></div>
                     <div></div>
                 </div>
                 <div class="portal-card" onclick="navTo('safety')">
@@ -388,7 +378,6 @@
                         <button class="btn-reset" onclick="resetToToday()">🔄 ئەمڕۆ</button>
                     </div>
                     <div class="date-inputs">
-                        <!-- بەروارەکان پێچەوانە کرانەوە: ڕۆژ - مانگ - ساڵ -->
                         <div class="date-box" onclick="openModal('day')"><label>ڕۆژ</label><div class="date-custom-input" id="day-btn">10</div></div>
                         <div class="date-box" onclick="openModal('month')"><label>مانگ</label><div class="date-custom-input" id="month-btn">7</div></div>
                         <div class="date-box" onclick="openModal('year')"><label>ساڵ</label><div class="date-custom-input" id="year-btn">2026</div></div>
@@ -454,7 +443,7 @@
         <div id="officesSection" class="page-section" style="display: none;">
             <div class="offices-container">
                 <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 15px;">
-                    <h2 style="margin:0; font-size: 14px;"><i class="fa-solid fa-building-user" style="color: var(--primary-color);"></i> نووسینگه‌‌‌‌كانی شۆفێری</h2>
+                    <h2 style="margin:0; font-size: 14px;"><i class="fa-solid fa-building-user" style="color: var(--primary-color);"></i> نووسینگهكانی شۆفێری</h2>
                     <button onclick="navTo('portal')" class="btn-reset" style="padding: 4px 10px; font-size: 12px;"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە</button>
                 </div>
                 <p style="font-size: 12px; color: var(--label-color); margin-bottom: 15px; text-align: center;">:</p>
@@ -494,12 +483,7 @@
         </div>
     </div>
 
-    <div id="installAppContainer" style="display: none; text-align: center; margin-bottom: 15px;" class="no-print">
-        <button id="installAppBtn" class="action-btn" style="background: #28a745; width: auto; padding: 10px 25px; border-radius: 25px; box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);">
-            <i class="fa-solid fa-download"></i> دابەزاندنی ئەپڵیکەیشن (Install)
-        </button>
-    </div>
-
+    <!-- مۆداڵی دیاریکردنی ژمارە -->
     <div class="modal-overlay" id="picker-modal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h3 id="modal-title">دیاریکردنی ژمارە</h3>
@@ -525,15 +509,6 @@
             </div>
             <button class="action-btn" onclick="closeColorPicker()" style="background: var(--primary-color);">داخستن</button>
         </div>
-    </div>
-
-    <div class="rating-container no-print" id="ratingSystem">
-        <div class="rating-title">هەڵسەنگاندنت بۆ سیستەمەکە چۆنە؟</div>
-        <div class="stars" id="starContainer">
-            <i class="fa-solid fa-star" data-value="1"></i><i class="fa-solid fa-star" data-value="2"></i><i class="fa-solid fa-star" data-value="3"></i><i class="fa-solid fa-star" data-value="4"></i><i class="fa-solid fa-star" data-value="5"></i>
-        </div>
-        <button id="submitRatingBtn" class="action-btn" onclick="submitRating()" style="display: none; margin-top: 10px;">ناردنی هەڵسەنگاندن</button>
-        <div id="ratingThanks" class="rating-thanks" style="display: none; margin-top: 10px; color: #28a745; font-weight: bold;"><i class="fa-solid fa-circle-check"></i> زۆر سوپاس بۆ هەڵسەنگاندنەکەت!</div>
     </div>
 
     <footer>
@@ -566,7 +541,6 @@
             }
         });
 
-        // ------------------ لیستێکی جێگیر بۆ نووسینگەکان ------------------
         const staticOfficesList = [
             { name: "بەڕێوەبەرایەتی هاتووچۆی هەڵەبجە", phone1: "", phone2: "07731631988", mapUrl: "https://maps.app.goo.gl/iV7Ly21Rkx7ikreFA" },
             { name: "به‌ڕێوه‌به‌رایه‌تی هاتووچۆی سلێمانی", phone1: "", phone2: "", mapUrl: "https://maps.app.goo.gl/r3aV4pWpWJLrqWVy5" },
@@ -593,7 +567,6 @@
                     </div>`;
             });
         }
-        // -------------------------------------------------------------------
 
         const trafficSignsData = [];
         for (let i = 1; i <= 223; i++) { trafficSignsData.push({ img: `${i}.png` }); }
@@ -739,24 +712,24 @@
             { img: "1.png", q: "ئەم هێمایەی ئاماژەیە بۆ چی؟", options: ["یەکتربڕی مەترسی‌دار لە پێشەوەیە", "ڕێگاكه‌ كاری تێدا ده‌كرێت", "لەم شوێنەدا وەستان قەدەغەیە"], answer: 0 },
             { img: "2.png", q: "کاتێک ئەم هێمایه‌ لە سەر ڕێگا دەبینیت، مانای چییە؟", options: ["چوارڕیانی ئازاد له‌ پێشته‌وه‌یه‌", "ڕێگەی سەرەکییە مه‌ترسیداره‌", "چوارڕیانی مه‌ترسیدار له‌ پێشته‌وه‌یه‌"], answer: 2 },
             { img: "3.png", q: "ئەم تابڵۆیە هۆشدارییە لەسەر بوونی چی؟", options: ["ئاگاراری ڕێگای لاوه‌كی به‌", "سێ ڕیانی مه‌ترسی دار له‌پێشه‌وه‌یه‌", "‌ده‌بێت سایدی ده‌سته‌ ڕاست بوه‌ستێت بۆت"], answer: 1 },
-            { img: "4.png", q: "ئەم هێمایە چی بۆ شۆفێر ڕوون دەکاتەوە؟", options: ["فولكه‌ لە پێشەوەیە", "وه‌ستان له‌ناو فولكه‌ قه‌‌ده‌غه‌یه‌", "پێچکردنەوە قەدەغەیە"], answer: 0 },
-            { img: "5.png", q: "ئاگاداری لەسەر چی دەدات ئەم هێمایەی؟", options: ["ده‌بێت پیاده‌ بۆم ڕاوه‌ستێت", "شوێنی په‌ڕینه‌وه‌ی پیاده‌ له‌ پێشه‌وه‌یه‌", "ڕێگاكه‌ كاری تێدا ده‌كرێت"], answer: 1 },
-            { img: "6.png", q: "بەپێی یاسای هاتووچۆ، ئەم تابلۆیە مانای چییە؟", options: ["هاتووچۆی ڕووبه‌ڕوو له‌ پێشه‌وه‌یه‌‌", "شەقامی یەک ئاراستە", "قەدەغەکردنی تێپەڕین‌"], answer: 0 },
+            { img: "4.png", q: "ئەم هێمایە چی بۆ شۆفێر ڕوون دەکاتەوە؟", options: ["فولكه‌ لە پێشەوەیە", "وه‌ستان له‌ناو فولكه‌ قه‌ده‌غه‌یه‌", "پێچکردنەوە قەدەغەیە"], answer: 0 },
+            { img: "5.png", q: "ئاگاداری لەسەر چی دەدات ئەم هێمایەی؟", options: ["ده‌بێت پیاده‌ بۆم ڕاوه‌ستێت", "شوێنی په‌ڕینه‌‌وه‌ی پیاده‌ له‌ پێشه‌وه‌یه‌", "ڕێگاكه‌ كاری تێدا ده‌كرێت"], answer: 1 },
+            { img: "6.png", q: "بەپێی یاسای هاتووچۆ، ئەم تابلۆیە مانای چییە؟", options: ["هاتووچۆی ڕووبه‌ڕوو له‌ پێشه‌وه‌یه‌", "شەقامی یەک ئاراستە", "قەدەغەکردنی تێپەڕین‌"], answer: 0 },
             { img: "7.png", q: "ئەم نیشانەیە چی بە شۆفێر دەڵێت؟", options: ["ترافیک لایت لە پێشەوە", "وەستانی ناچاری", "شەقامی خێرا"], answer: 0 },
             { img: "8.png", q: "ئەم هێمایەی هاتووچۆ هۆشداری دەدات لەسەر چی؟", options: ["ترافیک لایت لە پێشەوە", "وەستانی ناچاری", "مه‌ترسیی ڕیزبه‌ستن قه‌ره‌بالغی له‌پێشه‌وه‌یه‌"], answer: 2 },
             { img: "9.png", q: "ئەم تابڵۆیە ئاگادارت دەکاتەوە لە بوونی؟", options: ["ڕێڕه‌وی پاسكیل له‌ پێشه‌", "وەستانی پاسكیل سوار قه‌ده‌غه‌یه‌", "وه‌ستانی پاسكیل سوار ئاساییه‌"], answer: 0 },
-            { img: "10.png", q: "ئەم هێمایە ئاماژەیە بۆ چ حاڵەتێک؟", options: ["منداڵ ده‌بێت ڕاوه‌ستێت ", "منداڵ  لە پێشەوە", "‌قوتابخانه‌ی منداڵ له‌‌پێشه‌"], answer: 1 },
-            { img: "11.png", q: "ئەم هێمایە مانای چی ده‌گه‌یه‌نێت؟", options: ["ئه‌سپ سوار ڕێگه‌ پێدراوه‌ ", "ئه‌سپ سوار قه‌ده‌قه‌یه‌", "‌‌ئه‌سپ سوار له‌ پێشه‌وه‌"], answer: 2 },
-            { img: "12.png", q: "کاتێک ئەم دەبینیت، دەبێت وریای چی بیت ؟", options: [" ئاژه‌ڵی كێوی له‌‌ پێشه‌وه‌ ", "ئاژه‌ڵی ماڵی له‌ پێشه‌وه‌", "‌‌ ڕێگه‌ پێدراوه‌ ئاژه‌ڵی ماڵی تێپه‌ڕێت"], answer: 0 },
-            { img: "13.png", q: "مانای ئەم تابلۆیه‌ هۆشدارییە چی دەگەیەنێت ؟", options: [" كێڵگه‌ی گاوداری له‌ پێشه‌وه‌ ", "ئاژه‌ڵی ماڵی له‌ پێشه‌وه‌", "‌‌ كێڵگه‌ی کشتوكاڵی له‌پێشه‌وه‌"], answer: 1 },
+            { img: "10.png", q: "ئەم هێمایە ئاماژەیە بۆ چ حاڵەتێک؟", options: ["منداڵ ده‌بێت ڕاوه‌ستێت ", "منداڵ  لە پێشەوە", "‌قوتابخانه‌ی منداڵ له‌پێشه‌"], answer: 1 },
+            { img: "11.png", q: "ئەم هێمایە مانای چی ده‌گه‌یه‌نێت؟", options: ["ئه‌سپ سوار ڕێگه‌ پێدراوه‌ ", "ئه‌سپ سوار قه‌ده‌قه‌یه‌", "‌‌‌‌ئه‌سپ سوار له‌ پێشه‌وه‌"], answer: 2 },
+            { img: "12.png", q: "کاتێک ئەم دەبینیت، دەبێت وریای چی بیت ؟", options: [" ئاژه‌ڵی كێوی له‌ پێشه‌وه‌ ", "ئاژه‌ڵی ماڵی له‌ پێشه‌وه‌", "‌‌ ڕێگه‌ پێدراوه‌ ئاژه‌ڵی ماڵی تێپه‌ڕێت"], answer: 0 },
+            { img: "13.png", q: "مانای ئەم تابلۆیه‌ هۆشدارییە چی دەگەیەنێت ؟", options: [" كێڵگه‌ی گاوداری له‌ پێشه‌وه‌ ", "ئاژه‌ڵی ماڵی له‌ پێشه‌وه‌", "‌‌ كێڵگه‌ی کشتوكاڵی له‌پێشه‌وه‌‌"], answer: 1 },
             { img: "14.png", q: "شۆفێر لە کاتی بینینی ئەم هێمایە دەبێت چ بکات ؟", options: [" ڕێگاكه‌ به‌رزای و نزماییه‌ ", "شۆفێری له‌م شوێنه‌ قه‌ده‌غه‌یه‌", "‌‌ ڕێگه‌ی خلیسك له‌پێشه‌"], answer: 2 },
             { img: "15.png", q: "ئەم تابلۆیە هۆشداری دەدات لەسەر چی ؟", options: ["به‌رد یان زیخ له‌ پێشه‌وه‌  ", "شۆفێری له‌م ناوه‌چه‌ ڕێگه‌ پێدارو نییه‌", "‌‌ ڕێگه‌ی سه‌خت له‌ پێشه‌وه‌ "], answer: 0 },
             { img: "16.png", q: "ئاماژەی ئەم تابلۆیە لە سەر ڕێگا چییه‌ ؟", options: ["ئه‌م ڕێگایه‌ به‌ستراوه‌  ", " شه‌قامی به‌ردین", "‌‌ ‌به‌رده‌ خزه‌ هه‌ره‌سهێنان له‌ پێشه‌وه‌ "], answer: 2 },
             { img: "17.png", q: "شۆفێر لە بەرامبەر ئەم هێمایەدا دەبێت لە چی وریابێت ؟", options: ["ڕێگاكه‌ مه‌ترسیداره‌‌  ", " قه‌راغ ڕێگه‌ی مه‌ترسی دار له‌ پێشه‌وه‌ ", "‌‌ ‌‌ڕێگاكه‌‌ هه‌ورازو نشێوه‌ "], answer: 1 },
             { img: "18.png", q: " مەبەست لەم هێما هۆشدارییە بۆ چی ؟", options: ["تاسه‌ی ده‌سكرد له‌مپه‌ر له‌ پێشه‌وه‌یه‌  ", " بوونی پرد له‌ پێشه‌وه‌ ", "‌‌ ‌‌ڕێگاكه‌ ‌به‌ستراوه‌ "], answer: 0 },
             { img: "19.png", q: " ئەم تابلۆیە ئاماژەیە بۆ چ جۆرە ڕێگەیەک ؟", options: ["تاسه‌ی ده‌سكرد له‌ پێشه‌وه‌یه‌  ", " ئاگاداری ڕێگه‌كه‌ به‌ ", "‌‌ ڕه‌گله‌ (تاسه‌) له‌پیشه‌وه‌ "], answer: 2 },
-            { img: "20.png", q: " ئەم هێمایه‌‌ چی ڕێگاكه‌ نیشان دەدات ؟", options: ["شه‌قامه‌كه‌ به‌ستراوه‌  ", " كاركردنی شه‌قام له‌ پێشه‌وه‌ ", "‌‌ زه‌وی كشتوكاڵی له‌پێشه‌وه‌ "], answer: 1 },
-            { img: "21.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["ته‌سكبوونه‌وه‌ی شه‌قام لای چه‌پ له‌ پێشه‌وه‌یه‌  ", " شەقامەکە لە لای ڕاستەوە تەسک دەبێتەوە ", "‌‌ شەقامەکە فراوان دەبێت "], answer: 0 },
+            { img: "20.png", q: " ئەم هێمایه‌ چی ڕێگاكه‌ نیشان دەدات ؟", options: ["شه‌قامه‌كه‌ به‌ستراوه‌  ", " كاركردنی شه‌قام له‌ پێشه‌وه‌ ", "‌‌ زه‌وی كشتوكاڵی له‌پێشه‌وه‌ "], answer: 1 },
+            { img: "21.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["ته‌سكبوونه‌وه‌ی شه‌قام لای چه‌پ له‌ پێشه‌وه‌یه‌‌  ", " شەقامەکە لە لای ڕاستەوە تەسک دەبێتەوە ", "‌‌ شەقامەکە فراوان دەبێت "], answer: 0 },
             { img: "22.png", q: " ئاگاداری لەسەر بوونی چی دەدات ئەم تابلۆیە ؟", options: ["شەقامی یەک ئاراستە  ", " ته‌سكبوونه‌وه‌ی شه‌قام لای چه‌پ له‌ پێشه‌وه‌ ", "‌‌ ته‌سكبوونه‌وه‌ی شه‌قام لای ڕاسته‌وه‌ له‌ پێشه‌وه‌‌ "], answer: 2 },
             { img: "23.png", q: " کاتێک ئەم هێمایە دەبینیت، نیشانەی چییە ؟", options: ["هێڵی شه‌مه‌نده‌فه‌ر له‌پ  ", " ته‌سكبوونه‌وه‌ی شه‌قام له‌ هه‌ردوولاوه‌ له‌ پێشه‌وه‌ ", "‌‌ شەقامەکە فراوان دەبێت "], answer: 1 },
             { img: "24.png", q: " ئەم تابڵۆیە هۆشداری دەدات لەسەر چ جۆرە پێچێک ؟", options: ["پێچكردنه‌وه‌ بۆ لای ده‌سته‌ ڕاست له‌پێشه‌وه‌   ", "پێچكردنه‌‌وه‌ بۆلای چه‌پ قه‌ده‌قه‌یه‌ ", "‌‌ پێچكردنه‌وه‌ بۆ لای ده‌سته‌ چه‌پ له‌ پێشه‌وه‌ "], answer: 2 },
@@ -767,58 +740,58 @@
             { img: "29.png", q: " ئەم تابڵۆیە هۆشداری دەدات لەسەر چی ؟", options: ["لێژیی له‌ پێشه‌وه‌یه‌  ", " هەوراز له‌پێشه‌وه‌یه‌ ", "‌‌ ڕێگاكه‌ كاری تێدا ده‌كرێت به‌و ڕێژه‌یه‌ "], answer: 1 },
             { img: "30.png", q: " ئەم هێمایەی ئاماژەیە بۆ چ حاڵەتێک ؟", options: ["تونێل كاری تێدا ده‌كرێت  ", " تونێل به‌ستراوه‌ ", "‌‌‌‌ تونێل له‌پێشه‌وه‌ "], answer: 2 },
             { img: "31.png", q: " ئەم هێمایە ئاماژەیە بۆ چ جۆرە مەترسییەک ؟", options: ["هێڵی شه‌مه‌نده‌فه‌ر به‌بێ له‌مپه‌ر له‌پێشه‌وه‌  ", " هێڵی شه‌مه‌نده‌فه‌‌ر به‌ له‌مپه‌ره‌وه‌ له‌پێشه‌وه‌ ", "‌‌ هێڵی شه‌مه‌نده‌فه‌ر له‌پێشه‌وه‌ "], answer: 0 },
-            { img: "32.png", q: " ئەم نیشانەیە چی بۆ شۆفێر ڕوون دەکاتەوە ؟", options: ["هێڵی شه‌مه‌نده‌فه‌ر به‌بێ له‌مپه‌ر له‌پێشه‌وه‌  ", " هێڵی شه‌مه‌نده‌فه‌ر به‌ له‌مپه‌ره‌وه‌ له‌پێشه‌وه‌ ", "‌‌ هێڵی شه‌‌مه‌نده‌فه‌ر له‌پێشه‌وه‌ "], answer: 1 },
-            { img: "33.png", q: " ئەم هێمایە کە لە نزیک هێڵی شەمەندەفەر دەبینرێت، مانای چییە ؟", options: ["هێڵی شه‌مه‌نده‌فه‌ری فره‌ ڕێڕه‌و له‌پێشه‌وه‌  ", " هێڵی شه‌مه‌نده‌فه‌ر به‌ له‌مپه‌ره‌وه‌ له‌پێشه‌وه‌ ", "‌‌ هێڵی شه‌مه‌نده‌فه‌ری یه‌‌ك ڕێڕه‌و له‌ پێشه‌وه‌ "], answer: 2 },
-            { img: "34.png", q: " ئەم تابلۆیە هۆشداری دەدات لەسەر بوونی چی ؟", options: ["هێڵی شه‌مه‌نده‌فه‌ری فره‌ ڕێڕه‌و له‌پێشه‌وه‌  ", " هێڵی شه‌مه‌نده‌فه‌ر به‌ له‌مپه‌ره‌وه‌ له‌پێشه‌وه‌ ", "‌‌ هێڵی شه‌مه‌نده‌فه‌ری یه‌ك ڕێڕه‌و له‌ پێشه‌وه‌ "], answer: 0 },
-            { img: "35.png", q: " ئەم نیشانەیە هۆشدارییە لەسەر بوونی چ حاڵەتێک لە ڕێگادا ؟", options: ["پرده‌كه‌ كاری تێدا ده‌‌كرێت  ", " پردی هه‌ڵدانه‌وه‌ (پردی بزۆك) له‌پێشه‌وه‌ ", "‌‌ پردی ئاسنینی سابت له‌پێشه‌وه‌ "], answer: 1 },
+            { img: "32.png", q: " ئەم نیشانەیە چی بۆ شۆفێر ڕوون دەکاتەوە ؟", options: ["هێڵی شه‌مه‌نده‌فه‌ر به‌بێ له‌‌مپه‌ر له‌پێشه‌وه‌  ", " هێڵی شه‌مه‌نده‌فه‌ر به‌ له‌مپه‌ره‌وه‌‌ له‌پێشه‌وه‌ ", "‌‌ هێڵی شه‌مه‌نده‌فه‌ر له‌پێشه‌وه‌ "], answer: 1 },
+            { img: "33.png", q: " ئەم هێمایە کە لە نزیک هێڵی شەمەندەفەر دەبینرێت، مانای چییە ؟", options: ["هێڵی شه‌مه‌نده‌فه‌ری فره‌ ڕێڕه‌و له‌پێشه‌وه‌  ", " هێڵی شه‌مه‌نده‌فه‌ر به‌ له‌مپه‌‌ره‌وه‌ له‌پێشه‌وه‌ ", "‌‌ هێڵی شه‌مه‌نده‌فه‌ری یه‌ك ڕێڕه‌و له‌ پێشه‌وه‌ "], answer: 2 },
+            { img: "34.png", q: " ئەم تابلۆیە هۆشداری دەدات لەسەر بوونی چی ؟", options: ["هێڵی شه‌مه‌نده‌فه‌ری فره‌ ڕێڕه‌و له‌پێشه‌وه‌  ", " هێڵی شه‌مه‌نده‌فه‌ر به‌ له‌مپه‌ره‌وه‌ له‌پێشه‌وه‌ ", "‌‌ هێڵی شه‌مه‌نده‌‌فه‌ری یه‌ك ڕێڕه‌و له‌ پێشه‌وه‌ "], answer: 0 },
+            { img: "35.png", q: " ئەم نیشانەیە هۆشدارییە لەسەر بوونی چ حاڵەتێک لە ڕێگادا ؟", options: ["پرده‌كه‌ كاری تێدا ده‌كرێت  ", " پردی هه‌ڵدانه‌وه‌ (پردی بزۆك) له‌پێشه‌وه‌ ", "‌‌ پردی ئاسنینی سابت له‌پێشه‌وه‌ "], answer: 1 },
             { img: "36.png", q: " ئەم تابلۆیە هۆشداری دەدات لەسەر بوونی چ مەترسییەک ؟", options: ["ڕێگاكه‌ كار تێداده‌كرێت  ", " ڕێگەی خلیسکێنەر ", "‌‌ كه‌نار ده‌ریای نزیك له‌پێشه‌وه‌ "], answer: 2 },
             { img: "37.png", q: " ئەم نیشانەیە چی به‌ شۆفێر ڕوون دەکاتەوە ؟", options: ["مه‌ترسیی بای ته‌نیشت له‌پێشه‌وه‌  ", " ڕێگەی ته‌م و مژاوی ", "‌‌ كه‌نار ده‌ریای نزیك له‌پێشه‌وه‌ "], answer: 0 },
-            { img: "38.png", q: " کاتێک ئەم هێمایە لەسەر ڕێگا دەبینیت، نیشانەی چییە ؟", options: ["شوێنی وەستاندنی هەلیکۆپتەر  ", " نزمه‌فڕه‌ی فڕۆكه‌ له‌پێشه‌وه‌ ", "‌‌ مه‌تاڕ له‌‌پێشه‌وه‌ "], answer: 1 },
+            { img: "38.png", q: " کاتێک ئەم هێمایە لەسەر ڕێگا دەبینیت، نیشانەی چییە ؟", options: ["شوێنی وەستاندنی هەلیکۆپتەر  ", " نزمه‌فڕه‌ی فڕۆكه‌ له‌پێشه‌وه‌ ", "‌‌ مه‌تاڕ له‌پێشه‌وه‌ "], answer: 1 },
             { img: "39.png", q: " ئەم هێمایەی هۆشدارییە گشتییە ئاماژەیە بۆ چی ؟", options: ["کۆتایی ڕێگەی خێرا  ", " نیشانه‌ی ووریاكردنه‌وه‌ی مه‌ترسی له‌پێشه‌وه‌ ", "‌‌ وەستانی ناچاری "], answer: 1 },
-            { img: "40.png", q: " ئەم تابلۆ تیشکییانە (هێڵە لارییەکان) ئاماژەن بۆ چی ؟", options: ["هێڵی شه‌مه‌نده‌فه‌ر به‌ له‌مپه‌ره‌وه‌ له‌پێشه‌وه‌  ", " ڕێگەی خلیسکێنەر ", "‌‌ ماوه‌ی دووریی له‌ هێڵی شه‌نده‌فه‌ره‌وه‌ "], answer: 2 },
-            { img: "41.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["به‌رزترین خێرای به‌رپرسیارانه‌  ", " خێراییه‌كه‌ت كه‌مبكه‌‌ره‌وه‌ ", "‌‌ (40) كیلۆمه‌تری تر ڕێگاكه‌ كۆتایی دێت "], answer: 0 },
-            { img: "43.png", q: " ئەم هێمایەی قەدەغەکردن ئاماژەیە بۆ چی ؟", options: ["پێچكردنه‌وه‌ بۆ ده‌سته‌ڕاست ڕێگه‌ پێدراوه‌  ", " پێچكردنه‌وه‌ بۆ ده‌سته‌چه‌پ قه‌دەغەیە ", "‌‌پێچكردنه‌وه‌ بۆ ده‌سته‌ڕاست قه‌دەغەیە "], answer: 2 },
+            { img: "40.png", q: " ئەم تابلۆ تیشکییانە (هێڵە لارییەکان) ئاماژەن بۆ چی ؟", options: ["هێڵی شه‌مه‌نده‌فه‌ر به‌ له‌مپه‌ره‌وه‌ له‌پێشه‌وه‌  ", " ڕێگەی خلیسکێنەر ", "‌‌‌‌ ماوه‌ی دووریی له‌ هێڵی شه‌نده‌فه‌ره‌وه‌ "], answer: 2 },
+            { img: "41.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["به‌‌رزترین خێرای به‌رپرسیارانه‌  ", " خێراییه‌كه‌ت كه‌مبكه‌ره‌وه‌ ", "‌‌‌‌ (40) كیلۆمه‌تری تر ڕێگاكه‌ كۆتایی دێت "], answer: 0 },
+            { img: "43.png", q: " ئەم هێمایەی قەدەغەکردن ئاماژەیە بۆ چی ؟", options: ["پێچكردنه‌وه‌ بۆ ده‌سته‌ڕاست ڕێگه‌ پێدراوه‌  ", " پێچكردنه‌وه‌ بۆ ده‌سته‌چه‌پ قه‌دەغەیە ", "‌‌پێچكردنه‌وه‌ بۆ ده‌سته‌‌ڕاست قه‌دەغەیە "], answer: 2 },
             { img: "44.png", q: " کاتێک ئەم تابلۆیە لەسەر ڕێگا دەبینیت، مانای چییە ؟", options: ["پێچكردنه‌وه‌ بۆ ده‌سته‌ڕاست ڕێگه‌ پێدراوه‌  ", " پێچكردنه‌وه‌ بۆ ده‌سته‌چه‌پ قه‌دەغەیە ", "‌‌پێچكردنه‌وه‌ بۆ ده‌سته‌ڕاست قه‌دەغەیە "], answer: 1 },
             { img: "45.png", q: " ئەم هێمایە چی بۆ شۆفێر قەدەغە دەکات ؟", options: ["سوڕانه‌وه‌ قه‌ده‌قه‌یه‌  ", " پێچكردنه‌وه‌ بۆ ده‌سته‌چه‌پ قه‌دەغەیە ", "‌‌پێچكردنه‌وه‌ بۆ ده‌سته‌ڕاست قه‌دەغەیە "], answer: 0 },
-            { img: "46.png", q: " ئەم هێمایە ئاماژەیە بۆ چی ؟", options: ["وه‌ستان قه‌ده‌غه‌یه‌  ", " وه‌ستان ڕێگه‌ پێدراوه‌ ", "‌‌لێخوڕین بۆ ناو ئه‌م شه‌قامه‌ قه‌ده‌غه‌یه‌ "], answer: 2 },
-            { img: "47.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["وه‌ستان قه‌ده‌‌غه‌یه‌  ", " لێخوڕن به‌هه‌ردوو ئاڕاسته‌ قه‌ده‌غه‌یه‌ ", "‌‌ وه‌ستانی كاتی ڕێگه‌ پێداروه‌ "], answer: 1 },
-            { img: "48.png", q: " ئەم هێمایە چی بۆ شۆفێر قەدەغە دەکات ؟", options: ["لێخوڕینی ئۆتۆمبێل و ماتۆڕ بۆ ناو ئه‌‌م شه‌قامه‌ قه‌ده‌غه‌یه‌  ", " هاتووچۆی ماتۆڕسکیل قەدەغەیە ", "‌‌ وه‌ستانی ئۆتۆمبێل و ماتۆرسكیل ڕێگه‌پێدراوه‌ "], answer: 0 },
+            { img: "46.png", q: " ئەم هێمایە ئاماژەیە بۆ چی ؟", options: ["وه‌‌ستان قه‌ده‌غه‌یه‌  ", " وه‌ستان ڕێگه‌ پێدراوه‌ ", "‌‌لێخوڕین بۆ ناو ئه‌م شه‌قامه‌‌ قه‌ده‌غه‌یه‌ "], answer: 2 },
+            { img: "47.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["وه‌ستان قه‌ده‌غه‌یه‌  ", " لێخوڕن به‌هه‌‌ردوو ئاڕاسته‌ قه‌ده‌غه‌یه‌ ", "‌‌ وه‌ستانی كاتی ڕێگه‌ پێداروه‌ "], answer: 1 },
+            { img: "48.png", q: " ئەم هێمایە چی بۆ شۆفێر قەدەغە دەکات ؟", options: ["لێخوڕینی ئۆتۆمبێل و ماتۆڕ بۆ ناو ئه‌م شه‌قامه‌ قه‌ده‌غه‌یه‌  ", " هاتووچۆی ماتۆڕسکیل قەدەغەیە ", "‌‌ وه‌ستانی ئۆتۆمبێل و ماتۆرسكیل ڕێگه‌پێدراوه‌ "], answer: 0 },
             { img: "49.png", q: " ئەم نیشانەیە چی بە شۆفێر ڕوون دەکاتەوە ؟", options: ["وه‌ستانی پاسكیل قه‌ده‌غه‌یه‌  ", " وه‌ستانی ئۆتۆمبێل قه‌ده‌غەیە ", "‌‌ ‌لێخوڕینی ماتۆڕ قه‌ده‌غه‌یه‌ "], answer: 2 },
-            { img: "50.png", q: " ئەم تابلۆیە قەدەغەکردنە بۆ چ جۆرە ئۆتۆمبێلێک ؟", options: ["لێخوڕینی لۆری قه‌‌ده‌غه‌یه‌  ", " وه‌ستانی ئۆتۆمبێل قه‌ده‌غەیە ", "‌‌ ‌لێخوڕینی ماتۆڕ قه‌ده‌غه‌یه‌ "], answer: 0 },
+            { img: "50.png", q: " ئەم تابلۆیە قەدەغەکردنە بۆ چ جۆرە ئۆتۆمبێلێک ؟", options: ["لێخوڕینی لۆری قه‌ده‌غه‌یه‌  ", " وه‌ستانی ئۆتۆمبێل قه‌ده‌غەیە ", "‌‌ ‌لێخوڕینی ماتۆڕ قه‌ده‌غه‌یه‌ "], answer: 0 },
             { img: "51.png", q: " مانای ئەم هێمایە چییە لەسەر ڕێگەوبانەکان ؟", options: ["وه‌ستانی پاس قه‌ده‌غه‌یه‌  ", " لێخوڕینی پاس قه‌ده‌غه‌یه‌ ", "‌‌ ‌لێخوڕینی ماتۆڕ پاس ڕێگه‌پێدراوه‌ "], answer: 1 },
-            { img: "52.png", q: " ئەم تابلۆیە هۆشداری دەدات لە قەدەغەکردنی هاتووچۆ بۆ کۆمەڵێک ئامێر، کامیانە ؟", options: ["لێخوڕینی تراكتۆر قه‌ده‌غه‌یه‌  ", " وه‌ستانی تراكتۆر قه‌ده‌غه‌یه‌ ", "‌‌ ‌لێخوڕینی تراكتۆر ڕێگه‌پێدراوه‌ "], answer: 0 },
-            { img: "53.png", q: " ئەم هێمایەی قەدەغەکردن ئاماژەیە بۆ هاتووچۆی چ جۆرێك ؟", options: ["ڕێڕه‌وی ئه‌سپسوار له‌پێشه‌وه‌  ", " ئه‌سپسواری قه‌ده‌غه‌یه‌ ", "‌‌ ‌لێخوڕینی عه‌ره‌بانه‌ قه‌ده‌غه‌یه‌ "], answer: 2 },
+            { img: "52.png", q: " ئەم تابلۆیە هۆشداری دەدات لە قەدەغەکردنی هاتووچۆ بۆ کۆمەڵێک ئامێر، کامیانە ؟", options: ["لێخوڕینی تراكتۆر قه‌ده‌غه‌یه‌  ", " وه‌ستانی تراكتۆر قه‌ده‌غه‌یه‌ ", "‌‌ ‌لێخوڕینی تراكتۆر ڕێگه‌‌پێدراوه‌ "], answer: 0 },
+            { img: "53.png", q: " ئەم هێمایەی قەدەغەکردن ئاماژەیە بۆ هاتووچۆی چ جۆرێك ؟", options: ["ڕێڕه‌وی ئه‌‌سپسوار له‌پێشه‌وه‌  ", " ئه‌سپسواری قه‌ده‌غه‌یه‌ ", "‌‌ ‌لێخوڕینی عه‌ره‌بانه‌ قه‌‌ده‌غه‌یه‌ "], answer: 2 },
             { img: "54.png", q: " کاتێک ئەم هێمایە دەبینیت، قەدەغەکردن بۆ چ جۆرە هۆکارێکی گواستنەوەیە ؟", options: ["وه‌ستانی پاسكیل ڕێگه‌پێدراوه‌  ", " لێخوڕینی پاسكیل قه‌ده‌غه‌یه‌ ", "‌‌ ‌ڕێڕه‌وی پاسیكل له‌پێشه‌وه‌ "], answer: 1 },
             { img: "55.png", q: " ئەم نیشانەیە لەسەر ڕێگا مانای چییە ؟", options: ["وه‌ستانی پاسكیل ڕێگه‌پێدراوه‌  ", " لێخوڕینی پاسكیل قه‌ده‌غه‌یه‌ ", "‌‌ ‌لێخوڕینی ماتۆرسكیل قه‌ده‌غه‌یه‌ "], answer: 2 },
-            { img: "56.png", q: " ئامانجی ئەم تابلۆیە چییە ؟", options: ["ئه‌سپ سواری قه‌ده‌غه‌یه‌‌  ", " ڕێڕه‌وی ئه‌سپ له‌پێشه‌وه‌ ", "‌‌ ‌لێخوڕینی ماتۆرسكیل قه‌ده‌غه‌یه‌ "], answer: 0 },
-            { img: "57.png", q: " کاتێک ئەم تابلۆیە دەبینرێت، مانای چی دەگەیەنێت ؟", options: ["ئه‌سپ سواری قه‌ده‌‌غه‌یه‌  ", " ڕێڕه‌وی ئه‌سپ له‌پێشه‌وه‌ ", "‌‌ ‌پیاده‌ ڕۆیشتن قه‌ده‌غه‌یه‌ "], answer: 2 },
-            { img: "58.png", q: " ئەم هێمایەی قەدەغەکردن بۆ چ جۆرە ئامێرێکە ؟", options: ["عه‌ره‌بانه‌ی ده‌ستی ڕێگه‌پێداروه‌  ", " عه‌ره‌بانه‌ی ده‌ستی قه‌ده‌غه‌یه‌ ", "‌‌ ‌پیاده‌ ڕۆیشتن قه‌ده‌غه‌یه‌ "], answer: 1 },
-            { img: "59.png", q: " ئەم تابلۆیە قەدەغەکردنی هاتووچۆیە بۆ کام جۆرە بارهەڵگر ؟", options: ["لێخوڕینی بار هه‌ڵگر ڕێپگه‌پێدراوه‌  ", " لێخوڕینی لۆری قه‌ده‌غه‌یه‌ ", "‌‌ ‌لێخوڕینی لۆری به‌باری مه‌تریسداره‌وه‌ قه‌ده‌غه‌یه‌ "], answer: 2 },
+            { img: "56.png", q: " ئامانجی ئەم تابلۆیە چییە ؟", options: ["ئه‌سپ سواری قه‌ده‌غه‌یه‌  ", " ڕێڕه‌وی ئه‌سپ له‌پێشه‌وه‌ ", "‌‌ ‌لێخوڕینی ماتۆرسكیل قه‌ده‌غه‌یه‌ "], answer: 0 },
+            { img: "57.png", q: " کاتێک ئەم تابلۆیە دەبینرێت، مانای چی دەگەیەنێت ؟", options: ["ئه‌سپ سواری قه‌ده‌غه‌یه‌  ", " ڕێڕه‌وی ئه‌سپ له‌پێشه‌وه‌ ", "‌‌ ‌پیاده‌ ڕۆیشتن قه‌ده‌غه‌یه‌ "], answer: 2 },
+            { img: "58.png", q: " ئەم هێمایەی قەدەغەکردن بۆ چ جۆرە ئامێرێکە ؟", options: ["عه‌ره‌بانه‌ی ده‌ستی ڕێگه‌پێداروه‌  ", " عه‌ره‌بانه‌ی ده‌ستی قه‌ده‌غه‌یه‌ ", "‌‌ ‌پیاده‌‌ ڕۆیشتن قه‌ده‌غه‌یه‌ "], answer: 1 },
+            { img: "59.png", q: " ئەم تابلۆیە قەدەغەکردنی هاتووچۆیە بۆ کام جۆرە بارهەڵگر ؟", options: ["لێخوڕینی بار هه‌ڵگر ڕێپگه‌پێدراوه‌  ", " لێخوڕینی لۆری قه‌ده‌غه‌یه‌ ", "‌‌ ‌لێخوڕینی لۆری به‌باری مه‌تریسداره‌وه‌ قه‌‌ده‌غه‌یه‌ "], answer: 2 },
             { img: "60.png", q: " مانای ئەم هێمایە لەسەر پرد یان ڕێگاکان چییە ؟", options: ["ئه‌وپه‌ڕی ڕاده‌ی قورسایی  ", " ئه‌وپه‌ڕی ڕاده‌ی به‌رزی ", "‌‌ ‌قه‌ده‌غه‌یه‌ له‌ پێنچ خووله‌ك زیاتر بووه‌ستیت "], answer: 0 },
-            { img: "61.png", q: " ئەم نیشانەیە مانای چییە لەسەر ڕێگا ؟", options: [" ئه‌وپه‌ڕی ڕاده‌ی به‌رزی ", " دوا ڕاده‌ی قورسایی به‌عه‌‌ره‌بانه‌وه‌ ", "‌‌ ‌لێخوڕینی بار هه‌ڵگر ڕێپگه‌پێدراوه‌ "], answer: 1 },
-            { img: "62.png", q: " ئەم تابلۆیە هۆشداری دەدات لەسەر سنووردارکردنی چی ؟", options: [" ئه‌وپه‌ڕی ڕاده‌ی به‌رزی ", " دوا ڕاده‌ی قورسایی به‌عه‌ره‌بانه‌وه‌ ", "‌‌ ‌دوا ڕاده‌ی قورسایی له‌سه‌ر ئه‌كسل "], answer: 2 },
-            { img: "63.png", q: " مانای ئەم هێمایەی هاتووچۆ چییە ؟", options: [" ئه‌وپه‌ڕی ڕاده‌ی به‌رزی ", " دوا ڕاده‌ی قورسایی له‌سه‌‌ر جووت ئه‌كسل ", "‌‌ ‌دوا ڕاده‌ی قورسایی له‌سه‌ر تاك ئه‌كسل "], answer: 1 },
+            { img: "61.png", q: " ئەم نیشانەیە مانای چییە لەسەر ڕێگا ؟", options: [" ئه‌وپه‌ڕی ڕاده‌ی به‌‌رزی ", " دوا ڕاده‌ی قورسایی به‌عه‌ره‌بانه‌وه‌ ", "‌‌ ‌لێخوڕینی بار هه‌ڵگر ڕێپگه‌پێدراوه‌ "], answer: 1 },
+            { img: "62.png", q: " ئەم تابلۆیە هۆشداری دەدات لەسەر سنووردارکردنی چی ؟", options: [" ئه‌وپه‌‌ڕی ڕاده‌ی به‌رزی ", " دوا ڕاده‌ی قورسایی به‌عه‌ره‌بانه‌وه‌ ", "‌‌ ‌دوا ڕاده‌ی قورسایی له‌سه‌ر ئه‌كسل "], answer: 2 },
+            { img: "63.png", q: " مانای ئەم هێمایەی هاتووچۆ چییە ؟", options: [" ئه‌وپه‌ڕی ڕاده‌ی به‌‌رزی ", " دوا ڕاده‌ی قورسایی له‌سه‌ر جووت ئه‌كسل ", "‌‌ ‌دوا ڕاده‌ی قورسایی له‌سه‌ر تاك ئه‌كسل "], answer: 1 },
             { img: "64.png", q: " ئەم هێمایە چی بۆ شۆفێر دیاری دەکات ؟", options: [" ئه‌و په‌ڕی پانی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ ", " ئه‌وپه‌ڕی به‌رزی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ ", "‌‌ ‌‌ئه‌و په‌ڕی قورسایی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ "], answer: 0 },
             { img: "65.png", q: " کاتێک ئەم تابلۆیە دەبینیت، مانای چییە ؟", options: [" ئه‌و په‌ڕی پانی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ ", " ئه‌و په‌ڕی قورسایی مۆڵه‌ت پێداروه‌ به‌باره‌وه‌ ", "‌ ‌ئه‌وپه‌ڕی به‌رزی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ "], answer: 2 },
             { img: "66.png", q: " ئەم نیشانەیە ئاماژەیە بۆ قەدەغەکردنی چی ؟", options: [" ئه‌و په‌ڕی پانی مۆڵه‌ت پێدراوه‌ ", " ئه‌و په‌ڕی درێژی مۆڵه‌ت پێداروه‌ به‌باره‌وه‌ ", "‌ ‌ئه‌وپه‌ڕی به‌رزی مۆڵه‌ت پێدراوه‌ به‌باره‌وه‌ "], answer: 1 },
-            { img: "67.png", q: " ئەم هێمایەی قەدەغەکردن مانای چی دەگەیەنێت ؟", options: [" تێپه‌ڕاندن قه‌ده‌غه‌یه‌ ", " وه‌ستان قه‌ده‌غه‌یه‌ ", "‌ ‌ڕێگه‌ی یه‌ك ئاڕاسته‌‌ "], answer: 0 },
+            { img: "67.png", q: " ئەم هێمایەی قەدەغەکردن مانای چی دەگەیەنێت ؟", options: [" تێپه‌ڕاندن قه‌ده‌غه‌یه‌ ", " وه‌ستان قه‌ده‌غه‌یه‌ ", "‌ ‌ڕێگه‌ی یه‌ك ئاڕاسته‌ "], answer: 0 },
             { img: "68.png", q: " ئەم تابلۆیە چی قەدەغەی  دەکات ؟", options: [" وه‌ستا به‌ هه‌موو شێوه‌یه‌ك قه‌ده‌غه‌یه‌ ", " تێپه‌ڕاندن بۆ ئۆتۆمبێلی بچوك قه‌ده‌غه‌یه‌ ", "‌ ‌تێپه‌ڕاندن بۆ لۆری قه‌ده‌غه‌یه‌‌ "], answer: 2 },
             { img: "69.png", q: " ئەم نیشانەیە چی ڕوون دەکاتەوە ؟", options: [" تێپه‌ڕاندن قه‌ده‌غه‌یه‌ ", " تێپه‌ڕاندن ڕیگه‌پێدراوه‌ ", "‌ ‌تێپه‌ڕاندن بۆ ئۆتۆمبێلی بارهه‌ڵگر قه‌ده‌غه‌یه‌ "], answer: 1 },
             { img: "70.png", q: " مانای ئەم هێمایە لەسەر ڕێگا چییە ؟", options: [" تێپه‌ڕاندن بۆ لۆری ڕێگه‌پێدراوه‌ ", " تێپه‌ڕاندن بۆ ئۆتۆمبێلی بچوك ڕێگه‌پێدراوه‌ ", "‌ ‌تێپه‌ڕاندن بۆ ئۆتۆمبێلی بارهه‌ڵگر قه‌ده‌غه‌یه‌ "], answer: 0 },
-            { img: "71.png", q: " ئەم نیشانەیە چی بۆ شۆفێر دیاری دەکات ؟", options: [" ئه‌و په‌ڕی خێرایی ڕێگه‌پێدراو ", " ئه‌و په‌ڕی خێرایی ڕێگه‌پێدراو نییه‌ ", "‌ ‌وه‌ستان له‌م شوێنه‌‌دا قه‌ده‌غه‌یه‌ "], answer: 0 },
-            { img: "72.png", q: " مانای ئەم هێمایەی هاتووچۆ چییە ؟", options: [" تێپه‌ڕاندن ڕیگه‌پێدراوه‌ ", " تێپه‌ڕاندن بۆ ئۆتۆمبێلی بچوك ڕێگه‌پێدراوه‌ ", "‌ ‌ته‌واو بوونی ئه‌وپه‌ڕی خێرای ڕێگه‌پێدراوه‌ "], answer: 2 },
+            { img: "71.png", q: " ئەم نیشانەیە چی بۆ شۆفێر دیاری دەکات ؟", options: [" ئه‌‌و په‌ڕی خێرایی ڕێگه‌پێدراو ", " ئه‌و په‌ڕی خێرایی ڕێگه‌‌پێدراو نییه‌ ", "‌ ‌وه‌ستان له‌م شوێنه‌دا قه‌ده‌غه‌یه‌ "], answer: 0 },
+            { img: "72.png", q: " مانای ئەم هێمایەی هاتووچۆ چییە ؟", options: [" تێپه‌ڕاندن ڕیگه‌‌پێدراوه‌ ", " تێپه‌ڕاندن بۆ ئۆتۆمبێلی بچوك ڕێگه‌پێدراوه‌ ", "‌ ‌ته‌واو بوونی ئه‌وپه‌ڕی خێرای ڕێگه‌پێدراوه‌ "], answer: 2 },
             { img: "73.png", q: " ئەم هێمایە ئاماژەیە بۆ چ حاڵەتێک لەسەر ڕێگا ؟", options: [" تێپه‌ڕاندن ڕیگه‌پێدراوه‌ ", " ته‌واوبوونی قه‌ده‌غه‌كردن ", "‌ ‌ته‌واو بوونی ئه‌وپه‌ڕی خێرای ڕێگه‌پێدراوه‌ "], answer: 1 },
             { img: "74.png", q: " کاتێک ئەم تابلۆیە دەبینیت، مانای چییە ؟", options: [" ڕاوه‌ستان و پارككردن قه‌ده‌غه‌یه‌ ", " وەستانی کاتی ڕێگەپێدراوە ", "‌ ‌ته‌واو بوونی ئه‌وپه‌ڕی خێرای ڕێگه‌پێدراوه‌ "], answer: 0 },
             { img: "75.png", q: " ئەم نیشانەیە چی لەسەر شەقامەکان قەدەغە دەکات ؟", options: [" تێپه‌ڕاندن ڕیگه‌پێدراوه‌ ", " پارككردن قه‌ده‌غه‌یه‌‌ ", "‌ ‌وەستانی کاتی ڕێگەپێدراوە "], answer: 1 },
-            { img: "76.png", q: " مانای ئه‌م هێمایه‌ ئاماژه‌ بۆچی ؟", options: [" ڕاوه‌ستان بۆ پشكنین و كۆنترۆڵكردن ", " پارككردن قه‌ده‌غه‌یه‌ ", "‌‌ ‌وەستان قه‌ده‌غه‌یه‌ "], answer: 0 },
+            { img: "76.png", q: " مانای ئه‌م هێمایه‌ ئاماژه‌ بۆچی ؟", options: [" ڕاوه‌ستان بۆ پشكنین و كۆنترۆڵكردن ", " پارككردن قه‌ده‌غه‌یه‌ ", "‌‌‌‌ ‌وەستان قه‌ده‌غه‌یه‌ "], answer: 0 },
             { img: "78.png", q: " تابلۆی سێگۆشەی سەرەوژێر (ڕووەو خوار) ئاماژەیە بۆ چی ؟", options: [" ڕێگه‌ی یه‌ك ئاڕاسته‌ ", " وه‌ستان قه‌ده‌غه‌یه‌ ", "‌ ‌پابه‌ندبوونی ڕه‌ها "], answer: 2 },
             { img: "79.png", q: " ئەم هێمایەی نەخشەی ڕێگا چ جۆرە یەکتربڕێک نیشان دەدات ؟", options: [" پابه‌ندبونی نائاسایی پێشڕوه‌ی بۆ شه‌قامه‌ باریكه‌كانه‌ ", " پابه‌ندبونی نائاسایی پێشڕوه‌ی بۆ شه‌قامه‌ پانه‌كانه‌ ", "‌ تێپه‌ڕاندن قه‌ده‌غه‌یه‌ "], answer: 1 },
-            { img: "81.png", q: " (STOP) مانای چییە؟ ؟", options: [" خالی پشكنین له‌پێشه‌وه‌‌ ", " وه‌ستان قه‌ده‌غه‌یه‌ ", "‌ ‌ڕاوه‌سته‌ پێشڕوی بۆتۆیه‌ "], answer: 2 },
+            { img: "81.png", q: " (STOP) مانای چییە؟ ؟", options: [" خالی پشكنین له‌پێشه‌وه‌ ", " وه‌ستان قه‌ده‌غه‌یه‌ ", "‌ ‌ڕاوه‌سته‌ پێشڕوی بۆتۆیه‌ "], answer: 2 },
             { img: "82.png", q: " ئەم هێمایە ئاماژەیە بۆ چ حاڵەتێک لە ڕێگادا", options: [" یه‌كگرتنی سایده‌كان ", " تەسکبوونەوەی شەقام ", "‌ ‌دابه‌ش بوونی سایده‌كان "], answer: 0 },
             { img: "83.png", q: " تابلۆی چوارگۆشەی چەماوەی زەرد (ڕووبەری سەرەکی) مانای چییەا", options: [" پابه‌ندبوونی ڕه‌ها ", " شه‌قامی سه‌ره‌كی پێشڕه‌وی بۆتۆیه‌ ", "‌ ‌وه‌ستان قه‌ده‌غه‌یه‌ "], answer: 1 },
-            { img: "84.png", q: " ئەم هێمایە بە هێڵی ڕەشەوە چی دەگەیەنێت", options: [" پابه‌ندبوونی ڕه‌ها ", " شه‌قامی سه‌ره‌كی پێشڕه‌وی بۆتۆیه‌ ", "‌ ‌شه‌قامی سه‌ره‌كی ته‌واو بوونی پێشڕه‌وی "], answer: 2 },
+            { img: "84.png", q: " ئەم هێمایە بە هێڵی ڕەشەوە چی دەگەیەنێت", options: [" پابه‌ندبوونی ڕه‌ها ", " شه‌قامی سه‌ره‌كی پێشڕه‌وی بۆتۆیه‌ ", "‌ ‌شه‌قامی سه‌ره‌‌كی ته‌واو بوونی پێشڕه‌وی "], answer: 2 },
             { img: "85.png", q: " ئەم هێمایەی ناو بازنەی سوور ئاماژەیە بۆ چی", options: [" تێپه‌ڕاندن ڕیگه‌پێدراوه‌ ", " پێشڕه‌وی بۆ ئۆتۆمبێلی ڕووبه‌ڕوه‌ ", "‌ ‌شه‌قامی یه‌ك ئاڕاسته‌ "], answer: 1 },
-            { img: "86.png", q: " تابلۆی شینی چوارگۆشە کە تیری سپی و سووری تێدایە مانای چییە", options: [" پێشڕه‌‌وی بۆتۆیه‌ ", " پێشڕه‌وی بۆ ئۆتۆمبێلی ڕووبه‌ڕوه‌ ", "‌ ‌شه‌قامی یه‌ك ئاڕاسته‌ "], answer: 0 },
+            { img: "86.png", q: " تابلۆی شینی چوارگۆشە کە تیری سپی و سووری تێدایە مانای چییە", options: [" پێشڕه‌وی بۆتۆیه‌ ", " پێشڕه‌وی بۆ ئۆتۆمبێلی ڕووبه‌ڕوه‌ ", "‌ ‌شه‌قامی یه‌ك ئاڕاسته‌ "], answer: 0 },
             { img: "88.png", q: "ئەم هێمایە (تیرەی شین بە ئاڕاستەی ڕاستەوخۆ) ئاماژەیە بۆ چی؟", options: ["ته‌نیا ڕاسته‌و ڕاست بۆ پێشه‌وه‌", "پێچکردنەوە قەدەغەیە", "وەستان قەدەغەیە"], answer: 0 },
             { img: "89.png", q: "ئەم هێمایە (تیرەی شین بۆ چەپ) مانای چییە؟", options: ["ته‌نیا بۆ لای ده‌ست ڕاست", "پێچکردنەوە بۆ ڕاست", "ته‌نیا بۆ لای ده‌سته‌چه‌پ"], answer: 2 },
             { img: "90.png", q: "ئەم هێمایە (تیرەی شین بۆ ڕاست) مانای چییە؟", options: ["ته‌نیا بۆ لای ده‌سته‌ڕاست", "پێچکردنەوە بۆ چەپ", "خێرایی کەم بکەوە"], answer: 0 },
@@ -863,7 +836,7 @@
         }
 
         function startExam(type) {
-            vibrate(); currentExamType = type; currentQuestionIndex = 0; score = 0;
+            vibrate(20); currentExamType = type; currentQuestionIndex = 0; score = 0;
             let allQuestions = [...examDatabase[type]]; activeQuestions = getUniqueRandomQuestions(allQuestions, 25);
             document.getElementById('examMenu').style.display = 'none'; document.getElementById('examResultBox').style.display = 'none';
             document.getElementById('examBox').style.display = 'block'; loadQuestion();
@@ -896,7 +869,8 @@
         }
 
         function selectOption(selectedIndex, correctIndex, element) {
-            clearInterval(examTimerInterval); vibrate(20);
+            clearInterval(examTimerInterval); vibrate(30);
+            element.classList.add('clicked');
             let options = document.querySelectorAll('.exam-option'); options.forEach(opt => opt.style.pointerEvents = 'none');
             if(selectedIndex === correctIndex) { element.classList.add('correct'); score++; } 
             else { element.classList.add('wrong'); options[correctIndex].classList.add('correct'); }
@@ -948,9 +922,15 @@
         }
 
         let metaThemeColor = document.getElementById("meta-theme-color"); let currentTheme = localStorage.getItem("theme");
-        if (!currentTheme) { const nowIraq = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Baghdad" })); const hour = nowIraq.getHours(); currentTheme = (hour >= 19 || hour < 6) ? "dark" : "light"; }
+        if (!currentTheme) { 
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                currentTheme = "dark";
+            } else {
+                const nowIraq = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Baghdad" })); const hour = nowIraq.getHours(); currentTheme = (hour >= 19 || hour < 6) ? "dark" : "light"; 
+            }
+        }
         if (currentTheme === "dark") { document.body.classList.add("dark-mode"); document.documentElement.classList.add("dark-mode"); document.getElementById("themeToggleBtn").innerText = "☀️"; if(metaThemeColor) metaThemeColor.setAttribute("content", "#121212"); } 
-        else { if(metaThemeColor) metaThemeColor.setAttribute("content", "#0056b3"); }
+        else { document.getElementById("themeToggleBtn").innerText = "🌙"; if(metaThemeColor) metaThemeColor.setAttribute("content", getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim()); }
 
         function toggleTheme() {
             vibrate(); document.body.classList.toggle("dark-mode"); document.documentElement.classList.toggle("dark-mode"); let metaTheme = document.getElementById("meta-theme-color");
@@ -1010,7 +990,7 @@
                     item.onclick = function() { vibrate(); selectedMonth = i; userSetDate = true; document.getElementById('month-btn').textContent = i; const maxDays = getDaysInMonth(i, selectedYear); if (selectedDay > maxDays) { selectedDay = maxDays; document.getElementById('day-btn').textContent = maxDays; } closeModal(); calculateFine(); }; grid.appendChild(item);
                 }
             } else if (type === 'year') {
-                title.textContent = '📅 ساڵێك دیاری بكه‌';
+                title.textContent = '📅 ساڵێك دیاری بكه';
                 for (let i = 2015; i <= 2035; i++) {
                     let item = document.createElement('div'); item.className = 'grid-item'; if (i === selectedYear) item.classList.add('selected-item'); item.textContent = i;
                     item.onclick = function() { vibrate(); selectedYear = i; userSetDate = true; document.getElementById('year-btn').textContent = i; const maxDays = getDaysInMonth(selectedMonth, i); if (selectedDay > maxDays) { selectedDay = maxDays; document.getElementById('day-btn').textContent = maxDays; } closeModal(); calculateFine(); }; grid.appendChild(item);
@@ -1124,24 +1104,6 @@
             if (expiryDate < currentDate && result.fine > 0) { document.documentElement.style.setProperty('--dynamic-status-color', '#e53e3e'); fineBox.style.borderColor = 'rgba(229, 62, 62, 0.4)'; fineBox.style.boxShadow = '0 10px 30px rgba(229, 62, 62, 0.15)'; } 
             else { document.documentElement.style.setProperty('--dynamic-status-color', '#48bb78'); fineBox.style.borderColor = 'rgba(72, 187, 120, 0.4)'; fineBox.style.boxShadow = '0 10px 30px rgba(72, 187, 120, 0.15)'; }
             updateSpeedometer(result.fine);
-        }
-
-        let currentRating = 0; const ratingStars = document.querySelectorAll('#starContainer i'); const feedbackInput = document.getElementById('feedbackText'); const submitRatingBtn = document.getElementById('submitRatingBtn'); const ratingThanks = document.getElementById('ratingThanks'); const ratingSystem = document.getElementById('ratingSystem');
-
-        if (localStorage.getItem('user_has_rated')) { ratingSystem.style.display = 'none'; }
-
-        ratingStars.forEach(star => {
-            star.addEventListener('click', function() {
-                vibrate(); currentRating = parseInt(this.getAttribute('data-value'));
-                ratingStars.forEach(s => { if (parseInt(s.getAttribute('data-value')) <= currentRating) { s.classList.add('active'); } else { s.classList.remove('active'); } });
-                feedbackInput.style.display = 'block'; submitRatingBtn.style.display = 'block';
-            });
-        });
-
-        function submitRating() {
-            if(currentRating === 0) return; let feedback = feedbackInput.value.trim(); submitRatingBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; submitRatingBtn.disabled = true;
-            localStorage.setItem('user_has_rated', 'true'); document.getElementById('starContainer').style.display = 'none'; feedbackInput.style.display = 'none'; submitRatingBtn.style.display = 'none'; document.querySelector('.rating-title').style.display = 'none'; ratingThanks.style.display = 'block'; vibrate(30);
-            setTimeout(() => { ratingSystem.style.opacity = '0'; setTimeout(() => ratingSystem.style.display = 'none', 300); }, 4000);
         }
 
         document.addEventListener('DOMContentLoaded', function() {
